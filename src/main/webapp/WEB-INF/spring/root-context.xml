@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- Spring DB -->
+	<bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="username" value="mvc"/>
+		<property name="password" value = "1234"/>
+	</bean>
+	
+	<!-- MyBatis : sqlSessionFactoryBean-->
+<!-- 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="driverManagerDataSource"/>
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:com/java/member/dao/mapper/MemberMapper.xml</value>
+				<value>classpath:com/java/fileBoard/dao/mapper/FileBoardMapper.xml</value>
+			</list>
+		</property>
+		
+		<property name="mapperLocations" value="classpath:com/java/**/*.xml"/>
+	</bean> -->
+	
+	<!-- MyBatis : sqlsessionTemplate-->
+<!-- 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactoryBean"/>
+	</bean> -->
+	
+</beans>
