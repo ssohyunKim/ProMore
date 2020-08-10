@@ -57,6 +57,23 @@
           </div>
         </div>
       </li>
+      
+      <!-- Nav Item - 관리자 페이지 Menu -->
+      <li class="nav-item active">
+        <a class="nav-link collapsed" href="${root}/manager/memberList.do" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>관리자 페이지</span>
+        </a>
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Manager Page</h6>
+            <a class="collapse-item" href="${root}/manager/memberList.do">회원 관리</a>
+            <a class="collapse-item" href="${root}/manager/noriceList.do">공지사항 관리</a>
+            <a class="collapse-item" href="${root}/manager/reportList.do">고객게시판 관리</a>
+            <div class="collapse-divider"></div>
+          </div>
+        </div>
+      </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item active">
