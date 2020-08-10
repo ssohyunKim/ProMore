@@ -46,7 +46,7 @@
 					<!-- Page Heading -->
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">공지사항 관리</h1>
+						<h1 class="h3 mb-0 text-gray-800">공지사항 작성</h1>
 					</div>
 
 					<!-- 여기에 코드를 넣어주세요!! -->
@@ -65,7 +65,7 @@
 											<span class="icon"> <i class="fas fa-arrow-left"></i>
 										</span>
 										</a>
-										<h4 class="m-0 font-weight-bold text-primary p-2">공지사항 작성</h4>
+										<h5 class="m-0 font-weight-bold text-primary p-2">공지사항 작성</h5>
 									</div>
 								</div>
 

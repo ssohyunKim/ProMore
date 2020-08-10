@@ -52,8 +52,8 @@
 
 					<div class="card shadow mb-4">
 						<div class="card-header py-3 form-inline justify-content-between">
-							<h5 class="m-0 font-weight-bold text-primary p-2">공지사항 목록</h5>
-							<a href="${root}/manager/noticeCreate.do" class="btn btn-primary btn-circle btn-lg"><i class="fas fa-pen"></i></a>
+							<h5 class="m-0 font-weight-bold text-primary p-2">공지사항 글 목록</h5>
+							<a href="${root}/manager/noticeCreate.do" class="btn btn-primary btn-circle btn-md"><i class="fas fa-pen"></i></a>
 						</div>
 						
 						<!-- 공지사항 리스트 -->

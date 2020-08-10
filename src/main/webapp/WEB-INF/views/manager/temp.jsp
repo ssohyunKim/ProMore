@@ -46,83 +46,70 @@
 					<!-- Page Heading -->
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">공지사항 관리</h1>
+						<h1 class="h3 mb-0 text-gray-800">공지사항 작성</h1>
 					</div>
 
 					<!-- 여기에 코드를 넣어주세요!! -->
 
-					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">고객게시판 관리</h6>
-						</div>
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
-									<thead>
-										<tr>
-											<th>글 번호</th>
-											<th>글쓴이 ID</th>
-											<th>글 제목</th>
-											<th>글 내용</th>
-											<th>첨부 파일</th>
-											<th>접수 현황</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>글 번호</th>
-											<th>글쓴이 ID</th>
-											<th>글 제목</th>
-											<th>글 내용</th>
-											<th>첨부 파일</th>
-											<th>접수 현황</th>
-										</tr>
-									</tfoot>
-									<tbody>
-										<tr>
-											<td>58011</td>
-											<td>adams1234</td>
-											<td><a href="#">이런 경우 어떻게 처리하나요??</a></td>
-											<td>상의없이 코드 내용을 유출했어요...</td>
-											<td>캡처.zip</td>
-											<td><a href="#">접수 대기중</a></td>
-										</tr>
-										<tr>
-											<td>58012</td>
-											<td>brad88</td>
-											<td><a href="#">팀원 미참여 문제</a></td>
-											<td>팀원이 잠수탔네여...</td>
-											<td>image.jpg</td>
-											<td><a href="#">접수중</a></td>
-										</tr>
-										<tr>
-											<td>58013</td>
-											<td>coco3356</td>
-											<td><a href="#">보안 위반 처리 부탁드려요</a></td>
-											<td>신고 접수한 글의 내용...</td>
-											<td>주소.txt</td>
-											<td><a href="#">접수중</a></td>
-										</tr>
-										<tr>
-											<td>58014</td>
-											<td>donadona12</td>
-											<td><a href="#">신고합니다</a></td>
-											<td>상의없이 코드 내용을 유출했어요...</td>
-											<td>캡처.zip</td>
-											<td><a href="#">접수완료</a></td>
-										</tr>
-										<tr>
-											<td>58016</td>
-											<td>eman4956</td>
-											<td><a href="#">프로젝트 문의</a></td>
-											<td>프로젝트 관련 문의 사항이 있어 글 남깁...</td>
-											<td>첨부파일 없음</td>
-											<td><a href="#">접수완료</a></td>
-										</tr>
+					<!-- 공지사항 작성 -->
+					<div
+						class="d-sm-flex align-items-center justify-content-center mb-4">
+						<div class="col-lg-8">
+							<div class="card shadow-lg my-5">
 
-									</tbody>
-								</table>
+								<!-- Card Header -->
+								<div class="card-header">
+									<div style="text-align: center; align-content: center;">
+										<a href="${root}/customer/notice.do" class="btn btn-lg"
+											style="float: left; margin-left: 0px; padding-left: 0px;">
+											<span class="icon"> <i class="fas fa-arrow-left"></i>
+										</span>
+										</a>
+										<h5 class="m-0 font-weight-bold text-primary p-2">공지사항 작성</h5>
+									</div>
+								</div>
+
+								<!-- Card Body -->
+								<div class="card-body">
+									<form>
+
+										<!-- 공지사항 글 제목 -->
+										<div class="form-group row">
+											<div class="col-sm-12">
+												<input type="text" class="form-control" id="inputTitle"
+													value="제목을 입력하세요.">
+											</div>
+										</div>
+
+										<!-- 공지사항 글 내용 -->
+										<div class="form-group row">
+											<div class="col-sm-12">
+												<textarea class="form-control" rows="15" id="inputContent"
+													placeholder="글을 입력하세요."></textarea>
+											</div>
+										</div>
+
+										<!-- 파일 첨부 -->
+										<div class="form-group row">
+											<div class="col-sm-12">
+												<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
+												</span>
+												<input type="file" class="mx-2" id="inputFile" />
+											</div>
+										</div>
+
+										<!-- 초기화 -->
+										<button type="reset" class="btn btn-secondary mb-2 col-sm-12">
+											<span class="text">초기화</span>
+										</button>
+										<br />
+
+										<!-- 작성 완료 -->
+										<button type="submit" class="btn btn-primary col-sm-12">
+											<span class="text">작성 완료</span>
+										</button>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
