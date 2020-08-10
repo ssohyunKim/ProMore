@@ -13,7 +13,6 @@
   <!-- Custom styles for this template-->
   <link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
 </head>
-
 <body id="page-top">
 <c:set var="root" value="${pageContext.request.contextPath}" />
   <!-- Page Wrapper -->
@@ -71,8 +70,8 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Customer Service</h6>
-            <a class="collapse-item" href="utilities-color.html">1:1 문의하기</a>
-            <a class="collapse-item" href="utilities-border.html">공지사항</a>
+            <a class="collapse-item" href="${root}/customer/inquire.do">1:1 문의하기</a>
+            <a class="collapse-item" href="${root}/customer/notice.do">공지사항</a>
           </div>
         </div>
       </li>
