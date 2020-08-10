@@ -21,7 +21,7 @@ input, section {
   padding-top: 10px;
   display: none;
 }
-label {
+label[for ^=tab]{
   font-weight: bold;
   font-size: 14px;
   display: block;
