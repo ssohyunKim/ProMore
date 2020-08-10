@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+.col-lg-6{
+	Margin-left: auto;Margin-right: auto;
+}
+ #secondUl{
+ 		display:inline-block; 
+ 		padding-left: 10px;
+ 		margin-bottom: 0px;
+ 	}
+ #secondUl li{
+		list-style-type: none;
+		padding: 2px 8px;
+		border:1px solid #cccccc;
+		float:left;
+		border-left-width: 0px;
+		display: inline-block;
+		overflow: hidden;
+		cursor: pointer;
+		font-size: 0.9em;
+	}
+	#secondUl li:first-child{
+		background-color: #6799FF;
+		color:white;
+		border-radius: 10px 0px 0px 10px;
+	}
+	#secondUl li:nth-child(3){
+		border-radius: 0px 10px 10px 0px;
+	}
+
+	.workDateDiv input{
+		border: 1px solid #d1d3e2;
+		color: #6e707e;
+		border-radius: 3.2px;
+		font-size: .875rem;
+	}
+	.fileUpLoad input{
+		font-size: .875rem;
+	}
+	.workLiDivRead{
+	overflow: hidden; 
+	
+	}
+	
+	#calender, .calenderInput{
+	margin-left: 5px;
+	font-size: .875rem;
+	border: 1px solid #d1d3e2;
+	border-radius: 3.2px;
+	}
+	
+	.managerWho{
+		font-size: .875rem;
+	}
+	
+	#updateDelete{
+		float:right; 
+		font-size: .875rem;
+	}
+	.addIndexDivRead{
+	font-size: .875rem;
+	}
+	
+	
+	
