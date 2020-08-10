@@ -54,7 +54,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">My Page</h6>
             <a class="collapse-item" href="#">프로필 관리</a>
-            <a class="collapse-item" href="#">회원 수정</a>
+            <a class="collapse-item" href="${root}/mypage/memberUpdate.do">회원 수정</a>
             <a class="collapse-item" href="#">회원 탈퇴</a>
             <div class="collapse-divider"></div>
           </div>
