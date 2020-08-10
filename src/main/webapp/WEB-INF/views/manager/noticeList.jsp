@@ -44,16 +44,16 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<div
-						class="d-sm-flex align-items-center justify-content-between mb-4">
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">공지사항 관리</h1>
 					</div>
 
 					<!-- 여기에 코드를 넣어주세요!! -->
 
 					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary p-2">공지사항 목록</h4>
+						<div class="card-header py-3 form-inline justify-content-between">
+							<h5 class="m-0 font-weight-bold text-primary p-2">공지사항 목록</h5>
+							<a href="${root}/manager/noticeCreate.do" class="btn btn-primary btn-circle btn-lg"><i class="fas fa-pen"></i></a>
 						</div>
 						
 						<!-- 공지사항 리스트 -->
