@@ -27,14 +27,6 @@ public class ManagerController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/manager/noticeCreate.do", method = RequestMethod.GET)
-	public ModelAndView noticeCreate(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("Ok");
-		
-		ModelAndView mav = new ModelAndView("/manager/noticeCreate");
-		return mav;
-	}
-	
 	@RequestMapping(value = "/manager/reportList.do", method = RequestMethod.GET)
 	public ModelAndView reportList(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("Ok");
