@@ -7,7 +7,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>공지사항 관리</title>
+<title>고객게시판 관리</title>
 
 <!-- Custom fonts for this template-->
 <link href="${root}/resources/vendor/fontawesome-free/css/all.min.css"
@@ -44,19 +44,21 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-
+				
 					<!-- Page Heading -->
-					<div
-						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">공지사항 관리</h1>
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">고객게시판 관리</h1>
 					</div>
 
 					<!-- 여기에 코드를 넣어주세요!! -->
 
 					<div class="card shadow mb-4">
+						<!-- Card Header -->
 						<div class="card-header py-3">
-							<h5 class="m-0 font-weight-bold text-primary">고객게시판 관리</h5>
+							<h5 class="m-0 font-weight-bold text-primary p-2">고객게시판 관리</h5>
 						</div>
+						
+						<!-- Card Body -->
 						<div class="card-body">
 							<div class="table-responsive">
 								<table class="table table-bordered" id="dataTable" width="100%"

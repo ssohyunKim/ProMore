@@ -4,27 +4,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<c:set var="root" value="${pageContext.request.contextPath}" />
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>공지사항 관리</title>
-	
-	<!-- Custom fonts for this template-->
-	<link href="${root}/resources/vendor/fontawesome-free/css/all.min.css"
-		rel="stylesheet" type="text/css">
-	<link
-		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-		rel="stylesheet">
-		
-	<!-- Custom styles for this template-->
-	<link href="${root}/resources/css/sb-admin-2.min.css" rel="stylesheet">
-	
-	<!-- Custom styles for this page -->
-	<link href="${root}/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-	
+<c:set var="root" value="${pageContext.request.contextPath}" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>공지사항 관리</title>
+
+<!-- Custom fonts for this template-->
+<link href="${root}/resources/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="${root}/resources/css/sb-admin-2.min.css" rel="stylesheet">
+
+<!-- Custom styles for this page -->
+<link
+	href="${root}/resources/vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+
 </head>
 <body id="page-top">
-	
+
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
@@ -44,18 +46,24 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+					<div
+						class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">공지사항 관리</h1>
 					</div>
 
 					<!-- 여기에 코드를 넣어주세요!! -->
 
 					<div class="card shadow mb-4">
+						<!-- Card Header -->
 						<div class="card-header py-3 form-inline justify-content-between">
 							<h5 class="m-0 font-weight-bold text-primary p-2">공지사항 글 목록</h5>
-							<a href="${root}/manager/noticeCreate.do" class="btn btn-primary btn-circle btn-md"><i class="fas fa-pen"></i></a>
+							<a href="#" class="btn btn-primary btn-circle btn-md"
+								data-toggle="modal" data-target="#noticeCreateModal"> <!-- <a href="${root}/manager/noticeCreate.do" class="btn btn-primary btn-circle btn-md"> -->
+								<i class="fas fa-pen"></i>
+							</a>
 						</div>
-						
+
+						<!-- Card Body -->
 						<!-- 공지사항 리스트 -->
 						<div class="card-body">
 							<div class="table-responsive">
@@ -136,7 +144,7 @@
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			
+
 			<!-- End of Footer -->
 
 		</div>
@@ -145,24 +153,94 @@
 	</div>
 	<!-- End of Page Wrapper -->
 
+
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
 
+
+	<!-- Write Model -->
+	<div class="modal fade" id="noticeCreateModal" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
+
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">공지사항 작성</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<form>
+
+					<!-- modal-body -->
+					<div class="modal-body">
+
+
+						<!-- 공지사항 글 제목 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<input type="text" class="form-control" id="inputTitle"
+									placeholder="제목을 입력하세요.">
+							</div>
+						</div>
+
+						<!-- 공지사항 글 내용 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<textarea class="form-control" rows="20" id="inputContent"
+									placeholder="글을 입력하세요."></textarea>
+							</div>
+						</div>
+
+						<!-- 파일 첨부 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
+								</span> <input type="file" class="mx-2" id="inputFile" />
+							</div>
+						</div>
+
+					</div>
+
+					<!-- modal-footer -->
+					<div class="modal-footer justify-content-between">
+						<button type="reset" class="btn btn-warning">초기화</button>
+
+						<div>
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">취소</button>
+							<button type="submit" class="btn btn-primary">작성 완료</button>
+						</div>
+					</div>
+
+				</form>
+
+			</div>
+		</div>
+	</div>
+
 	<!-- Bootstrap core JavaScript-->
 	<script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
-	<script src="${root}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="${root}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script src="${root}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script
+		src="${root}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
 	<script src="${root}/resources/js/sb-admin-2.min.js"></script>
-	
+
 	<!-- Page level plugins -->
-	<script src="${root}/resources/vendor/datatables/jquery.dataTables.min.js"></script>
-	<script src="${root}/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<script
+		src="${root}/resources/vendor/datatables/jquery.dataTables.min.js"></script>
+	<script
+		src="${root}/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 	<!-- Page level custom scripts -->
 	<script src="${root}/resources/js/demo/datatables-demo.js"></script>

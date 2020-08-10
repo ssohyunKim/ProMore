@@ -52,13 +52,15 @@
 					<!-- 여기에 코드를 넣어주세요!! -->
 
 					<div class="card shadow mb-4">
+						<!-- Card Header -->
 						<div class="card-header py-3">
-							<h5 class="m-0 font-weight-bold text-primary">회원 관리</h5>
+							<h5 class="m-0 font-weight-bold text-primary p-2">회원 관리</h5>
 						</div>
+						
+						<!-- Card Body -->
 						<div class="card-body">
 							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
 											<th>회원 번호</th>
