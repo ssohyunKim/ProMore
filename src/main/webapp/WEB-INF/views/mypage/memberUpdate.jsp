@@ -43,7 +43,7 @@
 					<!-- Page Heading -->
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">메인페이지</h1>
+						<h1 class="h3 mb-0 text-gray-800">회원 정보 수정</h1>
 					</div>
 
 					<!-- 여기에 코드를 넣어주세요!! -->

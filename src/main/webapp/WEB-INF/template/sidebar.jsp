@@ -68,7 +68,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Manager Page</h6>
             <a class="collapse-item" href="${root}/manager/memberList.do">회원 관리</a>
-            <a class="collapse-item" href="${root}/manager/noriceList.do">공지사항 관리</a>
+            <a class="collapse-item" href="${root}/manager/noticeList.do">공지사항 관리</a>
             <a class="collapse-item" href="${root}/manager/reportList.do">고객게시판 관리</a>
             <div class="collapse-divider"></div>
           </div>
