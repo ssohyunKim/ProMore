@@ -82,7 +82,7 @@
 
 							<div class="calender-main col-lg-8 col-sm-12">
 								<!-- 일정 추가/수정 -->
-								<div id=schedule-modal-container class="modal" tabindex="-1"
+								<div id=schedule-modal-container class="modal fade" tabindex="-1"
 									aria-labelledby="exampleModalLabel" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered">
 										<div class="modal-content">
@@ -152,7 +152,7 @@
 								</div>
 
 								<!-- 일정 간단히 보기 -->
-								<div id=schedule-view class="modal" tabindex="-1"
+								<div id=schedule-view class="modal fade" tabindex="-1"
 									aria-labelledby="exampleModalLabel" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered">
 										<div class="modal-content">
@@ -228,14 +228,14 @@
 	</a>
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="resources/vendor/jquery/jquery.min.js"></script>
-	<script src="resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="${root }/resources/vendor/jquery/jquery.min.js"></script>
+	<script src="${root }/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script src="resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="${root }/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="resources/js/sb-admin-2.min.js"></script>
+	<script src="${root }/resources/js/sb-admin-2.min.js"></script>
 
 	<!-- Toast UI Calendar(캘린더) -->
 	<script

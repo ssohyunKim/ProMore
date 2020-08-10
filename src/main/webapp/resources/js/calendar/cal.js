@@ -218,7 +218,8 @@ function init() {
       modal.find("#schedule-start-date").val(today);
       modal.find("#schedule-end-date").val(today);
     } else if (from === "edit") {
-      $("#schedule-view").modal("hide");
+      $("#schedule-view").removeClass("fade").modal("hide");
+      $("#schedule-view").addClass("fade");
 
       var schedule = calendar.getSchedule(
         parseInt(rT.attr("schedule-id")),
