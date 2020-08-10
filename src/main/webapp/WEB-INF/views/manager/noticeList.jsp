@@ -79,20 +79,11 @@
 											<th>게시글 관리</th>
 										</tr>
 									</thead>
-									<tfoot>
-										<tr>
-											<th>글 번호</th>
-											<th>글 제목</th>
-											<th>조회수</th>
-											<th>작성 일자</th>
-											<th>첨부 파일</th>
-											<th>게시글 관리</th>
-										</tr>
-									</tfoot>
 									<tbody>
 										<tr>
 											<td>58011</td>
-											<td>[필독] 프로젝트 참여시 주의사항</td>
+											<td><a href="#" data-toggle="modal"
+												data-target="#noticeReadModal">[필독] 프로젝트 참여시 주의사항</a></td>
 											<td>61</td>
 											<td>2012/03/29</td>
 											<td>첨부파일 없음</td>
@@ -160,7 +151,7 @@
 	</a>
 
 
-	<!-- Write Model -->
+	<!-- Notice Write Model -->
 	<div class="modal fade" id="noticeCreateModal" tabindex="-1"
 		role="dialog">
 		<div class="modal-dialog modal-lg mt-5" role="document">
@@ -179,7 +170,6 @@
 
 					<!-- modal-body -->
 					<div class="modal-body">
-
 
 						<!-- 공지사항 글 제목 -->
 						<div class="form-group row">
@@ -215,6 +205,126 @@
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">취소</button>
 							<button type="submit" class="btn btn-primary">작성 완료</button>
+						</div>
+					</div>
+
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Notice Read Model -->
+	<div class="modal fade" id="noticeReadModal" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
+
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">공지사항 읽기</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<form>
+
+					<!-- modal-body -->
+					<div class="modal-body p-4">
+
+						<!-- 공지사항 글 제목 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<h5 class="form-control-plaintext font-weight-bold"
+									id="staticTitle">[필독] 프로젝트 참여시 주의사항</h5>
+							</div>
+						</div>
+
+						<!-- 공지사항 글 내용 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<textarea readonly class="form-control-plaintext" rows="20"
+									id="content"
+									placeholder="안녕하세요.&#13;관리자입니다.&#13;&#13;프로젝트 진행 과정에서 다음과 같은 문제가 자주 발생하고 있습니다.&#13;1. ~~&#13;2. &#13;3. ~~&#13;&#13;우리 모두 매너있는 팀원/팀장으로서 즐겁게 프로젝트를 진행할 수 있도록 부탁드립니다. 잦은 신고 문의가 들어올 시 예고없이 탈퇴처리할 수 있음을 알려드립니다."></textarea>
+							</div>
+						</div>
+
+						<!-- 파일 첨부 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
+								</span> <a class="mx-2">첨부파일 없음</a>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- modal-footer -->
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-warning" data-toggle="modal"
+							data-target="#noticeUpdateModal">수정하기</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+					</div>
+
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Notice Update Model -->
+	<div class="modal fade" id="noticeUpdateModal" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
+
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">공지사항 수정</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<form>
+
+					<!-- modal-body -->
+					<div class="modal-body p-4">
+
+						<!-- 공지사항 글 제목 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<input type="text" class="form-control" id="inputTitle" value="기존 제목">
+							</div>
+						</div>
+
+						<!-- 공지사항 글 내용 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<textarea class="form-control" rows="20" id="inputContent">기존 글 내용</textarea>
+							</div>
+						</div>
+
+						<!-- 파일 첨부 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
+								</span> <input type="file" class="mx-2" id="changeFile" value="첨부파일 없음" />
+							</div>
+						</div>
+
+					</div>
+
+					<!-- modal-footer -->
+					<div class="modal-footer justify-content-between">
+						<button type="reset" class="btn btn-warning">초기화</button>
+
+						<div>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+							<button type="submit" class="btn btn-primary">수정 완료</button>
 						</div>
 					</div>
 
