@@ -394,10 +394,9 @@
 						<div class="card mb-4 py-3 border-left-primary">
 							<div class="card-body">
 								<div class="workLiDivRead">
-									<div style="margin: 5px;">
+									<div style="margin: 5px;" class="form-check-inline col justify-content-between">
 										<b>작성자</b>
-									</div>
-									<div>
+								
 										<ul style="display: inline-block;" id="secondUl">
 											<li style="border-left: 1px solid #cccccc;">요청</li>
 											<li>진행</li>
@@ -405,16 +404,15 @@
 										</ul>
 									</div>
 									<div style="margin: 5px;">
-										<a>이형은</a> <a href="#" onclick="myFun()">담당자 변경</a>
+										<a>이형은</a> <a href="#" onclick="myFun()" class="col-sm-3">담당자 변경</a>
 										
-											<div>
+											
 												<img id="calender" src="resources/img/calendar.png"> <input
-													class="calenderInput" type="text" id="date3" value="시작일 추가" />
-											</div>
-											<div>
+													class="calenderInput col-sm-3" type="text" id="date3" value="시작일 추가" />
+											
 												<img id="calender" src="resources/img/calendar.png"> <input
-													class="calenderInput" type="text" id="date4" value="마감일 추가" />
-											</div>
+													class="calenderInput col-sm-3" type="text" id="date4" value="마감일 추가" />
+											
 									</div>
 
 									<div class="addIndexDivRead">
@@ -480,7 +478,7 @@
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="resources/vendor/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="resources/js/workspace/jquery-ui.js"></script>
+	<script type="text/javascript" src="resources/workspace/js/jquery-ui.js"></script>
 	<script src="resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
