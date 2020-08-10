@@ -21,6 +21,10 @@ input, section {
   padding-top: 10px;
   display: none;
 }
+section {
+  height: 700px;
+}
+
 label[for ^=tab]{
   font-weight: bold;
   font-size: 14px;
