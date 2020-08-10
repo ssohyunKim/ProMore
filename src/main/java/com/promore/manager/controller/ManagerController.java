@@ -23,7 +23,7 @@ public class ManagerController {
 	public ModelAndView noticeList(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("Ok");
 		
-		ModelAndView mav = new ModelAndView("/manager/memberList");
+		ModelAndView mav = new ModelAndView("/manager/noticeList");
 		return mav;
 	}
 	
@@ -31,7 +31,7 @@ public class ManagerController {
 	public ModelAndView reportList(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("Ok");
 		
-		ModelAndView mav = new ModelAndView("/manager/memberList");
+		ModelAndView mav = new ModelAndView("/manager/reportList");
 		return mav;
 	}
 }

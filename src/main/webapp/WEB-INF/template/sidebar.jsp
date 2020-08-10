@@ -60,7 +60,7 @@
       
       <!-- Nav Item - Manager Collapse Menu -->
       <li class="nav-item active">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManager" aria-expanded="true" aria-controls="collapseManager">
           <i class="fas fa-fw fa-cog"></i>
           <span>관리자 페이지</span>
         </a>
