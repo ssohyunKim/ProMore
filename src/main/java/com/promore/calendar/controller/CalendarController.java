@@ -19,8 +19,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CalendarController {
+	
+	@RequestMapping(value = "/calendar.do", method = RequestMethod.GET)
+	public ModelAndView getCalendar(HttpServletRequest req, HttpServletResponse resp) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("calendar/calendar");
+		return mav;
+	}
 
-	@RequestMapping(value = "/calendar/holiday", method = RequestMethod.GET)
+	@RequestMapping(value = "/calendar/holiday.do", method = RequestMethod.GET)
 	public void getHoliday(HttpServletRequest req, HttpServletResponse resp) {
 		String year = req.getParameter("year");
 		String month = req.getParameter("month");
