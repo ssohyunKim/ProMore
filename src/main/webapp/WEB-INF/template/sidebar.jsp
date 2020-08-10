@@ -35,7 +35,7 @@
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item active">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="${root}/project/main.do">
           <i class="fas fa-fw fa-folder"></i>
           <span>프로젝트</span>
         </a>
@@ -50,8 +50,8 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">My Page</h6>
-            <a class="collapse-item" href="#">프로필 관리</a>
-            <a class="collapse-item" href="#">회원 수정</a>
+            <a class="collapse-item" href="${root}/mypage/myPage.do">프로필 관리</a>
+            <a class="collapse-item" href="${root}/mypage/memberUpdate.do">회원 수정</a>
             <a class="collapse-item" href="#">회원 탈퇴</a>
             <div class="collapse-divider"></div>
           </div>
@@ -83,21 +83,21 @@
       
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="${root }/calendar.do">
+        <a class="nav-link" href="${root}/calendar.do">
           <i class="fas fa-fw fa-table"></i>
           <span>일정 관리</span></a>
       </li>
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="${root}/project/pjtState.do">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>프로젝트 현황</span></a>
       </li>
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="${root}/project/workState.do">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>일감 현황</span></a>
       </li>

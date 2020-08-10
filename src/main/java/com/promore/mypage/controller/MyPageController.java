@@ -12,10 +12,20 @@ import org.springframework.web.servlet.ModelAndView;
 public class MyPageController {
 	
 	@RequestMapping(value = "/mypage/memberUpdate.do", method = RequestMethod.GET)
-	public ModelAndView customerInquire(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView memberUpdate(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("Ok");
 		
 		ModelAndView mav = new ModelAndView("/mypage/memberUpdate");
 		return mav;
 	}
+	
+	@RequestMapping(value = "/mypage/myPage.do", method = RequestMethod.GET)
+	public ModelAndView myPage(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("Ok");
+		
+		ModelAndView mav = new ModelAndView("/mypage/myPage");
+		return mav;
+	}
+	
+	
 }
