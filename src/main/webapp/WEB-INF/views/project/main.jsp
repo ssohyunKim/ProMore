@@ -57,7 +57,7 @@
 						<p>최대인원 : n명</p>
 
 					</div>
-					<a href="${root}/project/read.do">
+					<a href="${root}/workspace/workspace.do">
 					<div class="flip-card-back1">
 						<p>팀장</p>
 						</br>

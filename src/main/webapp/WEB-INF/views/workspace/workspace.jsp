@@ -4,22 +4,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+ <c:set var="root" value="${pageContext.request.contextPath}" />	
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>ProMore-프로젝트를 모아모아</title>
 <!-- Custom fonts for this template-->
 
-<link href="resources/vendor/fontawesome-free/css/all.min.css"
+<link href="${root}/resources/vendor/fontawesome-free/css/all.min.css"
 	rel="stylesheet" type="text/css">
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
 <!-- Custom styles for this template-->
-<link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
-<link rel="stylesheet" href="resources/css/workspace/jquery-ui.css" />
-<link rel="stylesheet" href="resources/css/workspace/jquery-ui.structure.css" />
-<link rel="stylesheet" href="resources/css/workspace/jquery-ui.theme.css" />
-<link rel="stylesheet" href="resources/css/workspace/workspace.css" />
+<link href="${root}/resources/css/sb-admin-2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="${root}/resources/css/workspace/jquery-ui.css" />
+<link rel="stylesheet" href="${root}/resources/css/workspace/jquery-ui.structure.css" />
+<link rel="stylesheet" href="${root}/resources/css/workspace/jquery-ui.theme.css" />
+<link rel="stylesheet" href="${root}/resources/css/workspace/workspace.css" />
 
 </head>
 
@@ -312,10 +313,10 @@
 														class="dropdown-item" href="#">김아름</a>
 												</div>
 												<span class="col-sm-3 managerWho"></span>
-													<img id="calender" src="resources/img/calendar.png">
+													<img id="calender" src="${root}/resources/img/calendar.png">
 													<input class="calenderInput col-sm-3" type="text" id="date1"
 														value="시작일 추가" />
-													<img id="calender" src="resources/img/calendar.png">
+													<img id="calender" src="${root}/resources/img/calendar.png">
 													<input class="calenderInput col-sm-3" type="text" id="date2"
 														value="마감일 추가" />
 											</div>
@@ -341,7 +342,7 @@
 
 											<div class="fileUpLoad">
 												<span class="one"> <img
-													src="resources/img/upload.png"> <input
+													src="${root}/resources/img/upload.png"> <input
 													class="content" type="file" name="file" />
 												</span>
 											</div>
@@ -407,10 +408,10 @@
 										<a>이형은</a> <a href="#" onclick="myFun()" class="col-sm-3">담당자 변경</a>
 										
 											
-												<img id="calender" src="resources/img/calendar.png"> <input
+												<img id="calender" src="${root}/resources/img/calendar.png"> <input
 													class="calenderInput col-sm-3" type="text" id="date3" value="시작일 추가" />
 											
-												<img id="calender" src="resources/img/calendar.png"> <input
+												<img id="calender" src="${root}/resources/img/calendar.png"> <input
 													class="calenderInput col-sm-3" type="text" id="date4" value="마감일 추가" />
 											
 									</div>
@@ -429,7 +430,7 @@
 										</div>
 
 										<div class="fileUpLoad">
-											<span class="one"> <img src="resources/img/upload.png">
+											<span class="one"> <img src="${root}/resources/img/upload.png">
 												<input class="content" type="file" name="file" />
 											</span>
 										</div>
@@ -477,15 +478,15 @@
 	</a>
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="resources/vendor/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="resources/workspace/js/jquery-ui.js"></script>
-	<script src="resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="${root}/resources/workspace/js/jquery-ui.js"></script>
+	<script src="${root}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script src="resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="${root}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="resources/js/sb-admin-2.min.js"></script>
-	<script type="text/javascript" src="resources/js/workspace/workspace.js"></script>
+	<script src="${root}/resources/js/sb-admin-2.min.js"></script>
+	<script type="text/javascript" src="${root}/resources/js/workspace/workspace.js"></script>
 </body>
 </html>
