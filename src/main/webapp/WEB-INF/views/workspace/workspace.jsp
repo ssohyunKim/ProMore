@@ -62,13 +62,14 @@
 					</div>
 
 					<!-- 여기에 코드를 넣어주세요!! -->
+					
 					<!-- 	<div class="toast">
 						<div class="toast-header">Toast Header</div>
 						<div class="toast-body">알람확인</div>
 					</div> -->
 
 					<!-- 일감 목록 -->
-					<div class="col-xl-8">
+					<div class="card shadow p-4 col-xl-8 bg-light">
 
 						<!-- 프로젝트명 들어가기 -->
 						<a href="${root}/project/read.do" class="text-decoration-none">
@@ -184,8 +185,16 @@
 									</div>
 
 								</form>
+								
 							</div>
 						</div>
+						
+						<!-- 추가된 일감 3 -->
+						
+						<!-- 추가된 일감 2 -->
+						
+						<!-- 추가된 일감 1 -->
+						
 					</div>
 
 
