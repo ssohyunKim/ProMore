@@ -30,7 +30,7 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
 <!-- 일감댓글 -->
-<link rel="stylesheet" href="${root }/resources/css/workspace/reply.css" />
+<link rel="stylesheet" href="${root}/resources/css/workspace/reply.css" />
 <script>
 	var root = "${root }";
 </script>
@@ -206,7 +206,7 @@
 											</ul>
 										</div>
 										<div style="margin: 5px;">
-											<a>이형은</a> <a href="#" onclick="myFun()" class="col-sm-3">담당자
+											<a>이형은</a> <a href="#" onclick="managerSelect('${root}')" class="col-sm-3">담당자
 												변경</a> <img id="calender"
 												src="${root}/resources/img/calendar.png"> <input
 												class="calenderInput col-sm-3" type="text" id="date3"

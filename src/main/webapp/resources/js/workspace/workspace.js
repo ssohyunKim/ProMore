@@ -106,9 +106,11 @@
              
        });
        
-       function myFun(){
-     	  //alert("확인");
-          window.open("http://localhost:8181/view/workList.html","","width=300px, height=200px");
+       function managerSelect(root){
+     	  //alert("확인"+root);
+     	  var url = root +"/workspace/manager.do";
+     	  alert(url);
+          window.open(url,"","width=300px, height=200px");
            //"주소","윈도우이름","가로세로스크롤"
     }
        function workPost(){

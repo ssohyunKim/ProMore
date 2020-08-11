@@ -20,4 +20,13 @@ public class WorkspaceController {
 		ModelAndView mav = new ModelAndView("/workspace/workspace");
 		return mav;
 	}
+	
+	@RequestMapping(value = "/workspace/manager.do", method = RequestMethod.GET)
+	public ModelAndView manager(HttpServletRequest request, HttpServletResponse response) {
+		HAspect.logger.info(HAspect.logMsg+"managerOk");
+		
+		ModelAndView mav = new ModelAndView("/workspace/manager");
+		return mav;
+	}
+	
 }
