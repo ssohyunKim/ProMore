@@ -5,9 +5,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 
 <!-- Sidebar -->
-<ul
-	class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-	id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 	<!-- Sidebar - Brand -->
 	<a
 		class="sidebar-brand d-flex align-items-center justify-content-center"
@@ -43,7 +41,6 @@
 			aria-labelledby="headingPages" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">My Page</h6>
-				<a class="collapse-item" href="${root}/mypage/myPage.do">프로필 관리</a>
 				<a class="collapse-item" href="${root}/mypage/memberUpdate.do">회원
 					수정</a> <a class="collapse-item" href="#">회원 탈퇴</a>
 				<div class="collapse-divider"></div>
