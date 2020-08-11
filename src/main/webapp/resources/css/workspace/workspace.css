@@ -67,3 +67,10 @@
 .addIndexDivRead {
 	font-size: .875rem;
 }
+
+	.projectName a{
+	color: white; 
+	text-decoration: none; 
+	cursor: pointer; 
+	margin-left: 10px;
+	}

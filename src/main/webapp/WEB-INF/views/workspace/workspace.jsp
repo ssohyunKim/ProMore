@@ -40,8 +40,8 @@
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<!-- Sidebar -->
-		<jsp:include page="/WEB-INF/template/sidebar.jsp"/>
-		
+		<jsp:include page="/WEB-INF/template/sidebar.jsp" />
+
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
 
@@ -49,8 +49,8 @@
 			<div id="content">
 
 				<!-- Topbar -->
-				<jsp:include page="/WEB-INF/template/topbar.jsp"/>
-				
+				<jsp:include page="/WEB-INF/template/topbar.jsp" />
+
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
@@ -70,6 +70,14 @@
 			   	알람확인
 			  </div>
 			</div> -->
+
+					<div class="col-lg-6">
+						<div class="projectName card mb-4 py-3 border-left-primary"
+							style="background-color: #4e73df; opacity: 80%; border-radius: 10px 10px 10px 10px; height: 50px; margin-left: auto; margin-right: auto;">
+							<a href="#"
+								style="color: white; text-decoration: none; cursor: pointer; margin-left: 10px;">프로젝트명</a>
+						</div>
+					</div>
 					<form action="#">
 						<div class="col-lg-6">
 
@@ -345,6 +353,6 @@
 	<script type="text/javascript"
 		src="${root}/resources/js/workspace/workspace.js"></script>
 	<!-- 일감댓글 -->
-	<script src="${root }/resources/js/workspace/reply.js"></script>
+	<script src="${root}/resources/js/workspace/reply.js"></script>
 </body>
 </html>
