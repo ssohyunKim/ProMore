@@ -13,195 +13,202 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="${root}/resources/css/sb-admin-2.min.css" rel="stylesheet">
+  <!-- Custom styles for this page -->
+  <link href="${root}/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 <body id="page-top">
- <!-- Page Wrapper -->
-  <div id="wrapper">
-  
-	<!-- Sidebar -->
-	<jsp:include page="/WEB-INF/template/sidebar.jsp"/>
-  
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
 
-      <!-- Main Content -->
-      <div id="content">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
 
-        <!-- Topbar -->
-		<jsp:include page="/WEB-INF/template/topbar.jsp"/>
+		<!-- Sidebar -->
+		<jsp:include page="/WEB-INF/template/sidebar.jsp" />
 
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
 
-          <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">1:1 문의하기</h1>
-          <a href="#" class="btn btn-secondary btn-circle btn-lg" style="float: left; margin: 10px 20px 10px 10px;">
-            <span class="icon">
-              <i class="fas fa-question"></i>
-            </span>
-          </a>
-          <p class="mb-4">공지사항을 확인 후 글작성 부탁드립니다.<br />
-            욕설, 비방글, 회원신고는 신고하기로 작성해주세요.<br />
-            (파일첨부는 1개만 가능합니다.)</p>
+			<!-- Main Content -->
+			<div id="content">
 
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary"></h6>
-              <a href="#" class="btn btn-primary btn-icon-split" style="float: right;" data-toggle="modal" data-target="#WriteModal">
-                <span class="icon text-white-50">
-                  <i class="fas fa-pencil-alt"></i>
-                </span>
-                <span class="text">글쓰기</span>
-              </a>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>제목</th>
-                      <th>분류</th>
-                      <th>작성자</th>
-                      <th>날짜</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><a href="#">프로젝트 개설 문의드립니다.</a></td>
-                      <td>일반문의</td>
-                      <td>김땡땡</td>
-                      <td>2020-08-04</td>
-                    </tr>
-                    <tr>
-                      <td><a href="#">회원 등급 문의합니다.</a></td>
-                      <td>일반문의</td>
-                      <td>김땡땡</td>
-                      <td>2020-08-07</td>
-                    </tr>
-                    <tr>
-                      <td><a href="#">회원 신고합니다.</a></td>
-                      <td>신고하기</td>
-                      <td>김땡땡</td>
-                      <td>2020-08-07</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+				<!-- Topbar -->
+				<jsp:include page="/WEB-INF/template/topbar.jsp" />
 
-        </div>
-        <!-- /.container-fluid -->
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
 
-      </div>
-      <!-- End of Main Content -->
+					<!-- Page Heading -->
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">1:1 문의하기</h1>
+					</div>
+					
+					<div>
+						<a href="#" class="btn btn-secondary btn-circle btn-lg" style="float: left; margin: 10px 20px 10px 10px;">
+						<span class="icon"> 
+							<i class="fas fa-question"></i>
+						</span>
+						</a>
+						<p class="mb-4">
+							<br />
+							욕설, 비방글, 회원신고는 신고하기로 작성해주세요.<br />
+							(파일첨부는 1개만 가능합니다.)
+						</p>
+					</div>
 
-      <!-- Footer -->
-      <jsp:include page="/WEB-INF/template/footer.jsp"/>
-      <!-- End of Footer -->
+					<div class="card shadow mb-4">
+						<!-- Card Header -->
+						<div class="card-header py-3 form-inline justify-content-between">
+							<h5 class="m-0 font-weight-bold text-primary p-2">1:1 문의하기</h5>
+							<a href="#" class="btn btn-primary btn-circle btn-md" data-toggle="modal" data-target="#customerWriteModal"> 
+								<i class="fas fa-pen"></i>
+							</a>
+						</div>
+						
+						<!-- Card Body -->
+						<!-- 문의사항 리스트 -->
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0">
+									<thead>
+										<tr>
+											<th>제목</th>
+											<th>분류</th>
+											<th>작성자</th>
+											<th>날짜</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><a href="#">프로젝트 개설 문의드립니다.</a></td>
+											<td>일반문의</td>
+											<td>김땡땡</td>
+											<td>2020-08-04</td>
+										</tr>
+										<tr>
+											<td><a href="#">회원 등급 문의합니다.</a></td>
+											<td>일반문의</td>
+											<td>김땡땡</td>
+											<td>2020-08-07</td>
+										</tr>
+										<tr>
+											<td><a href="#">회원 신고합니다.</a></td>
+											<td>신고하기</td>
+											<td>김땡땡</td>
+											<td>2020-08-07</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+		
+			</div>
+			<!-- End of Main Content -->
+			
+			<!-- Footer -->
+			<jsp:include page="/WEB-INF/template/footer.jsp" />
+			<!-- End of Footer -->
+			
+		</div>
+		<!-- End of Content Wrapper -->
+		
+	</div>
+	<!-- End of Page Wrapper -->
 
-    </div>
-    <!-- End of Content Wrapper -->
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
 
-  </div>
-  <!-- End of Page Wrapper -->
+	<!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready
+					to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="login.html">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+	<!-- Customer Write Model -->
+	<div class="modal fade" id="customerWriteModal" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">문의글 작성</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
 
-  <!-- Write Model -->
-  <div class="modal fade" id="WriteModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">1:1 문의하기</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <input type="text" class="form-control bg-light border-0 small" placeholder="제목을 입력하세요." style="display: inline; width: 75%;"/>
-          <div class="dropdown mb-4 bg-light" style="float: right;">
-            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              일반문의
-            </button>
-            <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">신고하기</a>
-              <a class="dropdown-item" href="#">기타문의</a>
-            </div>
-          </div>
-          <textarea name="" id="" class="form-control bg-light border-0 small" cols="55" rows="10">글을 입력하세요.</textarea>
-          <input type="file" name="" id="" class="form-control bg-light border-0 small"/>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-          <button type="button" class="btn btn-primary">글쓰기</button>
-        </div>
-      </div>
-    </div>
-  </div>
+				<form>
 
-    <!-- Sample View Model -->
-    <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">공지사항</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="(공지) 쉽고 빠른 프로젝트 관리의 시작을 기대하세요!" style="display: inline; width: 75%;" readonly/>
-            <div class="dropdown mb-4 bg-light" style="float: right;">
-              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                	공지사항
-              </button>
-            </div>
-            <textarea name="" id="" class="form-control bg-light border-0 small" cols="55" rows="10" readonly>
-           	   🎉   협업할때 어려웠던 프로젝트 관리, 이제 OOO과 함께하세요!
+					<!-- modal-body -->
+					<div class="modal-body">
 
-              - 서비스 오픈 기념으로 프로젝트 5개까지는 free로 이용이 가능합니다.
-              - 사용방법은 블로그와 유투브를 통해 쉽게 확인하실 수 있습니다.
-              - 개선할 부분이나 부족한 부분은 1:1문의게시판에 마구마구 의견을 남겨주세요.
-              
-              
-              * 유투브 주소 [www.youtube.com/sample]
-              * 블로그 주소 [blog.com/sample]
-            </textarea>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">삭제</button>
-            <button type="button" class="btn btn-primary">수정</button>
-          </div>
-        </div>
-      </div>
-    </div>
+						<!-- 문의글 제목 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<input type="text" class="form-control" id="inputTitle"
+									placeholder="제목을 입력하세요.">
+							</div>
+						</div>
 
-  <!-- Bootstrap core JavaScript -->
+						<!-- 문의글 내용 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<textarea class="form-control" rows="20" id="inputContent"
+									placeholder="글을 입력하세요."></textarea>
+							</div>
+						</div>
+
+						<!-- 파일 첨부 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
+								</span> <input type="file" class="mx-2" id="inputFile" />
+							</div>
+						</div>
+
+					</div>
+
+					<!-- modal-footer -->
+					<div class="modal-footer justify-content-between">
+						<button type="reset" class="btn btn-warning">초기화</button>
+
+						<div>
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">취소</button>
+							<button type="submit" class="btn btn-primary">작성 완료</button>
+						</div>
+					</div>
+
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript -->
   <script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
   <script src="${root}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -210,5 +217,12 @@
 
   <!-- Custom scripts for all pages -->
   <script src="${root}/resources/js/sb-admin-2.min.js"></script>
+  
+  <!-- Page level plugins -->
+  <script src="${root}/resources/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="${root}/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="${root}/resources/js/demo/datatables-demo.js"></script>
 </body>
 </html>
