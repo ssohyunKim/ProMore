@@ -40,7 +40,7 @@
         </div>
 
    			 <div>
-				  <a href="${root}/project/pjtWrite.do" class="btn btn-primary btn-icon-split" style="float: right;" data-toggle="modal" data-target="#WriteModal">
+				  <a href="${root}/project/pjtWrite.do" class="btn btn-primary btn-icon-split" style="float: right;" data-toggle="modal" data-toggle="modal" data-target="#WriteModal">
 	                <span class="icon text-white-50">
 		                  <i class="fas fa-pencil-alt"></i>
 		             </span>
@@ -124,6 +124,39 @@
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
           <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Write Model -->
+  <div class="modal fade" id="WriteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">프로젝트 생성</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control bg-light border-0 small" placeholder="프로젝트 제목을 입력하세요." style="display: inline; width: 75%;"/>
+        	인원수 <div class="dropdown mb-4 bg-light" style="float: right;">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              1
+            </button>
+            <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">2</a>
+              <a class="dropdown-item" href="#">3</a>
+              <a class="dropdown-item" href="#">4</a>
+              <a class="dropdown-item" href="#">5</a>
+            </div>
+          </div>
+          <textarea name="" id="" class="form-control bg-light border-0 small" cols="55" rows="10">프로젝트 내용을 입력하세요.</textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-primary">글쓰기</button>
         </div>
       </div>
     </div>
