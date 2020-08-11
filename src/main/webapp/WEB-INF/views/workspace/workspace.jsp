@@ -62,22 +62,21 @@
 					</div>
 
 					<!-- 여기에 코드를 넣어주세요!! -->
+					
 					<!-- 	<div class="toast">
 						<div class="toast-header">Toast Header</div>
 						<div class="toast-body">알람확인</div>
 					</div> -->
 
 					<!-- 일감 목록 -->
-					<div class="col-xl-8">
+					<div class="card shadow p-4 col-xl-8 bg-light">
 
 						<!-- 프로젝트명 들어가기 -->
-						<a href="${root}/project/read.do" class="text-decoration-none">
-							<div
-								class="alert alert-primary bg-primary p-3 rounded-lg text-center">
+						<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#ReadModal">
+							<div class="alert alert-primary bg-primary p-3 rounded-lg text-center">
 								<b class="text-white font-weight-bolder">ProMore</b>
 							</div>
 						</a>
-
 
 						<!-- 일감 생성 -->
 						<div class="card shadow mb-4 border-bottom-primary">
@@ -184,8 +183,16 @@
 									</div>
 
 								</form>
+								
 							</div>
 						</div>
+						
+						<!-- 추가된 일감 3 -->
+						
+						<!-- 추가된 일감 2 -->
+						
+						<!-- 추가된 일감 1 -->
+						
 					</div>
 
 					<!-- 	<div id="alarm" class="progress" style="width:800px; height: 16px; margin-left: 180px; margin-bottom: 10px; display: inline-block">
@@ -359,6 +366,72 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
+	
+	
+	<!-- Read Model -->
+	<div class="modal fade" id="ReadModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
+
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">프로젝트 읽기</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!-- modal-body -->
+				<div class="modal-body">
+
+
+					<!--프로젝트 제목 && 인원수 -->
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="inputTitle"
+								style="display: inline; width: 85%;" rows="20"
+								margin-right:30px; placeholder="제목을 입력하세요."> &ensp;인원수
+							<div class="dropdown mb-4 bg-light"
+								style="float: right; width: 100">
+								<button class="btn dropdown-toggle" type="button"
+									id="dropdownMenuButton" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">1</button>
+								<div class="dropdown-menu animated--fade-in"
+									aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="#">2</a> <a
+										class="dropdown-item" href="#">3</a> <a class="dropdown-item"
+										href="#">4</a> <a class="dropdown-item" href="#">5</a>
+								</div>
+
+							</div>
+						</div>
+					
+					<!-- 글 내용 -->
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<textarea class="form-control" rows="20" id="inputContent"
+								placeholder="글을 입력하세요."></textarea>
+						</div>
+					</div>
+				
+				<!-- modal-footer -->
+				<div class="modal-footer justify-content-between">
+						<button type="reset" class="btn btn-warning">초기화</button>
+
+						<div>
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary">수정</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+	
+	
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
