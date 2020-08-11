@@ -62,22 +62,23 @@
 					</div>
 
 					<!-- 여기에 코드를 넣어주세요!! -->
-					<!--           	<div class="toast">
-			  <div class="toast-header">
-			    Toast Header
-			  </div>
-			  <div class="toast-body">
-			   	알람확인
-			  </div>
-			</div> -->
-
+				<!-- 	<div class="toast">
+						<div class="toast-header">Toast Header</div>
+						<div class="toast-body">알람확인</div>
+					</div> -->
+					
+					
+					
+					<!-- 프로젝트명 들어가기 -->
 					<div class="col-lg-6">
 						<div class="projectName card mb-4 py-3 border-left-primary"
-							style="background-color: #4e73df; opacity: 80%; border-radius: 10px 10px 10px 10px; height: 50px; margin-left: auto; margin-right: auto;">
+							style="background-color: #4e73df; opacity: 80%; border-radius: 10px 10px 10px 10px;">
 							<a href="#"
 								style="color: white; text-decoration: none; cursor: pointer; margin-left: 10px;">프로젝트명</a>
 						</div>
 					</div>
+
+					<!-- 새글 등록 -->
 					<form action="#">
 						<div class="col-lg-6">
 
@@ -138,7 +139,7 @@
 												<!-- <textarea rows="2" cols="70" style ="margin-left: 13px;">업무내용을 입력해주세요</textarea> -->
 											</div>
 
-											<div class="fileUpLoad">
+											<div class="fileUpLoad p-2">
 												<span class="one"> <img
 													src="${root}/resources/img/upload.png"> <input
 													class="content" type="file" name="file" />
@@ -187,6 +188,8 @@
 				</span>
 			</div>
 		</c:forEach>--%>
+
+					<!-- 글 등록 -->
 					<div class="col-lg-6" id="workRead" style="display: none;">
 						<form>
 							<div class="card mb-4 py-3 border-left-primary">
