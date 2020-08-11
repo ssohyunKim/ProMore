@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<c:set var="root" value="${pageContext.request.contextPath}"/>
-
 <!-- Topbar -->
 <nav
 	class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -109,6 +106,8 @@
 		</a></li>
 
 		<!-- Nav Item - User Information -->
+		
+		
 		<li class="nav-item dropdown no-arrow"><a
 			class="nav-link dropdown-toggle" href="#" id="userDropdown"
 			role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -116,14 +115,114 @@
 				class="mr-2 d-none d-lg-inline text-gray-600 small">관리자</span> <img
 				class="img-profile rounded-circle"
 				src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-		</a> <!-- Dropdown - User Information -->
+		</a> 
+		
+		
+		
+		<!-- Dropdown - Alerts -->
+			<div
+				class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+				aria-labelledby="alertsDropdown">
+				<h6 class="dropdown-header">My Profile</h6>
+				<a class="dropdown-item d-flex align-items-center" href="#">
+						<div class="small text-gray-500" style="width:50px; float:left; margin-right:30px;">이름</div>
+						<div class="font-weight" style="float:right;">최정윤</div>
+				</a> 
+					
+
+					<a class="dropdown-item d-flex align-items-center" href="#">
+							<div class="small text-gray-500" style="width:60px; float:left; margin-right:30px;">닉네임</div>
+							<div class="font-weight" style="float:right;">yunnie</div>
+					</a> 
+
+					<a class="dropdown-item d-flex align-items-center" href="#">
+							<div class="small text-gray-500" style="width:60px; float:left; margin-right:30px;">등급</div>
+							<div class="font-weight" style="float:right;">팀원</div>
+					</a> 
+
+					<a class="dropdown-item d-flex align-items-center" href="#">
+							<div class="small text-gray-500" style="width:60px; float:left; margin-right:30px;">휴대폰 번호</div>
+							<div class="font-weight" style="float:right;">010-1234-5678</div>
+					</a> 
+
+					<a class="dropdown-item d-flex align-items-center" href="#">
+							<div class="small text-gray-500" style="width:60px; float:left; margin-right:30px;">이메일 주소</div>
+							<div class="font-weight" style="float:right;">email@example.com</div>
+					</a> 
+					
+					
+					<a class="dropdown-item d-flex align-items-center" href="#">
+							<div class="small text-gray-500" style="width:60px; float:left; margin-right:30px;">보유기술</div>
+							<div class="font-weight" style="float:right; width:180px" >ooo 경력(n년), 프로그래밍(c++, java사용가능)..</div>
+					</a> 
+
+					 
+					<a class="dropdown-item d-flex align-items-center" href="#" data-toggle="modal" data-target="#logoutModal">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							<div class="small text-gray-500" style="width:60px; float:left; margin-right:30px;">로그아웃</div>
+					</a>
+						
+						
+					<a class="dropdown-item text-center small text-gray-500" href="#">Show
+					All Alerts</a>
+			</div></li>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!--  Dropdown - User Information
 			<div
 				class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 				aria-labelledby="userDropdown">
-				<a class="dropdown-item" href="${root}/mypage/myPage.do"> <i
-					class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 프로필 보기
-				</a> <a class="dropdown-item" href="${root}/mypage/memberUpdate.do"> <i
-					class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 회원 정보 수정
+            <div name="" id="" class="border-0 small">
+           		최정윤
+            </div>
+             <div name="" id="" class="text-black-400">
+           		yunnie
+            </div>
+            <div name="" id="" class="text-gray-400">
+           		팀원
+            </div>
+            <div name="" id="" class="text-gray-400">
+           		010-1234-5678
+            </div>
+            <div name="" id="" class="text-gray-400">
+           		abc123@naveer.com	
+            </div>
+            <div name="" id="" class="text-gray-400">
+           		c/c++, java, python
+            </div>
+          <a class="dropdown-item" href="#" data-toggle="modal"
+					data-target="#logoutModal"> <i
+					class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+					로그아웃
+			</a>
+          </div> -->
+			
+		
+			<!-- <div
+				class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+				aria-labelledby="userDropdown">
+				<a class="dropdown-item" href="#" style="float: right;" data-toggle="modal" data-toggle="modal" data-target="#ViewModal"> <i
+					class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 프로필 관리
+				</a> <a class="dropdown-item" href="#"> <i
+					class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 회원 수정
 				</a>
 				<div class="dropdown-divider"></div>
 				<a class="dropdown-item" href="#" data-toggle="modal"
@@ -131,6 +230,11 @@
 					class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 					로그아웃
 				</a>
-			</div></li>
+			</div> -->
+			
+			
+			</li>
 	</ul>
 </nav>
+
+ 
