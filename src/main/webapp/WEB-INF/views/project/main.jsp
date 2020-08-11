@@ -37,16 +37,16 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
            <h1 class="h3 mb-0 text-gray-800">공지사항 글보기</h1>
+           
         </div>
 
-   			 <div>
-				  <a href="${root}/project/pjtWrite.do" class="btn btn-primary btn-icon-split" style="float: right;" data-toggle="modal" data-toggle="modal" data-target="#WriteModal">
-	                <span class="icon text-white-50">
-		                  <i class="fas fa-pencil-alt"></i>
-		             </span>
-		             <span class="text">프로젝트 생성</span>
-		          </a>
-			</div>
+		<!-- 글 작성 버틍 -->
+		<div>
+			<a href="#" class="btn btn-primary btn-circle btn-md"
+							data-toggle="modal" data-target="#WriteModal" style="float:right"> <!-- <a href="${root}/manager/noticeCreate.do" class="btn btn-primary btn-circle btn-md"> -->
+							<i class="fas fa-pen"></i>
+			</a>
+		</div>	
 				
 						
 			<div class="flip-card">
@@ -129,41 +129,70 @@
     </div>
   </div>
 
-<!-- Write Model -->
-  <div class="modal fade" id="WriteModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">프로젝트 생성</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <input type="text" class="form-control bg-light border-0 small" placeholder="프로젝트 제목을 입력하세요." style="display: inline; width: 75%;"/>
-        	인원수 <div class="dropdown mb-4 bg-light" style="float: right;">
-            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              1
-            </button>
-            <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">2</a>
-              <a class="dropdown-item" href="#">3</a>
-              <a class="dropdown-item" href="#">4</a>
-              <a class="dropdown-item" href="#">5</a>
-            </div>
-          </div>
-          <textarea name="" id="" class="form-control bg-light border-0 small" cols="55" rows="10">프로젝트 내용을 입력하세요.</textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-          <button type="button" class="btn btn-primary">글쓰기</button>
-        </div>
-      </div>
-    </div>
-  </div>
+	<!-- Write Model -->
+	<div class="modal fade" id="WriteModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
+
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">프로젝트 생성</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!-- modal-body -->
+				<div class="modal-body">
 
 
-  <!-- Bootstrap core JavaScript -->
+					<!--프로젝트 제목 && 인원수 -->
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="inputTitle"
+								style="display: inline; width: 85%;" rows="20"
+								margin-right:30px; placeholder="제목을 입력하세요."> &ensp;인원수
+							<div class="dropdown mb-4 bg-light"
+								style="float: right; width: 100">
+								<button class="btn dropdown-toggle" type="button"
+									id="dropdownMenuButton" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">1</button>
+								<div class="dropdown-menu animated--fade-in"
+									aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="#">2</a> <a
+										class="dropdown-item" href="#">3</a> <a class="dropdown-item"
+										href="#">4</a> <a class="dropdown-item" href="#">5</a>
+								</div>
+
+							</div>
+						</div>
+					
+					<!-- 글 내용 -->
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<textarea class="form-control" rows="20" id="inputContent"
+								placeholder="글을 입력하세요."></textarea>
+						</div>
+					</div>
+				
+				<!-- modal-footer -->
+				<div class="modal-footer justify-content-between">
+						<button type="reset" class="btn btn-warning">초기화</button>
+
+						<div>
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary">작성 완료</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+	<!-- Bootstrap core JavaScript -->
   <script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
   <script src="${root}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

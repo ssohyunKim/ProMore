@@ -13,204 +13,226 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="${root}/resources/css/sb-admin-2.min.css" rel="stylesheet">
+  <!-- Custom styles for this page -->
+  <link href="${root}/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 <body id="page-top">
- <!-- Page Wrapper -->
-  <div id="wrapper">
-  
+
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+	 
 	<!-- Sidebar -->
 	<jsp:include page="/WEB-INF/template/sidebar.jsp"/>
-  
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+	 
+	   <!-- Content Wrapper -->
+	   <div id="content-wrapper" class="d-flex flex-column">
+	
+	     <!-- Main Content -->
+			<div id="content">
+	
+				<!-- Topbar -->
+				<jsp:include page="/WEB-INF/template/topbar.jsp" />
+	
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+	
+					<!-- Page Heading -->
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">공지사항</h1>
+					</div>
+	
+					<div>
+						<a href="#" class="btn btn-secondary btn-circle btn-lg" style="float: left; margin: 10px 20px 10px 10px;">
+						<span class="icon"> 
+							<i class="fas fa-info"></i>
+						</span>
+						</a>
+						<p class="mb-4">
+							<br />
+							공지사항 확인 후 1:1 문의 게시판을 이용해주세요.<br />
+							<br />
+							
+						</p>
+					</div>
+	
+					<div class="card shadow mb-4">
+						<!-- Card Header -->
+						<div class="card-header py-3">
+							<h5 class="m-0 font-weight-bold text-primary p-2">공지사항 글보기</h5>
+						</div>
+	
+						<!-- Card Body -->
+						<!-- 공지사항 리스트 -->
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+									<thead>
+										<tr>
+											<th>제목</th>
+											<th>분류</th>
+											<th>작성자</th>
+											<th>날짜</th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<th>제목</th>
+											<th>분류</th>
+											<th>작성자</th>
+											<th>날짜</th>
+										</tr>
+									</tfoot>
+									<tbody>
+										<tr>
+											<td><a href="#" data-toggle="modal" data-target="#noticeViewModal">[필독] 프로젝트 참여시 주의사항</a></td>
+											<td>공지사항</td>
+											<td>관리자</td>
+											<td>2020-08-01</td>
+										</tr>
+										<tr>
+											<td>[필독] 쉽고 빠른 프로젝트 관리의 시작</td>
+											<td>공지사항</td>
+											<td>관리자</td>
+											<td>2020-08-02</td>
+										</tr>
+										<tr>
+											<td>[필독] 프로젝트 참여시 주의사항</td>
+											<td>공지사항</td>
+											<td>관리자</td>
+											<td>2020-08-03</td>
+										</tr>
+										<tr>
+											<td>[필독] 프로젝트 신고시 주의사항</td>
+											<td>공지사항</td>
+											<td>관리자</td>
+											<td>2020-08-03</td>
+										</tr>
+										<tr>
+											<td>[필독] 문의 게시판 이용 방법</td>
+											<td>공지사항</td>
+											<td>관리자</td>
+											<td>2020-08-03</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+		
+			</div>
+			<!-- End of Main Content -->
+			
+			<!-- Footer -->
+			<jsp:include page="/WEB-INF/template/footer.jsp" />
+			<!-- End of Footer -->
+			
+		</div>
+		<!-- End of Content Wrapper -->
+		
+	</div>
+	<!-- End of Page Wrapper -->
 
-      <!-- Main Content -->
-      <div id="content">
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> 
+		<i class="fas fa-angle-up"></i>
+	</a>
 
-        <!-- Topbar -->
-		<jsp:include page="/WEB-INF/template/topbar.jsp"/>
+	<!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready
+					to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="login.html">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+	<!-- Notice Read Model -->
+	<div class="modal fade" id="noticeViewModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
 
-          <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">공지사항</h1>
-          <a href="#" class="btn btn-secondary btn-circle btn-lg" style="float: left; margin: 10px 20px 10px 10px;">
-            <span class="icon">
-              <i class="fas fa-info"></i>
-            </span>
-          </a>
-          <p class="mb-4">공지사항을 확인 후 글작성 부탁드립니다.<br />
-            욕설, 비방글, 회원신고는 신고하기로 작성해주세요.<br />
-            (파일첨부는 1개만 가능합니다.)</p>
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">공지사항 읽기</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
 
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary"></h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>제목</th>
-                      <th>분류</th>
-                      <th>작성자</th>
-                      <th>날짜</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><a href="#" data-toggle="modal" data-target="#ViewModal">(공지) 쉽고 빠른 프로젝트 관리의 시작을 기대하세요!</a></td>
-                      <td>공지사항</td>
-                      <td>관리자</td>
-                      <td>2020-08-01</td>
-                    </tr>
-                    <tr>
-                      <td><a href="#">(공지) 서비스 이용 공지사항</a></td>
-                      <td>공지사항</td>
-                      <td>관리자</td>
-                      <td>2020-08-02</td>
-                    </tr>
-                    <tr>
-                      <td><a href="#">(필독) 프로젝트 참여시 주의사항</a></td>
-                      <td>공지사항</td>
-                      <td>관리자</td>
-                      <td>2020-08-03</td>
-                    </tr>
-                    <tr>
-                      <td><a href="#">(필독) 프로젝트 신고시 주의사항</a></td>
-                      <td>공지사항</td>
-                      <td>관리자</td>
-                      <td>2020-08-03</td>
-                    </tr>
-                    <tr>
-                      <td><a href="#">(필독) 문의 게시판 이용 방법</a></td>
-                      <td>공지사항</td>
-                      <td>관리자</td>
-                      <td>2020-08-03</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+				<form>
+					<!-- modal-body -->
+					<div class="modal-body p-4">
 
-        </div>
-        <!-- /.container-fluid -->
+						<!-- 공지사항 글 제목 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<h5 class="form-control-plaintext font-weight-bold"
+									id="staticTitle">[필독] 프로젝트 참여시 주의사항</h5>
+							</div>
+						</div>
 
-      </div>
-      <!-- End of Main Content -->
+						<!-- 공지사항 글 내용 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<textarea readonly class="form-control-plaintext" rows="20"
+									id="content"
+									placeholder="안녕하세요.&#13;관리자입니다.&#13;&#13;프로젝트 진행 과정에서 다음과 같은 문제가 자주 발생하고 있습니다.&#13;1. ~~&#13;2. &#13;3. ~~&#13;&#13;우리 모두 매너있는 팀원/팀장으로서 즐겁게 프로젝트를 진행할 수 있도록 부탁드립니다. 잦은 신고 문의가 들어올 시 예고없이 탈퇴처리할 수 있음을 알려드립니다."></textarea>
+							</div>
+						</div>
 
-      <!-- Footer -->
-      <jsp:include page="/WEB-INF/template/footer.jsp"/>
-      <!-- End of Footer -->
+						<!-- 파일 첨부 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
+								</span> <a class="mx-2">첨부파일 없음</a>
+							</div>
+						</div>
 
-    </div>
-    <!-- End of Content Wrapper -->
+					</div>
 
-  </div>
-  <!-- End of Page Wrapper -->
+					<!-- modal-footer -->
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-warning" data-toggle="modal"
+							data-target="#noticeUpdateModal">수정하기</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+	<!-- Bootstrap core JavaScript -->
+	<script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
+	<script src="${root}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
+	<!-- Core plugin JavaScript -->
+	<script src="${root}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-  <!-- Write Model -->
-  <div class="modal fade" id="WriteModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">1:1 문의하기</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <input type="text" class="form-control bg-light border-0 small" placeholder="제목을 입력하세요." style="display: inline; width: 75%;"/>
-          <div class="dropdown mb-4 bg-light" style="float: right;">
-            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              일반문의
-            </button>
-            <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">신고하기</a>
-              <a class="dropdown-item" href="#">기타문의</a>
-            </div>
-          </div>
-          <textarea name="" id="" class="form-control bg-light border-0 small" cols="55" rows="10">글을 입력하세요.</textarea>
-          <input type="file" name="" id="" class="form-control bg-light border-0 small"/>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-          <button type="button" class="btn btn-primary">글쓰기</button>
-        </div>
-      </div>
-    </div>
-  </div>
+	<!-- Custom scripts for all pages -->
+	<script src="${root}/resources/js/sb-admin-2.min.js"></script>
 
-    <!-- Sample View Model -->
-    <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">공지사항</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="(공지) 쉽고 빠른 프로젝트 관리의 시작을 기대하세요!" style="display: inline; width: 75%;" readonly/>
-            <div class="dropdown mb-4 bg-light" style="float: right;">
-              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                	공지사항
-              </button>
-            </div>
-            <textarea name="" id="" class="form-control bg-light border-0 small" cols="55" rows="10" readonly>
- 🎉   협업할때 어려웠던 프로젝트 관리, 이제 OOO과 함께하세요!
+	<!-- Page level plugins -->
+	<script src="${root}/resources/vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="${root}/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-- 서비스 오픈 기념으로 프로젝트 5개까지는 free로 이용이 가능합니다.
-- 사용방법은 블로그와 유투브를 통해 쉽게 확인하실 수 있습니다.
-- 개선할 부분이나 부족한 부분은 1:1문의게시판에 마구마구 의견을 남겨주세요.
-
-
-* 유투브 주소 [www.youtube.com/sample]
-* 블로그 주소 [blog.com/sample]
-            </textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
-  <script src="${root}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript -->
-  <script src="${root}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages -->
-  <script src="${root}/resources/js/sb-admin-2.min.js"></script>
+	<!-- Page level custom scripts -->
+	<script src="${root}/resources/js/demo/datatables-demo.js"></script>
 </body>
 </html>
