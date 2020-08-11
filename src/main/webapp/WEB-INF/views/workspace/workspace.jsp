@@ -71,7 +71,7 @@
 					<div class="col-xl-8">
 
 						<!-- 프로젝트명 들어가기 -->
-						<a href="#" class="text-decoration-none">
+						<a href="${root}/project/read.do" class="text-decoration-none">
 							<div class="alert alert-primary bg-primary p-3 rounded-lg text-center">
 								<b class="text-white font-weight-bolder">ProMore</b>
 							</div>
