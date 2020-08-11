@@ -1,10 +1,1 @@
 @charset "utf-8";
-
-#reply-my-content, #reply-file-select {
-  width: 430px;
-}
-
-.upload-progress {
-  width: 40px;
-  right: -50px;
-}

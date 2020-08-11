@@ -19,7 +19,6 @@ function init() {
 
     //AJAX
     // ...
-    uploadProgress.classList.remove("invisible");
 
     var copyReply = replyTmpl.cloneNode(true);
     copyReply.classList.remove("d-none");

@@ -62,13 +62,12 @@
 					</div>
 
 					<!-- 여기에 코드를 넣어주세요!! -->
-				<!-- 	<div class="toast">
+					<!-- 	<div class="toast">
 						<div class="toast-header">Toast Header</div>
 						<div class="toast-body">알람확인</div>
 					</div> -->
-					
-					
-					
+
+
 					<!-- 프로젝트명 들어가기 -->
 					<div class="col-lg-6">
 						<div class="projectName card mb-4 py-3 border-left-primary"
@@ -128,14 +127,14 @@
 
 											<div style="margin: 5px;" class=".col-lg-8">
 												<input type="search" class="form-control form-control-sm"
-													placeholder aria-controls="dataTable" value="업무명을 입력하세요">
+													placeholder="업무명을 입력하세요" aria-controls="dataTable">
 											</div>
 
 
 
 											<div style="margin: 5px;" class=".col-lg-8">
 												<textarea type="search" class="form-control form-control-sm"
-													placeholder aria-controls="dataTable">업무내용을 입력하세요</textarea>
+													placeholder="업무내용을 입력하세요" aria-controls="dataTable"></textarea>
 												<!-- <textarea rows="2" cols="70" style ="margin-left: 13px;">업무내용을 입력해주세요</textarea> -->
 											</div>
 
@@ -158,16 +157,11 @@
 											</span> <span class="text" onclick="workPost()">올리기</span>
 											</a>
 										</div>
-
-
 									</div>
 								</div>
 							</div>
 						</div>
-
-
 					</form>
-
 
 
 					<!-- 	<div id="alarm" class="progress" style="width:800px; height: 16px; margin-left: 180px; margin-bottom: 10px; display: inline-block">
@@ -206,8 +200,8 @@
 											</ul>
 										</div>
 										<div style="margin: 5px;">
-											<a>이형은</a> <a href="#" onclick="managerSelect('${root}')" class="col-sm-3">담당자
-												변경</a> <img id="calender"
+											<a>이형은</a> <a href="#" onclick="managerSelect('${root}')"
+												class="col-sm-3">담당자 변경</a> <img id="calender"
 												src="${root}/resources/img/calendar.png"> <input
 												class="calenderInput col-sm-3" type="text" id="date3"
 												value="시작일 추가" /> <img id="calender"
@@ -285,32 +279,34 @@
 
 						<!-- 댓글 작성 폼 -->
 						<div class="container">
-							<div class="row clearfix">
-								<div class="left-column float-left position-relative">
-									<!-- 아바타 -->
-									<img src="${root }/resources/img/avatar.png" width="50"
-										height="50" /> <b class="position-absolute"
-										style="left: 0; top: 50px"">정한우</b>
+							<form id="reply-form" action="/work-reply/write" method="post"
+								enctype="multipart/form-data">
+								<div class="row">
+									<div class="input-group mb-3">
+										<div class="input-group-append">
+											<!-- 아바타 -->
+											<img src="${root }/resources/img/avatar.png" width="50"
+												height="50" />
+										</div>
+										<textarea id="reply-my-content" class="form-control"
+											placeholder="댓글을 작성하세요." name="reply-content" required></textarea>
+										<div class="input-group-append">
+											<button class="btn btn-outline-secondary" type="submit">작성</button>
+										</div>
+									</div>
 								</div>
-								<div class="right-column ml-2">
-									<form id="reply-form" action="/work-reply/write" method="post"
-										enctype="multipart/form-data">
+								<div class="row">
+									<div class="right-column ml-2 col-lg-8 float-right">
 										<div class="form-group clearfix position-relative">
-											<textarea id="reply-my-content"
-												class="form-control float-left" name="reply-content"
-												required></textarea>
-											<button class="reply-btn btn btn-primary float-left ml-2"
-												type="submit">&nbsp;작&nbsp;성&nbsp;</button>
-											<img class="upload-progress position-absolute invisible"
-												src="${root }/resources/img/progress.gif" />
+											<img class="position-absolute"
+												src="${root}/resources/img/upload.png"
+												style="top: 10px; left: -20px"> <input
+												id="reply-file-select" class="float-left" type="file"
+												name="reply-file">
 										</div>
-										<div class="form-group clearfix">
-											<input id="reply-file-select" class="form-control float-left"
-												type="file" name="reply-file">
-										</div>
-									</form>
+									</div>
 								</div>
-							</div>
+							</form>
 						</div>
 					</div>
 				</div>
