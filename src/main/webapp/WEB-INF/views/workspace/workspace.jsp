@@ -23,8 +23,8 @@
 	href="${root}/resources/css/workspace/jquery-ui.structure.css" />
 <link rel="stylesheet"
 	href="${root}/resources/css/workspace/jquery-ui.theme.css" />
-<link rel="stylesheet"
-	href="${root}/resources/css/workspace/workspace.css" />
+<%-- <link rel="stylesheet"
+		href="${root}/resources/css/workspace/workspace.css" /> --%>
 
 <!-- Bootstrap -->
 <link rel="stylesheet"
@@ -58,115 +58,135 @@
 					<!-- Page Heading -->
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<!--   <h1 class="h3 mb-0 text-gray-800">메인페이지</h1>-->
+						<h1 class="h3 mb-0 text-gray-800">일감 관리</h1>
 					</div>
 
 					<!-- 여기에 코드를 넣어주세요!! -->
-				<!-- 	<div class="toast">
+					<!-- 	<div class="toast">
 						<div class="toast-header">Toast Header</div>
 						<div class="toast-body">알람확인</div>
 					</div> -->
-					
-					
-					
-					<!-- 프로젝트명 들어가기 -->
-					<div class="col-lg-6">
-						<div class="projectName card mb-4 py-3 border-left-primary"
-							style="background-color: #4e73df; opacity: 80%; border-radius: 10px 10px 10px 10px;">
-							<a href="#"
-								style="color: white; text-decoration: none; cursor: pointer; margin-left: 10px;">프로젝트명</a>
-						</div>
-					</div>
 
-					<!-- 새글 등록 -->
-					<form action="#">
-						<div class="col-lg-6">
+					<!-- 일감 목록 -->
+					<div class="col-xl-8">
 
-							<div class="card mb-4 py-3 border-left-primary">
-								<div class="card-body">
-									<div class="workLiDiv o-hidden">
-										<div class="form-check-inline col justify-content-between">
+						<!-- 프로젝트명 들어가기 -->
+						<a href="#" class="text-decoration-none">
+							<div class="alert alert-primary bg-primary p-3 rounded-lg text-center">
+								<b class="text-white font-weight-bolder">ProMore</b>
+							</div>
+						</a>
+
+
+						<!-- 일감 생성 -->
+						<div class="card shadow mb-4 border-bottom-primary">
+
+							<!-- Card Body -->
+							<div class="card-body">
+
+								<form action="#">
+									<div class="o-hidden">
+
+										<!-- writer, state -->
+										<div
+											class="form-check-inline col justify-content-between pb-4">
+											<!-- 작성자 -->
 											<b>작성자</b>
-											<ul style="display: inline-block; padding-left: 10px;"
-												id="secondUl">
+
+											<!-- 상태 -->
+											<div class="btn-group btn-group-toggle my-1"
+												data-toggle="buttons">
+												<label class="btn btn-primary active"> <input
+													type="radio" name="options" id="option1" checked>
+													요청
+												</label> <label class="btn btn-primary"> <input type="radio"
+													name="options" id="option2"> 진행
+												</label> <label class="btn btn-primary"> <input type="radio"
+													name="options" id="option3"> 완료
+												</label>
+											</div>
+
+
+											<!-- <ul class="pl-3" id="secondUl">
 												<li style="border-left: 1px solid #cccccc;">요청</li>
 												<li>진행</li>
 												<li>완료</li>
-											</ul>
+											</ul> -->
 										</div>
 
-										<div style="margin: 5px;">
-											<!-- <input type="text"/> -->
-											<!-- <input type="button" onclick="myFun()" value="담당자 추가"/> -->
 
-											<div class="dropdown mb-4 form-check-inline">
-												<button style="padding: 2px; font-size: .875rem;"
-													class="btn btn-primary dropdown-toggle col-sm-3"
-													type="button" id="dropdownMenuButton"
-													data-toggle="dropdown" aria-haspopup="true"
-													aria-expanded="false">담당자</button>
-												<div class="dropdown-menu animated--fade-in"
-													aria-labelledby="dropdownMenuButton" id="manager">
-													<a class="dropdown-item" href="#">이형은</a> <a
-														class="dropdown-item" href="#">이다은</a> <a
-														class="dropdown-item" href="#">김아름</a>
+										<!-- drop down, date picker -->
+										<div
+											class="form-check-inline col justify-content-between pb-4">
+
+											<!-- drop down -->
+											<div>
+												<div class="btn-group">
+													<button type="button"
+														class="btn btn-primary dropdown-toggle"
+														data-toggle="dropdown" aria-haspopup="true"
+														aria-expanded="false">담당자</button>
+													<div class="dropdown-menu" id="manager">
+														<a class="dropdown-item" href="#">이형은</a> <a
+															class="dropdown-item" href="#">이다은</a> <a
+															class="dropdown-item" href="#">김아름</a>
+													</div>
 												</div>
-												<span class="col-sm-3 managerWho"></span> <img id="calender"
-													src="${root}/resources/img/calendar.png"> <input
-													class="calenderInput col-sm-3" type="text" id="date1"
-													value="시작일 추가" /> <img id="calender"
-													src="${root}/resources/img/calendar.png"> <input
-													class="calenderInput col-sm-3" type="text" id="date2"
-													value="마감일 추가" />
-											</div>
-										</div>
 
-
-										<div class="addIndexDiv">
-											<div class="workDateDiv"></div>
-
-
-											<div style="margin: 5px;" class=".col-lg-8">
-												<input type="search" class="form-control form-control-sm"
-													placeholder aria-controls="dataTable" value="업무명을 입력하세요">
+												<!-- 선택된 담당자 -->
+												<label class="p-2" id="managerWho"></label>
 											</div>
 
+											<!-- date picker -->
+											<div class="justify-content-between">
+												<!-- 시작일 추가 -->
+												<div class="form-check-inline">
+													<span class="icon"> <i
+														class="fas fa-calendar-alt fa-lg mr-2"></i>
+													</span> <input class="calenderInput" type="text" id="date1"
+														value="시작일 추가" />
+												</div>
 
-
-											<div style="margin: 5px;" class=".col-lg-8">
-												<textarea type="search" class="form-control form-control-sm"
-													placeholder aria-controls="dataTable">업무내용을 입력하세요</textarea>
-												<!-- <textarea rows="2" cols="70" style ="margin-left: 13px;">업무내용을 입력해주세요</textarea> -->
-											</div>
-
-											<div class="fileUpLoad p-2">
-												<span class="one"> <img
-													src="${root}/resources/img/upload.png"> <input
-													class="content" type="file" name="file" />
-												</span>
+												<!-- 마감일 추가 -->
+												<div class="form-check-inline m-0">
+													<span class="icon"> <i
+														class="fas fa-calendar-alt fa-lg mr-2"></i>
+													</span> <input class="calenderInput" type="text" id="date2"
+														value="마감일 추가" />
+												</div>
 											</div>
 
 										</div>
 
 
-
-										<div>
-											<!-- <input type="submit" value="올리기">	 -->
-											<a href="#" class="btn btn-primary btn-icon-split btn-sm"
-												style="float: right; margin-right: 20px;"> <span
-												class="icon text-white-50"> <i class="fas fa-flag"></i>
-											</span> <span class="text" onclick="workPost()">올리기</span>
-											</a>
+										<!-- 일감 제목 -->
+										<div class="pb-3">
+											<input type="text" class="form-control"
+												placeholder="업무명을 입력하세요">
 										</div>
 
+										<!-- 일감 내용 -->
+										<div class="pb-3">
+											<textarea class="form-control">업무내용을 입력하세요</textarea>
+										</div>
+
+										<!-- 파일 첨부 -->
+										<div class="pb-3">
+											<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
+											</span> <input type="file" class="mx-2" id="inputFile" />
+										</div>
+
+										<!-- 올리기 -->
+										<div class="d-flex flex-row-reverse">
+											<button type="submit" class="btn btn-primary">올리기</button>
+										</div>
 
 									</div>
-								</div>
+
+								</form>
 							</div>
 						</div>
-
-
-					</form>
+					</div>
 
 
 
@@ -206,8 +226,8 @@
 											</ul>
 										</div>
 										<div style="margin: 5px;">
-											<a>이형은</a> <a href="#" onclick="managerSelect('${root}')" class="col-sm-3">담당자
-												변경</a> <img id="calender"
+											<a>이형은</a> <a href="#" onclick="managerSelect('${root}')"
+												class="col-sm-3">담당자 변경</a> <img id="calender"
 												src="${root}/resources/img/calendar.png"> <input
 												class="calenderInput col-sm-3" type="text" id="date3"
 												value="시작일 추가" /> <img id="calender"
@@ -290,7 +310,7 @@
 									<!-- 아바타 -->
 									<img src="${root }/resources/img/avatar.png" width="50"
 										height="50" /> <b class="position-absolute"
-										style="left: 0; top: 50px"">정한우</b>
+										style="left: 0; top: 50px">정한우</b>
 								</div>
 								<div class="right-column ml-2">
 									<form id="reply-form" action="/work-reply/write" method="post"
