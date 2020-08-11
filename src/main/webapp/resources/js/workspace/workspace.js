@@ -88,19 +88,19 @@
               	//alert("왕아아아");
               	var test = $("#manager").children("a").eq(0).text();
               	//alert(test);
-              	$(".managerWho").html(test);
+              	$("#managerWho").html(test);
               });
               
               $("#manager").children("a").eq(1).click(function(){
               	//alert("왕아아아");
               	var test = $("#manager").children("a").eq(1).text();
-              	$(".managerWho").html(test);
+              	$("#managerWho").html(test);
               });
               $("#manager").children("a").eq(2).click(function(){
               	//alert("왕아아아");
               	var test = $("#manager").children("a").eq(2).text();
               	//alert(test);
-              	$(".managerWho").html(test);
+              	$("#managerWho").html(test);
               });
               
              
