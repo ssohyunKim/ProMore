@@ -19,14 +19,13 @@
 
   <!-- Custom styles for this template-->
   <link href="resources/css/sb-admin-2.min.css?after" rel="stylesheet">
-  <script type="text/javascript" src="${root}/resources/js/customCheck.js" ></script> 
-  <script src="http://code.jquery.com/jquery-3.5.1.js"></script>
-  	
-	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="${root}/resources/js/workspace/jquery-3.5.1.js"></script>
+  <script type="text/javascript" src="${root}/resources/js/workspace/customCheck.js" ></script> 
+ 
 </head>
 
 <body class="bg-gradient-primary">
-	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
   <div class="container">
 
     <!-- Outer Row -->

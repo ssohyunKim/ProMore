@@ -62,7 +62,7 @@
 					</div>
 
 					<!-- 여기에 코드를 넣어주세요!! -->
-					
+
 					<!-- 	<div class="toast">
 						<div class="toast-header">Toast Header</div>
 						<div class="toast-body">알람확인</div>
@@ -72,8 +72,10 @@
 					<div class="card shadow p-4 col-xl-8 bg-light">
 
 						<!-- 프로젝트명 들어가기 -->
-						<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#ReadModal">
-							<div class="alert alert-primary bg-primary p-3 rounded-lg text-center">
+						<a href="#" class="text-decoration-none" data-toggle="modal"
+							data-target="#ReadModal">
+							<div
+								class="alert alert-primary bg-primary p-3 rounded-lg text-center">
 								<b class="text-white font-weight-bolder">ProMore</b>
 							</div>
 						</a>
@@ -84,7 +86,7 @@
 							<!-- Card Body -->
 							<div class="card-body">
 
-								<form action="#">
+								<form action="#" method="get" onsubmit="workPost()">
 									<div class="o-hidden">
 
 										<!-- writer, state -->
@@ -94,7 +96,7 @@
 											<b>작성자</b>
 
 											<!-- 상태 -->
-											<div class="btn-group btn-group-toggle my-1"
+											<div class="btn-group btn-group-toggle my-1 workState"
 												data-toggle="buttons">
 												<label class="btn btn-primary active"> <input
 													type="radio" name="options" id="option1" checked>
@@ -103,7 +105,7 @@
 													name="options" id="option2"> 진행
 												</label> <label class="btn btn-primary"> <input type="radio"
 													name="options" id="option3"> 완료
-												</label> 
+												</label>
 											</div>
 
 
@@ -183,191 +185,220 @@
 									</div>
 
 								</form>
-								
+
 							</div>
 						</div>
-						
+
+						<!-- 	<div id="alarm" class="progress" style="width:800px; height: 16px; margin-left: 180px; margin-bottom: 10px; display: inline-block">
+       					<div id ="alarm" class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">새글이 등록되었습니다.</div>
+                        </div> -->
 						<!-- 추가된 일감 3 -->
-						
-						<!-- 추가된 일감 2 -->
-						
-						<!-- 추가된 일감 1 -->
-						
-					</div>
+						<div class="card shadow mb-4 border-bottom-primary" id="workRead"
+							style="display: none;">
 
-					<!-- 	<div id="alarm" class="progress" style="width:800px; height: 16px; margin-left: 180px; margin-bottom: 10px; display: inline-block">
-       <div id ="alarm" class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">새글이 등록되었습니다.</div>
-    </div> -->
+							<!-- Card Body -->
+							<div class="card-body">
 
-					<%-- 	<div id="listAllDiv">
-		<!-- 새로운 댓글 -->
-		
-		<!-- 기존 댓글 : 자바 스크립트에서 생성한 태그들과 동일한 형태로 작성한다. -->
-		<c:forEach >
-			<div class="replyDiv" id="${replyDTO.bunho}">
-				<span class="cssBunho">${replyDTO.bunho}</span>
-				<span class="cssReply">${replyDTO.line_reply}</span>
-				<span class="cssUpDel">
-					<a href="javascript:deleteToServer('${replyDTO.bunho}','${root}')">삭제&nbsp;</a>					
-					<a href="javascript:selectToServer('${replyDTO.bunho}','${root}')">수정</a>
-				</span>
-			</div>
-		</c:forEach>--%>
+								<form action="#" method="get" onsubmit="workPost()">
+									<div class="o-hidden">
 
-					<!-- 글 등록 -->
-					<div class="col-lg-6" id="workRead" style="display: none;">
-						<form>
-							<div class="card mb-4 py-3 border-left-primary">
-								<div class="card-body">
-									<div class="workLiDivRead">
-										<div style="margin: 5px;"
-											class="form-check-inline col justify-content-between">
+										<!-- writer, state -->
+										<div
+											class="form-check-inline col justify-content-between pb-4">
+											<!-- 작성자 -->
 											<b>작성자</b>
 
-											<ul style="display: inline-block;" id="secondUl">
+											<!-- 상태 -->
+											<div class="btn-group btn-group-toggle my-1 workState"
+												data-toggle="buttons">
+												<label class="btn btn-primary active"> <input
+													type="radio" name="options" id="option1" checked>
+													요청
+												</label> <label class="btn btn-primary"> <input type="radio"
+													name="options" id="option2"> 진행
+												</label> <label class="btn btn-primary"> <input type="radio"
+													name="options" id="option3"> 완료
+												</label>
+											</div>
+
+
+											<!-- <ul class="pl-3" id="secondUl">
 												<li style="border-left: 1px solid #cccccc;">요청</li>
 												<li>진행</li>
 												<li>완료</li>
-											</ul>
-										</div>
-										<div style="margin: 5px;">
-											<a>이형은</a> <a href="#" onclick="managerSelect('${root}')"
-												class="col-sm-3">담당자 변경</a> <img id="calender"
-												src="${root}/resources/img/calendar.png"> <input
-												class="calenderInput col-sm-3" type="text" id="date3"
-												value="시작일 추가" /> <img id="calender"
-												src="${root}/resources/img/calendar.png"> <input
-												class="calenderInput col-sm-3" type="text" id="date4"
-												value="마감일 추가" />
-
+											</ul> -->
 										</div>
 
-										<div class="addIndexDivRead">
-											<div style="margin: 5px;" class=".col-lg-8">
-												<input type="search" class="form-control" placeholder
-													aria-controls="dataTable" value="업무명을 입력하세요">
+
+										<!-- drop down, date picker -->
+										<div
+											class="form-check-inline col justify-content-between pb-4">
+
+											<!-- drop down -->
+											<div>
+												<a>이형은</a> <a href="#" onclick="managerSelect('${root}')"
+													class="text-decoration-none col-sm-3">담당자 변경</a>
+
+												<!-- 선택된 담당자 -->
+												<label class="p-2" id="managerWho"></label>
 											</div>
 
+											<!-- date picker -->
+											<div class="justify-content-between">
+												<!-- 시작일 추가 -->
+												<div class="form-check-inline">
+													<span class="icon"> <i
+														class="fas fa-calendar-alt fa-lg mr-2"></i>
+													</span> <input class="calenderInput" type="text" id="date1"
+														value="시작일 추가" />
+												</div>
 
-
-											<div style="margin: 5px;" class=".col-lg-8">
-												<textarea type="search" class="form-control" placeholder
-													aria-controls="dataTable">업무내용을 입력하세요</textarea>
+												<!-- 마감일 추가 -->
+												<div class="form-check-inline m-0">
+													<span class="icon"> <i
+														class="fas fa-calendar-alt fa-lg mr-2"></i>
+													</span> <input class="calenderInput" type="text" id="date2"
+														value="마감일 추가" />
+												</div>
 											</div>
 
-											<div class="fileUpLoad">
-												<span class="one"> <img
-													src="${root}/resources/img/upload.png"> <input
-													class="content" type="file" name="file" />
-												</span>
-											</div>
-
-											<div id="updateDelete" class="justify-content-between">
-												<a href="#">수정</a> <a href="#">삭제</a>
-											</div>
 										</div>
-										<!-- 
-										<div style="margin-top: 28px; border-top: #6e707e">
-											<a href="#" style="color: #6e707e; font-size: .875rem">댓글</a>
+
+
+										<!-- 일감 제목 -->
+										<div class="pb-3">
+											<input type="text" class="form-control"
+												placeholder="업무명을 입력하세요">
 										</div>
-										 -->
+
+										<!-- 일감 내용 -->
+										<div class="pb-3">
+											<textarea class="form-control">업무내용을 입력하세요</textarea>
+										</div>
+
+										<!-- 파일 첨부 -->
+										<div class="pb-3">
+											<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
+											</span> <input type="file" class="mx-2" id="inputFile" />
+										</div>
+
+										<div id="updateDelete" class="d-flex flex-row-reverse">
+											<a class="m-1 text-decoration-none" href="#">수정</a> <a
+												class="m-1 text-decoration-none" href="#">삭제</a>
+										</div>
+
 									</div>
 
+								</form>
+
+								<!-- 일감 댓글 전체 -->
+								<div class="card mb-4 m-4">
+
+									<!-- Card Header -->
+									<div class="card-header">
+										<p>댓글</p>
+									</div>
+
+									<!-- Card Body -->
+									<div class="card-body">
+
+										<!-- 댓글 리스트 영역 -->
+										<div class="container reply-list">
+											<!-- 댓글 템플릿 -->
+											<div id="reply-tmpl" class="row clearfix d-none mb-3">
+												<div class="left-column float-left">
+													<!-- 아바타 -->
+													<img src="${root }/resources/img/avatar.png" width="50"
+														height="50" />
+												</div>
+												<div class="right-column ml-2">
+													<div class="writer-info">
+														<span class="reply-writer">정한우</span> <span
+															class="reply-write-date">2020-08-04 16:25</span> <span
+															class="reply-like ml-3"> <i
+															class="far fa-thumbs-up"></i> <a href="/work-reply/like">좋아요</a>
+														</span> |&nbsp;<a href="#">수정</a> |&nbsp;<a href="#">삭제</a>
+													</div>
+													<div class="reply-content">Trust You</div>
+													<!-- 파일 다운로드 템플릿 -->
+													<div id="file-download-tmpl"
+														class="reply-file clearfix bg-info d-none">
+														<span class="left-column float-left"> <i
+															class="fas fa-file"></i> <span class="reply-file-name">요구사항
+																분석서.doc</span>
+														</span> <span class="right-column float-right"> <a
+															href="#">다운로드</a> |&nbsp;<a href="#">삭제</a>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<!-- 댓글 작성 폼 -->
+										<div class="container">
+											<form id="reply-form" action="/work-reply/write"
+												method="post" enctype="multipart/form-data">
+												<!-- 아바타, textarea, 작성버튼 -->
+												<div class="row">
+													<div class="input-group mb-3">
+														<div class="input-group-append">
+															<!-- 아바타 -->
+															<img src="${root }/resources/img/avatar.png" width="50"
+																height="50" />
+														</div>
+														<textarea id="reply-my-content" class="form-control"
+															placeholder="댓글을 작성하세요." name="reply-content" required></textarea>
+														<div class="input-group-append">
+															<button class="btn btn-outline-secondary" type="submit">작성</button>
+														</div>
+													</div>
+												</div>
+												<!-- 업로드 -->
+												<div class="row">
+													<div class="right-column ml-2 col-lg-8 float-right">
+														<div class="form-group clearfix position-relative">
+															<span> <i class="fas fa-paperclip fa-lg mr-2"></i>
+															</span> <input id="reply-file-select" type="file"
+																name="reply-file">
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+										<!-- End of 댓글 작성 폼 -->
+									</div>
 								</div>
+								<!-- End of 일감 댓글 전체 -->
 							</div>
-						</form>
-						<!-- 댓글 영역 -->
-						<div class="container reply-list">
-							<!-- 댓글 템플릿 -->
-							<div id="reply-tmpl" class="row clearfix d-none mb-3">
-								<div class="left-column float-left">
-									<!-- 아바타 -->
-									<img src="${root }/resources/img/avatar.png" width="50"
-										height="50" />
-								</div>
-								<div class="right-column ml-2">
-									<div class="writer-info">
-										<span class="reply-writer">정한우</span> <span
-											class="reply-write-date">2020-08-04 16:25</span> <span
-											class="reply-like ml-3"> <i class="far fa-thumbs-up"></i>
-											<a href="/work-reply/like">좋아요</a>
-										</span> |&nbsp;<a href="#">수정</a> |&nbsp;<a href="#">삭제</a>
-									</div>
-									<div class="reply-content">Trust You</div>
-									<!-- 파일 다운로드 템플릿 -->
-									<div id="file-download-tmpl"
-										class="reply-file clearfix bg-info d-none">
-										<span class="left-column float-left"> <i
-											class="fas fa-file"></i> <span class="reply-file-name">요구사항
-												분석서.doc</span>
-										</span> <span class="right-column float-right"> <a href="#">다운로드</a>
-											|&nbsp;<a href="#">삭제</a>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- 댓글 작성 폼 -->
-						<div class="container">
-							<form id="reply-form" action="/work-reply/write" method="post"
-								enctype="multipart/form-data">
-								<div class="row">
-									<div class="input-group mb-3">
-										<div class="input-group-append">
-											<!-- 아바타 -->
-											<img src="${root }/resources/img/avatar.png" width="50"
-												height="50" />
-										</div>
-										<textarea id="reply-my-content" class="form-control"
-											placeholder="댓글을 작성하세요." name="reply-content" required></textarea>
-										<div class="input-group-append">
-											<button class="btn btn-outline-secondary" type="submit">작성</button>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="right-column ml-2 col-lg-8 float-right">
-										<div class="form-group clearfix position-relative">
-											<img class="position-absolute"
-												src="${root}/resources/img/upload.png"
-												style="top: 10px; left: -20px"> <input
-												id="reply-file-select" class="float-left" type="file"
-												name="reply-file">
-										</div>
-									</div>
-								</div>
-							</form>
 						</div>
 					</div>
-				</div>
-				<!-- /.container-fluid -->
+					<!-- 추가된 일감 2 -->
 
+					<!-- 추가된 일감 1 -->
+
+				</div>
 			</div>
-			<!-- End of Main Content -->
-
-			<!-- Footer -->
-			<footer class="sticky-footer bg-white">
-				<div class="container my-auto">
-					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Your Website 2020</span>
-					</div>
-				</div>
-			</footer>
-			<!-- End of Footer -->
-
 		</div>
-		<!-- End of Content Wrapper -->
-
 	</div>
+	</div>
+	<!-- /.container-fluid -->
+
+	<!-- End of Main Content -->
+
+	<!-- Footer -->
+	<jsp:include page="/WEB-INF/template/footer.jsp" />
+	<!-- End of Footer -->
+
+	<!-- End of Content Wrapper -->
+
 	<!-- End of Page Wrapper -->
 
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
-	
-	
+
+
 	<!-- Read Model -->
 	<div class="modal fade" id="ReadModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg mt-5" role="document">
@@ -406,8 +437,8 @@
 
 							</div>
 						</div>
-					
-					<!-- 글 내용 -->
+
+						<!-- 글 내용 -->
 					</div>
 					<div class="form-group row">
 						<div class="col-sm-12">
@@ -415,23 +446,23 @@
 								placeholder="글을 입력하세요."></textarea>
 						</div>
 					</div>
-				
-				<!-- modal-footer -->
-				<div class="modal-footer justify-content-between">
+
+					<!-- modal-footer -->
+					<div class="modal-footer justify-content-between">
 						<button type="reset" class="btn btn-warning">초기화</button>
 
 						<div>
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary">수정</button>
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">취소</button>
+							<button type="button" class="btn btn-primary">수정</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-</div>
-	
-	
+
+
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="${root}/resources/vendor/jquery/jquery.min.js"></script>

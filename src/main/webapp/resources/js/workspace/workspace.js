@@ -49,10 +49,10 @@
            });
               
                     
-              $("#secondUl li:first-child").click(function(){
-             	 // alert("확인");
-             	 $("#secondUl li:first-child").css("color","white"); 
-             	 $("#secondUl li:first-child").css("background","#6799FF"); 
+            /*  $(".secondUl").click(function(){
+             	 //alert("확인");
+             	 $(".workState input:first-child").css("color","white"); 
+             	 $(".workState input:first-child").css("background","#6799FF"); 
              	 $("#secondUl li:nth-child(2)").css("color","black"); 
              	 $("#secondUl li:nth-child(2)").css("background","white");
              	 $("#secondUl li:nth-child(3)").css("color","black"); 
@@ -76,6 +76,8 @@
              	 $("#secondUl li:nth-child(3)").css("color","white"); 
              	 $("#secondUl li:nth-child(3)").css("background","#858796"); 
                });
+               
+               */
               
               $(".addIndex").click(function(){
             	 //alert("확인");

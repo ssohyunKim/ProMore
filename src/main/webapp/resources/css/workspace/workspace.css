@@ -18,15 +18,6 @@
 	font-size: 0.9em;
 }
 
-#secondUl li:first-child {
-	background-color: #6799FF;
-	color: white;
-	border-radius: 10px 0px 0px 10px;
-}
-
-#secondUl li:nth-child(3) {
-	border-radius: 0px 10px 10px 0px;
-}
 
 .workDateDiv input {
 	border: 1px solid #d1d3e2;
