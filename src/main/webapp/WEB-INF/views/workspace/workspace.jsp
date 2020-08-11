@@ -439,17 +439,17 @@
 				</div>
 				<!-- /.container-fluid -->
 
-			</div>
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
 			<jsp:include page="/WEB-INF/template/footer.jsp" />
 			<!-- End of Footer -->
 
+			</div>
 		</div>
 		<!-- End of Content Wrapper -->
 
-	</div>
+
 	<!-- End of Page Wrapper -->
 
 	<!-- Scroll to Top Button-->
