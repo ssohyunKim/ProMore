@@ -19,11 +19,14 @@
 
   <!-- Custom styles for this template-->
   <link href="resources/css/sb-admin-2.min.css?after" rel="stylesheet">
-  <script type="text/javascript" src="${root}/resources/js/customCheck" ></script> 
+  <script type="text/javascript" src="${root}/resources/js/customCheck.js" ></script> 
+  <script src="http://code.jquery.com/jquery-3.5.1.js"></script>
+  	
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
 
 <body class="bg-gradient-primary">
-
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <div class="container">
 
     <!-- Outer Row -->
@@ -54,18 +57,16 @@
                         <label class="custom-control-label" for="customCheck">아이디 기억하기</label>
                       </div>
                     </div>
-                    <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                    로그인
-                    </a>
+                    <input type="submit" class="btn btn-primary btn-user btn-block" value="로그인">      
                     <a href="${root}/project/main.do" class="btn btn-primary btn-user btn-block">
                                  	프로젝트메인
                     </a>
                     <hr>
                     <a href="index.html" class="btn btn-google btn-user btn-block">
-                      <i class="fab fa-google fa-fw"></i> 구글로 로그인하기
+                      <i class="fab fa-google fa-fw"></i> Goolge계정으로 로그인하기
                     </a>
                     <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                      <i class="fab fa-facebook-f fa-fw" ></i> 페이스북으로 로그인하기
+                      <i class="fab fa-facebook-f fa-fw" ></i> Facebook계정으로 로그인하기
                     </a>
                   </form>
                   <hr>
