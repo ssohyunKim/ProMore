@@ -48,7 +48,13 @@
 			#{notWriteDate},
 			#{notReadCount})
 	</insert>
-
 	
+	<select id="notice_count" resultType="int">
+		select count(*) from notice
+	</select>
+	
+	<select id="notice_list" resultMap="notice_dto">
+		select * from notice order by not_num desc
+	</select>
 
 </mapper>

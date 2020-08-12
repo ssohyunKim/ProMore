@@ -2,6 +2,7 @@ package com.promore.manager.service;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,4 +65,16 @@ public class NoticeServiceImp implements NoticeService {
 		mav.addObject("check", check);
 		mav.setViewName("manager/noticeWriteOk");
 	}
+	
+	@Override
+	public void noticeList(ModelAndView mav) {		
+		int noticeCount = noticeDao.noticeCount();
+		List<NoticeDto> noticeDtoArray = noticeDao.noticeList();
+		
+		mav.addObject("noticeDtoArray", noticeDtoArray);	// 전체 게시물
+		mav.addObject("noticeCount", noticeCount);			// 전체 게시물 개수
+		
+		HAspect.logger.info(HAspect.logMsg + noticeDtoArray.size());
+	}
+	
 }

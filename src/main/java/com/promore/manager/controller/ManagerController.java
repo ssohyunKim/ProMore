@@ -31,7 +31,12 @@ public class ManagerController extends MultiActionController {
 	public ModelAndView noticeList(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("noticeList.do");
 		
-		return new ModelAndView("/manager/noticeList");
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		
+		noticeService.noticeList(mav);
+		
+		return mav;
 	}
 	
 	@RequestMapping(value = "/manager/noticeWriteOk.do", method = RequestMethod.POST)
@@ -39,7 +44,7 @@ public class ManagerController extends MultiActionController {
 		System.out.println("noticeOk");
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		
-		ModelAndView mav = new ModelAndView("/manager/noticeWriteOk");
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", multipartRequest);
 		mav.addObject("noticeDto", noticeDto);
 		

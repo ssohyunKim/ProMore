@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,6 +81,26 @@
 										</tr>
 									</thead>
 									<tbody>
+										<c:if test="${noticeCount==0 || noticeDtoArray.size()==0}">
+											<tr>
+												<td colspan="6">게시판에 저장된 글이 없습니다.</td>
+											</tr>
+										</c:if>
+
+										<c:if test="${noticeCount>0}">
+											<c:forEach var="noticeDto" items="${noticeDtoArray}">
+												<tr>
+													<td>${noticeDto.notNum}</td>
+													<td><a href="#">${noticeDto.notTitle}</a></td>
+													<td>${noticeDto.notReadCount}</td>
+													<td><fmt:formatDate value="${noticeDto.notWriteDate}"
+															pattern="yyyy-MM-dd-HH:mm:ss" /></td>
+													<td>${noticeDto.notFileName}</td>
+													<td><a href="#">삭제</a></td>
+												</tr>
+											</c:forEach>
+										</c:if>
+										
 										<tr>
 											<td>58011</td>
 											<td><a href="#" data-toggle="modal"
@@ -89,6 +110,7 @@
 											<td>첨부파일 없음</td>
 											<td><a href="#">삭제</a></td>
 										</tr>
+
 										<tr>
 											<td>58012</td>
 											<td>[필독] 신고시 주의사항</td>
@@ -166,18 +188,19 @@
 					</button>
 				</div>
 
-				<form action="${root}/manager/noticeWriteOk.do" method="post" enctype="multipart/form-data">
+				<form action="${root}/manager/noticeWriteOk.do" method="post"
+					enctype="multipart/form-data">
 
 					<%-- <input type="hidden" name="notNum" value="${notNum}" /> --%>
-					
+
 					<!-- modal-body -->
 					<div class="modal-body">
 
 						<!-- 공지사항 글 제목 -->
 						<div class="form-group row">
 							<div class="col-sm-12">
-								<input type="text" class="form-control" 
-									placeholder="제목을 입력하세요." name="notTitle">
+								<input type="text" class="form-control" placeholder="제목을 입력하세요."
+									name="notTitle">
 							</div>
 						</div>
 
@@ -299,7 +322,8 @@
 						<!-- 공지사항 글 제목 -->
 						<div class="form-group row">
 							<div class="col-sm-12">
-								<input type="text" class="form-control" id="inputTitle" value="기존 제목">
+								<input type="text" class="form-control" id="inputTitle"
+									value="기존 제목">
 							</div>
 						</div>
 
@@ -325,7 +349,8 @@
 						<button type="reset" class="btn btn-warning">초기화</button>
 
 						<div>
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">취소</button>
 							<button type="submit" class="btn btn-primary">수정 완료</button>
 						</div>
 					</div>

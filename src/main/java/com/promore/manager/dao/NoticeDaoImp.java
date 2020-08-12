@@ -1,5 +1,7 @@
 package com.promore.manager.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,4 +29,16 @@ public class NoticeDaoImp implements NoticeDao {
 		
 		return check;
 	}
+	
+	@Override
+	public int noticeCount() {
+		return sqlSessionTemplate.selectOne("notice_count");
+	}
+	
+	@Override
+	public List<NoticeDto> noticeList() {
+		return sqlSessionTemplate.selectList("notice_list");
+	}
+	
+	
 }

@@ -6,4 +6,6 @@ public interface NoticeService {
 	
 	public void noticeWriteOk (ModelAndView mav);
 	
+	public void noticeList (ModelAndView mav);
+	
 }
