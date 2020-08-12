@@ -193,7 +193,7 @@
        					<div id ="alarm" class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">새글이 등록되었습니다.</div>
                         </div> -->
 						<!-- 추가된 일감 3 -->
-						<div class="card shadow mb-4 border-bottom-primary"
+						<div id="work-test" class="card shadow mb-4 border-bottom-primary"
 							style="display: none;">
 
 							<!-- Card Body -->

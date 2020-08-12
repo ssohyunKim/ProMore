@@ -122,7 +122,16 @@
            $('.toast').toast('show');
            */
            
+          	var workTest = document.getElementById("work-test");
+          	var copyWorkTest = workTest.cloneNode(true);
+          	copyWorkTest.style.display = "block";
+           
            var workRead = document.getElementById("workRead");
+           
+           $("#workRead").after($(copyWorkTest));
+           return false;
+           
+           /////////////////////아래는 안써도 될것 같아요///////////////////////////
            
             var workReadDiv = document.createElement("div");
             workReadDiv.className="card";
