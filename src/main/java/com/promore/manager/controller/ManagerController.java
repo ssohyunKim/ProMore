@@ -53,10 +53,22 @@ public class ManagerController extends MultiActionController {
 		return mav;
 	}	
 	
+	@RequestMapping(value = "/manager/noticeRead.do", method = RequestMethod.GET)
+	public ModelAndView fileBoardRead(HttpServletRequest request, HttpServletResponse response) {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		
+		noticeService.noticeLoad(mav);
+		
+		return mav;
+	}
+	
 	@RequestMapping(value = "/manager/reportList.do", method = RequestMethod.GET)
 	public ModelAndView reportList(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("reportList.do");
 		
 		return new ModelAndView("/manager/reportList");
 	}
+	
 }

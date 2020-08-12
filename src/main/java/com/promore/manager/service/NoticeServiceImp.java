@@ -1,9 +1,16 @@
 package com.promore.manager.service;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -54,9 +61,9 @@ public class NoticeServiceImp implements NoticeService {
 					e.printStackTrace();
 
 				}
-			}	
+			}
 		}
-		
+
 		HAspect.logger.info(HAspect.logMsg + noticeDto);
 
 		int check = noticeDao.noticeWrite(noticeDto);
@@ -65,16 +72,82 @@ public class NoticeServiceImp implements NoticeService {
 		mav.addObject("check", check);
 		mav.setViewName("manager/noticeWriteOk");
 	}
-	
+
 	@Override
-	public void noticeList(ModelAndView mav) {		
+	public void noticeList(ModelAndView mav) {
 		int noticeCount = noticeDao.noticeCount();
 		List<NoticeDto> noticeDtoArray = noticeDao.noticeList();
-		
-		mav.addObject("noticeDtoArray", noticeDtoArray);	// 전체 게시물
-		mav.addObject("noticeCount", noticeCount);			// 전체 게시물 개수
-		
+
+		mav.addObject("noticeDtoArray", noticeDtoArray); // 전체 게시물
+		mav.addObject("noticeCount", noticeCount); // 전체 게시물 개수
+
 		HAspect.logger.info(HAspect.logMsg + noticeDtoArray.size());
 	}
+
+	@Override
+	public void noticeLoad(ModelAndView mav) {
+
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		
+		int notNum = Integer.parseInt(request.getParameter("notNum"));
+		HAspect.logger.info(HAspect.logMsg + notNum);
+		
+		NoticeDto noticeDto = noticeDao.noticeRead(notNum);
+		HAspect.logger.info(HAspect.logMsg + noticeDto);
+		
+		if(noticeDto.getNotFileName()!=null) {
+			int index = noticeDto.getNotFileName().indexOf("_")+1;
+			noticeDto.setNotFileName(noticeDto.getNotFileName().substring(index));
+		}
+		
+		mav.addObject("noticeDto", noticeDto);
+		mav.setViewName("fileBoard/read");
+	}
 	
+	/*
+	 * public void fileDownload(ModelAndView mav) { Map<String, Object> map =
+	 * mav.getModelMap(); HttpServletRequest request = (HttpServletRequest)
+	 * map.get("request"); HttpServletResponse response = (HttpServletResponse)
+	 * map.get("response");
+	 * 
+	 * int notNum = Integer.parseInt(request.getParameter("notNum"));
+	 * HAspect.logger.info(HAspect.logMsg + notNum);
+	 * 
+	 * NoticeDto noticeDto = noticeDao.noticeSelect(notNum);
+	 * HAspect.logger.info(HAspect.logMsg + noticeDto);
+	 * 
+	 * BufferedInputStream bis = null; BufferedOutputStream bos = null;
+	 * 
+	 * try {
+	 * 
+	 * int index = noticeDto.getNotFileName().indexOf("_") + 1; String fName =
+	 * noticeDto.getNotFileName().substring(index); String fileName = new
+	 * String(fName.getBytes("utf-8"), "ISO-8859-1");
+	 * 
+	 * long fileSize = noticeDto.getNotFileSize(); String path =
+	 * noticeDto.getNotFilePath();
+	 * 
+	 * response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+	 * response.setContentType("application/octet-stream");
+	 * response.setContentLength((int) fileSize);
+	 * 
+	 * bis = new BufferedInputStream(new FileInputStream(path), 1024); bos = new
+	 * BufferedOutputStream(response.getOutputStream(), 1024);
+	 * 
+	 * while (true) { int data = bis.read(); if (data == -1) break; bos.write(data);
+	 * } bos.flush();
+	 * 
+	 * } catch (IOException e) {
+	 * 
+	 * e.printStackTrace();
+	 * 
+	 * } finally {
+	 * 
+	 * try { if (bis != null) bis.close(); if (bos != null) bos.close();
+	 * 
+	 * } catch (Exception e) {
+	 * 
+	 * e.printStackTrace(); } } }
+	 */
 }
