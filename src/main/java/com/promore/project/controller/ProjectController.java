@@ -28,7 +28,7 @@ public class ProjectController {
 	}
 
 	// 프로젝트 작성
-	@RequestMapping(value = "/project/write.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/project/writeOk.do", method = RequestMethod.POST)
 	public ModelAndView projectWrite(HttpServletRequest request, HttpServletResponse response, ProjectDto projectDto) {
 		System.out.println("OK write");
 		System.out.println(projectDto); 
@@ -39,7 +39,6 @@ public class ProjectController {
 		
 		projectservice.projectWrite(mav); 
 		return mav;
-		
 	}
 
 	// 일감현황

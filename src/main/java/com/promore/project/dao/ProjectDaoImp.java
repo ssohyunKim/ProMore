@@ -13,8 +13,9 @@ public class ProjectDaoImp implements ProjectDao {
 	
 	@Override
 	public int projectWrite(ProjectDto projectDto) {
-		return sqlSessionTemplate.insert("project_insert", projectDto);
-		
+		int check=0;
+		check = sqlSessionTemplate.insert("project_insert", projectDto);
+		return check;
 	}
 	
 }

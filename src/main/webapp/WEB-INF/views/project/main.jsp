@@ -135,24 +135,30 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 				</div>
-					<form id="createform" action="${root}/project/write.do" method="post"
+					<form id="createform" action="${root}/project/writeOk.do" method="post"
 									onsubmit="return boardCheck(this)">
 				<!-- modal-body -->
 						<div class="modal-body">
-					
-							<!--프로젝트 제목 && 인원수 -->
-							<div class="form-group row">
-								<div class="col-sm-12">
-									<input type="text" class="form-control" name="proName" 
-											style="display: inline; width: 80%;" placeholder="제목을 입력하세요."> 
-									&ensp;인원수
-									<div class="dropdown mb-4 bg-light" style="float: right; width:10%">
-										<input type="text" class="form-control" name="proCnt" 
-											style="display: inline; width: 87%;" placeholder="0"> 
-									</div>
-								</div>
-							</div>
-					
+						
+						      <!-- 프로젝트 제목 && 인원수  -->
+			                  <div class="form-group row">
+			                     <div class="col-sm-10">
+			                        <input type="text" class="form-control" name="proName" style="display: inline;"  placeholder="제목을 입력하세요.">
+			                     </div>
+			                    		<p style="margin: 6px 13px 0px 0px">인원수</p>
+			                     <div class="col-sm-1.5" style="display: inline;" >
+			                     	              
+			                             <select name="proCnt" class="form-control">
+			                            <option value="2">2</option>
+			                            <option value="3">3</option>
+			                            <option value="4">4</option>
+			                            <option value="5">5</option>
+			                        </select>
+			                     </div>
+			                  </div>
+						
+						
+						
 							<!-- 글 내용 -->
 							<div class="form-group row">
 								<div class="col-sm-12">

@@ -23,15 +23,17 @@ public class ProjectServiceImp implements ProjectService {
 	public void projectWrite(ModelAndView mav) {
 	Map<String, Object> map = mav.getModelMap();
 	HttpServletRequest request = (HttpServletRequest)map.get("request");
-	ProjectDto projectDto = (ProjectDto) map.get("projectDto");
-		
+	ProjectDto projectDto = (ProjectDto) map.get("projectDto");	
+	
 	  projectDto.setProName(projectDto.getProName());
 	  projectDto.setProContent(projectDto.getProContent());
 	  projectDto.setProManager("팀장");
 	  projectDto.setProState(0); 
 	  projectDto.setProCnt(projectDto.getProCnt());
 		  
-	  projectDao.projectWrite(projectDto);
-	  mav.setViewName("project/main");
+	 
+	  int check =  projectDao.projectWrite(projectDto);
+	  mav.addObject("check", check);
+	  mav.setViewName("project/writeOk");
 	}
 }
