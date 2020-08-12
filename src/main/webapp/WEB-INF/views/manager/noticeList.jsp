@@ -59,7 +59,7 @@
 						<div class="card-header py-3 form-inline justify-content-between">
 							<h5 class="m-0 font-weight-bold text-primary p-2">공지사항 글 목록</h5>
 							<a href="#" class="btn btn-primary btn-circle btn-md"
-								data-toggle="modal" data-target="#noticeCreateModal"> <!-- <a href="${root}/manager/noticeCreate.do" class="btn btn-primary btn-circle btn-md"> -->
+								data-toggle="modal" data-target="#noticeCreateModal">
 								<i class="fas fa-pen"></i>
 							</a>
 						</div>
@@ -81,69 +81,72 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:if test="${noticeCount==0 || noticeDtoArray.size()==0}">
-											<tr>
-												<td colspan="6">게시판에 저장된 글이 없습니다.</td>
-											</tr>
-										</c:if>
-
 										<c:if test="${noticeCount>0}">
 											<c:forEach var="noticeDto" items="${noticeDtoArray}">
 												<tr>
 													<td>${noticeDto.notNum}</td>
-													<td><a href="#">${noticeDto.notTitle}</a></td>
+													<td><a href="#" data-toggle="modal" data-target="#noticeReadModal" data-whatever="${noticeDto.notTitle}">${noticeDto.notTitle}</a></td>
 													<td>${noticeDto.notReadCount}</td>
 													<td><fmt:formatDate value="${noticeDto.notWriteDate}"
-															pattern="yyyy-MM-dd-HH:mm:ss" /></td>
-													<td>${noticeDto.notFileName}</td>
+															pattern="yyyy-MM-dd" /></td>
+															
+													<c:if test="${noticeDto.notFileSize>0}">
+													<td><a href="#">${noticeDto.notFileName}</a></td>
+													</c:if>
+													
+													<c:if test="${noticeDto.notFileSize==0}">
+													<td>첨부파일 없음</td>
+													</c:if>
+													
 													<td><a href="#">삭제</a></td>
 												</tr>
 											</c:forEach>
-										</c:if>
-										
-										<tr>
-											<td>58011</td>
-											<td><a href="#" data-toggle="modal"
-												data-target="#noticeReadModal">[필독] 프로젝트 참여시 주의사항</a></td>
-											<td>61</td>
-											<td>2012/03/29</td>
-											<td>첨부파일 없음</td>
-											<td><a href="#">삭제</a></td>
-										</tr>
+											
+											<tr>
+												<td>58011</td>
+												<td><a href="#" data-toggle="modal"
+													data-target="#noticeReadModal">[필독] 프로젝트 참여시 주의사항</a></td>
+												<td>61</td>
+												<td>2012/03/29</td>
+												<td>첨부파일 없음</td>
+												<td><a href="#">삭제</a></td>
+											</tr>
 
-										<tr>
-											<td>58012</td>
-											<td>[필독] 신고시 주의사항</td>
-											<td>63</td>
-											<td>2011/07/25</td>
-											<td>첨부파일 없음</td>
-											<td><a href="#">삭제</a></td>
-										</tr>
-										<tr>
-											<td>58013</td>
-											<td>[필독] 고객 게시판 사용 방법</td>
-											<td>66</td>
-											<td>2011/04/25</td>
-											<td>첨부파일 없음</td>
-											<td><a href="#">삭제</a></td>
-										</tr>
-										<tr>
-											<td>58014</td>
-											<td>버그 수정이 완료되었습니다.</td>
-											<td>22</td>
-											<td>2009/01/12</td>
-											<td>첨부파일 없음</td>
-											<td><a href="#">삭제</a></td>
-										</tr>
-										<tr>
-											<td>58016</td>
-											<td>새로운 서비스 런칭</td>
-											<td>33</td>
-											<td>2008/11/28</td>
-											<td><a href="#">영상.mp4</a></td>
-											<td><a href="#">삭제</a></td>
-										</tr>
+											<tr>
+												<td>58012</td>
+												<td>[필독] 신고시 주의사항</td>
+												<td>63</td>
+												<td>2011/07/25</td>
+												<td>첨부파일 없음</td>
+												<td><a href="#">삭제</a></td>
+											</tr>
+											<tr>
+												<td>58013</td>
+												<td>[필독] 고객 게시판 사용 방법</td>
+												<td>66</td>
+												<td>2011/04/25</td>
+												<td>첨부파일 없음</td>
+												<td><a href="#">삭제</a></td>
+											</tr>
+											<tr>
+												<td>58014</td>
+												<td>버그 수정이 완료되었습니다.</td>
+												<td>22</td>
+												<td>2009/01/12</td>
+												<td>첨부파일 없음</td>
+												<td><a href="#">삭제</a></td>
+											</tr>
+											<tr>
+												<td>58016</td>
+												<td>새로운 서비스 런칭</td>
+												<td>33</td>
+												<td>2008/11/28</td>
+												<td><a href="#">영상.mp4</a></td>
+												<td><a href="#">삭제</a></td>
+											</tr>
+										</c:if>
 									</tbody>
+									<tfoot></tfoot>
 								</table>
 							</div>
 						</div>
@@ -171,7 +174,6 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
-
 
 	<!-- Notice Write Model -->
 	<div class="modal fade" id="noticeCreateModal" tabindex="-1"
@@ -262,8 +264,8 @@
 						<!-- 공지사항 글 제목 -->
 						<div class="form-group row">
 							<div class="col-sm-12">
-								<h5 class="form-control-plaintext font-weight-bold"
-									id="staticTitle">[필독] 프로젝트 참여시 주의사항</h5>
+								<h5 class="modal-title form-control-plaintext font-weight-bold"
+									id="staticTitle"></h5>
 							</div>
 						</div>
 
@@ -271,8 +273,7 @@
 						<div class="form-group row">
 							<div class="col-sm-12">
 								<textarea readonly class="form-control-plaintext" rows="20"
-									id="content"
-									placeholder="안녕하세요.&#13;관리자입니다.&#13;&#13;프로젝트 진행 과정에서 다음과 같은 문제가 자주 발생하고 있습니다.&#13;1. ~~&#13;2. &#13;3. ~~&#13;&#13;우리 모두 매너있는 팀원/팀장으로서 즐겁게 프로젝트를 진행할 수 있도록 부탁드립니다. 잦은 신고 문의가 들어올 시 예고없이 탈퇴처리할 수 있음을 알려드립니다."></textarea>
+									id="content"></textarea>
 							</div>
 						</div>
 
@@ -381,5 +382,9 @@
 
 	<!-- Page level custom scripts -->
 	<script src="${root}/resources/js/demo/datatables-demo.js"></script>
+	
+	<!-- Modal JavaScript-->
+	<script src="${root}/resources/js/manager/notice.js"></script>
+	
 </body>
 </html>

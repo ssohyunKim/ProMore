@@ -53,7 +53,7 @@ public class ManagerController extends MultiActionController {
 		return mav;
 	}	
 	
-	@RequestMapping(value = "/manager/noticeRead.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/manager/noticeLoad.do", method = RequestMethod.GET)
 	public ModelAndView fileBoardRead(HttpServletRequest request, HttpServletResponse response) {
 		
 		ModelAndView mav = new ModelAndView();

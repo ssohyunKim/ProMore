@@ -93,7 +93,7 @@ public class NoticeServiceImp implements NoticeService {
 		int notNum = Integer.parseInt(request.getParameter("notNum"));
 		HAspect.logger.info(HAspect.logMsg + notNum);
 		
-		NoticeDto noticeDto = noticeDao.noticeRead(notNum);
+		NoticeDto noticeDto = noticeDao.noticeLoad(notNum);
 		HAspect.logger.info(HAspect.logMsg + noticeDto);
 		
 		if(noticeDto.getNotFileName()!=null) {
