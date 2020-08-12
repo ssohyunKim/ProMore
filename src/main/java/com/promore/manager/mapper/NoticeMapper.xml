@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.promore.manager.mapper.NoticeMapper">
+
+	<resultMap type="com.promore.manager.dto.NoticeDto" id="notice_dto">
+		<result column="NOT_NUM" property="notNum"/>
+		<result column="NOT_TITLE" property="notTitle"/>
+		<result column="NOT_CONTENT" property="notContent"/>
+		<result column="NOT_WRITE_DATE" property="notWriteDate"/>
+		
+		<result column="NOT_FILE_NAME" property="notFileName"/>
+		<result column="NOT_FILE_PATH" property="notFilePath"/>
+		<result column="NOT_FILE_SIZE" property="notFileSize"/>
+		
+		<result column="NOT_READ_COUNT" property="notReadCount"/>
+	</resultMap>
+	
+	<insert id="notice_insert"
+		parameterType="com.promore.manager.dto.NoticeDto">
+		insert into notice 
+		values(
+			notice_not_num_seq.nextval,
+			#{notTitle},
+			#{notContent},
+			#{notWriteDate},			
+			#{notFileName},
+			#{notFilePath},
+			#{notFileSize},		
+			#{notReadCount})
+	</insert>
+	
+	<insert id="notice_insert_without_file"
+		parameterType="com.promore.manager.dto.NoticeDto">
+		insert into notice(
+			not_num,
+			not_title,
+			not_content,
+			not_write_date,
+			not_read_count)
+		values(
+			notice_not_num_seq.nextval,
+			#{notTitle},
+			#{notContent},
+			#{notWriteDate},
+			#{notReadCount})
+	</insert>
+
+	
+
+</mapper>

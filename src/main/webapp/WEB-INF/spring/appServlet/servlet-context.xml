@@ -28,4 +28,11 @@
 	
 	<!-- AOP -->
 	<aop:aspectj-autoproxy/>
+	
+	<!-- fileUpload -->
+	<beans:bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver"	id="multipartResolver">
+		<beans:property value="502400" name="maxUploadSize" />
+		<beans:property value="utf-8" name="defaultEncoding" />
+	</beans:bean>
+	
 </beans:beans>

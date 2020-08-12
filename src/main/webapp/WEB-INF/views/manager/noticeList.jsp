@@ -166,16 +166,18 @@
 					</button>
 				</div>
 
-				<form>
+				<form action="${root}/manager/noticeWriteOk.do" method="post" enctype="multipart/form-data">
 
+					<%-- <input type="hidden" name="notNum" value="${notNum}" /> --%>
+					
 					<!-- modal-body -->
 					<div class="modal-body">
 
 						<!-- 공지사항 글 제목 -->
 						<div class="form-group row">
 							<div class="col-sm-12">
-								<input type="text" class="form-control" id="inputTitle"
-									placeholder="제목을 입력하세요.">
+								<input type="text" class="form-control" 
+									placeholder="제목을 입력하세요." name="notTitle">
 							</div>
 						</div>
 
@@ -183,7 +185,7 @@
 						<div class="form-group row">
 							<div class="col-sm-12">
 								<textarea class="form-control" rows="20" id="inputContent"
-									placeholder="글을 입력하세요."></textarea>
+									placeholder="글을 입력하세요." name="notContent"></textarea>
 							</div>
 						</div>
 
