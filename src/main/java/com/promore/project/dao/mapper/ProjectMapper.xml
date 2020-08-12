@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dto.projectDto">
+
+	<resultMap type="com.promore.project.dto.ProjectDto" id="project_dto">
+		<result column="pro_num" property="proNum"/>
+		<result column="pro_name" property="proName"/>
+		<result column="pro_content" property="proContent"/>
+		<result column="pro_manager" property="proManager"/>
+		<result column="pro_state" property="proState"/>
+		<result column="pro_cnt" property="proCnt"/>
+	</resultMap>
+
+
+
+
+<insert id="project_insert" parameterType="com.promore.project.dto.ProjectDto">
+		insert into project(
+			pro_num,
+			pro_name,
+			pro_content,
+			pro_manager,
+			pro_state,
+			pro_cnt
+		)
+		values(
+			project_pro_num_seq.nextval,
+			#{proName},
+			#{proContent},
+			#{proManager},
+			#{proState},
+			#{proCnt}
+		)
+</insert>
+	
+
+
+</mapper>
