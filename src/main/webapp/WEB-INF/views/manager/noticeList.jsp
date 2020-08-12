@@ -193,7 +193,7 @@
 						<div class="form-group row">
 							<div class="col-sm-12">
 								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
-								</span> <input type="file" class="mx-2" id="inputFile" />
+								</span> <input type="file" class="mx-2" id="inputFile" name="file" />
 							</div>
 						</div>
 

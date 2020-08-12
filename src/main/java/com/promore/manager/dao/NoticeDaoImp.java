@@ -2,15 +2,20 @@ package com.promore.manager.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import com.promore.aop.HAspect;
 import com.promore.manager.dto.NoticeDto;
 
+@Component
 public class NoticeDaoImp implements NoticeDao {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	@Override
 	public int noticeWrite(NoticeDto noticeDto) {
+		
+		HAspect.logger.info(HAspect.logMsg + "noticeWriteOk - Dao");
 		
 		int check = 0;
 		
