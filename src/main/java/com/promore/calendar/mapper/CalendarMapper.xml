@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CalendarMapper">
+
+	<resultMap type="com.promore.calendar.dto.CalendarDto"
+		id="calendar_dto">
+		<result column="sche_num" property="scheNum" />
+		<result column="sche_title" property="scheTitle" />
+		<result column="sche_start_date" property="scheStartDate" />
+		<result column="sche_end_date" property="scheEndDate" />
+		<result column="sche_content" property="scheContent" />
+		<result column="pro_num" property="proNum" />
+	</resultMap>
+	
+	<insert id="insert_schedule" parameterType="com.promore.calendar.dto.CalendarDto">
+		insert into schedule(
+			sche_num,
+			sche_title, 
+			sche_start_date, 
+			sche_end_date, 
+			sche_content, 
+			pro_num
+		)
+		values(
+			#{scheNum}, 
+			#{scheTitle}, 
+			#{scheStartDate}, 
+			#{scheEndDate}, 
+			#{scheContent}, 
+			#{proNum}
+		)
+	</insert>
+	
+	<select id="select_schedule" parameterType="com.promore.calendar.dto.CalendarDto" resultMap="calendar_dto">
+		select * from schedule where pro_num = #{proNum}
+	</select>
+</mapper>

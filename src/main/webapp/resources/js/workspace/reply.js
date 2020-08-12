@@ -1,5 +1,5 @@
 function init() {
-  var replyForm = document.querySelector("#reply-form");
+  var replyForm = document.querySelector(".reply-form");
   var replyList = document.querySelector(".reply-list");
   var replyTmpl = document.querySelector("#reply-tmpl");
   var replyFileSel = document.querySelector("#reply-file-select");

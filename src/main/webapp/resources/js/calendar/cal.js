@@ -128,6 +128,44 @@ function getHoliday(year, month) {
   });
 }
 
+function getAllSchedule() {
+  // TODO: 나중에 현재 사용자를 기준으로 한 프로젝트 리스트를 통해서
+  // proNum 리스트를 가져온다.
+  var data = {
+    proNum: 1,
+  };
+
+  $.ajax({
+    url: root + "/calendar/read-schedule.do",
+    data: data,
+    dataType: "json",
+  })
+    .then(function (data) {
+      // Toast로 대체
+      var result = data.result;
+      [].forEach.call(result, function (item) {
+        var start = moment(item.scheStartDate).format("yyyy-MM-DD (ddd)");
+        var end = moment(item.scheEndDate).format("yyyy-MM-DD (ddd)");
+
+        calendar.createSchedules([
+          {
+            id: item.scheNum,
+            calendarId: "schedule",
+            title: item.scheTitle,
+            body: item.scheContent,
+            category: "allday",
+            start: start,
+            end: end,
+          },
+        ]);
+      });
+    })
+    .catch(function (err) {
+      // Toast로 대체
+      alert("일정을 불러오는데 실패하였습니다.");
+    });
+}
+
 function init() {
   var nextBtn = document.querySelector(".calendar-next");
   var prevBtn = document.querySelector(".calendar-prev");
@@ -138,24 +176,13 @@ function init() {
   var scheduleCb = document.querySelector("#schedule-cb");
   var holidayCb = document.querySelector("#holiday-cb");
 
-  //FIXME: 더미(나중에 지움)
-  calendar.createSchedules([
-    {
-      id: Date.now(),
-      calendarId: "schedule",
-      title: "팀 회의",
-      body: "하계 팀 회의입니다. 많은 참석 바랍니다.",
-      category: "time",
-      start: "2020-08-09",
-      end: "2020-08-15",
-    },
-  ]);
-
   // 년/달 현재 달로 초기화
   setYearMonthHeader(ymHeader);
   // 체크박스 모두 체크
   scheduleCb.checked = true;
   holidayCb.checked = true;
+
+  getAllSchedule();
   // 공휴일 현재 달 생성(프록시)
   getHoliday(new Date().getFullYear(), fillMonth(new Date().getMonth() + 1));
 
@@ -243,10 +270,15 @@ function init() {
   // 저장 버튼
   scheduleForm.onsubmit = function (e) {
     e.preventDefault();
-    var title = this["schedule-title"].value;
-    var startDate = moment(this["schedule-start-date"].value);
-    var endDate = moment(this["schedule-end-date"].value);
-    var content = this["schedule-content"].value;
+    var scheduleNum = this["scheNum"];
+    var title = this["scheTitle"].value;
+    var startDate = moment(this["scheStartDate"].value);
+    var endDate = moment(this["scheEndDate"].value);
+    var content = this["scheContent"].value;
+
+    // TODO: 차후 변경해주어야 함
+    var proNum = this["proNum"].value;
+
     var modal = $("#schedule-modal-container");
 
     if (endDate.isBefore(startDate)) {
@@ -256,9 +288,11 @@ function init() {
 
     var modalTitle = modal.find(".modal-title").text();
     if (modalTitle === "일정추가") {
+      scheduleNum.value = Date.now();
+
       calendar.createSchedules([
         {
-          id: Date.now(),
+          id: scheduleNum.value,
           calendarId: "schedule",
           title: title,
           body: content,
@@ -267,13 +301,39 @@ function init() {
           end: this["schedule-end-date"].value,
         },
       ]);
+
+      // AJAX
+      var data = {
+        scheNum: scheduleNum.value,
+        scheTitle: title,
+        scheStartDate: this["scheStartDate"].value,
+        scheEndDate: this["scheEndDate"].value,
+        scheContent: content,
+        proNum: proNum,
+      };
+
+      $.ajax({
+        url: root + "/calendar/add-schedule.do",
+        method: "post",
+        data: data,
+        dataType: "text",
+      }).then(function (data) {
+        // Toast로 대체
+        if (data.trim() === "1") alert("일정이 추가되었습니다.");
+        else alert("일정이 추가되지 못했습니다. 다시 시도해주세요.");
+      });
     } else if (modalTitle === "일정수정") {
-      calendar.updateSchedule(parseInt(modal.attr("schedule-id")), "schedule", {
+      scheduleNum.value = parseInt(modal.attr("schedule-id"));
+
+      calendar.updateSchedule(scheduleNum.value, "schedule", {
         title: title,
         body: content,
         start: this["schedule-start-date"].value,
         end: this["schedule-end-date"].value,
       });
+
+      // AJAX
+      // schduleNum.value;
     }
 
     $("#schedule-modal-container").modal("hide");

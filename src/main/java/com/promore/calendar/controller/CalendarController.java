@@ -1,32 +1,76 @@
 package com.promore.calendar.controller;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.promore.calendar.service.CalendarService;
+
 @Controller
 public class CalendarController {
 	
+	@Autowired
+	@Qualifier("calendarService")	
+	private CalendarService calendarService;
+	
+	// 페이지 조회
 	@RequestMapping(value = "/calendar.do", method = RequestMethod.GET)
 	public ModelAndView getCalendar(HttpServletRequest req, HttpServletResponse resp) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("calendar/calendar");
 		return mav;
 	}
+	
+	// 일정 추가
+	@RequestMapping(value="/calendar/add-schedule.do", method=RequestMethod.POST)
+	public void addSchedule(HttpServletRequest req, HttpServletResponse resp) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("req", req);
+		calendarService.addSchedule(mav);
+		
+		resp.setHeader("Content-Type", "plain/text;charset=utf-8");
+		try {
+			resp.getWriter().println(mav.getModel().get("chk"));
+			resp.flushBuffer();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// 모든 일정 조회
+	@RequestMapping(value = "/calendar/read-schedule.do", method = RequestMethod.GET)
+	public void getAllSchedule(HttpServletRequest req, HttpServletResponse resp) {
+		ModelAndView mav = new ModelAndView();
+		int proNum = Integer.parseInt(req.getParameter("proNum"));
+		
+		mav.addObject("proNum", proNum);
+		calendarService.getAllSchedule(mav);
+		
+		resp.setHeader("Content-Type", "application/json;charset=utf-8");
+		try {
+			resp.getWriter().println(((JSONObject)mav.getModel().get("jsonObj")).toJSONString());
+			resp.flushBuffer();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
+	// 공휴일 조회
 	@RequestMapping(value = "/calendar/holiday.do", method = RequestMethod.GET)
 	public void getHoliday(HttpServletRequest req, HttpServletResponse resp) {
 		String year = req.getParameter("year");
@@ -50,7 +94,6 @@ public class CalendarController {
 				while((str=br.readLine()) != null) 
 					sb.append(str);
 				resp.setHeader("Content-Type", "text/plain; charset=utf-8");
-				System.out.println(sb.toString());
 				resp.getWriter().println(sb.toString());
 				resp.flushBuffer();
 			}

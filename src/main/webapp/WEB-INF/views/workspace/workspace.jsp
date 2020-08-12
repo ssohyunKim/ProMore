@@ -336,7 +336,7 @@
 
 										<!-- 댓글 작성 폼 -->
 										<div class="container">
-											<form id="reply-form" action="/work-reply/write"
+											<form class="reply-form" action="/work-reply/write"
 												method="post" enctype="multipart/form-data">
 												<!-- 아바타, textarea, 작성버튼 -->
 												<div class="row">
