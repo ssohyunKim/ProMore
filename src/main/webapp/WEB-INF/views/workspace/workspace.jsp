@@ -93,18 +93,18 @@
 										<div
 											class="form-check-inline col justify-content-between pb-4">
 											<!-- 작성자 -->
-											<b>작성자</b>
+											<b name="workSender">작성자</b>
 
 											<!-- 상태 -->
 											<div class="btn-group btn-group-toggle my-1 workState"
 												data-toggle="buttons">
 												<label class="btn btn-primary active"> <input
-													type="radio" name="options" id="option1" checked>
+													type="radio" name="workState" id="option1" checked>
 													요청
 												</label> <label class="btn btn-primary"> <input type="radio"
-													name="options" id="option2"> 진행
+													name="workState" id="option2"> 진행
 												</label> <label class="btn btn-primary"> <input type="radio"
-													name="options" id="option3"> 완료
+													name="workState" id="option3"> 완료
 												</label>
 											</div>
 
@@ -123,19 +123,12 @@
 											<!-- drop down -->
 											<div>
 												<div class="btn-group">
-													<button type="button"
-														class="btn btn-primary dropdown-toggle"
-														data-toggle="dropdown" aria-haspopup="true"
-														aria-expanded="false">담당자</button>
-													<div class="dropdown-menu" id="manager">
-														<a class="dropdown-item" href="#">이형은</a> <a
-															class="dropdown-item" href="#">이다은</a> <a
-															class="dropdown-item" href="#">김아름</a>
-													</div>
+													<button type="button" class="btn btn-primary"
+														data-toggle="modal" data-target="#managerModal">담당자</button>
 												</div>
 
 												<!-- 선택된 담당자 -->
-												<label class="p-2" id="managerWho"></label>
+												<label class="p-2" id="managerWho" name="workReceiver"></label>
 											</div>
 
 											<!-- date picker -->
@@ -144,16 +137,16 @@
 												<div class="form-check-inline">
 													<span class="icon"> <i
 														class="fas fa-calendar-alt fa-lg mr-2"></i>
-													</span> <input class="calenderInput" type="text" id="date1"
-														value="시작일 추가" />
+													</span> <input class="calenderStart" name="workStartDate"
+														type="text" id="date1" value="시작일 추가" />
 												</div>
 
 												<!-- 마감일 추가 -->
 												<div class="form-check-inline m-0">
 													<span class="icon"> <i
 														class="fas fa-calendar-alt fa-lg mr-2"></i>
-													</span> <input class="calenderInput" type="text" id="date2"
-														value="마감일 추가" />
+													</span> <input class="calenderEnd" name="workEndDate" type="text"
+														id="date2" value="마감일 추가" />
 												</div>
 											</div>
 
@@ -162,13 +155,13 @@
 
 										<!-- 일감 제목 -->
 										<div class="pb-3">
-											<input type="text" class="form-control"
+											<input type="text" class="form-control" name="workSubject"
 												placeholder="업무명을 입력하세요">
 										</div>
 
 										<!-- 일감 내용 -->
 										<div class="pb-3">
-											<textarea class="form-control">업무내용을 입력하세요</textarea>
+											<textarea class="form-control" name="workContent">업무내용을 입력하세요</textarea>
 										</div>
 
 										<!-- 파일 첨부 -->
@@ -236,11 +229,11 @@
 
 											<!-- drop down -->
 											<div>
-												<a>이형은</a> <a href="#" onclick="managerSelect('${root}')"
-													class="text-decoration-none col-sm-3">담당자 변경</a>
-
+												<a href="#" class="text-decoration-none col-sm-3"
+													data-toggle="modal" data-target="#managerModal">담당자 변경</a>
+												<a id="managerWho">이형은</a>
 												<!-- 선택된 담당자 -->
-												<label class="p-2" id="managerWho"></label>
+												<label class="p-2"></label>
 											</div>
 
 											<!-- date picker -->
@@ -457,6 +450,47 @@
 								data-dismiss="modal">취소</button>
 							<button type="button" class="btn btn-primary">수정</button>
 						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- managerList Model -->
+	<div class="modal fade" id="managerModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog col-sm-6" role="document">
+			<div class="modal-content">
+
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">담당자</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!-- modal-body -->
+				<div class="modal-body">
+
+
+					<!--담당자 리스트 -->
+					<div class="form-group d-flex justify-content-center">
+						<div class="form-check-inline">
+							<input type="text" class="form-check-inline" id="inputTitle"
+								placeholder="담장자를 검색하세요"> <input type="button"
+								class="btn btn-primary" value="검색">
+						</div>
+					</div>
+					<!-- 글 내용 -->
+					<div class="form-group row">
+						<div class="col-sm-12"></div>
+					</div>
+
+					<!-- modal-footer -->
+					<div
+						class="modal-footer justify-content-between d-flex flex-row-reverse">
+						<button type="reset" class="btn btn-warning" data-dismiss="modal">닫기</button>
 					</div>
 				</div>
 			</div>
