@@ -85,6 +85,7 @@ $(function () {
 });
 
 var koreanDays = ["일", "월", "화", "수", "목", "금", "토"];
+var beforeEditState = {};
 
 function managerSelect(root) {
   //alert("확인"+root);
@@ -156,6 +157,10 @@ function writeToServer() {
         );
       $tmpl.find(".work-subject").text(workSubject);
       $tmpl.find("input[value='" + workStateVar + "']").attr("checked", "");
+      $tmpl
+        .find("input[name='workState']")
+        .not("input[value='" + workStateVar + "']")
+        .attr("disabled", "");
       $tmpl
         .find("input[value='" + workStateVar + "']")
         .parent()
@@ -235,6 +240,17 @@ function editWork(e) {
     "h5.work-subject"
   ).innerText;
 
+  work
+    .querySelectorAll("input[name='workState'][disabled]")
+    .forEach(function (i) {
+      i.removeAttribute("disabled");
+    });
+  beforeEditState.btnState = work
+    .querySelector("input[name='workState']:checked")
+    .value.trim();
+
+  work.querySelector(".receiver-search").removeAttribute("disabled");
+
   work.querySelector(".work-start-date").removeAttribute("readonly");
   work.querySelector(".work-end-date").removeAttribute("readonly");
 
@@ -254,6 +270,25 @@ function cancelEdit(e) {
 
   work.querySelector("h5.work-subject").classList.remove("d-none");
   work.querySelector("input.work-subject").classList.add("d-none");
+
+  work
+    .querySelector("input[value='" + beforeEditState.btnState + "']")
+    .setAttribute("checked", "");
+  work
+    .querySelector("input[value='" + beforeEditState.btnState + "']")
+    .parentNode.classList.add("active");
+
+  work
+    .querySelectorAll(
+      "input[name='workState']:not([value='" + beforeEditState.btnState + "'])"
+    )
+    .forEach(function (i) {
+      i.setAttribute("disabled", "");
+      i.removeAttribute("checked", "");
+      i.parentNode.classList.remove("active");
+    });
+
+  work.querySelector(".receiver-search").setAttribute("disabled", "");
 
   work.querySelector(".work-start-date").setAttribute("readonly", "");
   work.querySelector(".work-end-date").setAttribute("readonly", "");
@@ -304,6 +339,14 @@ function okEdit(e) {
         "input.work-subject"
       ).value;
       work.querySelector("input.work-subject").classList.add("d-none");
+
+      work
+        .querySelectorAll("input[name='workState']:not(:checked)")
+        .forEach(function (i) {
+          i.setAttribute("disabled", "");
+        });
+
+      work.querySelector(".receiver-search").setAttribute("disabled", "");
 
       work.querySelector(".work-start-date").setAttribute("readonly", "");
       work.querySelector(".work-end-date").setAttribute("readonly", "");

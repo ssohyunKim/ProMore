@@ -133,7 +133,7 @@
 											<!-- modal -->
 											<div class="float-left">
 												<div class="btn-group">
-													<button type="button" class="btn btn-primary"
+													<button type="button" class="receiver-search btn btn-primary"
 														data-toggle="modal" data-target="#managerModal">담당자</button>
 												</div>
 
@@ -247,13 +247,13 @@
 														data-toggle="buttons">
 														<label class="btn btn-primary active"> <input
 															type="radio" name="workState" value="요청"
-															${fn:trim(item.workState) == '0'? 'checked': '' }>요청
+															${fn:trim(item.workState) == '0'? 'checked': 'disabled' }>요청
 														</label> <label class="btn btn-primary"> <input
 															type="radio" name="workState" value="진행"
-															${fn:trim(item.workState) == '1'? 'checked': '' }>진행
+															${fn:trim(item.workState) == '1'? 'checked': 'disabled' }>진행
 														</label> <label class="btn btn-primary"> <input
 															type="radio" name="workState" value="완료"
-															${fn:trim(item.workState) == '2'? 'checked': '' }>완료
+															${fn:trim(item.workState) == '2'? 'checked': 'disabled' }>완료
 														</label>
 													</div>
 												</div>
@@ -265,8 +265,8 @@
 													<!-- modal -->
 													<div class="float-left">
 														<div class="btn-group">
-															<button type="button" class="btn btn-primary"
-																data-toggle="modal" data-target="#managerModal">담당자</button>
+															<button type="button" class="receiver-search btn btn-primary"
+																data-toggle="modal" data-target="#managerModal" disabled>담당자</button>
 														</div>
 
 														<!-- 선택된 담당자 -->
@@ -301,7 +301,7 @@
 												<div class="pb-3">
 													<div class="work-content p-3">${item.workContent }</div>
 													<textarea name="workContent"
-														class="work-content form-control d-none" required>${item.workContent }</textarea>
+														class="work-content form-control d-none" placeholder="업무내용을 입력하세요" required>${item.workContent }</textarea>
 												</div>
 
 												<!-- file-down -->
@@ -588,7 +588,7 @@
 						<!-- modal -->
 						<div class="float-left">
 							<div class="btn-group">
-								<button type="button" class="btn btn-primary"
+								<button type="button" class="receiver-search btn btn-primary"
 									data-toggle="modal" data-target="#managerModal">담당자</button>
 							</div>
 
@@ -620,7 +620,7 @@
 					<div class="pb-3">
 						<div class="work-content p-3">내용</div>
 						<textarea name="workContent"
-							class="form-control work-content d-none" required>내용</textarea>
+							class="form-control work-content d-none" placeholder="업무내용을 입력하세요" required>내용</textarea>
 					</div>
 
 					<!-- file-down -->
