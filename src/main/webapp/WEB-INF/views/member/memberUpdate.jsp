@@ -69,7 +69,10 @@
 
 								<!-- Card Body -->
 								<div class="card-body">
-									<form name="updateForm">
+									<form name="updateForm" onsubmit="return memberUpdate(this, ${memberDto.memPassword});">
+									
+										<input type="hidden" name = "num" value="${memberDto.memNum}" />
+									
 										<!-- 아이디 -->
 										<div class="form-group row">
 											<label for="staticId" class="col-sm-3 col-form-label">아이디</label>
@@ -92,7 +95,7 @@
 										<div class="form-group row">
 											<label for="changeNickName" class="col-sm-3 col-form-label">닉네임</label>
 											<div class="col-sm-9">
-												<input type="text" class="form-control" id="changeNickName"
+												<input type="text" class="form-control" id="changeNickName" name="nickname"
 													value="${memberDto.memNickname}">
 											</div>
 										</div>
@@ -102,7 +105,7 @@
 											<label for="inputPassword3" class="col-sm-3 col-form-label">비밀번호</label>
 											<div class="col-sm-9">
 												<input type="password" class="form-control"
-													id="inputPassword3" placeholder="비밀번호를 입력하세요.">
+													id="inputPassword3" placeholder="비밀번호를 입력하세요." name="password">
 											</div>
 										</div>
 
@@ -112,7 +115,7 @@
 												확인</label>
 											<div class="col-sm-9">
 												<input type="password" class="form-control"
-													id="inputPassword4" placeholder="비밀번호를 다시 한 번 입력하세요.">
+													id="inputPassword4" placeholder="비밀번호를 다시 한 번 입력하세요." name="passwordCheck">
 											</div>
 										</div>
 
@@ -130,7 +133,7 @@
 											<label for="changePhone" class="col-sm-3 col-form-label">휴대폰
 												번호</label>
 											<div class="col-sm-9">
-												<input type="phone" class="form-control" id="changePhone"
+												<input type="phone" class="form-control" id="changePhone" name="phone"
 													value="${memberDto.memPhone}"> <span
 													class="m-0 pl-2">('-'을 제외한 숫자만 입력해주세요. ex :
 													01012345678)</span>
@@ -177,7 +180,7 @@
 										<div class="form-group row">
 											<label for="comment" class="col-sm-3 col-form-label">보유기술</label>
 											<div class="col-sm-9">
-												<textarea class="form-control" rows="5" id="comment">${memberDto.memSkills}</textarea>
+												<textarea class="form-control" rows="5" id="comment" name="skills">${memberDto.memSkills}</textarea>
 											</div>
 										</div>
 
@@ -188,8 +191,7 @@
 										<br />
 
 										<!-- 수정 완료 -->
-										<button type="submit" class="btn btn-primary col-sm-12"data-toggle="modal"
-															data-target="#memberUpdateModal" data-memnum="${memberDto.memNum}" data-mempassword="${memberDto.memPassword}">
+										<button type="submit" class="btn btn-primary col-sm-12">
 											<span class="text">수정 완료</span>
 										</button>
 
@@ -230,7 +232,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" onclick="memberUpdate('${root}');">확인</button>
+					<button type="button" class="btn btn-primary" onclick="memberUpdateOk('${root}');">확인</button>
 				</div>
 			</div>
 		</div>
@@ -247,5 +249,9 @@
 
 	<!-- Custom scripts for all pages-->
 	<script src="${root}/resources/js/sb-admin-2.min.js"></script>
+	
+	<!-- Member JavaScript-->
+	<script src="${root}/resources/js/member/member.js"></script>
+	
 </body>
 </html>

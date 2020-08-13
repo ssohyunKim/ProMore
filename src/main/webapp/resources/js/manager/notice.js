@@ -8,7 +8,7 @@ $('#noticeReadModal').on('show', function() {
     consol.log($(getIdFromRow))
 })
 
-$(document).ready(function() {     
+$(document).ready(function() {
     $('#noticeDeleteModal').on('show.bs.modal', function(event) {          
         notnum = $(event.relatedTarget).data('notnum');
     });

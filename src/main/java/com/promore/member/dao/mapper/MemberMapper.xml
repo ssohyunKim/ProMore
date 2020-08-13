@@ -23,9 +23,15 @@
 		select mem_level from member where mem_id=#{memId} and mem_password=#{memPassword}
 	</select> 
 	
-	<select id="member_select" resultMap="member_dto">
+	<select id="member_select" parameterType="int" resultMap="member_dto">
 		select * from member where mem_num = #{memNum}
 	</select>
+	
+	<update id="member_update" parameterType="com.promore.member.dto.MemberDto">
+		update member set mem_nickname = #{memNickname}, mem_phone = #{memPhone},
+				mem_email = #{memEmail}, mem_mailing = #{memMailing}, mem_skills = #{memSkills}
+		where mem_num = #{memNum}
+	</update>
 
 	
 	
