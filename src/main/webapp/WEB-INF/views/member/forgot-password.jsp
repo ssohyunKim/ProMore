@@ -42,7 +42,7 @@
                   </div>
                   <form class="user" action="${root}/member/sendPw.do" method="get">
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="이메일 주소를 입력하세요...">
+                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="이메일 주소를 입력하세요..." name="mem_email">
                     </div>
                     <input type="submit" class="btn btn-primary btn-user btn-block" value="비밀번호 찾기">
                   </form>

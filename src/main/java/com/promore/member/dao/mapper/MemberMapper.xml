@@ -20,7 +20,7 @@
 	</resultMap>
 	
 	<!-- <select id="member_login" parameterType="java.util.Map" resultType="String">
-		select mem_level from member where mem_id=#{mem_id} and mem_password=#{mem_password}
+		select mem_level from member where mem_id=#{memId} and mem_password=#{memPassword}
 	</select> -->
 	
 	<select id="member_select" resultMap="member_dto">

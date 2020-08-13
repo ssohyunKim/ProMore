@@ -6,7 +6,7 @@ import com.promore.member.dto.MemberDto;
 
 public interface MemberDao {
 	
-	public int loginOk(String mem_id, String mem_password);	
+	public int loginOk(String memId, String memPassword);	
 	
 	String getPw(Map<String, Object> paramMap);
 	
