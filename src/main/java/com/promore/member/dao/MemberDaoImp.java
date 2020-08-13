@@ -20,7 +20,7 @@ public class MemberDaoImp implements MemberDao {
 	
 	@Override
 	public String getPw(Map<String, Object> paramMap) {
-		String value = (String) sqlSessionTemplate.selectOne("MEM_passowrd", paramMap);
+		String value = (String) sqlSessionTemplate.selectOne("mem_passowrd", paramMap);
 		return value;
 	}
 }

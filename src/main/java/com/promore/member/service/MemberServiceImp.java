@@ -37,7 +37,7 @@ public class MemberServiceImp implements MemberService {
 		String mem_id = request.getParameter("mem_id");
 		String mem_password=request.getParameter("mem_password");
 		String mem_level=request.getParameter("mem_level");
-		int check = memberDao.loginOk(mem_id, mem_password);
+		//int check = memberDao.loginOk(mem_id, mem_password);
 		HAspect.logger.info(HAspect.logMsg + mem_id);
 		HAspect.logger.info(HAspect.logMsg + mem_password);
 		HAspect.logger.info(HAspect.logMsg + mem_level);
@@ -62,8 +62,8 @@ public class MemberServiceImp implements MemberService {
 //		HAspect.logger.info(HAspect.logMsg + check);
 		
 		mav.addObject("mem_id", mem_id);
-		mav.addObject("mem_password", mem_id);
-		//mav.addObject("mem_level", "0");
+		mav.addObject("mem_password", mem_password);
+		mav.addObject("mem_level", "0");
 		mav.setViewName("member/logout");
 		
 	}
