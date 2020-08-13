@@ -37,7 +37,7 @@ public class MailController {
 	    if(pw!=null) {
 			email.setContent("비밀번호는 "+pw+" 입니다.");
 	        email.setReceiver(memEmail);
-	        email.setSubject(memId+"님 비밀번호 찾기 메일입니다.");
+	        //email.setSubject(memId+"님 비밀번호 찾기 메일입니다.");
 	        emailSender.SendEmail(email);
 	        mav= new ModelAndView("redirect:/emailSuccess.do");
 	        return mav;
