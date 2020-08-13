@@ -3,19 +3,28 @@ package com.promore.member.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.promore.member.service.MemberService;
+
 @Controller
 public class MemberController {
 
+	@Autowired
+	private MemberService memberService;
+	
 	@RequestMapping(value = "/member/loginOk.do", method = RequestMethod.POST)
 	public ModelAndView loginOk(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("OK");
+		System.out.println("OK1");
 		
-		ModelAndView mav = new ModelAndView("member/loginOk");
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("request", request);
+		
+		memberService.memberLoginOk(mav);
 		return mav;
 	}
 	
