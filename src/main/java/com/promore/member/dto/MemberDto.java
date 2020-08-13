@@ -1,44 +1,131 @@
 package com.promore.member.dto;
 
+import java.util.Date;
+
 public class MemberDto {
-	private String mem_id;
-	private String mem_password;
-	private String mem_email;
-	private String mem_level;
-	
+	private int memNum;
+	private String memId;
+	private String memName;
+	private String memNickname;
+	private String memPassword;
+	private String memLevel;
+	private String memPhone;
+	private String memEmail;
+	private int memMailing;
+	private String memSkills;
+	private Date memRegDate;
+
 	public MemberDto() {}
 
-	public String getMem_id() {
-		return mem_id;
+	public MemberDto(int memNum, String memId, String memName, String memNickname, String memPassword, String memLevel,
+			String memPhone, String memEmail, int memMailing, String memSkills, Date memRegDate) {
+		this.memNum = memNum;
+		this.memId = memId;
+		this.memName = memName;
+		this.memNickname = memNickname;
+		this.memPassword = memPassword;
+		this.memLevel = memLevel;
+		this.memPhone = memPhone;
+		this.memEmail = memEmail;
+		this.memMailing = memMailing;
+		this.memSkills = memSkills;
+		this.memRegDate = memRegDate;
 	}
 
-	public void setMem_id(String mem_id) {
-		this.mem_id = mem_id;
+	public int getMemNum() {
+		return memNum;
 	}
 
-	public String getMem_password() {
-		return mem_password;
+	public void setMemNum(int memNum) {
+		this.memNum = memNum;
 	}
 
-	public void setMem_password(String mem_password) {
-		this.mem_password = mem_password;
+	public String getMemId() {
+		return memId;
 	}
 
-	public String getMem_email() {
-		return mem_email;
+	public void setMemId(String memId) {
+		this.memId = memId;
 	}
 
-	public void setMem_email(String mem_email) {
-		this.mem_email = mem_email;
+	public String getMemName() {
+		return memName;
 	}
 
-	public String getMem_level() {
-		return mem_level;
+	public void setMemName(String memName) {
+		this.memName = memName;
 	}
 
-	public void setMem_level(String mem_level) {
-		this.mem_level = mem_level;
+	public String getMemNickname() {
+		return memNickname;
 	}
-	
-	
+
+	public void setMemNickname(String memNickname) {
+		this.memNickname = memNickname;
+	}
+
+	public String getMemPassword() {
+		return memPassword;
+	}
+
+	public void setMemPassword(String memPassword) {
+		this.memPassword = memPassword;
+	}
+
+	public String getMemLevel() {
+		return memLevel;
+	}
+
+	public void setMemLevel(String memLevel) {
+		this.memLevel = memLevel;
+	}
+
+	public String getMemPhone() {
+		return memPhone;
+	}
+
+	public void setMemPhone(String memPhone) {
+		this.memPhone = memPhone;
+	}
+
+	public String getMemEmail() {
+		return memEmail;
+	}
+
+	public void setMemEmail(String memEmail) {
+		this.memEmail = memEmail;
+	}
+
+	public int getMemMailing() {
+		return memMailing;
+	}
+
+	public void setMemMailing(int memMailing) {
+		this.memMailing = memMailing;
+	}
+
+	public String getMemSkills() {
+		return memSkills;
+	}
+
+	public void setMemSkills(String memSkills) {
+		this.memSkills = memSkills;
+	}
+
+	public Date getMemRegDate() {
+		return memRegDate;
+	}
+
+	public void setMemRegDate(Date memRegDate) {
+		this.memRegDate = memRegDate;
+	}
+
+	@Override
+	public String toString() {
+		return "MemberDto [memNum=" + memNum + ", memId=" + memId + ", memName=" + memName + ", memNickname="
+				+ memNickname + ", memPassword=" + memPassword + ", memLevel=" + memLevel + ", memPhone=" + memPhone
+				+ ", memEmail=" + memEmail + ", memMailing=" + memMailing + ", memSkills=" + memSkills + ", memRegDate="
+				+ memRegDate + "]";
+	}
+
 }

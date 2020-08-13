@@ -30,14 +30,14 @@ public class MailController {
 	public ModelAndView sendEmailAction (@RequestParam Map<String, Object> paramMap, ModelMap model) throws Exception {
 		System.out.println("mail");
 		ModelAndView mav;
-	    String mem_id=(String) paramMap.get("mem_id");
-	    String mem_email=(String) paramMap.get("mem_email");
+	    //String memId=(String) paramMap.get("memId");
+	    String memEmail=(String) paramMap.get("memEmail");
 	    String pw=memberService.getPw(paramMap);
 	    System.out.println(pw);
 	    if(pw!=null) {
 			email.setContent("비밀번호는 "+pw+" 입니다.");
-	        email.setReceiver(mem_email);
-	        email.setSubject(mem_id+"님 비밀번호 찾기 메일입니다.");
+	        email.setReceiver(memEmail);
+	        //email.setSubject(memId+"님 비밀번호 찾기 메일입니다.");
 	        emailSender.SendEmail(email);
 	        mav= new ModelAndView("redirect:/emailSuccess.do");
 	        return mav;

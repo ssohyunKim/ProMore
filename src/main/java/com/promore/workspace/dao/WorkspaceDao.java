@@ -1,5 +1,7 @@
 package com.promore.workspace.dao;
 
-public interface WorkspaceDao {
+import com.promore.workspace.dto.WorkspaceDto;
 
+public interface WorkspaceDao {
+	public int workspaceWrite(WorkspaceDto workspaceDto);
 }

@@ -45,10 +45,10 @@
                   </div>
                   <form class="user" action="${root}/member/loginOk.do" method="post">
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="아이디를 입력하세요..." name="mem_id">
+                      <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="아이디를 입력하세요..." name="memId">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="비밀번호" name="mem_password">
+                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="비밀번호" name="memPassword">
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
@@ -74,7 +74,7 @@
                   </div>
                   <div class="text-center">
                     <a class="small" href="${root}/member/register.do">계정을 만드세요!</a>
-                  </div>
+                  </div>         
                 </div>
               </div>
             </div>

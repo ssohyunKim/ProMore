@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.promore.member.dto.MemberDto;
 import com.promore.member.service.MemberService;
 
 @Controller
@@ -36,6 +37,17 @@ public class MemberController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/member/memberUpdate.do", method = RequestMethod.GET)
+	public ModelAndView memberUpdate(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("memberUpdate.do");
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		
+		memberService.memberUpdate(mav);
+		
+		return mav;
+	}
 	
 	@RequestMapping(value = "/member/forgot-password.do", method = RequestMethod.GET)
 	public ModelAndView forgotPassword(HttpServletRequest request, HttpServletResponse response) {
