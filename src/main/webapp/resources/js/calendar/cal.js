@@ -46,10 +46,11 @@ calendar.on("clickSchedule", function (e) {
   var startDate = schedule.start;
   var endDate = schedule.end;
   var content = schedule.body.replace(/\n/g, "<br/>");
-  var schduleEdit = document.querySelector("#schedule-edit");
-  var schduleDelete = document.querySelector("#schedule-delete");
+  var scheduleEdit = document.querySelector("#schedule-edit");
+  var scheduleDelete = document.querySelector("#schedule-delete");
 
   var scheduleView = $("#schedule-view");
+  var scheduleFormView = $("#schedule-modal-container");
 
   scheduleView.find(".modal-title").html(title);
   scheduleView.find(".schedule-content").html(content);
@@ -62,14 +63,15 @@ calendar.on("clickSchedule", function (e) {
     );
 
   if (schedule.calendarId === "schedule") {
-    schduleEdit.classList.remove("invisible");
-    schduleDelete.classList.remove("invisible");
+    scheduleEdit.classList.remove("invisible");
+    scheduleDelete.classList.remove("invisible");
   } else if (schedule.calendarId === "holiday") {
-    schduleEdit.classList.add("invisible");
-    schduleDelete.classList.add("invisible");
+    scheduleEdit.classList.add("invisible");
+    scheduleDelete.classList.add("invisible");
   }
 
-  scheduleView.attr("schedule-id", id);
+  scheduleEdit.setAttribute("schedule-id", id);
+  scheduleDelete.setAttribute("schedule-id", id);
 
   scheduleView.modal("toggle");
 });
@@ -270,11 +272,11 @@ function init() {
 
   scheduleDelete.onclick = function (e) {
     e.preventDefault();
-    var modal = $("#schedule-view");
+    var scheduleDelete = $("#schedule-delete");
 
     var choose = confirm("삭제하시겠습니까?");
     if (choose) {
-      var scheNum = parseInt(modal.attr("schedule-id"));
+      var scheNum = parseInt(scheduleDelete.attr("schedule-id"));
       calendar.deleteSchedule(scheNum, "schedule", false);
 
       // AJAX
