@@ -27,8 +27,8 @@ public class CalendarServiceImpl implements CalendarService {
 	@Override
 	public void addSchedule(ModelAndView mav) {
 		Map<String, Object> model = mav.getModel();
+		
 		HttpServletRequest req = (HttpServletRequest) model.get("req");
-
 		CalendarDto calendarDto = new CalendarDto();
 		calendarDto.setScheNum(Long.parseLong(req.getParameter("scheNum")));
 		calendarDto.setScheTitle(req.getParameter("scheTitle"));
@@ -52,7 +52,8 @@ public class CalendarServiceImpl implements CalendarService {
 		Map<String, Object> model = mav.getModel();
 
 		CalendarDto calendarDto = new CalendarDto();
-		calendarDto.setProNum((Integer) model.get("proNum"));
+		HttpServletRequest req = (HttpServletRequest) model.get("req");
+		calendarDto.setProNum(Integer.parseInt(req.getParameter("proNum")));
 
 		List<CalendarDto> list = calendarDao.selectSchedule(calendarDto);
 		JSONObject jsonObj = null;
@@ -72,4 +73,36 @@ public class CalendarServiceImpl implements CalendarService {
 		mav.addObject("jsonObj", jsonObj);
 	}
 
+	@Override
+	public void editSchedule(ModelAndView mav) {
+		Map<String, Object> model = mav.getModel();
+		
+		HttpServletRequest req = (HttpServletRequest) model.get("req");
+		CalendarDto calendarDto = new CalendarDto();
+		calendarDto.setScheNum(Long.parseLong(req.getParameter("scheNum")));
+		calendarDto.setScheTitle(req.getParameter("scheTitle"));
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			calendarDto.setScheStartDate(sdf.parse(req.getParameter("scheStartDate")));
+			calendarDto.setScheEndDate(sdf.parse(req.getParameter("scheEndDate")));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		calendarDto.setScheContent(req.getParameter("scheContent"));
+		
+		int chk = calendarDao.updateSchedule(calendarDto);
+		mav.addObject("chk", chk);
+	}
+
+	@Override
+	public void deleteSchedule(ModelAndView mav) {
+		Map<String, Object> model = mav.getModel();
+		
+		HttpServletRequest req = (HttpServletRequest) model.get("req");
+		CalendarDto calendarDto = new CalendarDto();
+		calendarDto.setScheNum(Long.parseLong(req.getParameter("scheNum")));
+		
+		int chk = calendarDao.deleteSchedule(calendarDto);
+		mav.addObject("chk", chk);
+	}
 }

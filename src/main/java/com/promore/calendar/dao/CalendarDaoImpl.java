@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.promore.calendar.dto.CalendarDto;
 
 @Repository("calendarDao")
-public class CalendarDaoImpl implements CalendarDao{
-	
+public class CalendarDaoImpl implements CalendarDao {
+
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 
@@ -23,5 +23,15 @@ public class CalendarDaoImpl implements CalendarDao{
 	public List<CalendarDto> selectSchedule(CalendarDto calendarDto) {
 		return sqlSessionTemplate.selectList("CalendarMapper.select_schedule", calendarDto);
 	}
-	
+
+	@Override
+	public int updateSchedule(CalendarDto calendarDto) {
+		return sqlSessionTemplate.update("CalendarMapper.update_schedule", calendarDto);
+	}
+
+	@Override
+	public int deleteSchedule(CalendarDto calendarDto) {
+		return sqlSessionTemplate.delete("CalendarMapper.delete_schedule", calendarDto);
+	}
+
 }

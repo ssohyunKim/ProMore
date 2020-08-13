@@ -7,10 +7,10 @@ import java.io.InputStreamReader;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -55,9 +55,8 @@ public class CalendarController {
 	@RequestMapping(value = "/calendar/read-schedule.do", method = RequestMethod.GET)
 	public void getAllSchedule(HttpServletRequest req, HttpServletResponse resp) {
 		ModelAndView mav = new ModelAndView();
-		int proNum = Integer.parseInt(req.getParameter("proNum"));
+		mav.addObject("req", req);
 		
-		mav.addObject("proNum", proNum);
 		calendarService.getAllSchedule(mav);
 		
 		resp.setHeader("Content-Type", "application/json;charset=utf-8");
@@ -68,7 +67,6 @@ public class CalendarController {
 			e.printStackTrace();
 		}
 	}
-	
 
 	// 공휴일 조회
 	@RequestMapping(value = "/calendar/holiday.do", method = RequestMethod.GET)
@@ -93,11 +91,43 @@ public class CalendarController {
 				StringBuffer sb = new StringBuffer();
 				while((str=br.readLine()) != null) 
 					sb.append(str);
-				resp.setHeader("Content-Type", "text/plain; charset=utf-8");
+				resp.setHeader("Content-Type", "application/json; charset=utf-8");
 				resp.getWriter().println(sb.toString());
 				resp.flushBuffer();
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// 일정 수정
+	@RequestMapping(value = "/calendar/edit-schedule.do", method = RequestMethod.POST)
+	public void editSchedule(HttpServletRequest req, HttpServletResponse resp) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("req", req);
+		
+		calendarService.editSchedule(mav);
+		resp.setHeader("Content-Type", "plain/text;charset=utf-8");
+		try {
+			resp.getWriter().println(mav.getModel().get("chk"));
+			resp.flushBuffer();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// 일정 삭제
+	@RequestMapping(value = "/calendar/delete-schedule.do", method = RequestMethod.GET)
+	public void deleteSchedule(HttpServletRequest req, HttpServletResponse resp) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("req", req);
+		
+		calendarService.deleteSchedule(mav);
+		resp.setHeader("Content-Type", "plain/text;charset=utf-8");
+		try {
+			resp.getWriter().println(mav.getModel().get("chk"));
+			resp.flushBuffer();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

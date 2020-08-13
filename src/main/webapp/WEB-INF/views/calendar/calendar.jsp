@@ -168,8 +168,13 @@
 													<h5 class="modal-title" id="exampleModalLabel">기업 세미나</h5>
 												</div>
 												<div class="right-column">
-													<a id="schedule-edit" data-toggle="modal" data-from="edit"
-														href="#schedule-modal-container"><i class="fas fa-pen"></i>&nbsp;수정</a>
+													<a id="schedule-edit" class="mr-2" data-toggle="modal" data-from="edit"
+														href="#schedule-modal-container">
+														<i class="fas fa-pen">&nbsp;수정</i>
+													</a>
+													<a id="schedule-delete"	 class="" href="#">
+														<i class="fas fa-trash">&nbsp;삭제</i>
+													</a>
 													<button type="button" class="close" data-dismiss="modal"
 														aria-label="Close">
 														<span aria-hidden="true">&times;</span>

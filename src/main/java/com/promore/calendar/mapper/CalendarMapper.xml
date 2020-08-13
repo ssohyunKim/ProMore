@@ -37,4 +37,17 @@
 	<select id="select_schedule" parameterType="com.promore.calendar.dto.CalendarDto" resultMap="calendar_dto">
 		select * from schedule where pro_num = #{proNum}
 	</select>
+	
+	<update id="update_schedule" parameterType="com.promore.calendar.dto.CalendarDto">
+		update schedule set
+			sche_title = #{scheTitle},
+			sche_start_date = #{scheStartDate}, 
+			sche_end_date = #{scheEndDate}, 
+			sche_content = #{scheContent} 
+		where sche_num = #{scheNum}
+	</update>
+	
+	<delete id="delete_schedule" parameterType="com.promore.calendar.dto.CalendarDto">
+		delete from schedule where sche_num = #{scheNum}
+	</delete>
 </mapper>

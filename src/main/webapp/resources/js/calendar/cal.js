@@ -30,14 +30,14 @@ var calendar = new tui.Calendar("#calendar", {
 
 var holidayChk = new Set([moment(new Date()).format("yyyyMM")]);
 
-calendar.on("beforeCreateSchedule", function (e) {
-  var startTime = e.start;
-  var endTime = e.end;
-  var isAllDay = e.isAllDay;
-  var guide = e.guide;
-  var triggerEventName = e.triggerEventName;
-  var schedule;
-});
+// calendar.on("beforeCreateSchedule", function (e) {
+//   var startTime = e.start;
+//   var endTime = e.end;
+//   var isAllDay = e.isAllDay;
+//   var guide = e.guide;
+//   var triggerEventName = e.triggerEventName;
+//   var schedule;
+// });
 
 calendar.on("clickSchedule", function (e) {
   var schedule = e.schedule;
@@ -45,11 +45,9 @@ calendar.on("clickSchedule", function (e) {
   var title = schedule.title;
   var startDate = schedule.start;
   var endDate = schedule.end;
-  var content = schedule.body;
+  var content = schedule.body.replace(/\n/g, "<br/>");
   var schduleEdit = document.querySelector("#schedule-edit");
-
-  console.log(content.replace(/\n/g, "<br/>"));
-  var content = content.replace(/\n/g, "<br/>");
+  var schduleDelete = document.querySelector("#schedule-delete");
 
   var scheduleView = $("#schedule-view");
 
@@ -63,12 +61,15 @@ calendar.on("clickSchedule", function (e) {
         moment(endDate.toDate()).format("yyyy-MM-DD (ddd)")
     );
 
-  if (schedule.calendarId === "schedule")
+  if (schedule.calendarId === "schedule") {
     schduleEdit.classList.remove("invisible");
-  else if (schedule.calendarId === "holiday")
+    schduleDelete.classList.remove("invisible");
+  } else if (schedule.calendarId === "holiday") {
     schduleEdit.classList.add("invisible");
+    schduleDelete.classList.add("invisible");
+  }
 
-  scheduleView.find("#schedule-edit").attr("schedule-id", id);
+  scheduleView.attr("schedule-id", id);
 
   scheduleView.modal("toggle");
 });
@@ -99,7 +100,6 @@ function getHoliday(year, month) {
 
   $.ajax({
     url: root + "/calendar/holiday.do",
-    // url: "/calendar/holiday",
     data: data,
     dataType: "json",
   }).then(function (data) {
@@ -172,6 +172,7 @@ function init() {
   var todayBtn = document.querySelector(".calendar-today");
   var ymHeader = document.querySelector(".calendar-ym-header");
   var scheduleForm = document.querySelector("#schedule-form");
+  var scheduleDelete = document.querySelector("#schedule-delete");
 
   var scheduleCb = document.querySelector("#schedule-cb");
   var holidayCb = document.querySelector("#holiday-cb");
@@ -267,6 +268,35 @@ function init() {
     }
   });
 
+  scheduleDelete.onclick = function (e) {
+    e.preventDefault();
+    var modal = $("#schedule-view");
+
+    var choose = confirm("삭제하시겠습니까?");
+    if (choose) {
+      var scheNum = parseInt(modal.attr("schedule-id"));
+      calendar.deleteSchedule(scheNum, "schedule", false);
+
+      // AJAX
+      var data = {
+        scheNum: scheNum,
+      };
+
+      $.ajax({
+        url: root + "/calendar/delete-schedule.do",
+        method: "get",
+        data: data,
+        dataType: "text",
+      })
+        .then(function (data) {
+          if (data.trim() === "1") $("#schedule-view").modal("hide");
+        })
+        .catch(function (err) {
+          alert("삭제되지 못했습니다. 다시 시도해주세요.");
+        });
+    }
+  };
+
   // 저장 버튼
   scheduleForm.onsubmit = function (e) {
     e.preventDefault();
@@ -323,9 +353,10 @@ function init() {
         else alert("일정이 추가되지 못했습니다. 다시 시도해주세요.");
       });
     } else if (modalTitle === "일정수정") {
-      scheduleNum.value = parseInt(modal.attr("schedule-id"));
+      var scheNum = parseInt(modal.attr("schedule-id"));
+      scheduleNum.value = scheNum;
 
-      calendar.updateSchedule(scheduleNum.value, "schedule", {
+      calendar.updateSchedule(scheNum, "schedule", {
         title: title,
         body: content,
         start: this["schedule-start-date"].value,
@@ -333,7 +364,24 @@ function init() {
       });
 
       // AJAX
-      // schduleNum.value;
+      var data = {
+        scheNum: scheNum,
+        scheTitle: title,
+        scheContent: content,
+        scheStartDate: this["schedule-start-date"].value,
+        scheEndDate: this["schedule-end-date"].value,
+      };
+
+      $.ajax({
+        url: root + "/calendar/edit-schedule.do",
+        method: "post",
+        data: data,
+        dataType: "text",
+      }).then(function (data) {
+        // Toast로 대체
+        if (data.trim() === "1") alert("일정이 수정되었습니다.");
+        else alert("일정이 수정되지 못했습니다. 다시 시도해주세요.");
+      });
     }
 
     $("#schedule-modal-container").modal("hide");
