@@ -12,8 +12,6 @@ public interface MemberService {
 	
 	public void memberLoginOk(ModelAndView mav);
 	
-	public void memberLogout(ModelAndView mav);
-	
 	String getPw(Map<String, Object> paramMap);
 	
 	public void memberUpdate(ModelAndView mav);

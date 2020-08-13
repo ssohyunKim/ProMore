@@ -37,36 +37,18 @@ public class MemberServiceImp implements MemberService {
 		
 		String memId = request.getParameter("memId");
 		String memPassword=request.getParameter("memPassword");
-		String memLevel=request.getParameter("memLevel");
-		//int check = memberDao.loginOk(memId, memPassword);
+		
+		String memLevel=memberDao.loginOk(memId, memPassword);
 		HAspect.logger.info(HAspect.logMsg + memId);
 		HAspect.logger.info(HAspect.logMsg + memPassword);
 		HAspect.logger.info(HAspect.logMsg + memLevel);
 		
+		mav.addObject("memLevel", memLevel);
 		mav.addObject("memId", memId);
 		mav.addObject("memPassword", memPassword);
-		mav.addObject("memLevel", "0");	//일반회원 0
 		mav.setViewName("member/loginOk");
 		
-		System.out.println("OK2");
-		
-	}
-	
-	@Override
-	public void memberLogout(ModelAndView mav) {
-		Map<String, Object> map = mav.getModelMap();
-		HttpServletRequest request = (HttpServletRequest)map.get("request");
-		
-		String memId = request.getParameter("memId");
-		String memPassword=request.getParameter("memPassword");
-		String memLevel=request.getParameter("memLevel");
-//		int check = memberDao.loginOk(memId, memPassword);
-//		HAspect.logger.info(HAspect.logMsg + check);
-		
-		mav.addObject("memId", memId);
-		mav.addObject("memPassword", memPassword);
-		mav.addObject("memLevel", "0");
-		mav.setViewName("member/logout");
+		System.out.println("OK3");
 		
 	}
 	

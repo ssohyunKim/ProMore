@@ -42,7 +42,8 @@ public class MailController {
 	        mav= new ModelAndView("redirect:/emailSuccess.do");
 	        return mav;
 	    }else {
-	        mav=new ModelAndView("redirect:/logout.do");
+	        //mav=new ModelAndView("redirect:/logout.do");
+	    	mav=new ModelAndView("member/logout.do");
 	        return mav;
 	    }
 

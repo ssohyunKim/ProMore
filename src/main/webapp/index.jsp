@@ -74,7 +74,7 @@
                   </div>
                   <div class="text-center">
                     <a class="small" href="${root}/member/register.do">계정을 만드세요!</a>
-                  </div>         
+                  </div>        
                 </div>
               </div>
             </div>

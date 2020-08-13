@@ -19,13 +19,14 @@
 		<result column="MEM_REG_DATE" property="memRegDate"/>
 	</resultMap>
 	
-	<!-- <select id="member_login" parameterType="java.util.Map" resultType="String">
+	<select id="member_login" parameterType="java.util.Map" resultType="String">
 		select mem_level from member where mem_id=#{memId} and mem_password=#{memPassword}
-	</select> -->
+	</select> 
 	
 	<select id="member_select" resultMap="member_dto">
 		select * from member where mem_num = #{memNum}
 	</select>
+
 	
 	
 </mapper>
