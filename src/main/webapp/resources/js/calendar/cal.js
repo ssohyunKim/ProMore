@@ -251,10 +251,9 @@ function init() {
       $("#schedule-view").removeClass("fade").modal("hide");
       $("#schedule-view").addClass("fade");
 
-      var schedule = calendar.getSchedule(
-        parseInt(rT.attr("schedule-id")),
-        "schedule"
-      );
+      var scheduleId = parseInt(rT.attr("schedule-id"));
+      console.log(scheduleId);
+      var schedule = calendar.getSchedule(scheduleId, "schedule");
 
       modal.find(".modal-title").html("일정수정");
       modal.find("#schedule-title").val(schedule.title);
@@ -307,6 +306,7 @@ function init() {
     var startDate = moment(this["scheStartDate"].value);
     var endDate = moment(this["scheEndDate"].value);
     var content = this["scheContent"].value;
+    var scheNum;
 
     // TODO: 차후 변경해주어야 함
     var proNum = this["proNum"].value;
@@ -319,12 +319,13 @@ function init() {
     }
 
     var modalTitle = modal.find(".modal-title").text();
-    if (modalTitle === "일정추가") {
-      scheduleNum.value = Date.now();
+    if (modalTitle.trim() === "일정추가") {
+      scheNum = Date.now();
+      scheduleNum.value = scheNum;
 
       calendar.createSchedules([
         {
-          id: scheduleNum.value,
+          id: scheNum,
           calendarId: "schedule",
           title: title,
           body: content,
@@ -354,8 +355,8 @@ function init() {
         if (data.trim() === "1") alert("일정이 추가되었습니다.");
         else alert("일정이 추가되지 못했습니다. 다시 시도해주세요.");
       });
-    } else if (modalTitle === "일정수정") {
-      var scheNum = parseInt(modal.attr("schedule-id"));
+    } else if (modalTitle.trim() === "일정수정") {
+      scheNum = parseInt(modal.attr("schedule-id"));
       scheduleNum.value = scheNum;
 
       calendar.updateSchedule(scheNum, "schedule", {
