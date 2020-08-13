@@ -15,4 +15,6 @@ public interface MemberService {
 	String getPw(Map<String, Object> paramMap);
 	
 	public void memberUpdate(ModelAndView mav);
+	
+	public void memberUpdateOk(ModelAndView mav);
 }

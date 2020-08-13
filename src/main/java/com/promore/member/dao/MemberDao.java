@@ -12,6 +12,5 @@ public interface MemberDao {
 	
 	public MemberDto memberSelect(int memNum);
 	
-	public int memberUpdate(int memNum);
-
+	public int memberUpdate(MemberDto memberDto);
 }

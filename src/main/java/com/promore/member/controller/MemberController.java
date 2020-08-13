@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.promore.manager.dto.NoticeDto;
 import com.promore.member.dto.MemberDto;
 import com.promore.member.service.MemberService;
 
@@ -45,6 +47,19 @@ public class MemberController {
 		mav.addObject("request", request);
 		
 		memberService.memberUpdate(mav);
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/member/memberUpdateOk.do", method = RequestMethod.POST)
+	public ModelAndView memberUpdateOk(HttpServletRequest request, HttpServletResponse response, MemberDto memberDto) {		
+		System.out.println("memberUpdateOk.do");
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("memberDto", memberDto);
+		
+		memberService.memberUpdateOk(mav);
 		
 		return mav;
 	}

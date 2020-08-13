@@ -1,14 +1,19 @@
 package com.promore.member.service;
 
+import java.io.File;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.promore.aop.HAspect;
+import com.promore.manager.dto.NoticeDto;
 import com.promore.member.dao.MemberDao;
 import com.promore.member.dto.MemberDto;
 
@@ -65,10 +70,25 @@ public class MemberServiceImp implements MemberService {
 		
 		int memNum = Integer.parseInt(request.getParameter("memNum"));
 		
+		System.out.println(memNum);
+		
 		MemberDto memberDto = memberDao.memberSelect(memNum);
 		
 		mav.addObject("memberDto", memberDto);
 		mav.setViewName("member/memberUpdate");
+	}
+	
+	@Override
+	public void memberUpdateOk(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		MemberDto memberDto = (MemberDto) map.get("memberDto");
+		HAspect.logger.info(HAspect.logMsg + memberDto);
+
+		int check = memberDao.memberUpdate(memberDto);
+		HAspect.logger.info(HAspect.logMsg + check);
+
+		mav.addObject("check", check);
+		mav.setViewName("member/memberUpdateOk");
 	}
 	
 }
