@@ -43,7 +43,7 @@ public class MemberServiceImp implements MemberService {
 		String memId = request.getParameter("memId");
 		String memPassword=request.getParameter("memPassword");
 		String memLevel=request.getParameter("memLevel");
-		int check = memberDao.loginOk(memId, memPassword);
+		//int check = memberDao.loginOk(memId, memPassword);
 		HAspect.logger.info(HAspect.logMsg + memId);
 		HAspect.logger.info(HAspect.logMsg + memPassword);
 		HAspect.logger.info(HAspect.logMsg + memLevel);

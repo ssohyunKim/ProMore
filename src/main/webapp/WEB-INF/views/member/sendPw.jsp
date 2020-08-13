@@ -23,8 +23,8 @@ public class MyAuthentication extends Authenticator { //아이디 패스워드 �
 
 
  //받는 사람의 정보
- String toName = request.getParameter("username");
- String toEmail = request.getParameter("email");
+ //String toName = request.getParameter("username");
+ String toEmail = request.getParameter("memEmail");
 
 
  //보내는 사람의 정보

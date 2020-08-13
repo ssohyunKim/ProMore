@@ -9,9 +9,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:if test="${mem_level!=null}">
-		<c:set var="mem_id" value="${mem_id}" scope="session"/>
-		<c:set var="mem_level" value="${mem_level}" scope="session"/>
+	<c:if test="${memLevel!=null}">
+		<c:set var="memId" value="${memId}" scope="session"/>
+		<c:set var="memLevel" value="${memLevel}" scope="session"/>
 	
 		<script type="text/javascript">
 			alert("로그인 성공");
@@ -19,7 +19,7 @@
 		</script>
 	</c:if>
 	
-	<c:if test="${mem_level==null}">
+	<c:if test="${memLevel==null}">
 		<script type="text/javascript">
 			alert("비밀번호와 아이디를 확인하세요");
 			location.href="${root}/index.jsp";

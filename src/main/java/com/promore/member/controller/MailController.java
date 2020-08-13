@@ -30,7 +30,7 @@ public class MailController {
 	public ModelAndView sendEmailAction (@RequestParam Map<String, Object> paramMap, ModelMap model) throws Exception {
 		System.out.println("mail");
 		ModelAndView mav;
-	    String memId=(String) paramMap.get("memId");
+	    //String memId=(String) paramMap.get("memId");
 	    String memEmail=(String) paramMap.get("memEmail");
 	    String pw=memberService.getPw(paramMap);
 	    System.out.println(pw);

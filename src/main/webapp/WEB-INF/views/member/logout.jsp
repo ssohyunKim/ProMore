@@ -9,8 +9,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:remove var="mem_id" scope="session"/>
-	<c:remove var="mem_level" scope="session"/>
+	<c:remove var="memId" scope="session"/>
+	<c:remove var="memLevel" scope="session"/>
 	
 	<script type="text/javascript">
 		alert("로그아웃 되었습니다.");
