@@ -2,10 +2,18 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="root" value="${pageContext.request.contextPath}"/>
+<c:set var="root" value="${pageContext.request.contextPath}" />
+<!-- 임시 ID : 둘 중 하나는 주석 처리하고 사용 -->
+<!-- 사용자용 ID -->
+<c:set var = "id" value="user" scope="session"/>
+
+<!-- 매니저용 ID -->
+<%-- <c:set var="id" value="manager" scope="session" /> --%>
 
 <!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul
+	class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+	id="accordionSidebar">
 	<!-- Sidebar - Brand -->
 	<a
 		class="sidebar-brand d-flex align-items-center justify-content-center"
@@ -31,40 +39,46 @@
 			<span>프로젝트</span>
 	</a></li>
 
-	<!-- Nav Item - Pages Collapse Menu -->
-	<li class="nav-item active"><a class="nav-link collapsed" href="#"
-		data-toggle="collapse" data-target="#collapsePages"
-		aria-expanded="true" aria-controls="collapsePages"> <i
-			class="fas fa-fw fa-cog"></i> <span>마이페이지</span>
-	</a>
-		<div id="collapsePages" class="collapse"
-			aria-labelledby="headingPages" data-parent="#accordionSidebar">
-			<div class="bg-white py-2 collapse-inner rounded">
-				<h6 class="collapse-header">My Page</h6>
-				<a class="collapse-item" href="${root}/mypage/memberUpdate.do">회원
-					수정</a> <a class="collapse-item" href="#">회원 탈퇴</a>
-				<div class="collapse-divider"></div>
-			</div>
-		</div></li>
+	<!-- 마이페이지 -->
 
-	<!-- Nav Item - Manager Collapse Menu -->
-	<li class="nav-item active"><a class="nav-link collapsed" href="#"
-		data-toggle="collapse" data-target="#collapseManager"
-		aria-expanded="true" aria-controls="collapseManager"> <i
-			class="fas fa-fw fa-cog"></i> <span>관리자 페이지</span>
-	</a>
-		<div id="collapseManager" class="collapse"
-			aria-labelledby="headingManager" data-parent="#accordionSidebar">
-			<div class="bg-white py-2 collapse-inner rounded">
-				<h6 class="collapse-header">Manager Page</h6>
-				<a class="collapse-item" href="${root}/manager/memberList.do">회원
-					관리</a> <a class="collapse-item" href="${root}/manager/noticeList.do">공지사항
-					관리</a> <a class="collapse-item" href="${root}/manager/reportList.do">고객게시판
-					관리</a>
-				<div class="collapse-divider"></div>
-			</div>
-		</div></li>
+	<c:if test="${id=='user'}">
+		<!-- Nav Item - Pages Collapse Menu -->
+		<li class="nav-item active"><a class="nav-link collapsed"
+			href="#" data-toggle="collapse" data-target="#collapsePages"
+			aria-expanded="true" aria-controls="collapsePages"> <i
+				class="fas fa-fw fa-cog"></i> <span>마이페이지</span>
+		</a>
+			<div id="collapsePages" class="collapse"
+				aria-labelledby="headingPages" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+					<h6 class="collapse-header">My Page</h6>
+					<a class="collapse-item" href="${root}/mypage/memberUpdate.do">회원
+						수정</a> <a class="collapse-item" href="#">회원 탈퇴</a>
+					<div class="collapse-divider"></div>
+				</div>
+			</div></li>
+	</c:if>
 
+	<c:if test="${id=='manager'}">
+		<!-- Nav Item - Manager Collapse Menu -->
+		<li class="nav-item active"><a class="nav-link collapsed"
+			href="#" data-toggle="collapse" data-target="#collapseManager"
+			aria-expanded="true" aria-controls="collapseManager"> <i
+				class="fas fa-fw fa-cog"></i> <span>관리자 페이지</span>
+		</a>
+			<div id="collapseManager" class="collapse"
+				aria-labelledby="headingManager" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+					<h6 class="collapse-header">Manager Page</h6>
+					<a class="collapse-item" href="${root}/manager/memberList.do">회원
+						관리</a> <a class="collapse-item" href="${root}/manager/noticeList.do">공지사항
+						관리</a> <a class="collapse-item" href="${root}/manager/reportList.do">고객게시판
+						관리</a>
+					<div class="collapse-divider"></div>
+				</div>
+			</div></li>
+	</c:if>
+	
 	<!-- Nav Item - Utilities Collapse Menu -->
 	<li class="nav-item active"><a class="nav-link collapsed" href="#"
 		data-toggle="collapse" data-target="#collapseUtilities"
@@ -83,6 +97,7 @@
 	<!-- Divider -->
 	<hr class="sidebar-divider">
 
+	<c:if test="${id=='user'}">
 	<!-- Heading -->
 	<div class="sidebar-heading">Addons</div>
 
@@ -103,11 +118,11 @@
 
 	<!-- Divider -->
 	<hr class="sidebar-divider d-none d-md-block">
+	</c:if>
 
 	<!-- Sidebar Toggler (Sidebar) -->
 	<div class="text-center d-none d-md-inline">
 		<button class="rounded-circle border-0" id="sidebarToggle"></button>
 	</div>
-
 </ul>
 <!-- End of Sidebar -->
