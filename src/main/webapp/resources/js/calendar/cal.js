@@ -28,6 +28,7 @@ var calendar = new tui.Calendar("#calendar", {
   },
 });
 
+var koreanDays = ["일", "월", "화", "수", "목", "금", "토"];
 var holidayChk = new Set([moment(new Date()).format("yyyyMM")]);
 
 // calendar.on("beforeCreateSchedule", function (e) {
@@ -45,21 +46,32 @@ calendar.on("clickSchedule", function (e) {
   var title = schedule.title;
   var startDate = schedule.start;
   var endDate = schedule.end;
+  var momentStartDate = moment(startDate.toDate());
+  var momentEndDate = moment(endDate.toDate());
   var content = schedule.body.replace(/\n/g, "<br/>");
   var scheduleEdit = document.querySelector("#schedule-edit");
   var scheduleDelete = document.querySelector("#schedule-delete");
 
   var scheduleView = $("#schedule-view");
-  var scheduleFormView = $("#schedule-modal-container");
+  // var scheduleFormView = $("#schedule-modal-container");
 
   scheduleView.find(".modal-title").html(title);
   scheduleView.find(".schedule-content").html(content);
   scheduleView
-    .find(".schedule-when")
-    .html(
-      moment(startDate.toDate()).format("yyyy-MM-DD (ddd)") +
-        " ~ " +
-        moment(endDate.toDate()).format("yyyy-MM-DD (ddd)")
+    .find("#schedule-start-date")
+    .text(
+      momentStartDate.format("yyyy-MM-DD") +
+        " (" +
+        koreanDays[momentStartDate.day()] +
+        ")"
+    );
+  scheduleView
+    .find("#schedule-end-date")
+    .text(
+      momentEndDate.format("yyyy-MM-DD") +
+        " (" +
+        koreanDays[momentEndDate.day()] +
+        ")"
     );
 
   if (schedule.calendarId === "schedule") {

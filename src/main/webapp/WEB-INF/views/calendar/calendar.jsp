@@ -188,9 +188,9 @@
 												</div>
 											</div>
 											<div class="modal-footer">
-												<div class="container">
-													<div class="row schedule-when">2020.08.04 (화), 오후
-														1:30 ~ 2020.08.05 (수), 오후 2:30</div>
+												<div class="container" style="font-size:14px">
+													<div class="row"><span id="schedule-start-date"></span>&nbsp;부터</div>
+													<div class="row"><span id="schedule-end-date"></span>&nbsp;까지</div>
 												</div>
 											</div>
 										</div>
