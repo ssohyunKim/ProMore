@@ -4,24 +4,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<c:set var="root" value="${pageContext.request.contextPath}" />
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>회원 정보 수정</title>
-	
-	<!-- Custom fonts for this template-->
-	<link href="${root}/resources/vendor/fontawesome-free/css/all.min.css"
-		rel="stylesheet" type="text/css">
-	<link
-		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-		rel="stylesheet">
-		
-	<!-- Custom styles for this template-->
-	<link href="${root}/resources/css/sb-admin-2.min.css" rel="stylesheet">
-	
+<c:set var="root" value="${pageContext.request.contextPath}" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>회원 정보 수정</title>
+
+<!-- Custom fonts for this template-->
+<link href="${root}/resources/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="${root}/resources/css/sb-admin-2.min.css" rel="stylesheet">
+
 </head>
 <body id="page-top">
-	
+
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
@@ -69,13 +69,13 @@
 
 								<!-- Card Body -->
 								<div class="card-body">
-									<form>
+									<form name="updateForm">
 										<!-- 아이디 -->
 										<div class="form-group row">
 											<label for="staticId" class="col-sm-3 col-form-label">아이디</label>
 											<div class="col-sm-9">
 												<input type="text" readonly class="form-control-plaintext"
-													id="staticId" value="사용자 ID">
+													id="staticId" value="${memberDto.memId}">
 											</div>
 										</div>
 
@@ -84,7 +84,7 @@
 											<label for="staticName" class="col-sm-3 col-form-label">이름</label>
 											<div class="col-sm-9">
 												<input type="text" readonly class="form-control-plaintext"
-													id="staticName" value="사용자 이름">
+													id="staticName" value="${memberDto.memName}">
 											</div>
 										</div>
 
@@ -93,7 +93,7 @@
 											<label for="changeNickName" class="col-sm-3 col-form-label">닉네임</label>
 											<div class="col-sm-9">
 												<input type="text" class="form-control" id="changeNickName"
-													value="사용자 닉네임">
+													value="${memberDto.memNickname}">
 											</div>
 										</div>
 
@@ -121,7 +121,7 @@
 											<label for="staticLevel" class="col-sm-3 col-form-label">등급</label>
 											<div class="col-sm-9">
 												<input type="text" readonly class="form-control-plaintext"
-													id="staticLevel" value="팀장/팀원">
+													id="staticLevel" value="${memberDto.memLevel}">
 											</div>
 										</div>
 
@@ -131,8 +131,9 @@
 												번호</label>
 											<div class="col-sm-9">
 												<input type="phone" class="form-control" id="changePhone"
-													value="01012345678"> <span class="m-0 pl-2">('-'을
-													제외한 숫자만 입력해주세요. ex : 01012345678)</span>
+													value="${memberDto.memPhone}"> <span
+													class="m-0 pl-2">('-'을 제외한 숫자만 입력해주세요. ex :
+													01012345678)</span>
 											</div>
 										</div>
 
@@ -141,7 +142,7 @@
 											<label for="changeEmail" class="col-sm-3 col-form-label">이메일</label>
 											<div class="col-sm-9">
 												<input type="email" class="form-control" id="changeEmail"
-													value="email@example.com">
+													value="${memberDto.memEmail}">
 											</div>
 										</div>
 
@@ -161,6 +162,14 @@
 														name="InputMailing" value="0">수신 안함
 													</label>
 												</div>
+
+												<script type="text/javascript">
+													for (var i = 0; i < updateForm.InputMailing.length; i++) {
+														if (updateForm.InputMailing[i].value == "${memberDto.memMailing}") {
+															updateForm.InputMailing[i].checked = true;
+														}
+													}
+												</script>
 											</div>
 										</div>
 
@@ -168,8 +177,7 @@
 										<div class="form-group row">
 											<label for="comment" class="col-sm-3 col-form-label">보유기술</label>
 											<div class="col-sm-9">
-												<textarea class="form-control" rows="5" id="comment"
-													placeholder="프로젝트 참여시 어필하고 싶은 본인의 보유 스킬을 자유롭게 기술해주세요.&#13;ex. ooo 경력(n년), 프로그래밍(c++, java 사용 가능) ..."></textarea>
+												<textarea class="form-control" rows="5" id="comment">${memberDto.memSkills}</textarea>
 											</div>
 										</div>
 
@@ -198,7 +206,7 @@
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			
+
 			<!-- End of Footer -->
 
 		</div>
@@ -214,10 +222,12 @@
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
-	<script src="${root}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="${root}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script src="${root}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script
+		src="${root}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
 	<script src="${root}/sresources/js/sb-admin-2.min.js"></script>

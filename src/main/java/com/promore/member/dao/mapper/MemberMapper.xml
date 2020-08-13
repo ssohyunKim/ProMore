@@ -6,14 +6,25 @@
 
 <mapper namespace="com.promore.member.dao.mapper.MemberMapper">
 	<resultMap type="com.promore.member.dto.MemberDto" id="member_dto">
-		<result column="mem_id" property="mem_id"/>
-		<result column="mem_password" property="mem_password"/>
-		<result column="mem_email" property="mem_email"/>
-		<result column="mem_level" property="mem_level"/>
+		<result column="MEM_NUM" property="memNum"/>
+		<result column="MEM_ID" property="memId"/>
+		<result column="MEM_NAME" property="memName"/>
+		<result column="MEM_NICKNAME" property="memNickname"/>
+		<result column="MEM_PASSWORD" property="memPassword"/>
+		<result column="MEM_LEVEL" property="memLevel"/>
+		<result column="MEM_PHONE" property="memPhone"/>
+		<result column="MEM_EMAIL" property="memEmail"/>
+		<result column="MEM_MAILING" property="memMailing"/>
+		<result column="MEM_SKILLS" property="memSkills"/>
+		<result column="MEM_REG_DATE" property="memRegDate"/>
 	</resultMap>
 	
-	<select id="member_login" parameterType="java.util.Map" resultType="String">
+	<!-- <select id="member_login" parameterType="java.util.Map" resultType="String">
 		select mem_level from member where mem_id=#{mem_id} and mem_password=#{mem_password}
+	</select> -->
+	
+	<select id="member_select" resultMap="member_dto">
+		select * from member where mem_num = #{memNum}
 	</select>
 	
 	
