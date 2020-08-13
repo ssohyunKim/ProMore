@@ -29,5 +29,25 @@
 		class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactoryBean" />
 	</bean>
+	
+	<!-- 지메일에 보내기 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="username" value="your id@gmail.com" />
+        <property name="password" value="your password" />
+       
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.auth">true</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="email" class="com.promore.member.email.Email">
+    </bean>
+    <bean id="emailSender" class="com.promore.member.email.EmailSender">
+	</bean>
 
 </beans>

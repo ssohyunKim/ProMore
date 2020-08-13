@@ -41,8 +41,13 @@ public class NoticeDaoImp implements NoticeDao {
 	}
 	
 	@Override
-	public NoticeDto noticeLoad(int notNum) {
-		return sqlSessionTemplate.selectOne("notice_load", notNum);
+	public NoticeDto noticeSelect(int notNum) {
+		return sqlSessionTemplate.selectOne("notice_select", notNum);
+	}
+	
+	@Override
+	public int noticeDelete(int notNum) {
+		return sqlSessionTemplate.delete("notice_delete", notNum);
 	}
 	
 }

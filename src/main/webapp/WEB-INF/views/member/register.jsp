@@ -99,10 +99,10 @@
               </form>
               <hr>
               <div class="text-center">
-                <a class="small" href="forgot-password.html">비밀번호를 잊으셨나요?</a>
+                <a class="small" href="${root}/member/forgot-password.do">비밀번호를 잊으셨나요?</a>
               </div>
               <div class="text-center">
-                <a class="small" href="login.html">이미 회원이신가요? 로그인!</a>
+                <a class="small" href="${root}/index.jsp">이미 회원이신가요? 로그인!</a>
               </div>              
             </div>
           </div>

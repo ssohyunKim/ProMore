@@ -85,26 +85,32 @@ public class NoticeServiceImp implements NoticeService {
 	}
 
 	@Override
-	public void noticeLoad(ModelAndView mav) {
+	public void noticeDelete(ModelAndView mav) {
 
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
-		
+
 		int notNum = Integer.parseInt(request.getParameter("notNum"));
 		HAspect.logger.info(HAspect.logMsg + notNum);
-		
-		NoticeDto noticeDto = noticeDao.noticeLoad(notNum);
+
+		NoticeDto noticeDto = noticeDao.noticeSelect(notNum);
 		HAspect.logger.info(HAspect.logMsg + noticeDto);
-		
-		if(noticeDto.getNotFileName()!=null) {
-			int index = noticeDto.getNotFileName().indexOf("_")+1;
-			noticeDto.setNotFileName(noticeDto.getNotFileName().substring(index));
+
+		int check = noticeDao.noticeDelete(notNum);
+
+		if (check > 0 && noticeDto.getNotFilePath() != null) {
+
+			File file = new File(noticeDto.getNotFilePath());
+
+			if (file.exists() && file.isFile()) {
+				file.delete();
+			}
 		}
-		
-		mav.addObject("noticeDto", noticeDto);
-		mav.setViewName("fileBoard/read");
+
+		mav.addObject("check", check);
+		mav.setViewName("manager/noticeDeleteOk");
 	}
-	
+
 	/*
 	 * public void fileDownload(ModelAndView mav) { Map<String, Object> map =
 	 * mav.getModelMap(); HttpServletRequest request = (HttpServletRequest)

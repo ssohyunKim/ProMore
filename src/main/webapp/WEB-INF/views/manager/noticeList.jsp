@@ -372,12 +372,12 @@
 	<div class="modal fade" id="noticeDeleteModal" tabindex="-1" role="dialog" >
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
+				<div class="modal-body">
 					<h5 class="modal-title">공지사항을 삭제하시겠습니까?</h5>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" onclick="noticeDelete();">삭제</button>
+					<button type="button" class="btn btn-primary" onclick="noticeDelete('${root}');">삭제</button>
 				</div>
 			</div>
 		</div>

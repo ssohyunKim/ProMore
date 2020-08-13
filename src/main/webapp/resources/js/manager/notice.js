@@ -11,8 +11,6 @@ $('#noticeReadModal').on('show', function() {
 $(document).ready(function() {     
     $('#noticeDeleteModal').on('show.bs.modal', function(event) {          
         notnum = $(event.relatedTarget).data('notnum');
-        
-        alert(notnum)
     });
     
     $('#noticeReadModal').on('show.bs.modal', function(event) {          
@@ -25,8 +23,7 @@ $(document).ready(function() {
 });
 
 
-function noticeDelete()
+function noticeDelete(root)
 {
-    alert("삭제되었습니다." + notnum)
+    location.href = root + '/manager/noticeDeleteOk.do?notNum=' + notnum;
 }
-

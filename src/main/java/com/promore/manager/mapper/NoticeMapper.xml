@@ -57,9 +57,12 @@
 		select * from notice order by not_num desc
 	</select>
 	
-	<select id="notice_load" resultMap="notice_dto">
+	<select id="notice_select" resultMap="notice_dto">
 		select * from notice where not_num = #{notNum}
 	</select>
 	
+	<delete id="notice_delete">
+		delete from notice where not_num = #{notNum}
+	</delete>
 
 </mapper>
