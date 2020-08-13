@@ -91,8 +91,8 @@
 			aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">Customer Service</h6>
-				<a class="collapse-item" href="${root}/customer/inquire.do">1:1
-					문의하기</a> <a class="collapse-item" href="${root}/customer/notice.do">공지사항</a>
+				<a class="collapse-item" href="${root}/customer/inquireList.do">1:1
+					문의하기</a> <a class="collapse-item" href="${root}/customer/noticeList.do">공지사항</a>
 			</div>
 		</div></li>
 
