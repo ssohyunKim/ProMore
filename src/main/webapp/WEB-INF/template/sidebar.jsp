@@ -5,13 +5,13 @@
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <!-- 임시 ID : 둘 중 하나는 주석 처리하고 사용 -->
 <!-- 사용자용 ID -->
-<c:set var = "id" value="user" scope="session"/>
+<%-- <c:set var = "id" value="user" scope="session"/> --%>
 <!-- 사용자용 회원 번호 -->
 <c:set var = "num" value="2" scope="session"/>
 <c:set var = "pass" value="1234" scope="session"/>
 
 <!-- 매니저용 ID -->
-<%-- <c:set var="id" value="manager" scope="session" /> --%>
+<c:set var="id" value="manager" scope="session" />
 
 <!-- Sidebar -->
 <ul
