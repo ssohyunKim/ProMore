@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WorkcalMapper">
+
+	<resultMap type="com.promore.workcal.dto.WorkcalDto"
+		id="workcal_dto">
+		<result column="work_num" property="workNum" />
+		<result column="work_state" property="workState" />
+		<result column="work_sender" property="workSender" />
+		<result column="work_receiver" property="workReceiver" />
+		<result column="work_subject" property="workSubject" />
+		<result column="work_content" property="workContent" />
+		<result column="work_start_date" property="workStartDate" />
+		<result column="work_end_date" property="workEndDate" />
+	</resultMap>
+	
+	<select id="select_giver_schedule" parameterType="com.promore.workcal.dto.WorkcalDto" resultMap="workcal_dto">
+		select 
+			work_num,
+			work_state,
+			work_sender,
+			work_receiver,
+			work_subject,
+			work_content,
+			work_start_date,
+			work_end_date
+		from work where work_sender = #{workSender}
+	</select>
+
+	<select id="select_taker_schedule" parameterType="com.promore.workcal.dto.WorkcalDto" resultMap="workcal_dto">
+		select 
+			work_num,
+			work_state,
+			work_sender,
+			work_receiver,
+			work_subject,
+			work_content,
+			work_start_date,
+			work_end_date
+		from work where work_receiver = #{workReceiver}
+	</select>
+	
+</mapper>

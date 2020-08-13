@@ -28,38 +28,62 @@ var calendar = new tui.Calendar("#calendar", {
   },
 });
 
-calendar.on("beforeCreateSchedule", function (e) {
-  var startTime = e.start;
-  var endTime = e.end;
-  var isAllDay = e.isAllDay;
-  var guide = e.guide;
-  var triggerEventName = e.triggerEventName;
-  var schedule;
-});
+var koreanDays = ["일", "월", "화", "수", "목", "금", "토"];
+
+// calendar.on("beforeCreateSchedule", function (e) {
+//   var startTime = e.start;
+//   var endTime = e.end;
+//   var isAllDay = e.isAllDay;
+//   var guide = e.guide;
+//   var triggerEventName = e.triggerEventName;
+//   var schedule;
+// });
 
 calendar.on("clickSchedule", function (e) {
   var schedule = e.schedule;
   var id = schedule.id;
+  var calId = schedule.calendarId;
   var title = schedule.title;
   var startDate = schedule.start;
   var endDate = schedule.end;
+  var momentStartDate = moment(startDate.toDate());
+  var momentEndDate = moment(endDate.toDate());
   var content = schedule.body;
+  var raw = schedule.raw;
 
-  console.log(content.replace(/\n/g, "<br/>"));
   var content = content.replace(/\n/g, "<br/>");
 
   var scheduleView = $("#work-view");
 
   scheduleView.find(".modal-title").html(title);
-  scheduleView.find(".schedule-content").html(content);
+  if (calId === "give-work") {
+    scheduleView.find("#work-giver").addClass("d-none");
+    scheduleView.find("#work-taker").removeClass("d-none");
+    scheduleView.find("#work-team-id").html(raw.workReceiver);
+  } else {
+    scheduleView.find("#work-giver").removeClass("d-none");
+    scheduleView.find("#work-taker").addClass("d-none");
+    scheduleView.find("#work-team-id").html(raw.workSender);
+  }
+  scheduleView.find("#work-content").html(content);
+
   scheduleView
-    .find(".schedule-when")
-    .html(
-      moment(startDate.toDate()).format("yyyy-MM-DD (ddd)") +
-        " ~ " +
-        moment(endDate.toDate()).format("yyyy-MM-DD (ddd)")
+    .find("#work-start-date")
+    .text(
+      momentStartDate.format("yyyy-MM-DD") +
+        " (" +
+        koreanDays[momentStartDate.day()] +
+        ")"
     );
-  // scheduleView.find("#schedule-edit").attr("schedule-id", id);
+  scheduleView
+    .find("#work-end-date")
+    .text(
+      momentEndDate.format("yyyy-MM-DD") +
+        " (" +
+        koreanDays[momentEndDate.day()] +
+        ")"
+    );
+  $("#work-detail").attr("href", id);
 
   scheduleView.modal("toggle");
 });
@@ -68,18 +92,90 @@ function fillMonth(month) {
   return parseInt(month) < 10 ? "0" + month : month;
 }
 
-function clearForm() {
-  var scheduleForm = $("#schedule-form");
-  scheduleForm.find("#schedule-title").val("");
-  scheduleForm.find("#schedule-start-date").val("");
-  scheduleForm.find("#schedule-end-date").val("");
-  scheduleForm.find("#schedule-content").val("");
-}
-
 function setYearMonthHeader(ymHeader) {
   var year = calendar.getDate().getFullYear();
   var month = fillMonth(calendar.getDate().getMonth() + 1);
   ymHeader.innerText = year + "." + month;
+}
+
+function getAllGiveSchedule() {
+  // 지금 로그인 한 유저(b)라고 가정
+  // 나중에 로그인 중인 아이디로 변경
+  var data = {
+    workSender: "b",
+  };
+
+  $.ajax({
+    url: root + "/workcal/get-givesche.do",
+    data: data,
+    dataType: "json",
+  })
+    .then(function (data) {
+      var result = data.result;
+
+      [].forEach.call(result, function (item) {
+        calendar.createSchedules([
+          {
+            id: item.workNum,
+            calendarId: "give-work",
+            title: item.workSubject,
+            body: item.workContent,
+            category: "allday",
+            start: moment(parseInt(item.workStartDate)).format(
+              "yyyy-MM-DD (ddd)"
+            ),
+            end: moment(parseInt(item.workEndDate)).format("yyyy-MM-DD (ddd)"),
+            raw: {
+              workSender: item.workSender,
+              workReceiver: item.workReceiver,
+            },
+          },
+        ]);
+      });
+    })
+    .catch(function (err) {
+      alert("요청한 일정 정보를 불러오지 못했습니다.");
+    });
+}
+
+function getAllTakeSchedule() {
+  // 지금 로그인 한 유저(b)라고 가정
+  // 나중에 로그인 중인 아이디로 변경
+  var data = {
+    workReceiver: "b",
+  };
+
+  $.ajax({
+    url: root + "/workcal/get-takesche.do",
+    data: data,
+    dataType: "json",
+  })
+    .then(function (data) {
+      var result = data.result;
+
+      [].forEach.call(result, function (item) {
+        calendar.createSchedules([
+          {
+            id: item.workNum,
+            calendarId: "take-work",
+            title: item.workSubject,
+            body: item.workContent,
+            category: "allday",
+            start: moment(parseInt(item.workStartDate)).format(
+              "yyyy-MM-DD (ddd)"
+            ),
+            end: moment(parseInt(item.workEndDate)).format("yyyy-MM-DD (ddd)"),
+            raw: {
+              workSender: item.workSender,
+              workReceiver: item.workReceiver,
+            },
+          },
+        ]);
+      });
+    })
+    .catch(function (err) {
+      alert("요청받은 일정 정보를 불러오지 못했습니다.");
+    });
 }
 
 function init() {
@@ -92,24 +188,14 @@ function init() {
   var takeWorkCb = document.querySelector("#take-work-cb");
   var giveWorkCb = document.querySelector("#give-work-cb");
 
-  //FIXME: 더미(나중에 지움)
-  calendar.createSchedules([
-    {
-      id: Date.now(),
-      calendarId: "take-work",
-      title: "팀 회의",
-      body: "하계 팀 회의입니다. 많은 참석 바랍니다.",
-      category: "time",
-      start: "2020-08-09",
-      end: "2020-08-15",
-    },
-  ]);
-
   // 년/달 현재 달로 초기화
   setYearMonthHeader(ymHeader);
   // 체크박스 모두 체크
   giveWorkCb.checked = true;
   takeWorkCb.checked = true;
+
+  getAllGiveSchedule();
+  getAllTakeSchedule();
 
   // 리스너 설정
   nextBtn.onclick = function () {
@@ -136,16 +222,20 @@ function init() {
   };
 
   // 모달 꺼짐 리스너
-  $("#schedule-modal-container").on("hidden.bs.modal", function () {
-    clearForm();
-  });
-  
+  $("#schedule-modal-container").on("hidden.bs.modal", function () {});
+
+  // 모달 켜짐 리스너
+  $("#schedule-modal-container").on("show.bs.modal", function (e) {});
+
   // section의 display:none을 지정하면서 캘린더를 만들기 위함
   var tab2 = document.querySelector("#tab2");
-  tab2.addEventListener("change", function(){
-  	todayBtn.click();
-  }, {once: true});
+  tab2.addEventListener(
+    "change",
+    function () {
+      todayBtn.click();
+    },
+    { once: true }
+  );
 }
 
 init();
-

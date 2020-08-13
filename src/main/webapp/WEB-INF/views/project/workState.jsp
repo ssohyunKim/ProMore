@@ -34,6 +34,9 @@
 	href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
 <link rel="stylesheet"
 	href="${root }/resources/css/work-calendar/cal.css" />
+<script>
+	var root = "${root}";
+</script>
 </head>
 
 <body id="page-top">
@@ -66,9 +69,9 @@
 
 					<!-- css tabs -->
 					<h2>CSS Tabs</h2>
-					<input id="tab1" type="radio" name="tabs" checked> <label
+					<input id="tab1" type="radio" name="tabs"> <label
 						for="tab1">나의 일감 현황</label> <input id="tab2" type="radio"
-						name="tabs"> <label for="tab2">나의 일감 일정</label>
+						name="tabs" checked> <label for="tab2">나의 일감 일정</label>
 
 
 					<section id="content1">
@@ -129,6 +132,7 @@
 							</div>
 						</div>
 					</section>
+					<!-- 일감 일정 탭 -->
 					<section id="content2">
 
 						<div class="card shadow mb-4">
@@ -162,13 +166,26 @@
 												<div class="modal-dialog modal-dialog-centered">
 													<div class="modal-content">
 														<div class="modal-header">
-															<div class="left-column">
-																<h5 class="modal-title work-title"
-																	id="exampleModalLabel">CSS 디자인 초안 작성</h5>
+															<div class="left-column clearfix">
+																<div class="left-column float-left">
+																	<span id="work-state" class="float-left bg-info"
+																		style="padding: 5px; border-radius: 5px;">요청</span>
+																</div>
+																<div class="right-column float-left ml-2">
+																	<h5 class="modal-title" id="exampleModalLabel">CSS
+																		디자인 초안 작성</h5>
+																	<div class="left-column mt-1"
+																		style="font-size: 12px; clear: both">
+																		<i class="fas fa-user-alt"></i> <span id="work-giver">나에게
+																			요청한 팀원</span> <span id="work-taker">요청받은 팀원</span> <span
+																			id="work-team-id" class="ml-2"></span>
+																	</div>
+																</div>
 															</div>
 															<div class="right-column">
 																<!-- 해당 일감 링크로 이동하기 -->
-																<a href="#"><i class="fas fa-info"></i>&nbsp;자세히 보기</a>
+																<a id="work-detail" href="#"><i class="fas fa-info">&nbsp;자세히
+																		보기</i></a>
 																<button type="button" class="close" data-dismiss="modal"
 																	aria-label="Close">
 																	<span aria-hidden="true">&times;</span>
@@ -177,24 +194,20 @@
 														</div>
 														<div class="modal-body">
 															<div class="container">
-																<div class="row clearfix">
-																	<div class="left-column float-left bg-info">
-																		<div class="work-writer-avatar">
-																			<img src="https://via.placeholder.com/50" />
-																		</div>
-																		<span class="work-giver">Jammy</span> <i
-																			class="fas fa-arrow-right"></i> <span
-																			class="work-taker">Jammy</span>
-																	</div>
-																	<div class="right-column work-content ml-2">인덱스
-																		페이지 디자인 완성해주세요.</div>
+																<div class="row">
+																	<div id="work-content" class="right-column ml-2">
+																		인덱스 페이지 디자인 완성해주세요.</div>
 																</div>
 															</div>
 														</div>
 														<div class="modal-footer">
-															<div class="container">
-																<div class="row work-when">2020.08.04 (화), 오후 1:30
-																	~ 2020.08.05 (수), 오후 2:30</div>
+															<div class="container" style="font-size: 14px;">
+																<div class="row">
+																	<span id="work-start-date"></span>&nbsp;부터
+																</div>
+																<div class="row">
+																	<span id="work-end-date"></span>&nbsp;까지
+																</div>
 															</div>
 														</div>
 													</div>
