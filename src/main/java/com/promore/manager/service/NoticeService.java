@@ -8,6 +8,6 @@ public interface NoticeService {
 	
 	public void noticeList(ModelAndView mav);
 	
-	public void noticeLoad(ModelAndView mav);
+	public void noticeDelete(ModelAndView mav);
 	
 }

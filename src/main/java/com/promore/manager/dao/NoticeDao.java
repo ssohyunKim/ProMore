@@ -12,6 +12,9 @@ public interface NoticeDao {
 	
 	public List<NoticeDto> noticeList();
 	
-	public NoticeDto noticeLoad(int notNum);
+	public NoticeDto noticeSelect(int notNum);
+	
+	public int noticeDelete(int notNum);
+	
 	
 }

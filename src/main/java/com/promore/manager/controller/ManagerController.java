@@ -41,7 +41,7 @@ public class ManagerController extends MultiActionController {
 	
 	@RequestMapping(value = "/manager/noticeWriteOk.do", method = RequestMethod.POST)
 	public ModelAndView noticeWriteOk(HttpServletRequest request, HttpServletResponse response, NoticeDto noticeDto) {		
-		System.out.println("noticeOk");
+		System.out.println("noticeWriteOk.do");
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		
 		ModelAndView mav = new ModelAndView();
@@ -51,15 +51,16 @@ public class ManagerController extends MultiActionController {
 		noticeService.noticeWriteOk(mav);
 		
 		return mav;
-	}	
+	}
 	
-	@RequestMapping(value = "/manager/noticeLoad.do", method = RequestMethod.GET)
-	public ModelAndView fileBoardRead(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/manager/noticeDeleteOk.do", method = RequestMethod.GET)
+	public ModelAndView noticeDelete(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("noticeDeleteOk.do");
 		
-		ModelAndView mav = new ModelAndView();
+		ModelAndView mav = new ModelAndView("manager/noticeDeleteOk");
 		mav.addObject("request", request);
 		
-		noticeService.noticeLoad(mav);
+		noticeService.noticeDelete(mav);
 		
 		return mav;
 	}
