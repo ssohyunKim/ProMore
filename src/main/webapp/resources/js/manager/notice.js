@@ -1,31 +1,32 @@
 /**
  * 
  */
- 
- $(function(){
- 	dialog.set({
- 		modal: true,
- 		buttons: {
- 			삭제: function() {
- 				dialog.close()
- 			},
- 			취소: function() {
- 				dialog.close()
- 			}
- 		}
- 	})
- })
- 
- 
- function noticeDelete(){
- 	dialog.open("<p>정말로 삭제하시겠습니까?</p>")
- }
+var notnum = "";
 
-$('#noticeReadModal').on('show.bs.modal', function (event) {
-	var a = $(event.relatedTarget)
-	var noticeTitle = a.data('whatever')
-	var modal = $(this)
-	
-	modal.find('.modal-title').text(noticeTitle)
-	modal.find
+$('#noticeReadModal').on('show', function() {
+	var getIdFromRow = $(event.target).closest('a').data('id')
+    consol.log($(getIdFromRow))
 })
+
+$(document).ready(function() {     
+    $('#noticeDeleteModal').on('show.bs.modal', function(event) {          
+        notnum = $(event.relatedTarget).data('notnum');
+        
+        alert(notnum)
+    });
+    
+    $('#noticeReadModal').on('show.bs.modal', function(event) {          
+        nottitle = $(event.relatedTarget).data('nottitle');
+        notcontent = $(event.relatedTarget).data('notcontent');
+        
+        $('#staticTitle').text(nottitle);
+        $('#staticContent').text(notcontent);
+    });
+});
+
+
+function noticeDelete()
+{
+    alert("삭제되었습니다." + notnum)
+}
+
