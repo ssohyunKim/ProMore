@@ -6,127 +6,111 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.promore.workspace.mapper.WorkspaceMapper">
-<!-- 	<resultMap type="com.promore.workspace.dto" id="workspace_dto">
-		<result column="work_num" property="workNum"/>
-		<result column="work_sender" property="workSender"/>
-		<result column="work_receiver" property="workReceiver"/>
-		<result column="work_subject" property="workSubject"/>
-		<result column="work_content" property="workContent"/>
-		<result column="work_state" property="workState"/>
-		<result column="work_end_date" property="workEndDate"/>
-		<result column="work_write_date" property="workWriteDate"/>
-		<result column="work_file_name" property="workFileName"/>
-		<result column="work_file_path" property="workFilePath"/>
-		<result column="work_file_size" property="workFileSize"/>
-	</resultMap> -->
 
-<!-- 파일이 없을때의 insert -->
-<!-- 	<insert id="workspacet_insert" parameterType="com.promore.workspace.dto">
-	insert into work(work_num,
-					 work_sender,
-					 work_receiver,
-					 work_subject,
-					 work_content,
-					 work_state,
-					 work_start_date,
-					 work_end_date,
-					 work_write_date)
-	values(PROMORE_WORK_WORK_NUM_SEQ.nextval,
-			#{workSender},
-			#{workReceiver},
-			#{workSubject},
-			#{workContent},
-			#{workState},
-			#{workStartDate},
-			#{workEndDate},
-			sysdate)
-	</insert> -->
+	<resultMap type="com.promore.workspace.dto.WorkspaceDto"
+		id="workspace_dto">
+		<result column="work_num" property="workNum" />
+		<result column="work_sender" property="workSender" />
+		<result column="work_receiver" property="workReceiver" />
+		<result column="work_subject" property="workSubject" />
+		<result column="work_content" property="workContent" />
+		<result column="work_state" property="workState" />
+		<result column="work_end_date" property="workEndDate" />
+		<result column="work_write_date" property="workWriteDate" />
+		<result column="work_file_name" property="workFileName" />
+		<result column="work_file_path" property="workFilePath" />
+		<result column="work_file_size" property="workFileSize" />
+	</resultMap>
 	
 	<!-- 파일이 있을때의 insert -->
-	<!-- 	<insert id="workspacet_insert_file" parameterType="com.promore.workspace.dto">
-	insert into work(work_num,
-					 work_sender,
-					 work_receiver,
-					 work_subject,
-					 work_content,
-					 work_state,
-					 work_start_date,
-					 work_end_date,
-					 work_write_date,
-					 work_file_name,
-					 work_file_path,
-					 work_file_size
-					 )
-	values(PROMORE_WORK_WORK_NUM_SEQ.nextval,
-			#{workSender},
-			#{workReceiver},
-			#{workSubject},
-			#{workContent},
-			#{workState},
-			#{workStartDate},
-			#{workEndDate},
-			sysdate,
-			#{workFileName},
-			#{workFilePath},
-			#{workFileSize}
-			)
-	</insert> -->
-	
+	<insert id="workspace_insert"
+		parameterType="com.promore.workspace.dto.WorkspaceDto">
+		insert into work(work_num,
+		work_sender,
+		work_receiver,
+		work_subject,
+		work_content,
+		work_state,
+		work_start_date,
+		work_end_date,
+		work_write_date,
+		work_file_name,
+		work_file_path,
+		work_file_size
+		)
+		values(PROMORE_WORK_WORK_NUM_SEQ.nextval,
+		#{workSender},
+		#{workReceiver},
+		#{workSubject},
+		#{workContent},
+		#{workState},
+		#{workStartDate},
+		#{workEndDate},
+		sysdate,
+		#{workFileName},
+		#{workFilePath},
+		#{workFileSize}
+		)
+	</insert>
 
-	<!-- 담당자 선택을 위한 SELECT -->	
-	<!-- <select id="workspace_memberID">
-		select apl_mem_ID from project_apply a, project p 
-			where a.apl_num = p.pro_num and apl_num = 1
-	</select> -->
+	<!-- 파일이 없을때의 insert -->
+	<insert id="workspace_insert_without_file"
+		parameterType="com.promore.workspace.dto.WorkspaceDto">
+		insert into work(work_num,
+		work_sender,
+		work_receiver,
+		work_subject,
+		work_content,
+		work_state,
+		work_start_date,
+		work_end_date,
+		work_write_date)
+		values(PROMORE_WORK_WORK_NUM_SEQ.nextval,
+		#{workSender},
+		#{workReceiver},
+		#{workSubject},
+		#{workContent},
+		#{workState},
+		#{workStartDate},
+		#{workEndDate},
+		sysdate)
+	</insert>
+
+	<!-- 리스트 뿌려주기 -->
+	<select id="work_list" resultMap="workspace_dto">
+		<![CDATA[ 
+			select * from work order by work_num desc
+		]]> 
+	</select>
+
+
+	<!-- 담당자 선택을 위한 SELECT -->
+	<!-- <select id="workspace_memberID"> select apl_mem_ID from project_apply 
+		a, project p where a.apl_num = p.pro_num and apl_num = 1 </select> -->
 
 	<!-- 가장 큰 번호 가지고 오기 -->
-<!-- 	<select id="workspace_bunho" resultType="int">
-		select nvl(max(work_num),0) form work	
-	</select> -->
+	<!-- <select id="workspace_bunho" resultType="int"> select nvl(max(work_num),0) 
+		form work </select> -->
 
+	<!-- 해당하는 일감select -->
+	<!-- <select id="workspace_read" resultMap="workspace_dto" parameterType="int"> 
+		<![CDATA[ select * from work where work_num =#{workNum} ]]> </select> -->
 
-		<!-- 리스트 뿌려주기  -->
-<!-- 	<select id="workspace_list" resultMap="workspace_dto" parameterType="java.util.HashMap">
-		<![CDATA[
-			select * from work order by work_num desc		
-		]]>
-	</select> -->
-	
-		<!-- 해당하는 일감select -->
-<!-- 		<select id="workspace_read" resultMap="workspace_dto" parameterType="int">
-			<![CDATA[
-				select * from work where work_num =#{workNum}
-			]]>		
-		</select> -->
-		
-		<!-- 일감 update (파일이 없을때 )-->
-<!-- 		<update id="workspace_update" parameterType="java.util.HashMap">
-			update work set 
-			work_receiver = #{workReceiver}, 
-			work_start_date = #{workStartDate},
-			work_end_date = #{workEndDate},
-			work_subject = #{workSubejct},
-			work_content = #{workContent} 
-			where work_num = #{workNum}
-		</update> -->
-		
-		<!-- 일감 update(파일이 있을 때 -->
-<!-- 		<update id="workspace_update" parameterType="java.util.HashMap">
-			update work set 
-			work_receiver = #{workReceiver}, 
-			work_start_date = #{workStartDate},
-			work_end_date = #{workEndDate},
-			work_subject = #{workSubejct},
-			work_content = #{workContent},
-			work_file_name = #{workFileName},
-			work_file_path = #{workFilePath},
-			work_file_size = #{workFileSize}
-			where work_num = #{workNum}
-		</update> -->
+	<!-- 일감 update (파일이 없을때 ) -->
+	<!-- <update id="workspace_update" parameterType="java.util.HashMap"> update 
+		work set work_receiver = #{workReceiver}, work_start_date = #{workStartDate}, 
+		work_end_date = #{workEndDate}, work_subject = #{workSubejct}, work_content 
+		= #{workContent} where work_num = #{workNum} </update> -->
 
-		<!-- 일감 delete -->
-	<!-- 	<delete id="workspace_delete" parameterType="int">
-			delete from work where work_num = #{workNum}
-		</delete> -->
-		
+	<!-- 일감 update(파일이 있을 때 -->
+	<!-- <update id="workspace_update" parameterType="java.util.HashMap"> update 
+		work set work_receiver = #{workReceiver}, work_start_date = #{workStartDate}, 
+		work_end_date = #{workEndDate}, work_subject = #{workSubejct}, work_content 
+		= #{workContent}, work_file_name = #{workFileName}, work_file_path = #{workFilePath}, 
+		work_file_size = #{workFileSize} where work_num = #{workNum} </update> -->
+
+	<!-- 일감 delete -->
+	<!-- <delete id="workspace_delete" parameterType="int"> delete from work 
+		where work_num = #{workNum} </delete> -->
+
 </mapper>

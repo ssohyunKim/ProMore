@@ -109,7 +109,8 @@
            	url: url,
            	type:"get",
            	dataType:"text",
-           	success:writeProcess(data)
+           	success:writeProcess(data),
+           	error: failProcess()
            }); 
          
            
@@ -125,8 +126,12 @@
        }
        
        function writeProcess(data){
-       	alert(확인);
+       	alert('확인');
        }
+       
+       function failProcess(){
+       	alert('실패');
+       	}
        
        
      

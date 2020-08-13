@@ -1,5 +1,7 @@
 package com.promore.workspace.dto;
 
+import java.util.Date;
+
 public class WorkspaceDto {
 	private int workNum;
 	private String workSender;
@@ -7,8 +9,8 @@ public class WorkspaceDto {
 	private String workSubject;
 	private String workContent;
 	private int workState;
-	private String workStartDate;
-	private String workEndDate;
+	private Date workStartDate;
+	private Date workEndDate;
 	private String writeDate;
 	private String workFileName;
 	private String workFilePath;
@@ -17,7 +19,7 @@ public class WorkspaceDto {
 	public WorkspaceDto() {}
 	
 	public WorkspaceDto(int workNum, String workSender, String workReceiver, String workSubject, String workContent,
-			int workState, String workStartDate, String workEndDate, String writeDate, String workFileName,
+			int workState, Date workStartDate, Date workEndDate, String writeDate, String workFileName,
 			String workFilePath, int workFileSize) {
 		super();
 		this.workNum = workNum;
@@ -82,19 +84,19 @@ public class WorkspaceDto {
 		this.workState = workState;
 	}
 
-	public String getWorkStartDate() {
+	public Date getWorkStartDate() {
 		return workStartDate;
 	}
 
-	public void setWorkStartDate(String workStartDate) {
+	public void setWorkStartDate(Date workStartDate) {
 		this.workStartDate = workStartDate;
 	}
 
-	public String getWorkEndDate() {
+	public Date getWorkEndDate() {
 		return workEndDate;
 	}
 
-	public void setWorkEndDate(String workEndDate) {
+	public void setWorkEndDate(Date workEndDate) {
 		this.workEndDate = workEndDate;
 	}
 

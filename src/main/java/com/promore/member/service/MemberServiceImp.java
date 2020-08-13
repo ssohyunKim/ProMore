@@ -1,19 +1,14 @@
 package com.promore.member.service;
 
-import java.util.Date;
 import java.util.Map;
-import java.util.logging.LogManager;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.promore.aop.HAspect;
-import com.promore.manager.dto.NoticeDto;
 import com.promore.member.dao.MemberDao;
 import com.promore.member.dto.MemberDto;
 
