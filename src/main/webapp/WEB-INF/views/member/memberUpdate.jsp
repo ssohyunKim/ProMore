@@ -188,7 +188,8 @@
 										<br />
 
 										<!-- 수정 완료 -->
-										<button type="submit" class="btn btn-primary col-sm-12">
+										<button type="submit" class="btn btn-primary col-sm-12"data-toggle="modal"
+															data-target="#memberUpdateModal" data-memnum="${memberDto.memNum}" data-mempassword="${memberDto.memPassword}">
 											<span class="text">수정 완료</span>
 										</button>
 
@@ -219,6 +220,21 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
+	
+	<!-- Member Update Model -->
+	<div class="modal fade" id="memberUpdateModal" tabindex="-1" role="dialog" >
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<h5 class="modal-title">수정을 완료하시겠습니까?</h5>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" onclick="memberUpdate('${root}');">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
@@ -230,6 +246,6 @@
 		src="${root}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="${root}/sresources/js/sb-admin-2.min.js"></script>
+	<script src="${root}/resources/js/sb-admin-2.min.js"></script>
 </body>
 </html>
