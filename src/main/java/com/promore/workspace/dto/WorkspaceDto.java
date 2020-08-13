@@ -11,17 +11,19 @@ public class WorkspaceDto {
 	private int workState;
 	private Date workStartDate;
 	private Date workEndDate;
+	private Date workWriteDate;
 	private String writeDate;
 	private String workFileName;
 	private String workFilePath;
 	private int workFileSize;
-	
-	public WorkspaceDto() {}
-	
+	private int proNum;
+
+	public WorkspaceDto() {
+	}
+
 	public WorkspaceDto(int workNum, String workSender, String workReceiver, String workSubject, String workContent,
-			int workState, Date workStartDate, Date workEndDate, String writeDate, String workFileName,
-			String workFilePath, int workFileSize) {
-		super();
+			int workState, Date workStartDate, Date workEndDate, Date workWriteDate, String writeDate,
+			String workFileName, String workFilePath, int workFileSize, int proNum) {
 		this.workNum = workNum;
 		this.workSender = workSender;
 		this.workReceiver = workReceiver;
@@ -30,10 +32,12 @@ public class WorkspaceDto {
 		this.workState = workState;
 		this.workStartDate = workStartDate;
 		this.workEndDate = workEndDate;
+		this.workWriteDate = workWriteDate;
 		this.writeDate = writeDate;
 		this.workFileName = workFileName;
 		this.workFilePath = workFilePath;
 		this.workFileSize = workFileSize;
+		this.proNum = proNum;
 	}
 
 	public int getWorkNum() {
@@ -100,6 +104,14 @@ public class WorkspaceDto {
 		this.workEndDate = workEndDate;
 	}
 
+	public Date getWorkWriteDate() {
+		return workWriteDate;
+	}
+
+	public void setWorkWriteDate(Date workWriteDate) {
+		this.workWriteDate = workWriteDate;
+	}
+
 	public String getWriteDate() {
 		return writeDate;
 	}
@@ -132,14 +144,20 @@ public class WorkspaceDto {
 		this.workFileSize = workFileSize;
 	}
 
+	public int getProNum() {
+		return proNum;
+	}
+
+	public void setProNum(int proNum) {
+		this.proNum = proNum;
+	}
+
 	@Override
 	public String toString() {
 		return "WorkspaceDto [workNum=" + workNum + ", workSender=" + workSender + ", workReceiver=" + workReceiver
 				+ ", workSubject=" + workSubject + ", workContent=" + workContent + ", workState=" + workState
-				+ ", workStartDate=" + workStartDate + ", workEndDate=" + workEndDate + ", writeDate=" + writeDate
-				+ ", workFileName=" + workFileName + ", workFilePath=" + workFilePath + ", workFileSize=" + workFileSize
-				+ "]";
+				+ ", workStartDate=" + workStartDate + ", workEndDate=" + workEndDate + ", workWriteDate="
+				+ workWriteDate + ", writeDate=" + writeDate + ", workFileName=" + workFileName + ", workFilePath="
+				+ workFilePath + ", workFileSize=" + workFileSize + ", proNum=" + proNum + "]";
 	}
-	
-
 }

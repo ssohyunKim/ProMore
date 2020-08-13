@@ -1,139 +1,318 @@
-  $(function(){
-             $( "#date1" ).datepicker({
-                       dateFormat: "yy-mm-dd",
-                       monthNames:["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
-                       dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
-                       changeMonth: true,
-                       changeYear: true,
-                       currentText: "Today",
-                       showOtherMonths: true,
-                       yearRange: "2010:2020"
-                      
-                     });
-              $( "#date2" ).datepicker({
-                  dateFormat: "yy-mm-dd",
-                  monthNames:["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
-                  dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
-                  changeMonth: true,
-                  changeYear: true,
-                  currentText: "Today",
-                  showOtherMonths: true,
-                  yearRange: "2010:2020"
-                     });
+$(function () {
+  //   $("#date1").datepicker({
+  //     dateFormat: "yy-mm-dd",
+  //     monthNames: [
+  //       "1월",
+  //       "2월",
+  //       "3월",
+  //       "4월",
+  //       "5월",
+  //       "6월",
+  //       "7월",
+  //       "8월",
+  //       "9월",
+  //       "10월",
+  //       "11월",
+  //       "12월",
+  //     ],
+  //     dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
+  //     changeMonth: true,
+  //     changeYear: true,
+  //     currentText: "Today",
+  //     showOtherMonths: true,
+  //     yearRange: "2010:2020",
+  //   });
+  //   $("#date2").datepicker({
+  //     dateFormat: "yy-mm-dd",
+  //     monthNames: [
+  //       "1월",
+  //       "2월",
+  //       "3월",
+  //       "4월",
+  //       "5월",
+  //       "6월",
+  //       "7월",
+  //       "8월",
+  //       "9월",
+  //       "10월",
+  //       "11월",
+  //       "12월",
+  //     ],
+  //     dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
+  //     changeMonth: true,
+  //     changeYear: true,
+  //     currentText: "Today",
+  //     showOtherMonths: true,
+  //     yearRange: "2010:2020",
+  //   });
+  //   $("#btn").click(function () {
+  //     $("#resultDate").text($("#date1").val());
+  //   });
+  //   $("#btn").click(function () {
+  //     $("#resultDate").text($("#date2").val());
+  //   });
+  //   $(".addIndex").click(function () {
+  //     //alert("확인");
+  //     $(".addIndexDiv").css("display", "block");
+  //     $(".addIndex").css("display", "none");
+  //   });
+  //   $("#manager")
+  //     .children("a")
+  //     .eq(0)
+  //     .click(function () {
+  //       //alert("왕아아아");
+  //       var test = $("#manager").children("a").eq(0).text();
+  //       //alert(test);
+  //       $("#managerWho").html(test);
+  //     });
+  //   $("#manager")
+  //     .children("a")
+  //     .eq(1)
+  //     .click(function () {
+  //       //alert("왕아아아");
+  //       var test = $("#manager").children("a").eq(1).text();
+  //       $("#managerWho").html(test);
+  //     });
+  //   $("#manager")
+  //     .children("a")
+  //     .eq(2)
+  //     .click(function () {
+  //       //alert("왕아아아");
+  //       var test = $("#manager").children("a").eq(2).text();
+  //       //alert(test);
+  //       $("#managerWho").html(test);
+  //     });
+});
 
-              $("#btn").click(function(){
-                     $("#resultDate").text($("#date1").val());
-              });
-              $("#btn").click(function(){
-                  $("#resultDate").text($("#date2").val());
-           });
-              
-                    
-              $(".addIndex").click(function(){
-                //alert("확인");
-                $(".addIndexDiv").css("display","block");
-                $(".addIndex").css("display","none");
-               
-              });
-              
-                $("#manager").children("a").eq(0).click(function(){
-                 //alert("왕아아아");
-                 var test = $("#manager").children("a").eq(0).text();
-                 //alert(test);
-                 $("#managerWho").html(test);
-              });
-              
-              $("#manager").children("a").eq(1).click(function(){
-                 //alert("왕아아아");
-                 var test = $("#manager").children("a").eq(1).text();
-                 $("#managerWho").html(test);
-              });
-              $("#manager").children("a").eq(2).click(function(){
-                 //alert("왕아아아");
-                 var test = $("#manager").children("a").eq(2).text();
-                 //alert(test);
-                 $("#managerWho").html(test);
-              });
-              
-              
-             
-       });
-       
-       function managerSelect(root){
-          //alert("확인"+root);
-          var url = root +"/workspace/manager.do";
-          alert(url);
-          window.open(url,"","width=300px, height=200px");
-           //"주소","윈도우이름","가로세로스크롤"
-    }
-    
-    
-       var root = null;
-       function writeToServer(requestRoot){
-          /*$("#workRead").css("display","block");
-          $("#alarm").css("display","block");
-           $('.toast').toast('show');
-           */
-           
-           var root = requestRoot;
-      
-           var workSender = $("#workSender").text();
-           var workStateVar = $('input[name="workState"]:checked').val();
-              if(workStateVar=="요청"){
-                 var workState="0";
-              }
-              if(workStateVar=="진행"){
-                 var workState="1";
-              }
-              if(workStateVar=="완료"){
-                 var workState="2";
-              }
-           var workReceiver = $("#workReceiver").text();
-           var workStartDate = $(".calenderStart").val();
-           var workEndDate = $(".calenderEnd").val();
-           var workSubject = $(".workSubject").val();
-           var workContent = $(".workContent").val();
-           
-           var url = root+"/workspace/workspace.do";
-           var params ="?workSender="+workSender+"&workState="+workState+"&workReceiver="+workReceiver
-                       +"&workStartDate="+workStartDate+"&workEndDate="+workEndDate+"&workSubject="+workSubject
-                       +"&workContent="+workContent;
-                       
-          	
-          	
-           var url = url + params;
-           
-           
-        
-          $.ajax({
-           	url: url,
-           	type:"get",
-           	dataType:"text",
-           	success:writeProcess(data),
-           	error: failProcess()
-           }); 
-         
-           
-           
-           var workTest = document.getElementById("work-test");
-           var copyWorkTest = workTest.cloneNode(true);
-           copyWorkTest.style.display = "block";
-           
-           var workRead = document.getElementById("workRead");
-           
-           $("#workRead").after($(copyWorkTest));
-           return false;
-       }
-       
-       function writeProcess(data){
-       	alert('확인');
-       }
-       
-       function failProcess(){
-       	alert('실패');
-       	}
-       
-       
-     
+var koreanDays = ["일", "월", "화", "수", "목", "금", "토"];
 
-  
+function managerSelect(root) {
+  //alert("확인"+root);
+  var url = root + "/workspace/manager.do";
+  alert(url);
+  window.open(url, "", "width=300px, height=200px");
+  //"주소","윈도우이름","가로세로스크롤"
+}
+
+function writeToServer() {
+  //   $("#workRead").css("display", "block");
+  //   $("#alarm").css("display", "block");
+  //   $(".toast").toast("show");
+  var workForm = $("#work-form");
+
+  var workSender = workForm.find(".work-sender").val();
+  var workStateVar = workForm
+    .find('input[name="workState"]:checked')
+    .val()
+    .trim();
+  var workState;
+  if (workStateVar === "요청") workState = 0;
+  if (workStateVar === "진행") workState = 1;
+  if (workStateVar === "완료") workState = 2;
+
+  var workReceiver = workForm.find(".work-receiver").text();
+  var workStartDate = workForm.find(".work-start-date").val();
+  var workEndDate = $(".work-end-date").val();
+  var workSubject = $(".work-subject").val();
+  var workContent = $(".work-content").val();
+  var proNum = $("#pro-num").val();
+
+  var data = {
+    workSender: workSender,
+    workReceiver: workReceiver,
+    workSubject: workSubject,
+    workState: workState,
+    workContent: workContent,
+    workStartDate: workStartDate,
+    workEndDate: workEndDate,
+    proNum: proNum,
+  };
+
+  console.log(data);
+
+  $.ajax({
+    url: root + "/workspace/add-work.do",
+    method: "post",
+    data: data,
+    dataType: "text",
+  })
+    .then(function (num) {
+      num = num.trim();
+
+      var workTmpl = document.getElementById("work-tmpl");
+      var copyWorkTmpl = workTmpl.cloneNode(true);
+      copyWorkTmpl.style.display = "block";
+      copyWorkTmpl.id = "work-no-" + num;
+
+      $tmpl = $(copyWorkTmpl);
+      $tmpl.find(".work-sender").text(workSender);
+      $tmpl
+        .find(".work-write-date")
+        .text(
+          moment(Date.now()).format("yyyy.MM.DD") +
+            " (" +
+            koreanDays[new Date().getDay()] +
+            ")"
+        );
+      $tmpl.find(".work-subject").text(workSubject);
+      $tmpl.find("input[value='" + workStateVar + "']").attr("checked", "");
+      $tmpl
+        .find("input[value='" + workStateVar + "']")
+        .parent()
+        .addClass("active");
+      $tmpl.find(".work-receiver").text(workReceiver);
+      $tmpl.find(".work-start-date").val(workStartDate);
+      $tmpl.find(".work-end-date").val(workEndDate);
+      $tmpl.find(".work-content").text(workContent);
+      copyWorkTmpl.querySelector(".work-edit").onclick = editWork;
+      copyWorkTmpl.querySelector(".work-edit-cancel").onclick = cancelEdit;
+      copyWorkTmpl.querySelector(".work-edit-ok").onclick = okEdit;
+
+      $form = $(workForm);
+      $form.find(".work-subject").val("");
+      $form
+        .find("input[value='" + workStateVar + "']")
+        .removeAttr("checked", "");
+      $form
+        .find("input[value='" + workStateVar + "']")
+        .parent()
+        .removeClass("active");
+      $form.find("input[value='요청']").attr("checked", "");
+      $form.find("input[value='요청']").parent().addClass("active");
+      // $form.find(".work-receiver").text('');
+      $form.find(".work-start-date").val("");
+      $form.find(".work-end-date").val("");
+      $form.find(".work-content").val("");
+
+      var workList = document.getElementById("work-list");
+      workList.prepend(copyWorkTmpl);
+    })
+    .catch(function (err) {
+      alert("일감을 작성하지 못했습니다. 다시 시도해주세요.");
+    });
+
+  return false;
+}
+
+function init() {
+  var workList = document.querySelector("#work-list");
+  var workEdit = workList.querySelectorAll(".work-edit");
+  var editCancelBtn = workList.querySelectorAll(".work-edit-cancel");
+  var editOkBtn = workList.querySelectorAll(".work-edit-ok");
+
+  // 일감 삭제 버튼
+  [].forEach.call(workEdit, function (item) {
+    item.onclick = editWork;
+  });
+
+  // 일감 수정 취소 버튼
+  [].forEach.call(editCancelBtn, function (item) {
+    item.onclick = cancelEdit;
+  });
+
+  // 일감 수정 전송 버튼
+  [].forEach.call(editOkBtn, function (item) {
+    item.onclick = okEdit;
+  });
+}
+
+function editWork(e) {
+  e.preventDefault();
+
+  var work = e.target.closest("[id^='work-no-']");
+  work.querySelector(".writer-row").classList.add("d-none");
+
+  work.querySelector("h5.work-subject").classList.add("d-none");
+  work.querySelector("input.work-subject").classList.remove("d-none");
+  work.querySelector("input.work-subject").value = work.querySelector(
+    "h5.work-subject"
+  ).innerText;
+
+  work.querySelector(".work-start-date").removeAttribute("readonly");
+  work.querySelector(".work-end-date").removeAttribute("readonly");
+
+  work.querySelector("div.work-content").classList.add("d-none");
+  work.querySelector("textarea.work-content").classList.remove("d-none");
+  work.querySelector("textarea.work-content").innerText = work.querySelector(
+    "div.work-content"
+  ).innerText;
+
+  work.querySelector(".more").classList.add("d-none");
+  work.querySelector(".edit-more").classList.remove("d-none");
+}
+
+function cancelEdit(e) {
+  var work = e.target.closest("[id^='work-no-']");
+  work.querySelector(".writer-row").classList.remove("d-none");
+
+  work.querySelector("h5.work-subject").classList.remove("d-none");
+  work.querySelector("input.work-subject").classList.add("d-none");
+
+  work.querySelector(".work-start-date").setAttribute("readonly", "");
+  work.querySelector(".work-end-date").setAttribute("readonly", "");
+
+  work.querySelector("div.work-content").classList.remove("d-none");
+  work.querySelector("textarea.work-content").classList.add("d-none");
+
+  work.querySelector(".more").classList.remove("d-none");
+  work.querySelector(".edit-more").classList.add("d-none");
+}
+
+function okEdit(e) {
+  e.preventDefault();
+
+  var work = e.target.closest("[id^='work-no-']");
+  var form = work.querySelector("form");
+
+  var workStateVar = $(form)
+    .find('input[name="workState"]:checked')
+    .val()
+    .trim();
+  var workState;
+  if (workStateVar === "요청") workState = 0;
+  if (workStateVar === "진행") workState = 1;
+  if (workStateVar === "완료") workState = 2;
+
+  var data = {
+    workNum: work.id.substr(8),
+    workReceiver: form.querySelector(".work-receiver").innerText,
+    workSubject: form.querySelector("input.work-subject").value,
+    workContent: form.querySelector("textarea.work-content").value,
+    workState: workState,
+    workStartDate: form.querySelector(".work-start-date").value,
+    workEndDate: form.querySelector(".work-end-date").value,
+  };
+
+  $.ajax({
+    url: root + "/workspace/edit-work.do",
+    method: "post",
+    data: data,
+    dataType: "text",
+  })
+    .then(function () {
+      work.querySelector(".writer-row").classList.remove("d-none");
+
+      work.querySelector("h5.work-subject").classList.remove("d-none");
+      work.querySelector("h5.work-subject").innerText = work.querySelector(
+        "input.work-subject"
+      ).value;
+      work.querySelector("input.work-subject").classList.add("d-none");
+
+      work.querySelector(".work-start-date").setAttribute("readonly", "");
+      work.querySelector(".work-end-date").setAttribute("readonly", "");
+
+      work.querySelector("div.work-content").classList.remove("d-none");
+      work.querySelector("div.work-content").innerText = work.querySelector(
+        "textarea.work-content"
+      ).value;
+      work.querySelector("textarea.work-content").classList.add("d-none");
+
+      work.querySelector(".more").classList.remove("d-none");
+      work.querySelector(".edit-more").classList.add("d-none");
+    })
+    .catch(function () {
+      alert("수정 되지 못했습니다. 다시 시도해주세요.");
+    });
+}
+
+init();

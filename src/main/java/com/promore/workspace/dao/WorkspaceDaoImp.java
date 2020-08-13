@@ -15,39 +15,28 @@ public class WorkspaceDaoImp implements WorkspaceDao {
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	@Override
-	public int workspaceWrite(WorkspaceDto workspaceDto) {
-		HAspect.logger.info(HAspect.logMsg + "workspaceWrite - Dao");
-
-		int check = 0;
-
-		if (workspaceDto.getWorkFileSize() != 0) {
-			check = sqlSessionTemplate.insert("workspacet_insert", workspaceDto);
-		} else {
-			check = sqlSessionTemplate.insert("workspacet_insert_file", workspaceDto);
-		}
-
-		return check;
+	public List<WorkspaceDto> selectAllWork(WorkspaceDto workspaceDto) {
+		return sqlSessionTemplate.selectList("WorkspaceMapper.select_all_work", workspaceDto);
 	}
 
 	@Override
-	public List<WorkspaceDto> workList() {
-
-		List<WorkspaceDto> list = sqlSessionTemplate.selectList("work_list");
-
-		return list;
+	public int selectWorkNum() {
+		return sqlSessionTemplate.selectOne("WorkspaceMapper.select_work_num");
 	}
 
 	@Override
-	public int workInsert(WorkspaceDto workspaceDto) {
+	public int insertWork(WorkspaceDto workspaceDto) {
+		if (workspaceDto.getWorkFileSize() != 0)
+			return sqlSessionTemplate.insert("WorkspaceMapper.insert_work", workspaceDto);
+		else
+			return sqlSessionTemplate.insert("WorkspaceMapper.insert_work_without_file", workspaceDto);
+	}
 
-		int check = 0;
-
-		if (workspaceDto.getWorkFileSize() != 0) {
-			check = sqlSessionTemplate.insert("work_insert", workspaceDto);
-		} else {
-			check = sqlSessionTemplate.insert("work_insert_without_file", workspaceDto);
-		}
-
-		return check;
+	@Override
+	public int updateWork(WorkspaceDto workspaceDto) {
+		if (workspaceDto.getWorkFileSize() != 0)
+			return sqlSessionTemplate.update("WorkspaceMapper.update_work", workspaceDto);
+		else
+			return sqlSessionTemplate.update("WorkspaceMapper.update_work_without_file", workspaceDto);
 	}
 }

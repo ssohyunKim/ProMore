@@ -5,11 +5,11 @@ import java.util.List;
 import com.promore.workspace.dto.WorkspaceDto;
 
 public interface WorkspaceDao {
+	public List<WorkspaceDto> selectAllWork(WorkspaceDto workspaceDto);
+
+	public int selectWorkNum();
+
+	public int insertWork(WorkspaceDto workspaceDto);
 	
-	public int workspaceWrite(WorkspaceDto workspaceDto);
-	
-	public List<WorkspaceDto> workList();
-	
-	public int workInsert(WorkspaceDto workspaceDto);
-	
+	public int updateWork(WorkspaceDto workspaceDto);
 }

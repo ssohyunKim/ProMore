@@ -5,7 +5,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.promore.workspace.mapper.WorkspaceMapper">
+<mapper namespace="WorkspaceMapper">
 
 	<resultMap type="com.promore.workspace.dto.WorkspaceDto"
 		id="workspace_dto">
@@ -15,17 +15,31 @@
 		<result column="work_subject" property="workSubject" />
 		<result column="work_content" property="workContent" />
 		<result column="work_state" property="workState" />
+		<result column="work_start_date" property="workStartDate" />
 		<result column="work_end_date" property="workEndDate" />
 		<result column="work_write_date" property="workWriteDate" />
 		<result column="work_file_name" property="workFileName" />
 		<result column="work_file_path" property="workFilePath" />
 		<result column="work_file_size" property="workFileSize" />
+		<result column="pro_num" property="proNum" />
 	</resultMap>
-	
+
+	<!-- 리스트 뿌려주기 -->
+	<select id="select_all_work" resultMap="workspace_dto">
+		select * from work where
+		pro_num = ${proNum} order by work_num desc
+	</select>
+
+	<select id="select_work_num" resultType="int">
+		select
+		work_work_num_seq.currval from dual
+	</select>
+
 	<!-- 파일이 있을때의 insert -->
-	<insert id="workspace_insert"
+	<insert id="insert_work"
 		parameterType="com.promore.workspace.dto.WorkspaceDto">
-		insert into work(work_num,
+		insert into work(
+		work_num,
 		work_sender,
 		work_receiver,
 		work_subject,
@@ -36,9 +50,11 @@
 		work_write_date,
 		work_file_name,
 		work_file_path,
-		work_file_size
+		work_file_size,
+		pro_num
 		)
-		values(PROMORE_WORK_WORK_NUM_SEQ.nextval,
+		values(
+		work_work_num_seq.nextval,
 		#{workSender},
 		#{workReceiver},
 		#{workSubject},
@@ -49,14 +65,16 @@
 		sysdate,
 		#{workFileName},
 		#{workFilePath},
-		#{workFileSize}
+		#{workFileSize},
+		#{proNum}
 		)
 	</insert>
 
 	<!-- 파일이 없을때의 insert -->
-	<insert id="workspace_insert_without_file"
+	<insert id="insert_work_without_file"
 		parameterType="com.promore.workspace.dto.WorkspaceDto">
-		insert into work(work_num,
+		insert into work(
+		work_num,
 		work_sender,
 		work_receiver,
 		work_subject,
@@ -64,8 +82,11 @@
 		work_state,
 		work_start_date,
 		work_end_date,
-		work_write_date)
-		values(PROMORE_WORK_WORK_NUM_SEQ.nextval,
+		work_write_date,
+		pro_num
+		)
+		values(
+		work_work_num_seq.nextval,
 		#{workSender},
 		#{workReceiver},
 		#{workSubject},
@@ -73,15 +94,37 @@
 		#{workState},
 		#{workStartDate},
 		#{workEndDate},
-		sysdate)
+		sysdate,
+		#{proNum}
+		)
 	</insert>
 
-	<!-- 리스트 뿌려주기 -->
-	<select id="work_list" resultMap="workspace_dto">
-		<![CDATA[ 
-			select * from work order by work_num desc
-		]]> 
-	</select>
+	<update id="update_work"
+		parameterType="com.promore.workspace.dto.WorkspaceDto">
+		update work set
+		work_receiver = #{workReceiver},
+		work_subject = #{workSubject},
+		work_content = #{workContent},
+		work_state = #{workState},
+		work_start_date = #{workStartDate},
+		work_end_date = #{workEndDate},
+		work_file_name = #{workFileName},
+		work_file_path = #{workFilePath},
+		work_file_size = #{workFileSize},
+		where work_num = #{workNum}
+	</update>
+
+	<update id="update_work_without_file"
+		parameterType="com.promore.workspace.dto.WorkspaceDto">
+		update work set
+		work_receiver = #{workReceiver},
+		work_subject = #{workSubject},
+		work_content = #{workContent},
+		work_state = #{workState},
+		work_start_date = #{workStartDate},
+		work_end_date = #{workEndDate}
+		where work_num = #{workNum}
+	</update>
 
 
 	<!-- 담당자 선택을 위한 SELECT -->
