@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.promore.aop.HAspect;
 import com.promore.workspace.dto.WorkspaceDto;
@@ -26,17 +27,16 @@ public class WorkspaceDaoImp implements WorkspaceDao {
 
 	@Override
 	public int insertWork(WorkspaceDto workspaceDto) {
-		if (workspaceDto.getWorkFileSize() != 0)
-			return sqlSessionTemplate.insert("WorkspaceMapper.insert_work", workspaceDto);
-		else
-			return sqlSessionTemplate.insert("WorkspaceMapper.insert_work_without_file", workspaceDto);
+		return sqlSessionTemplate.insert("WorkspaceMapper.insert_work", workspaceDto);
 	}
 
 	@Override
 	public int updateWork(WorkspaceDto workspaceDto) {
-		if (workspaceDto.getWorkFileSize() != 0)
-			return sqlSessionTemplate.update("WorkspaceMapper.update_work", workspaceDto);
-		else
-			return sqlSessionTemplate.update("WorkspaceMapper.update_work_without_file", workspaceDto);
+		return sqlSessionTemplate.update("WorkspaceMapper.update_work", workspaceDto);
+	}
+
+	@Override
+	public int deleteWork(WorkspaceDto workspaceDto) {
+		return sqlSessionTemplate.delete("WorkspaceMapper.delete_work", workspaceDto);
 	}
 }

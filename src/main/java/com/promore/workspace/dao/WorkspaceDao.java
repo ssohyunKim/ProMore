@@ -10,6 +10,8 @@ public interface WorkspaceDao {
 	public int selectWorkNum();
 
 	public int insertWork(WorkspaceDto workspaceDto);
-	
+
 	public int updateWork(WorkspaceDto workspaceDto);
+
+	public int deleteWork(WorkspaceDto workspaceDto);
 }

@@ -167,6 +167,7 @@ function writeToServer() {
       copyWorkTmpl.querySelector(".work-edit").onclick = editWork;
       copyWorkTmpl.querySelector(".work-edit-cancel").onclick = cancelEdit;
       copyWorkTmpl.querySelector(".work-edit-ok").onclick = okEdit;
+      copyWorkTmpl.querySelector(".work-delete").onclick = deleteWork;
 
       $form = $(workForm);
       $form.find(".work-subject").val("");
@@ -199,6 +200,7 @@ function init() {
   var workEdit = workList.querySelectorAll(".work-edit");
   var editCancelBtn = workList.querySelectorAll(".work-edit-cancel");
   var editOkBtn = workList.querySelectorAll(".work-edit-ok");
+  var deleteBtn = workList.querySelectorAll(".work-delete");
 
   // 일감 삭제 버튼
   [].forEach.call(workEdit, function (item) {
@@ -213,6 +215,11 @@ function init() {
   // 일감 수정 전송 버튼
   [].forEach.call(editOkBtn, function (item) {
     item.onclick = okEdit;
+  });
+
+  // 일감 수정 전송 버튼
+  [].forEach.call(deleteBtn, function (item) {
+    item.onclick = deleteWork;
   });
 }
 
@@ -313,6 +320,32 @@ function okEdit(e) {
     .catch(function () {
       alert("수정 되지 못했습니다. 다시 시도해주세요.");
     });
+}
+
+function deleteWork(e) {
+  e.preventDefault();
+
+  var choose = confirm("정말로 삭제하시겠습니까?");
+
+  if (choose) {
+    var work = e.target.closest("[id^='work-no-']");
+    var data = {
+      workNum: work.id.substr(8),
+    };
+
+    $.ajax({
+      url: root + "/workspace/delete-work.do",
+      method: "get",
+      data: data,
+      dataType: "text",
+    })
+      .then(function () {
+        work.remove();
+      })
+      .catch(function () {
+        alert("삭제되지 못했습니다. 다시 시도해주세요.");
+      });
+  }
 }
 
 init();

@@ -69,6 +69,23 @@ public class WorkspaceController {
 		}
 	}
 
+	// 일감 삭제
+	@RequestMapping(value = "/workspace/delete-work.do", method = RequestMethod.GET)
+	public void deleteWork(HttpServletRequest req, HttpServletResponse resp) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("req", req);
+		workspaceService.deleteWork(mav);
+
+		resp.setHeader("Content-Type", "plain/text;charset=utf-8");
+		try {
+			resp.getWriter().println(mav.getModel().get("chk"));
+			resp.flushBuffer();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 //	@RequestMapping("/workspace/workList.do") // 댓글 리스트
 //	@ResponseBody
 //	private List<WorkspaceDto> workServiceList(Model model) throws Exception {

@@ -90,15 +90,15 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		mav.addObject("chk", workspaceDao.updateWork(workspaceDto));
 	}
 
-//	@Override
-//	public void workListService() {
-//		// TODO Auto-generated method stub
-//
-//	}
-//
-//	@Override
-//	public void workInsertService(WorkspaceDto workspaceDto) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	@Override
+	public void deleteWork(ModelAndView mav) {
+		Map<String, Object> model = mav.getModel();
+
+		HttpServletRequest req = (HttpServletRequest) model.get("req");
+
+		WorkspaceDto workspaceDto = new WorkspaceDto();
+		workspaceDto.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
+		
+		mav.addObject("chk", workspaceDao.deleteWork(workspaceDto));
+	}
 }
