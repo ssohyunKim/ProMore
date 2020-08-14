@@ -143,5 +143,14 @@
 	<!-- 일감 delete -->
 	<!-- <delete id="workspace_delete" parameterType="int"> delete from work 
 		where work_num = #{workNum} </delete> -->
+		
+	<select id="work_cnt" parameterType="String" resultType="int">
+		select count(*) from work where work_receiver=#{workReceiver}
+	</select>
+	
+	<select id="work_list" parameterType="String" resultMap="workspace_dto">
+			select * from work where work_receiver=#{workReceiver}
+	</select>	
+		
 
 </mapper>

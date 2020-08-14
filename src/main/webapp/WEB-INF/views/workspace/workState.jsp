@@ -88,44 +88,45 @@
 										cellspacing="0">
 										<thead>
 											<tr>
-												<th>name</th>
-												<th>sender</th>
-												<th>state</th>
-												<th>start-date</th>
-												<th>end-date</th>
+												<th>프로젝트 이름</th>
+												<th>보내는 사람</th>
+												<th>상태</th>
+												<th>시작날짜</th>
+												<th>마감날짜</th>
 											</tr>
 										</thead>
+										
 										<tfoot>
 											<tr>
-												<th>name</th>
-												<th>sender</th>
-												<th>state</th>
-												<th>start-date</th>
-												<th>end-date</th>
+												<th>프로젝트 이름</th>
+												<th>보내는 사람</th>
+												<th>상태</th>
+												<th>시작날짜</th>
+												<th>마감날짜</th>
 											</tr>
 										</tfoot>
-										<tbody>
-											<tr>
-												<td>프로젝트이름</td>
-												<td>최정윤</td>
-												<td>요청</td>
-												<td>2020/08/10</td>
-												<td>2020/08/20</td>
-											</tr>
-											<tr>
-												<td>프로젝트이름</td>
-												<td>최정윤</td>
-												<td>진행중</td>
-												<td>2020/08/15</td>
-												<td>2020/08/20</td>
-											</tr>
-											<tr>
-												<td>프로젝트이름</td>
-												<td>최정윤</td>
-												<td>진행중</td>
-												<td>2020/08/15</td>
-												<td>2020/08/20</td>
-											</tr>
+									<tbody>
+									<c:if test="${workCount>0}">
+											<c:forEach var="workspaceDto" items="${workDtoArray}">
+											<c:set var="loop_flag" value="false" />
+												<tr>
+												 
+												<c:forEach var="projectDto" items="${projectDtoArray}">
+													 <c:if test="${not loop_flag }">
+														<c:set var="worknum" value="${projectDto.proNum}"/>
+														<c:if test="${workspaceDto.proNum eq worknum}">
+																 <c:set var="loop_flag" value="true" />
+																<td>${projectDto.proName}</td>
+														</c:if>
+													</c:if>
+												</c:forEach>
+													<td>${workspaceDto.workSender}</td>
+													<td>${workspaceDto.workState}</td>
+													<td>${workspaceDto.workStartDate}</td>
+													<td>${workspaceDto.workEndDate}</td>
+												</tr>
+											</c:forEach>
+										</c:if>
 										</tbody>
 									</table>
 								</div>

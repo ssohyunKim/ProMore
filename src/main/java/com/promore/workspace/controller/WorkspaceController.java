@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.promore.aop.HAspect;
+import com.promore.project.service.ProjectService;
 import com.promore.workspace.dto.WorkspaceDto;
 import com.promore.workspace.service.WorkspaceService;
 
@@ -29,8 +31,10 @@ import com.promore.workspace.service.WorkspaceService;
 public class WorkspaceController {
 	@Autowired
 	private WorkspaceService workspaceService;
+	@Autowired
+	private ProjectService projectservice;
 
-	// 페이지 조회(모든 일감 가져오기)
+	// 페이지 조회(모든 일감 가져오기) + 프로젝트 정보가져오기 위해 추가 시켰습니다!(최정윤)
 	@RequestMapping(value = "/workspace/workspace.do", method = RequestMethod.GET)
 	public ModelAndView getAllWork(HttpServletRequest req, HttpServletResponse resp) {
 		HAspect.logger.info(HAspect.logMsg + "workspace");
@@ -38,6 +42,10 @@ public class WorkspaceController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("req", req);
 		workspaceService.getAllWork(mav);
+		
+		
+		//프로젝트 정보(추가)
+		projectservice.projectList(mav);
 
 		return mav;
 	}
@@ -153,4 +161,30 @@ public class WorkspaceController {
 //
 //		return workspaceService.workInsertService(workspaceDto);
 //	}
+	
+	
+	//추가사항
+	//일감 현황
+	@RequestMapping(value = "/workspace/workState.do", method = RequestMethod.GET)
+	public ModelAndView projectWorkState(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		HAspect.logger.info(HAspect.logMsg + "ModelAndView" + id);
+		session.setAttribute("id", id);
+		mav.addObject("request", request);
+		mav.addObject("id", id);
+		
+		//일감 정보 가져오기
+		workspaceService.workState(mav, id);
+		//프로젝트 이름 가져오기
+		
+		//프로젝트 테이블 가져오기
+		projectservice.projectList(mav);
+
+		return mav;
+	}
+	
+	
 }

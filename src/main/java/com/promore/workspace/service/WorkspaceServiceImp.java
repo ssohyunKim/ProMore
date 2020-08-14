@@ -162,4 +162,19 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		else
 			mav.addObject("chk", 0);
 	}
+	
+	@Override
+	public void workState(ModelAndView mav, String id) {
+		int workCount = workspaceDao.workCount(id);
+		System.out.println("workStatOk" + workCount);
+		
+		List<WorkspaceDto> workDtoArr = workspaceDao.workList(id);
+		System.out.println("workstate" + workDtoArr);
+		
+		mav.addObject("workDtoArray", workDtoArr);
+		mav.addObject("workCount", workCount);
+		mav.setViewName("workspace/workState");
+		
+	}
+	
 }

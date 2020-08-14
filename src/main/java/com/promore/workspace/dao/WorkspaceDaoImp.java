@@ -49,4 +49,19 @@ public class WorkspaceDaoImp implements WorkspaceDao {
 	public int updateFileInfo(WorkspaceDto workspaceDto) {
 		return sqlSessionTemplate.update("WorkspaceMapper.update_file_info", workspaceDto);
 	}
+	
+	//일감 개수
+	@Override
+	public int workCount(String id) {
+		return sqlSessionTemplate.selectOne("work_cnt", id);
+	}
+	
+	//일감 리스트
+	@Override
+	public List<WorkspaceDto> workList(String id) {
+		// TODO Auto-generated method stub
+		System.out.println("worklist" + id);
+		return sqlSessionTemplate.selectList("work_list", id);
+	}
+	
 }
