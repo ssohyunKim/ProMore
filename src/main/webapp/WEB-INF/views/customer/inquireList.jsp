@@ -62,12 +62,13 @@ $(function(){
 		
 		var file = $(event.relatedTarget).data('file');
 	});
+	
+	$('.modal').on('hide.bs.modal', function(event){
+		location.reload();
+	});
 });
 function inquireDelete(root){
 	location.href = root + '/customer/inquireDelete.do?cusNum=' +cusNum;
-}
-function inquireUpdate(root){
-	location.href = root + '/customer/inquireUpdate.do?';
 }
 </script>
 <body id="page-top">

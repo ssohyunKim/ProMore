@@ -32,22 +32,29 @@ $(function(){
  		console.log(content);
 		$('textarea[name="notContent"]').text(content);
 		
- 		var file = $(event.relatedTarget).data('file');
+		var fileName = $(event.relatedTarget).data('file');
+		if (fileName != "") {
+	   		$('#fileName').text(fileName);
+		    //a.attr("href", "#");
+	    } else {
+			$('#fileName').html("첨부파일 없음");
+	    }
  		
- 		console.log(notNum);
  		//조회수 증가
- 		 $.ajax({
- 		    url: "${root}/customer/noticeUpdateCount.do",
- 		    type:"POST",
- 		    data: "notNum="+notNum,
- 		    dataType: "text",
+ 		$.ajax({
+ 		   	url: "${root}/customer/noticeUpdateCount.do",
+ 		   	type:"POST",
+ 		   	data: "notNum="+notNum,
+ 		   	dataType: "text",
  			success	: function(data){
- 				alert("OK");
  			},
  			error	: function(request, status, error){
- 				alert("FAIL")
+ 				alert("FAIL");
  			}
- 		 });
+ 		});
+	});
+	$('#noticeReadModal').on('hide.bs.modal', function(event){
+		location.reload();
 	});
 });
 </script>
@@ -106,6 +113,7 @@ $(function(){
 											<th>제목</th>
 											<th>작성자</th>
 											<th>날짜</th>
+											<th>조회수</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -118,12 +126,12 @@ $(function(){
 													data-title="${noticeDto.notTitle}"
 													data-content="${noticeDto.notContent}"
 													data-file="${noticeDto.notFileName}"
-													data-readCount="${noticeDto.notReadCount}"
 													data-toggle="modal" 
 													data-target="#noticeReadModal">
 													${noticeDto.notTitle}</a></td>
 													<td>관리자</td>
 													<td><fmt:formatDate value="${noticeDto.notWriteDate}" pattern="yyyy-MM-dd"/></td>
+													<td>${noticeDto.notReadCount}</td>
 												</tr>
 											</c:forEach>
 										</c:if>
@@ -215,16 +223,13 @@ $(function(){
 						<div class="form-group row">
 							<div class="col-sm-12">
 								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
-								</span><input type="file" name="file" class="mx-2" readonly/>
+								</span> <a id="fileName"></a>
 							</div>
 						</div>
-
 					</div>
 
 					<!-- modal-footer -->
 					<div class="modal-footer justify-content-between">
-						<button type="button" class="btn btn-warning" data-toggle="modal"
-							data-target="#noticeUpdateModal">수정하기</button>
 						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 					</div>
 				</form>
