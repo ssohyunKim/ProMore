@@ -12,10 +12,9 @@
 		<result column="pro_content" property="proContent"/>
 		<result column="pro_manager" property="proManager"/>
 		<result column="pro_state" property="proState"/>
+		<result column="pro_max" property="proMax"/>
 		<result column="pro_cnt" property="proCnt"/>
 	</resultMap>
-
-
 
 
 <insert id="project_insert" parameterType="com.promore.project.dto.ProjectDto">
@@ -25,6 +24,7 @@
 			pro_content,
 			pro_manager,
 			pro_state,
+			pro_max,
 			pro_cnt
 		)
 		values(
@@ -33,10 +33,28 @@
 			#{proContent},
 			#{proManager},
 			#{proState},
+			#{proMax},
 			#{proCnt}
 		)
 </insert>
-	
 
+<select id="project_count" resultType="int">
+	select count(*) from project
+</select>
+
+<select id="project_list" resultMap="project_dto">
+	select * from project
+</select>
+
+<select id="project_state" parameterType="String" resultType="java.lang.Integer" >
+	select apl_num from project_apply where apl_mem_id=#{aplMemId}
+</select>
+
+<!-- <select id="project_list" parameterType="Integer" resultType="com.promore.project.dto.ProjectDto">
+	select * from project
+</select> -->
+<select id="project_select" parameterType="Integer" resultType="java.util.HashMap">
+	select * from project where pro_num=#{proNum} 
+</select>
 
 </mapper>

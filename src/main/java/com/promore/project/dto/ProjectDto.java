@@ -6,6 +6,7 @@ public class ProjectDto {
 	private String proContent;
 	private String proManager;
 	private int proState;
+	private int proMax;
 	private int proCnt;
 	
 	public ProjectDto() {
@@ -13,13 +14,15 @@ public class ProjectDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProjectDto(int proNum, String proName, String proContent, String proManager, int proState, int proCnt) {
+	public ProjectDto(int proNum, String proName, String proContent, String proManager, int proState, int proMax,
+			int proCnt) {
 		super();
 		this.proNum = proNum;
 		this.proName = proName;
 		this.proContent = proContent;
 		this.proManager = proManager;
 		this.proState = proState;
+		this.proMax = proMax;
 		this.proCnt = proCnt;
 	}
 
@@ -63,6 +66,14 @@ public class ProjectDto {
 		this.proState = proState;
 	}
 
+	public int getProMax() {
+		return proMax;
+	}
+
+	public void setProMax(int proMax) {
+		this.proMax = proMax;
+	}
+
 	public int getProCnt() {
 		return proCnt;
 	}
@@ -74,10 +85,8 @@ public class ProjectDto {
 	@Override
 	public String toString() {
 		return "ProjectDto [proNum=" + proNum + ", proName=" + proName + ", proContent=" + proContent + ", proManager="
-				+ proManager + ", proState=" + proState + ", proCnt=" + proCnt + "]";
+				+ proManager + ", proState=" + proState + ", proMax=" + proMax + ", proCnt=" + proCnt + "]";
 	}
-	
-	
 	
 	
 }
