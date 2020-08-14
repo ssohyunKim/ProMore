@@ -9,5 +9,10 @@ public interface CustomerService {
 	public void customerBoardList(ModelAndView mav);
 
 	public void customerBoardDeleteOk(ModelAndView mav);
+
+	public void customerBoardUpdateOk(ModelAndView mav);
+
+	public void noticeBoardList(ModelAndView mav);
 	
+	public void noticeBoardUpdateCount(ModelAndView mav);
 }

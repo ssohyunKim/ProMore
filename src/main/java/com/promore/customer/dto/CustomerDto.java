@@ -7,22 +7,18 @@ public class CustomerDto {
 	private String cusTitle;
 	private String cusCate;
 	private String cusId;
-	
 	private Date cusDate;
+	
 	private String cusContent;
 	private String cusFileName;
 	private String cusFilePath;
 	private long cusFileSize;
-	
-	private int cusGroupNumber;
-	private int cusSequenceNumber;
-	private int cusSequenceLevel;
+	private int cusState;
 	
 	public CustomerDto() {}
 
-	public CustomerDto(int cusNum, String cusTitle, String cusCate, String cusId, Date cusDate,
-			String cusContent, String cusFileName, String cusFilePath, long cusFileSize, int cusGroupNumber,
-			int cusSequenceNumber, int cusSequenceLevel) {
+	public CustomerDto(int cusNum, String cusTitle, String cusCate, String cusId, Date cusDate, String cusContent,
+			String cusFileName, String cusFilePath, long cusFileSize, int cusState) {
 		super();
 		this.cusNum = cusNum;
 		this.cusTitle = cusTitle;
@@ -33,9 +29,7 @@ public class CustomerDto {
 		this.cusFileName = cusFileName;
 		this.cusFilePath = cusFilePath;
 		this.cusFileSize = cusFileSize;
-		this.cusGroupNumber = cusGroupNumber;
-		this.cusSequenceNumber = cusSequenceNumber;
-		this.cusSequenceLevel = cusSequenceLevel;
+		this.cusState = cusState;
 	}
 
 	public int getCusNum() {
@@ -61,7 +55,7 @@ public class CustomerDto {
 	public void setCusCate(String cusCate) {
 		this.cusCate = cusCate;
 	}
-	
+
 	public String getCusId() {
 		return cusId;
 	}
@@ -110,36 +104,19 @@ public class CustomerDto {
 		this.cusFileSize = cusFileSize;
 	}
 
-	public int getCusGroupNumber() {
-		return cusGroupNumber;
+	public int getCusState() {
+		return cusState;
 	}
 
-	public void setCusGroupNumber(int cusGroupNumber) {
-		this.cusGroupNumber = cusGroupNumber;
-	}
-
-	public int getCusSequenceNumber() {
-		return cusSequenceNumber;
-	}
-
-	public void setCusSequenceNumber(int cusSequenceNumber) {
-		this.cusSequenceNumber = cusSequenceNumber;
-	}
-
-	public int getCusSequenceLevel() {
-		return cusSequenceLevel;
-	}
-
-	public void setCusSequenceLevel(int cusSequenceLevel) {
-		this.cusSequenceLevel = cusSequenceLevel;
+	public void setCusState(int cusState) {
+		this.cusState = cusState;
 	}
 
 	@Override
 	public String toString() {
 		return "CustomerDto [cusNum=" + cusNum + ", cusTitle=" + cusTitle + ", cusCate=" + cusCate + ", cusId=" + cusId
-				+ ", "+ "cusDate=" + cusDate + ", cusContent=" + cusContent
-				+ ", cusFileName=" + cusFileName + ", cusFilePath=" + cusFilePath + ", cusFileSize=" + cusFileSize
-				+ ", cusGroupNumber=" + cusGroupNumber + ", cusSequenceNumber=" + cusSequenceNumber
-				+ ", cusSequenceLevel=" + cusSequenceLevel + "]";
+				+ ", cusDate=" + cusDate + ", cusContent=" + cusContent + ", cusFileName=" + cusFileName
+				+ ", cusFilePath=" + cusFilePath + ", cusFileSize=" + cusFileSize + ", cusState=" + cusState + "]";
 	}
+	
 }

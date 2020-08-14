@@ -21,71 +21,53 @@
 </head>
 <script type="text/javascript">
 var cusNum = "";
+var title = "";
+var cate = "";
+var content = "";
+var file = "";
 $(function(){
 	$('#customerReadModal').on('show.bs.modal', function(event) {
 		cusNum = $(event.relatedTarget).data('num');
 		
-		var title = $(event.relatedTarget).data('title');
+ 		title = $(event.relatedTarget).data('title');
 		$('input[name="cusTitle"]').val(title);
 		
-		var cate = $(event.relatedTarget).data('cate');
-		$('select[name="cusCate"] option').val(cate).attr("selected", "selected");
+	 	cate = $(event.relatedTarget).data('cate');
+	 	$('select[name="cusCate"]').val(cate).attr("selected", "selected");
 		$('select[name="cusCate"] option').attr('disabled', true);
 		
-		var content = $(event.relatedTarget).data('content');
+ 		content = $(event.relatedTarget).data('content');
 		$('textarea[name="cusContent"]').text(content);
 		
-		var file = $(event.relatedTarget).data('file');
+ 		file = $(event.relatedTarget).data('file');
 		console.log(file);
 	});
 	
 	$('#deleteBtn').click(function(){
-		$('#ConfirmModal').modal();
+		$('#removeConfirmModal').modal();
 	});
-/* 	$('.modal').on('shown.bs.modal', function () {
-		  $(this).focus();
-		  //console.log($(this).find('form'));
-		  $(this).find('form')[0].reset()
-	});
-	
-	$('#submitBtn').on('click', function(){
-		$('#ConfirmModal').modal('show');
-	});
-	
-	
-	$('#yesBtn').on('click', function(){
-		alert("ok");
-		formSubmit();
-	});
-	
-	function formSubmit(){
-		var form = $('#createForm')[0];
-		var formData = new FormData(form);
+
+	$('#updateBtn').click(function(){
+		$('#customerUpdateModal').modal();
 		
-		$.ajax({
-			url			: "${root}/customer/inquireWrite.do",
-			type		: "POST",
-			data		: formData,
-			dataType	: "text",
-			contentType : false,
-	        processData : false,
-			success	: function(data){
-				alert("작성이 완료되었습니다.");
-				
-				$('#ConfirmModal').modal('hide');
-				$('#customerWriteModal').modal('hide');
-				
-				//reload해서 추가된 화면 리스트 보여주기
-				
-			},
-			error 	: function(xhr, status, error){
-                alert(error);
-            }
-		});
-	} */
+		$('input[name="cusNum"]').val(cusNum);
+		$('input[name="cusTitle"]').val(title);
+		
+		$('select[name="cusCate"]').val(cate).prop("selected", true);
+		$('select[name="cusCate"] option').attr('disabled', false);
+		
+		$('textarea[name="cusContent"]').text(content);
+
+		$('#customerReadModal').modal().hide();
+		
+		var file = $(event.relatedTarget).data('file');
+	});
 });
 function inquireDelete(root){
 	location.href = root + '/customer/inquireDelete.do?cusNum=' +cusNum;
+}
+function inquireUpdate(root){
+	location.href = root + '/customer/inquireUpdate.do?';
 }
 </script>
 <body id="page-top">
@@ -134,7 +116,6 @@ function inquireDelete(root){
 								<i class="fas fa-pen"></i>
 							</a>
 						</div>
-						${cusNum}, ${cusGroupNumber}, ${cusSequenceNumber}, ${cusSequenceLevel}
 						<!-- Card Body -->
 						<!-- 문의사항 리스트 -->
 						<div class="card-body">
@@ -144,14 +125,11 @@ function inquireDelete(root){
 										<tr>
 											<th>제목</th>
 											<th>분류</th>
-											<th>작성자</th>
 											<th>날짜</th>
+											<th>상태</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:if test="${boardList.size()==0}">
-											<div>작성하신 문의글이 없습니다.</div>
-										</c:if>
 										<c:if test="${boardList.size()>0}">
 											<c:forEach var="customerDto" items="${boardList}">
 												<tr>
@@ -167,8 +145,13 @@ function inquireDelete(root){
 													
 													${customerDto.cusTitle}</a></td>
 													<td>${customerDto.cusCate}</td>
-													<td>${customerDto.cusId}</td>
 													<td><fmt:formatDate value="${customerDto.cusDate}" pattern="yyyy-MM-dd"/></td>
+													<c:if test="${customerDto.cusState==0}">
+														<td>처리중</td>
+													</c:if>
+													<c:if test="${customerDto.cusState==1}">
+														<td>처리완료</td>
+													</c:if>
 												</tr>
 											</c:forEach>
 										</c:if>
@@ -194,8 +177,8 @@ function inquireDelete(root){
 	<!-- End of Page Wrapper -->
 
 	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top"> <i
-		class="fas fa-angle-up"></i>
+	<a class="scroll-to-top rounded" href="#page-top"> 
+		<i class="fas fa-angle-up"></i>
 	</a>
 
 	<!-- Logout Modal-->
@@ -236,21 +219,13 @@ function inquireDelete(root){
 				</div>
 
 				<form action="${root}/customer/inquireWrite.do" name="createForm" method="post" enctype="multipart/form-data">
-					<!-- 글번호, 그룹넘버, 시퀀스번호, 시퀀스레벨 -->
-					<input type="hidden" name="cusNum" value="${cusNum}" /> 
-					<input type="hidden" name="cusGroupNumber" value="${cusGroupNumber}" /> 
-					<input type="hidden" name="cusSequenceNumber" value="${cusSequenceNumber}" /> 
-					<input type="hidden" name="cusSequenceLevel" value="${cusSequenceLevel}" />
-					
 					<!-- modal-body -->
 					<div class="modal-body">
-
 						<!-- 문의글 제목 -->
 						<div class="form-group row">
 							<div class="col-sm-9">
 								<input type="text" class="form-control" name="cusTitle" placeholder="제목을 입력하세요.">
 							</div>
-							
 							<div class="col-sm-3">
 			                    <select name="cusCate" class="form-control">
 								    <option value="일반문의">일반문의</option>
@@ -258,14 +233,12 @@ function inquireDelete(root){
 								</select>
 							</div>
 						</div>
-
 						<!-- 문의글 내용 -->
 						<div class="form-group row">
 							<div class="col-sm-12">
 								<textarea class="form-control" rows="20" name="cusContent" placeholder="글을 입력하세요."></textarea>
 							</div>
 						</div>
-
 						<!-- 파일 첨부 -->
 						<div class="form-group row">
 							<div class="col-sm-12">
@@ -273,29 +246,24 @@ function inquireDelete(root){
 								</span> <input type="file" name="file" class="mx-2"/>
 							</div>
 						</div>
-
 					</div>
-
 					<!-- modal-footer -->
 					<div class="modal-footer justify-content-between">
 						<button type="reset" class="btn btn-warning">초기화</button>
-
 						<div>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 							<button type="submit" class="btn btn-primary">작성 완료</button>
 						</div>
 					</div>
-
 				</form>
-
 			</div>
 		</div>
 	</div>
+	
 	<!-- Customer Read Model -->
 	<div class="modal fade" id="customerReadModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg mt-5" role="document">
 			<div class="modal-content">
-
 				<!-- modal-header -->
 				<div class="modal-header">
 					<h5 class="m-0 font-weight-bold text-primary p-2">문의글 보기</h5>
@@ -304,53 +272,92 @@ function inquireDelete(root){
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-
-				<form action="#" name="createForm" method="post" enctype="multipart/form-data">
-					<!-- 글번호, 그룹넘버, 시퀀스번호, 시퀀스레벨 -->
-					<input type="hidden" name="cusNum" value="${cusNum}" /> 
-					<input type="hidden" name="cusGroupNumber" value="${cusGroupNumber}" /> 
-					<input type="hidden" name="cusSequenceNumber" value="${cusSequenceNumber}" /> 
-					<input type="hidden" name="cusSequenceLevel" value="${cusSequenceLevel}" />
-					
+				<!-- modal-body -->
+				<div class="modal-body">
+					<!-- 문의글 제목 -->
+					<div class="form-group row">
+						<div class="col-sm-9">
+							<input type="text" class="form-control-plaintext" name="cusTitle" placeholder="제목을 입력하세요." readonly>
+						</div>
+						<div class="col-sm-3">
+		                    <select name="cusCate" class="form-control-plaintext" readonly>
+							    <option value="일반문의">일반문의</option>
+							    <option value="신고하기">신고하기</option>
+							</select>
+						</div>
+					</div>
+					<!-- 문의글 내용 -->
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<textarea class="form-control-plaintext" rows="20" name="cusContent" placeholder="글을 입력하세요." readonly></textarea>
+						</div>
+					</div>
+					<!-- 파일 첨부 -->
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
+							</span> <input type="file" name="file" class="mx-2" readonly/>
+						</div>
+					</div>
+				</div>
+				<!-- modal-footer -->
+				<div class="modal-footer justify-content-right">
+					<div>
+						<button id="deleteBtn" type="button" class="btn btn-secondary">삭제</button>
+						<button id="updateBtn" type="button" class="btn btn-primary">수정</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Customer Update Model -->
+	<div class="modal fade" id="customerUpdateModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">문의글 수정</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form action="${root}/customer/inquireUpdate.do" name="updateForm" method="post" enctype="multipart/form-data">		
+					<input type="hidden" id="cusNum" name="cusNum" value="" /> 
 					<!-- modal-body -->
 					<div class="modal-body">
-
 						<!-- 문의글 제목 -->
 						<div class="form-group row">
 							<div class="col-sm-9">
-								<input type="text" class="form-control" name="cusTitle" placeholder="제목을 입력하세요." readonly>
+								<input type="text" class="form-control" name="cusTitle" placeholder="제목을 입력하세요.">
 							</div>
-							
 							<div class="col-sm-3">
-			                    <select name="cusCate" class="form-control" readonly>
+			                    <select name="cusCate" class="form-control">
 								    <option value="일반문의">일반문의</option>
 								    <option value="신고하기">신고하기</option>
 								</select>
 							</div>
 						</div>
-
 						<!-- 문의글 내용 -->
 						<div class="form-group row">
 							<div class="col-sm-12">
-								<textarea class="form-control" rows="20" name="cusContent" placeholder="글을 입력하세요." readonly></textarea>
+								<textarea class="form-control" rows="20" name="cusContent" placeholder="글을 입력하세요."></textarea>
 							</div>
 						</div>
-
 						<!-- 파일 첨부 -->
 						<div class="form-group row">
 							<div class="col-sm-12">
 								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
-								</span> <input type="file" name="file" class="mx-2" readonly/>
+								</span> <input type="file" name="file" class="mx-2"/>
 							</div>
 						</div>
-
 					</div>
-
 					<!-- modal-footer -->
 					<div class="modal-footer justify-content-right">
 						<div>
-							<button id="deleteBtn" type="button" class="btn btn-secondary">삭제</button>
-							<button type="submit" class="btn btn-primary">수정</button>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+							<button type="submit" class="btn btn-primary">확인</button>
 						</div>
 					</div>
 				</form>
@@ -358,8 +365,8 @@ function inquireDelete(root){
 		</div>
 	</div>
 	
-	<!-- Confirm Modal-->
-	<div class="modal fade" id="ConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<!-- Remove Confirm Modal-->
+	<div class="modal fade" id="removeConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
