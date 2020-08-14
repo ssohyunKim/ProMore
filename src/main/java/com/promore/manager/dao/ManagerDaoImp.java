@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.promore.aop.HAspect;
+import com.promore.customer.dto.CustomerDto;
 import com.promore.manager.dto.NoticeDto;
 
 @Component
-public class NoticeDaoImp implements NoticeDao {
+public class ManagerDaoImp implements ManagerDao {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
@@ -48,6 +49,16 @@ public class NoticeDaoImp implements NoticeDao {
 	@Override
 	public int noticeDelete(int notNum) {
 		return sqlSessionTemplate.delete("notice_delete", notNum);
+	}
+	
+	@Override
+	public int reportCount() {
+		return sqlSessionTemplate.selectOne("report_count");
+	}
+	
+	@Override
+	public List<CustomerDto> reportList() {
+		return sqlSessionTemplate.selectList("report_list");
 	}
 	
 }

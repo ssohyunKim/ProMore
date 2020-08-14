@@ -11,14 +11,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
-import com.promore.aop.HAspect;
 import com.promore.manager.dto.NoticeDto;
-import com.promore.manager.service.NoticeService;
+import com.promore.manager.service.ManagerService;
 
 @Controller
 public class ManagerController extends MultiActionController {
 	@Autowired
-	private NoticeService noticeService;
+	private ManagerService managerService;
 	
 	@RequestMapping(value = "/manager/memberList.do", method = RequestMethod.GET)
 	public ModelAndView memberList(HttpServletRequest request, HttpServletResponse response) {
@@ -34,7 +33,7 @@ public class ManagerController extends MultiActionController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		
-		noticeService.noticeList(mav);
+		managerService.noticeList(mav);
 		
 		return mav;
 	}
@@ -48,7 +47,7 @@ public class ManagerController extends MultiActionController {
 		mav.addObject("request", multipartRequest);
 		mav.addObject("noticeDto", noticeDto);
 		
-		noticeService.noticeWriteOk(mav);
+		managerService.noticeWriteOk(mav);
 		
 		return mav;
 	}
@@ -60,7 +59,7 @@ public class ManagerController extends MultiActionController {
 		ModelAndView mav = new ModelAndView("manager/noticeDeleteOk");
 		mav.addObject("request", request);
 		
-		noticeService.noticeDelete(mav);
+		managerService.noticeDelete(mav);
 		
 		return mav;
 	}
@@ -69,7 +68,12 @@ public class ManagerController extends MultiActionController {
 	public ModelAndView reportList(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("reportList.do");
 		
-		return new ModelAndView("/manager/reportList");
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		
+		managerService.reportList(mav);
+		
+		return mav;
 	}
 	
 }

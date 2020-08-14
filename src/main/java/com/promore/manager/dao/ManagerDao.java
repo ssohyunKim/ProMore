@@ -2,9 +2,10 @@ package com.promore.manager.dao;
 
 import java.util.List;
 
+import com.promore.customer.dto.CustomerDto;
 import com.promore.manager.dto.NoticeDto;
 
-public interface NoticeDao {
+public interface ManagerDao {
 	
 	public int noticeWrite(NoticeDto noticeDto);
 	
@@ -15,6 +16,10 @@ public interface NoticeDao {
 	public NoticeDto noticeSelect(int notNum);
 	
 	public int noticeDelete(int notNum);
+	
+	public int reportCount();
+	
+	public List<CustomerDto> reportList();
 	
 	
 }
