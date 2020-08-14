@@ -38,7 +38,7 @@
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-           <h1 class="h3 mb-0 text-gray-800">공지사항 글보기</h1>
+           <h1 class="h3 mb-0 text-gray-800">프로젝트 글보기</h1>
            <a href="${root }/workspace/workspace.do?proNum=1">개발용 맨처음 만들 프로젝트로</a>
         </div>
 
@@ -48,44 +48,28 @@
 				<i class="fas fa-pen"></i>
 			</a>
 		</div>	
-				
-	<%-- <c:forEach var="boardDto" items="${boardList}">		 --%>				
-		<div class="flip-card">
-			<div class="flip-card-inner">
-				<div class="flip-card-front1">
-					<p>웹사이트 프로젝트</p>
-					</br>
-					<p>최대인원 : n명</p>
+		<c:if test="${projectCount>0}">		
+		 	<c:forEach var="projectDto" items="${projectDtoArray}">		 	
+				<div class="flip-card">
+					<div class="flip-card-inner">
+						<div class="flip-card-front1">
+							<p>${projectDto.proName}</p>
+							</br>
+							<p>최대인원 : ${projectDto.proMax}명</p>
+						</div>
+						<a href="${root}/workspace/workspace.do">
+						<div class="flip-card-back1">
+							<p>${projectDto.proManager}</p>
+							</br>
+							<p>현재인원 : ${projectDto.proCnt}명</p>
+						</div>
+						</a>
+					</div>
 				</div>
-				<a href="${root}/workspace/workspace.do">
-				<div class="flip-card-back1">
-					<p>팀장</p>
-					</br>
-					<p>현재인원 : n명</p>
-				</div>
-				</a>
-			</div>
-		</div>
-
-
-		<div class="flip-card">
-			<div class="flip-card-inner">
-				<div class="flip-card-front2">
-					<p>웹사이트 프로젝트</p>
-					</br>
-					<p>최대인원 : n명</p>
-				</div>
-				<div class="flip-card-back2">
-					<a href="${root}/project/read.do"></a>
-					<p>팀장</p>
-					</br>
-					<p>현재인원 : n명</p>
-				</div>
-			</div>
-		</div>		
+				 </c:forEach>
   <%--     </c:forEach> --%>
          <!-- /.container-fluid -->
-
+</c:if>
 	</div>
 	</div>
       <!-- End of Main Content -->

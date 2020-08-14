@@ -15,7 +15,7 @@ public class MyPageController {
 	public ModelAndView memberUpdate(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("Ok");
 		
-		ModelAndView mav = new ModelAndView("/mypage/memberUpdate");
+		ModelAndView mav = new ModelAndView("mypage/memberUpdate");
 		return mav;
 	}
 	
@@ -23,7 +23,7 @@ public class MyPageController {
 	public ModelAndView myPage(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("Ok");
 		
-		ModelAndView mav = new ModelAndView("/mypage/myPage");
+		ModelAndView mav = new ModelAndView("mypage/myPage");
 		return mav;
 	}
 	

@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.promore.aop.HAspect;
+import com.promore.customer.dto.CustomerDto;
 import com.promore.manager.dto.NoticeDto;
 
 @Component
-public class NoticeDaoImp implements NoticeDao {
+public class ManagerDaoImp implements ManagerDao {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
@@ -37,7 +38,16 @@ public class NoticeDaoImp implements NoticeDao {
 	
 	@Override
 	public List<NoticeDto> noticeList() {
-		return sqlSessionTemplate.selectList("notice_list");
+		
+		List<NoticeDto> list = sqlSessionTemplate.selectList("notice_list");
+		
+		for(NoticeDto noticeDto : list) {
+			if(noticeDto.getNotFileName()!=null) {
+				noticeDto.setNotFileName(noticeDto.getNotFileName().substring(noticeDto.getNotFileName().indexOf("_")+1));
+			}
+		}
+		
+		return list;
 	}
 	
 	@Override
@@ -48,6 +58,30 @@ public class NoticeDaoImp implements NoticeDao {
 	@Override
 	public int noticeDelete(int notNum) {
 		return sqlSessionTemplate.delete("notice_delete", notNum);
+	}
+	
+	@Override
+	public int reportCount() {
+		return sqlSessionTemplate.selectOne("report_count");
+	}
+	
+	@Override
+	public List<CustomerDto> reportList() {
+		
+		List<CustomerDto> list = sqlSessionTemplate.selectList("report_list");
+		
+		for(CustomerDto customerDto : list) {
+			if(customerDto.getCusFileName()!=null) {
+				customerDto.setCusFileName(customerDto.getCusFileName().substring(customerDto.getCusFileName().indexOf("_")+1));
+			}
+		}
+		
+		return list;
+	}
+
+	@Override
+	public int memberCount() {
+		return sqlSessionTemplate.selectOne("member_count");
 	}
 	
 }

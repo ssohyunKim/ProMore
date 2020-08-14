@@ -44,9 +44,10 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-				
+
 					<!-- Page Heading -->
-					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+					<div
+						class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">고객게시판 관리</h1>
 					</div>
 
@@ -57,7 +58,7 @@
 						<div class="card-header py-3">
 							<h5 class="m-0 font-weight-bold text-primary p-2">고객게시판 관리</h5>
 						</div>
-						
+
 						<!-- Card Body -->
 						<div class="card-body">
 							<div class="table-responsive">
@@ -84,46 +85,32 @@
 										</tr>
 									</tfoot>
 									<tbody>
-										<tr>
-											<td>58011</td>
-											<td>adams1234</td>
-											<td><a href="#">이런 경우 어떻게 처리하나요??</a></td>
-											<td>상의없이 코드 내용을 유출했어요...</td>
-											<td>캡처.zip</td>
-											<td><a href="#">접수 대기중</a></td>
-										</tr>
-										<tr>
-											<td>58012</td>
-											<td>brad88</td>
-											<td><a href="#">팀원 미참여 문제</a></td>
-											<td>팀원이 잠수탔네여...</td>
-											<td>image.jpg</td>
-											<td><a href="#">접수중</a></td>
-										</tr>
-										<tr>
-											<td>58013</td>
-											<td>coco3356</td>
-											<td><a href="#">보안 위반 처리 부탁드려요</a></td>
-											<td>신고 접수한 글의 내용...</td>
-											<td>주소.txt</td>
-											<td><a href="#">접수중</a></td>
-										</tr>
-										<tr>
-											<td>58014</td>
-											<td>donadona12</td>
-											<td><a href="#">신고합니다</a></td>
-											<td>상의없이 코드 내용을 유출했어요...</td>
-											<td>캡처.zip</td>
-											<td><a href="#">접수완료</a></td>
-										</tr>
-										<tr>
-											<td>58016</td>
-											<td>eman4956</td>
-											<td><a href="#">프로젝트 문의</a></td>
-											<td>프로젝트 관련 문의 사항이 있어 글 남깁...</td>
-											<td>첨부파일 없음</td>
-											<td><a href="#">접수완료</a></td>
-										</tr>
+										<c:if test="${reportCount>0}">
+											<c:forEach var="reportDto" items="${reportArray}">
+												<tr>
+													<td><label>${reportDto.cusNum}</label></td>
+													<td><label>${reportDto.cusId}</label></td>
+													<td><a href="#" data-toggle="modal"
+														data-target="#reportReadModal"
+														data-custitle="${reportDto.cusTitle}"
+														data-cuscontent="${reportDto.cusContent}">${reportDto.cusTitle}</a></td>
+													<td>${reportDto.cusContent}</td>
+
+													<c:if test="${reportDto.cusFileSize>0}">
+														<td><a href="#">${reportDto.cusFileName}</a></td>
+													</c:if>
+
+													<c:if test="${reportDto.cusFileSize==0}">
+														<td>첨부파일 없음</td>
+													</c:if>
+
+													<td><a id="state" href="#" data-toggle="modal"
+														data-target="#reportStateModal"
+														data-cusnum="${reportDto.cusNum}">접수대기중</a></td>
+												</tr>
+											</c:forEach>
+										</c:if>
+
 
 									</tbody>
 								</table>
@@ -152,6 +139,98 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
+	
+	<!-- Report Read Model -->
+	<div class="modal fade" id="reportReadModal" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
+
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">고객게시판 글 읽기</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<form>
+
+					<!-- modal-body -->
+					<div class="modal-body p-4">
+
+						<!-- 공지사항 글 제목 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<h5 class="modal-title form-control-plaintext font-weight-bold"
+									id="staticTitle"></h5>
+							</div>
+						</div>
+
+						<!-- 공지사항 글 내용 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<textarea readonly class="form-control-plaintext" rows="20"
+									id="staticContent"></textarea>
+							</div>
+						</div>
+
+						<!-- 파일 첨부 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
+								</span> <a class="mx-2">첨부파일 없음</a>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- modal-footer -->
+					<div class="modal-footer justify-content-right">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+					</div>
+
+				</form>
+
+			</div>
+		</div>
+	</div>
+	
+	<!-- Report State Model -->
+	<div class="modal fade" id="reportStateModal" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
+
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">접수 처리</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!-- modal-body -->
+				<div class="modal-body p-4">
+
+					<!-- 접수 완료 -->
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<h5 class="modal-title form-control-plaintext font-weight-bold">접수를 완료하세요.</h5>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- modal-footer -->
+				<div class="modal-footer justify-content-right">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="reportStateChange();">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
@@ -173,5 +252,9 @@
 
 	<!-- Page level custom scripts -->
 	<script src="${root}/resources/js/demo/datatables-demo.js"></script>
+	
+	<!-- Modal JavaScript-->
+	<script src="${root}/resources/js/manager/report.js"></script>
+	
 </body>
 </html>

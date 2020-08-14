@@ -1,16 +1,11 @@
 package com.promore.manager.service;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,13 +14,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.promore.aop.HAspect;
-import com.promore.manager.dao.NoticeDao;
+import com.promore.customer.dto.CustomerDto;
+import com.promore.manager.dao.ManagerDao;
 import com.promore.manager.dto.NoticeDto;
 
 @Component
-public class NoticeServiceImp implements NoticeService {
+public class ManagerServiceImp implements ManagerService {
 	@Autowired
-	private NoticeDao noticeDao;
+	private ManagerDao managerDao;
 
 	@Override
 	public void noticeWriteOk(ModelAndView mav) {
@@ -66,7 +62,7 @@ public class NoticeServiceImp implements NoticeService {
 
 		HAspect.logger.info(HAspect.logMsg + noticeDto);
 
-		int check = noticeDao.noticeWrite(noticeDto);
+		int check = managerDao.noticeWrite(noticeDto);
 		HAspect.logger.info(HAspect.logMsg + check);
 
 		mav.addObject("check", check);
@@ -75,8 +71,8 @@ public class NoticeServiceImp implements NoticeService {
 
 	@Override
 	public void noticeList(ModelAndView mav) {
-		int noticeCount = noticeDao.noticeCount();
-		List<NoticeDto> noticeDtoArray = noticeDao.noticeList();
+		int noticeCount = managerDao.noticeCount();
+		List<NoticeDto> noticeDtoArray = managerDao.noticeList();
 
 		mav.addObject("noticeDtoArray", noticeDtoArray); // 전체 게시물
 		mav.addObject("noticeCount", noticeCount); // 전체 게시물 개수
@@ -93,10 +89,10 @@ public class NoticeServiceImp implements NoticeService {
 		int notNum = Integer.parseInt(request.getParameter("notNum"));
 		HAspect.logger.info(HAspect.logMsg + notNum);
 
-		NoticeDto noticeDto = noticeDao.noticeSelect(notNum);
+		NoticeDto noticeDto = managerDao.noticeSelect(notNum);
 		HAspect.logger.info(HAspect.logMsg + noticeDto);
 
-		int check = noticeDao.noticeDelete(notNum);
+		int check = managerDao.noticeDelete(notNum);
 
 		if (check > 0 && noticeDto.getNotFilePath() != null) {
 
@@ -110,6 +106,25 @@ public class NoticeServiceImp implements NoticeService {
 		mav.addObject("check", check);
 		mav.setViewName("manager/noticeDeleteOk");
 	}
+	
+	@Override
+	public void reportList(ModelAndView mav) {
+		int reportCount = managerDao.reportCount();
+		List<CustomerDto> reportArray = managerDao.reportList();
+
+		mav.addObject("reportArray", reportArray); // 전체 게시물
+		mav.addObject("reportCount", reportCount); // 전체 게시물 개수
+
+		HAspect.logger.info(HAspect.logMsg + reportArray.size());
+	}
+
+	@Override
+	public void memberList(ModelAndView mav) {
+		int memberCount = managerDao.memberCount();
+		HAspect.logger.info(HAspect.logMsg + memberCount);
+		
+	}
+
 
 	/*
 	 * public void fileDownload(ModelAndView mav) { Map<String, Object> map =

@@ -86,6 +86,32 @@
 										</tr>
 									</tfoot>
 									<tbody>
+										<c:if test="${noticeCount>0}">
+												<c:forEach var="noticeDto" items="${noticeDtoArray}">
+													<tr>
+														<td><label>${noticeDto.notNum}</label></td>
+														<td><a href="#" data-toggle="modal"
+															data-target="#noticeReadModal"
+															data-nottitle="${noticeDto.notTitle}" data-notcontent="${noticeDto.notContent}">${noticeDto.notTitle}</a></td>
+														<td>${noticeDto.notReadCount}</td>
+														<td><fmt:formatDate value="${noticeDto.notWriteDate}"
+																pattern="yyyy-MM-dd" /></td>
+
+														<c:if test="${noticeDto.notFileSize>0}">
+															<td><a href="#">${noticeDto.notFileName}</a></td>
+														</c:if>
+
+														<c:if test="${noticeDto.notFileSize==0}">
+															<td>첨부파일 없음</td>
+														</c:if>
+
+														<td><a href="#" data-toggle="modal"
+															data-target="#noticeDeleteModal" data-notnum="${noticeDto.notNum}">삭제</a></td>
+													</tr>
+													
+												</c:forEach>
+									
+									
 										<tr>
 											<td>58011</td>
 											<td>adams1234</td>
@@ -136,6 +162,7 @@
 											<td>2020/07/10</td>
 											<td><a href="#">탈퇴 처리</a></td>
 										</tr>
+										</c:if>
 									</tbody>
 								</table>
 							</div>

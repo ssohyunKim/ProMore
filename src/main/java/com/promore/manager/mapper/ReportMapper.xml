@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.promore.manager.mapper.ReportMapper">
+
+	<resultMap type="com.promore.customer.dto.CustomerDto" id="report_dto">
+		<result column="CUS_NUM" property="cusNum"/>
+		<result column="CUS_TITLE" property="cusTitle"/>
+		<result column="CUS_CATE" property="cusCate"/>
+		<result column="CUS_NAME" property="cusName"/>
+		<result column="CUS_ID" property="cusId"/>
+		<result column="CUS_DATE" property="cusDate"/>
+		<result column="CUS_CONTENT" property="cusContent"/>
+		
+		<result column="CUS_FILE_NAME" property="cusFileName"/>
+		<result column="CUS_FILE_PATH" property="cusFilePath"/>
+		<result column="CUS_FILE_SIZE" property="cusFileSize"/>
+		
+		<result column="cus_group_number" property="cusGroupNumber"/>
+		<result column="cus_sequence_number" property="cusSequenceNumber"/>
+		<result column="cus_sequence_level" property="cusSequenceLevel"/>
+	</resultMap>
+	
+	<select id="report_count" resultType="int">
+		select count(*) from customer_board
+	</select>
+	
+	<select id="report_list" resultMap="report_dto">
+		select * from customer_board order by cus_num desc
+	</select>
+	
+</mapper>

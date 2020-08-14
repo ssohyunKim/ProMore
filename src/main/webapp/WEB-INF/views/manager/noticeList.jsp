@@ -88,7 +88,7 @@
 														<td><label>${noticeDto.notNum}</label></td>
 														<td><a href="#" data-toggle="modal"
 															data-target="#noticeReadModal"
-															data-nottitle="${noticeDto.notTitle}" data-notcontent="${noticeDto.notContent}">${noticeDto.notTitle}</a></td>
+															data-title="${noticeDto.notTitle}" data-content="${noticeDto.notContent}">${noticeDto.notTitle}</a></td>
 														<td>${noticeDto.notReadCount}</td>
 														<td><fmt:formatDate value="${noticeDto.notWriteDate}"
 																pattern="yyyy-MM-dd" /></td>
@@ -102,56 +102,12 @@
 														</c:if>
 
 														<td><a href="#" data-toggle="modal"
-															data-target="#noticeDeleteModal" data-notnum="${noticeDto.notNum}">삭제</a></td>
+															data-target="#noticeDeleteModal" data-num="${noticeDto.notNum}">삭제</a></td>
 													</tr>
 													
 												</c:forEach>
-
-												<tr>
-													<td>58011</td>
-													<td><a href="#" data-toggle="modal"
-														data-target="#noticeReadModal">[필독] 프로젝트 참여시 주의사항</a></td>
-													<td>61</td>
-													<td>2012/03/29</td>
-													<td>첨부파일 없음</td>
-													<td><a href="#">삭제</a></td>
-												</tr>
-
-												<tr>
-													<td>58012</td>
-													<td>[필독] 신고시 주의사항</td>
-													<td>63</td>
-													<td>2011/07/25</td>
-													<td>첨부파일 없음</td>
-													<td><a href="#">삭제</a></td>
-												</tr>
-												<tr>
-													<td>58013</td>
-													<td>[필독] 고객 게시판 사용 방법</td>
-													<td>66</td>
-													<td>2011/04/25</td>
-													<td>첨부파일 없음</td>
-													<td><a href="#">삭제</a></td>
-												</tr>
-												<tr>
-													<td>58014</td>
-													<td>버그 수정이 완료되었습니다.</td>
-													<td>22</td>
-													<td>2009/01/12</td>
-													<td>첨부파일 없음</td>
-													<td><a href="#">삭제</a></td>
-												</tr>
-												<tr>
-													<td>58016</td>
-													<td>새로운 서비스 런칭</td>
-													<td>33</td>
-													<td>2008/11/28</td>
-													<td><a href="#">영상.mp4</a></td>
-													<td><a href="#">삭제</a></td>
-												</tr>
 											</c:if>
 										</tbody>
-										<tfoot></tfoot>
 									</table>
 								</form>
 							</div>
