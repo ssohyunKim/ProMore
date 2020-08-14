@@ -38,7 +38,16 @@ public class ManagerDaoImp implements ManagerDao {
 	
 	@Override
 	public List<NoticeDto> noticeList() {
-		return sqlSessionTemplate.selectList("notice_list");
+		
+		List<NoticeDto> list = sqlSessionTemplate.selectList("notice_list");
+		
+		for(NoticeDto noticeDto : list) {
+			if(noticeDto.getNotFileName()!=null) {
+				noticeDto.setNotFileName(noticeDto.getNotFileName().substring(noticeDto.getNotFileName().indexOf("_")+1));
+			}
+		}
+		
+		return list;
 	}
 	
 	@Override
@@ -58,7 +67,16 @@ public class ManagerDaoImp implements ManagerDao {
 	
 	@Override
 	public List<CustomerDto> reportList() {
-		return sqlSessionTemplate.selectList("report_list");
+		
+		List<CustomerDto> list = sqlSessionTemplate.selectList("report_list");
+		
+		for(CustomerDto customerDto : list) {
+			if(customerDto.getCusFileName()!=null) {
+				customerDto.setCusFileName(customerDto.getCusFileName().substring(customerDto.getCusFileName().indexOf("_")+1));
+			}
+		}
+		
+		return list;
 	}
 
 	@Override

@@ -11,3 +11,10 @@ $(document).ready(function() {
         $('#staticContent').text(cusContent);
     });
 });
+
+function reportStateChange()
+{
+    var state = document.getElementById("state");
+    state.text = "접수 완료";
+    state.removeAttribute("href");
+}

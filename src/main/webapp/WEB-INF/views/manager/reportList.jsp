@@ -104,52 +104,11 @@
 														<td>첨부파일 없음</td>
 													</c:if>
 
-													<td><a href="#" data-toggle="modal"
-														data-target="#"
-														data-cusnum="${reportDto.cusNum}">접수현황</a></td>
+													<td><a id="state" href="#" data-toggle="modal"
+														data-target="#reportStateModal"
+														data-cusnum="${reportDto.cusNum}">접수대기중</a></td>
 												</tr>
 											</c:forEach>
-
-											<tr>
-												<td>58011</td>
-												<td>adams1234</td>
-												<td><a href="#">이런 경우 어떻게 처리하나요??</a></td>
-												<td>상의없이 코드 내용을 유출했어요...</td>
-												<td>캡처.zip</td>
-												<td><a href="#">접수 대기중</a></td>
-											</tr>
-											<tr>
-												<td>58012</td>
-												<td>brad88</td>
-												<td><a href="#">팀원 미참여 문제</a></td>
-												<td>팀원이 잠수탔네여...</td>
-												<td>image.jpg</td>
-												<td><a href="#">접수중</a></td>
-											</tr>
-											<tr>
-												<td>58013</td>
-												<td>coco3356</td>
-												<td><a href="#">보안 위반 처리 부탁드려요</a></td>
-												<td>신고 접수한 글의 내용...</td>
-												<td>주소.txt</td>
-												<td><a href="#">접수중</a></td>
-											</tr>
-											<tr>
-												<td>58014</td>
-												<td>donadona12</td>
-												<td><a href="#">신고합니다</a></td>
-												<td>상의없이 코드 내용을 유출했어요...</td>
-												<td>캡처.zip</td>
-												<td><a href="#">접수완료</a></td>
-											</tr>
-											<tr>
-												<td>58016</td>
-												<td>eman4956</td>
-												<td><a href="#">프로젝트 문의</a></td>
-												<td>프로젝트 관련 문의 사항이 있어 글 남깁...</td>
-												<td>첨부파일 없음</td>
-												<td><a href="#">접수완료</a></td>
-											</tr>
 										</c:if>
 
 
@@ -234,6 +193,41 @@
 
 				</form>
 
+			</div>
+		</div>
+	</div>
+	
+	<!-- Report State Model -->
+	<div class="modal fade" id="reportStateModal" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
+
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">접수 처리</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!-- modal-body -->
+				<div class="modal-body p-4">
+
+					<!-- 접수 완료 -->
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<h5 class="modal-title form-control-plaintext font-weight-bold">접수를 완료하세요.</h5>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- modal-footer -->
+				<div class="modal-footer justify-content-right">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="reportStateChange();">확인</button>
+				</div>
 			</div>
 		</div>
 	</div>
