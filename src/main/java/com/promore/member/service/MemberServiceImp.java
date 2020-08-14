@@ -4,9 +4,14 @@ import java.io.File;
 import java.util.Date;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -22,6 +27,9 @@ public class MemberServiceImp implements MemberService {
 	
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	@Override
 	public void main(ModelAndView mav) {
@@ -56,11 +64,7 @@ public class MemberServiceImp implements MemberService {
 		System.out.println("OK3");
 		
 	}
-	
-	@Override
-	public String getPw(Map<String, Object> paramMap) {
-		return memberDao.getPw(paramMap);
-	}
+
 	
 	@Override
 	public void memberUpdate(ModelAndView mav) {
@@ -91,4 +95,36 @@ public class MemberServiceImp implements MemberService {
 		mav.setViewName("member/memberUpdateOk");
 	}
 	
-}
+	@Override
+	public void sendEmail(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest)map.get("request");
+		
+		String memId = request.getParameter("memId");
+		String memEmail=request.getParameter("memEmail");
+		String memPassword=memberDao.getPw(memId, memEmail);
+		HAspect.logger.info(HAspect.logMsg + memId);
+		HAspect.logger.info(HAspect.logMsg + memEmail);
+		HAspect.logger.info(HAspect.logMsg + memPassword);
+		
+		mav.addObject("memId", memId);
+		mav.addObject("memEmail", memEmail);
+		mav.addObject("memPassword", memPassword);
+		
+		 try {
+			 MimeMessage msg = mailSender.createMimeMessage();
+			 MimeMessageHelper messageHelper = new MimeMessageHelper(msg, true, "UTF-8");
+		    
+			 messageHelper.setSubject(memId+"님 비밀번호 찾기 메일입니다.");
+			 messageHelper.setText("비밀번호는 "+memPassword+" 입니다.");
+			 messageHelper.setTo(memEmail);
+			 msg.setRecipients(MimeMessage.RecipientType.TO , InternetAddress.parse(memEmail));
+			 mailSender.send(msg);
+		        
+		}catch(MessagingException e) {
+			 System.out.println("MessagingException");
+		     e.printStackTrace();
+		}
+		mav.setViewName("member/emailSuccess");
+		}
+	}

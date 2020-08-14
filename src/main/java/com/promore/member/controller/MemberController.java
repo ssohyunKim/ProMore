@@ -79,4 +79,16 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView("member/logout");
 		return mav;
 	}
+	
+	@RequestMapping(value = "/member/sendPw.do", method = RequestMethod.GET)
+	public ModelAndView sendEmail(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("OK1");
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("request", request);
+		
+		memberService.sendEmail(mav);
+		
+		return mav;
+	}
 }
