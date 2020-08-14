@@ -88,7 +88,7 @@
 							<div class="card-body">
 
 								<form id="work-form" name="createWorkForm" method="post"
-									onsubmit="return writeToServer()" class="writeForm">
+									onsubmit="return writeToServer(this);" class="writeForm">
 									<div class="o-hidden">
 										<input id="pro-num" type="hidden" name="proNum"
 											value="${proNum }" />
@@ -133,7 +133,8 @@
 											<!-- modal -->
 											<div class="float-left">
 												<div class="btn-group">
-													<button type="button" class="receiver-search btn btn-primary"
+													<button type="button"
+														class="receiver-search btn btn-primary"
 														data-toggle="modal" data-target="#managerModal">담당자</button>
 												</div>
 
@@ -173,7 +174,8 @@
 										<div class="input-group pt-2 pb-2 col-8">
 											<span class="icon mt-2"> <i
 												class="fas fa-paperclip fa-lg"></i>
-											</span> <input type="file" class="mx-2" id="inputFile" />
+											</span> <input type="file" class="input-file form-control mx-2"
+												name="inputFile" />
 										</div>
 
 										<!-- 올리기 -->
@@ -265,12 +267,14 @@
 													<!-- modal -->
 													<div class="float-left">
 														<div class="btn-group">
-															<button type="button" class="receiver-search btn btn-primary"
+															<button type="button"
+																class="receiver-search btn btn-primary"
 																data-toggle="modal" data-target="#managerModal" disabled>담당자</button>
 														</div>
 
 														<!-- 선택된 담당자 -->
-														<label class="p-2 work-receiver" id="workReceiver" name="workReceiver">이형은</label>
+														<label class="p-2 work-receiver" id="workReceiver"
+															name="workReceiver">이형은</label>
 													</div>
 
 													<!-- date picker -->
@@ -301,20 +305,22 @@
 												<div class="pb-3">
 													<div class="work-content p-3">${item.workContent }</div>
 													<textarea name="workContent"
-														class="work-content form-control d-none" placeholder="업무내용을 입력하세요" required>${item.workContent }</textarea>
+														class="work-content form-control d-none"
+														placeholder="업무내용을 입력하세요" required>${item.workContent }</textarea>
 												</div>
 
 												<!-- file-down -->
-												<div class="file-down p-1 rounded reply-file clearfix"
-													style="background-color: #ddd">
-													<span class="left-column float-left"> <i
-														class="fas fa-file"></i> <span class="reply-file-name">요구사항
-															분석서.doc</span>
-													</span> <span class="right-column float-right"> <a
-														class="mr-2" href="#"><i class="fas fa-download">&nbsp;다운로드</i></a>
-														<a href="#"><i class="fas fa-trash">&nbsp;삭제</i></a>
-													</span>
-												</div>
+												<c:if test="${item.workFileSize > 0 }">
+													<div class="file-down p-1 rounded clearfix"
+														style="background-color: #ddd">
+														<span class="left-column float-left"> <i
+															class="fas fa-file"></i> <span class="work-file-name">${fn:substringAfter(item.workFileName, "_") }</span>
+														</span> <span class="right-column float-right"> <a
+															class="mr-2" href="${root }/workspace/download.do?workNum=${item.workNum }"><i class="fas fa-download">&nbsp;다운로드</i></a>
+															<a class="delete-file" href="${root }/workspace/delete-file.do?workNum=${item.workNum }"><i class="fas fa-trash">&nbsp;삭제</i></a>
+														</span>
+													</div>
+												</c:if>
 
 												<!-- 더보기 -->
 												<!-- 로그인 한 유저가 작성자인 경우만 보이게 -->
@@ -398,9 +404,10 @@
 														<div class="row">
 															<div class="right-column ml-2 col-lg-8 float-right">
 																<div class="form-group clearfix position-relative">
-																	<span> <i class="fas fa-paperclip fa-lg mr-2"></i>
-																	</span> <input class="reply-file-select" type="file"
-																		name="reply-file">
+																	<span class="float-left"> <i
+																		class="fas fa-paperclip fa-lg mt-3 mr-2"></i>
+																	</span> <input class="input-file form-control" type="file"
+																		name="inputFile" style="width: calc(100% - 50px)">
 																</div>
 															</div>
 														</div>
@@ -517,7 +524,8 @@
 					<!--담당자 리스트 -->
 					<div class="form-group d-flex justify-content-center">
 						<div class="form-check-inline">
-							<input type="text" class="form-control form-check-inline input-title"
+							<input type="text"
+								class="form-control form-check-inline input-title"
 								placeholder="담당자를 검색하세요"> <input type="button"
 								class="btn btn-primary" value="검색">
 						</div>
@@ -620,7 +628,8 @@
 					<div class="pb-3">
 						<div class="work-content p-3">내용</div>
 						<textarea name="workContent"
-							class="form-control work-content d-none" placeholder="업무내용을 입력하세요" required>내용</textarea>
+							class="form-control work-content d-none"
+							placeholder="업무내용을 입력하세요" required>내용</textarea>
 					</div>
 
 					<!-- file-down -->
@@ -716,8 +725,10 @@
 							<div class="row">
 								<div class="right-column ml-2 col-lg-8 float-right">
 									<div class="form-group clearfix position-relative">
-										<span> <i class="fas fa-paperclip fa-lg mr-2"></i>
-										</span> <input id="reply-file-select" type="file" name="reply-file">
+										<span class="float-left"> <i
+											class="fas fa-paperclip fa-lg mr-2 mt-3"></i>
+										</span> <input class="input-file form-control" type="file"
+											name="inputFile" style="width: calc(100% - 50px)">
 									</div>
 								</div>
 							</div>

@@ -15,7 +15,7 @@ public class WorkspaceDto {
 	private String writeDate;
 	private String workFileName;
 	private String workFilePath;
-	private int workFileSize;
+	private long workFileSize;
 	private int proNum;
 
 	public WorkspaceDto() {
@@ -23,7 +23,7 @@ public class WorkspaceDto {
 
 	public WorkspaceDto(int workNum, String workSender, String workReceiver, String workSubject, String workContent,
 			int workState, Date workStartDate, Date workEndDate, Date workWriteDate, String writeDate,
-			String workFileName, String workFilePath, int workFileSize, int proNum) {
+			String workFileName, String workFilePath, long workFileSize, int proNum) {
 		this.workNum = workNum;
 		this.workSender = workSender;
 		this.workReceiver = workReceiver;
@@ -136,11 +136,11 @@ public class WorkspaceDto {
 		this.workFilePath = workFilePath;
 	}
 
-	public int getWorkFileSize() {
+	public long getWorkFileSize() {
 		return workFileSize;
 	}
 
-	public void setWorkFileSize(int workFileSize) {
+	public void setWorkFileSize(long workFileSize) {
 		this.workFileSize = workFileSize;
 	}
 

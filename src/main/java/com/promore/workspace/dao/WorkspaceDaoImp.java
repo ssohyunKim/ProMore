@@ -39,4 +39,14 @@ public class WorkspaceDaoImp implements WorkspaceDao {
 	public int deleteWork(WorkspaceDto workspaceDto) {
 		return sqlSessionTemplate.delete("WorkspaceMapper.delete_work", workspaceDto);
 	}
+
+	@Override
+	public WorkspaceDto selectFileInfo(WorkspaceDto workspaceDto) {
+		return sqlSessionTemplate.selectOne("WorkspaceMapper.select_file_info", workspaceDto);
+	}
+
+	@Override
+	public int updateFileInfo(WorkspaceDto workspaceDto) {
+		return sqlSessionTemplate.update("WorkspaceMapper.update_file_info", workspaceDto);
+	}
 }

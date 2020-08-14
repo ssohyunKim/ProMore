@@ -77,16 +77,42 @@
 		work_state = #{workState},
 		work_start_date = #{workStartDate},
 		work_end_date = #{workEndDate},
-		work_file_name = #{workFileName, jdbcType=VARCHAR},
+		work_file_name = #{workFileName,
+		jdbcType=VARCHAR},
 		work_file_path = #{workFilePath, jdbcType=VARCHAR},
 		work_file_size = #{workFileSize, jdbcType=INTEGER}
-		where work_num = #{workNum}
+		where work_num =
+		#{workNum}
 	</update>
 
 	<delete id="delete_work"
 		parameterType="com.promore.workspace.dto.WorkspaceDto">
 		delete from work where work_num = #{workNum}
 	</delete>
+
+	<select id="select_file_info"
+		parameterType="com.promore.workspace.dto.WorkspaceDto"
+		resultMap="workspace_dto">
+		select
+		work_file_name,
+		work_file_size,
+		work_file_path
+		from work
+		where
+		work_num = ${workNum}
+	</select>
+
+
+	<update id="update_file_info"
+		parameterType="com.promore.workspace.dto.WorkspaceDto">
+		update work set
+		work_file_name = #{workFileName,
+		jdbcType=VARCHAR},
+		work_file_path = #{workFilePath, jdbcType=VARCHAR},
+		work_file_size = #{workFileSize, jdbcType=INTEGER}
+		where work_num =
+		#{workNum}
+	</update>
 
 
 	<!-- 담당자 선택을 위한 SELECT -->

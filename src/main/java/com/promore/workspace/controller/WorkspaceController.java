@@ -1,6 +1,11 @@
 package com.promore.workspace.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,7 +57,7 @@ public class WorkspaceController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// 일감 수정
 	@RequestMapping(value = "/workspace/edit-work.do", method = RequestMethod.POST)
 	public void editWork(HttpServletRequest req, HttpServletResponse resp) {
@@ -85,6 +90,52 @@ public class WorkspaceController {
 		}
 	}
 
+	// 파일 다운로드
+	@RequestMapping(value = "/workspace/download.do", method = RequestMethod.GET)
+	public void download(HttpServletRequest req, HttpServletResponse resp) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("req", req);
+		workspaceService.download(mav);
+
+		WorkspaceDto fileInfo = (WorkspaceDto) mav.getModel().get("fileInfo");
+		try {
+			String fileNameToLatin1 = new String(
+					fileInfo.getWorkFileName().substring(fileInfo.getWorkFileName().indexOf("_") + 1).getBytes("UTF-8"),
+					"ISO-8859-1");
+
+			resp.setHeader("Content-Type", "application/octet-stream;charset=utf-8");
+			resp.setHeader("Content-Disposition", "attachment; filename=" + fileNameToLatin1);
+			resp.setContentLength((int) fileInfo.getWorkFileSize());
+
+			BufferedOutputStream bos = new BufferedOutputStream(resp.getOutputStream(), 512);
+			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fileInfo.getWorkFilePath()), 512);
+
+			byte[] buff = new byte[512];
+			while (bis.read(buff) != -1)
+				bos.write(buff);
+			bos.flush();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	// 파일 삭제
+	@RequestMapping(value = "/workspace/delete-file.do", method = RequestMethod.GET)
+	public void deleteFile(HttpServletRequest req, HttpServletResponse resp) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("req", req);
+		workspaceService.deleteFile(mav);
+
+		resp.setHeader("Content-Type", "plain/text;charset=utf-8");
+		try {
+			resp.getWriter().println(mav.getModel().get("chk"));
+			resp.flushBuffer();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 //	@RequestMapping("/workspace/workList.do") // 댓글 리스트
 //	@ResponseBody

@@ -95,7 +95,7 @@ function managerSelect(root) {
   //"주소","윈도우이름","가로세로스크롤"
 }
 
-function writeToServer() {
+function writeToServer(obj) {
   //   $("#workRead").css("display", "block");
   //   $("#alarm").css("display", "block");
   //   $(".toast").toast("show");
@@ -108,8 +108,8 @@ function writeToServer() {
     .trim();
   var workState;
   if (workStateVar === "요청") workState = 0;
-  if (workStateVar === "진행") workState = 1;
-  if (workStateVar === "완료") workState = 2;
+  else if (workStateVar === "진행") workState = 1;
+  else if (workStateVar === "완료") workState = 2;
 
   var workReceiver = workForm.find(".work-receiver").text();
   var workStartDate = workForm.find(".work-start-date").val();
@@ -118,16 +118,17 @@ function writeToServer() {
   var workContent = $(".work-content").val();
   var proNum = $("#pro-num").val();
 
-  var data = {
-    workSender: workSender,
-    workReceiver: workReceiver,
-    workSubject: workSubject,
-    workState: workState,
-    workContent: workContent,
-    workStartDate: workStartDate,
-    workEndDate: workEndDate,
-    proNum: proNum,
-  };
+  var data = new FormData(obj);
+  data.delete("workState");
+  data.append("workSender", workSender);
+  data.append("workReceiver", workReceiver);
+  //   data.append("workSubject", workSubject);
+  data.append("workState", workState);
+  //   data.append("workStartDate", workStartDate);
+  //   data.append("workEndDate", workEndDate);
+  //   data.append("workContent", workContent);
+  //   data.append("inputFile", inputFile);
+  data.append("proNum", proNum);
 
   console.log(data);
 
@@ -136,9 +137,14 @@ function writeToServer() {
     method: "post",
     data: data,
     dataType: "text",
+    enctype: "multipart/form-data",
+    contentType: false,
+    processData: false,
   })
     .then(function (num) {
       num = num.trim();
+      if (parseInt(num) <= 0)
+        throw new Error("파일을 업로드하는데 실패하였습니다.");
 
       var workTmpl = document.getElementById("work-tmpl");
       var copyWorkTmpl = workTmpl.cloneNode(true);
@@ -189,6 +195,7 @@ function writeToServer() {
       $form.find(".work-start-date").val("");
       $form.find(".work-end-date").val("");
       $form.find(".work-content").val("");
+      $form.find(".input-file").val("");
 
       var workList = document.getElementById("work-list");
       workList.prepend(copyWorkTmpl);
@@ -206,6 +213,7 @@ function init() {
   var editCancelBtn = workList.querySelectorAll(".work-edit-cancel");
   var editOkBtn = workList.querySelectorAll(".work-edit-ok");
   var deleteBtn = workList.querySelectorAll(".work-delete");
+  var deleteFileBtn = workList.querySelectorAll(".delete-file");
 
   // 일감 삭제 버튼
   [].forEach.call(workEdit, function (item) {
@@ -225,6 +233,11 @@ function init() {
   // 일감 수정 전송 버튼
   [].forEach.call(deleteBtn, function (item) {
     item.onclick = deleteWork;
+  });
+
+  // 파일 삭제 전송 버튼
+  [].forEach.call(deleteFileBtn, function (item) {
+    item.onclick = deleteFile;
   });
 }
 
@@ -312,8 +325,8 @@ function okEdit(e) {
     .trim();
   var workState;
   if (workStateVar === "요청") workState = 0;
-  if (workStateVar === "진행") workState = 1;
-  if (workStateVar === "완료") workState = 2;
+  else if (workStateVar === "진행") workState = 1;
+  else if (workStateVar === "완료") workState = 2;
 
   var data = {
     workNum: work.id.substr(8),
@@ -389,6 +402,29 @@ function deleteWork(e) {
         alert("삭제되지 못했습니다. 다시 시도해주세요.");
       });
   }
+}
+
+function deleteFile(e) {
+  e.preventDefault();
+
+  var target = e.target;
+  var work = target.closest("[id^='work-no-']");
+
+  $.ajax({
+    url: target.closest(".delete-file").getAttribute("href"),
+    method: "get",
+    dataType: "text",
+  })
+    .then(function (chk) {
+      chk = parseInt(chk.trim());
+      if (chk === 0) throw new Error();
+      else if (chk === 1) {
+        work.querySelector(".file-down").remove();
+      }
+    })
+    .catch(function () {
+      alert("삭제되지 못했습니다. 다시 시도해주세요.");
+    });
 }
 
 init();

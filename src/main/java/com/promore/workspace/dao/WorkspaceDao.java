@@ -7,6 +7,10 @@ import com.promore.workspace.dto.WorkspaceDto;
 public interface WorkspaceDao {
 	public List<WorkspaceDto> selectAllWork(WorkspaceDto workspaceDto);
 
+	public WorkspaceDto selectFileInfo(WorkspaceDto workspaceDto);
+
+	public int updateFileInfo(WorkspaceDto workspaceDto);
+
 	public int selectWorkNum();
 
 	public int insertWork(WorkspaceDto workspaceDto);

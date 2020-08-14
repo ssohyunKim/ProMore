@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.promore.workspace.dao.WorkspaceDao;
@@ -43,7 +44,7 @@ public class WorkspaceServiceImp implements WorkspaceService {
 	public void addWork(ModelAndView mav) {
 		Map<String, Object> model = mav.getModel();
 
-		HttpServletRequest req = (HttpServletRequest) model.get("req");
+		MultipartHttpServletRequest req = (MultipartHttpServletRequest) model.get("req");
 
 		WorkspaceDto workspaceDto = new WorkspaceDto();
 		workspaceDto.setWorkSender(req.getParameter("workSender"));
@@ -60,6 +61,34 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+
+		MultipartFile uploadFile = req.getFile("inputFile");
+
+		if (uploadFile.getSize() > 0) {
+			String fileName = Long.toString(System.currentTimeMillis()) + "_" + uploadFile.getOriginalFilename();
+			Long fileSize = uploadFile.getSize();
+
+			File store = new File("C:\\pds\\");
+			store.mkdir();
+
+			if (store.exists() && store.isDirectory()) {
+				File dstFile = new File(store, fileName);
+
+				try {
+					uploadFile.transferTo(dstFile);
+
+					workspaceDto.setWorkFilePath(dstFile.getAbsolutePath());
+					workspaceDto.setWorkFileName(fileName);
+					workspaceDto.setWorkFileSize(fileSize);
+				} catch (Exception e) {
+					e.printStackTrace();
+					mav.addObject("num", 0);
+					return;
+				}
+			}
+		}
+
+		System.out.println(workspaceDto);
 
 		int chk = workspaceDao.insertWork(workspaceDto);
 		if (chk == 1)
@@ -86,7 +115,7 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		mav.addObject("chk", workspaceDao.updateWork(workspaceDto));
 	}
 
@@ -98,7 +127,39 @@ public class WorkspaceServiceImp implements WorkspaceService {
 
 		WorkspaceDto workspaceDto = new WorkspaceDto();
 		workspaceDto.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
-		
+
 		mav.addObject("chk", workspaceDao.deleteWork(workspaceDto));
+	}
+
+	@Override
+	public void download(ModelAndView mav) {
+		Map<String, Object> model = mav.getModel();
+
+		HttpServletRequest req = (HttpServletRequest) model.get("req");
+
+		WorkspaceDto workspaceDto = new WorkspaceDto();
+		workspaceDto.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
+
+		mav.addObject("fileInfo", workspaceDao.selectFileInfo(workspaceDto));
+	}
+
+	@Override
+	@Transactional
+	public void deleteFile(ModelAndView mav) {
+		Map<String, Object> model = mav.getModel();
+
+		HttpServletRequest req = (HttpServletRequest) model.get("req");
+
+		WorkspaceDto updatedFileInfo = new WorkspaceDto();
+		updatedFileInfo.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
+
+		WorkspaceDto deletedFileInfo = workspaceDao.selectFileInfo(updatedFileInfo);
+		String path = deletedFileInfo.getWorkFilePath();
+		File file = new File(path);
+		
+		if(workspaceDao.updateFileInfo(updatedFileInfo) == 1 && file.delete()) 
+			mav.addObject("chk", 1);
+		else
+			mav.addObject("chk", 0);
 	}
 }
