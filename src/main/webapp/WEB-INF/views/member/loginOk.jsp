@@ -9,9 +9,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:if test="${memLevel!=null}">
-		<c:set var="memId" value="${memId}" scope="session"/>
-		<c:set var="memLevel" value="${memLevel}" scope="session"/>
+
+	<c:if test="${memberDto.memLevel!=null}">
+		<c:set var="memId" value="${memberDto.memId}" scope="session"/>
+		<c:set var="memPassword" value="${memberDto.memPassword}" scope="session"/>
+		<c:set var="memName" value="${memberDto.memName}" scope="session"/>
+		<c:set var="memLevel" value="${memberDto.memLevel}" scope="session"/>
 	
 		<script type="text/javascript">
 			alert("로그인 성공");
