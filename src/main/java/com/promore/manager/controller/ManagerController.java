@@ -70,6 +70,17 @@ public class ManagerController extends MultiActionController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/manager/fileDownload.do", method = RequestMethod.GET)
+	public void fileDownload(HttpServletRequest request, HttpServletResponse response) {		
+		System.out.println("fileDownload.do");
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("response", response);
+		
+		managerService.fileDownload(mav);
+	}
+	
 	@RequestMapping(value = "/manager/noticeDeleteOk.do", method = RequestMethod.GET)
 	public ModelAndView noticeDelete(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("noticeDeleteOk.do");

@@ -1,6 +1,7 @@
 /**
  *
  */
+var root = "";
 var notNum = "";
 var notTitle = "";
 var notContent = "";
@@ -12,6 +13,7 @@ $(document).ready(function() {
   });
 
   $('#noticeReadModal').on('show.bs.modal', function(event) {
+    root = $(event.relatedTarget).data('root');
     notNum = $(event.relatedTarget).data('num');
     notTitle = $(event.relatedTarget).data('title');
     notContent = $(event.relatedTarget).data('content');
@@ -22,7 +24,8 @@ $(document).ready(function() {
 
     if (fileName != "") {
       $('#fileName').text(fileName);
-      //a.attr("href", "#");
+      var url = root + "/manager/fileDownload.do?notNum=" + notNum;
+      $('#fileName').attr("href", url);
     } else {
       $('#fileName').html("첨부파일 없음");
     }
@@ -30,7 +33,7 @@ $(document).ready(function() {
 
   $('#noticeUpdateModal').on('show.bs.modal', function(event) {
     var a = $('.fileName');
-    
+
     $('#updateNum').val(notNum);
     $('#updateTitle').val(notTitle);
     $('#updateContent').html(notContent);

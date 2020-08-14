@@ -91,13 +91,14 @@
 															data-num="${noticeDto.notNum}"
 															data-title="${noticeDto.notTitle}"
 															data-content="${noticeDto.notContent}"
-															data-file="${noticeDto.notFileName}">${noticeDto.notTitle}</a></td>
+															data-file="${noticeDto.notFileName}"
+															data-root="${root}">${noticeDto.notTitle}</a></td>
 														<td>${noticeDto.notReadCount}</td>
 														<td><fmt:formatDate value="${noticeDto.notWriteDate}"
 																pattern="yyyy-MM-dd" /></td>
 
 														<c:if test="${noticeDto.notFileSize>0}">
-															<td><a href="#">${noticeDto.notFileName}</a></td>
+															<td><a href="${root}/manager/fileDownload.do?notNum=${noticeDto.notNum}">${noticeDto.notFileName}</a></td>
 														</c:if>
 
 														<c:if test="${noticeDto.notFileSize==0}">

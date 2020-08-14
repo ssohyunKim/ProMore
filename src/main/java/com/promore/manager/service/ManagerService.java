@@ -8,6 +8,10 @@ public interface ManagerService {
 	
 	public void noticeList(ModelAndView mav);
 	
+	public void noticeUpdateOk(ModelAndView mav);
+	
+	public void fileDownload(ModelAndView mav);
+	
 	public void noticeDelete(ModelAndView mav);
 	
 	public void reportList(ModelAndView mav);
@@ -15,6 +19,4 @@ public interface ManagerService {
 	public void memberList(ModelAndView mav);
 
 	public void memberDelete(ModelAndView mav);
-	
-	public void noticeUpdateOk(ModelAndView mav);
 }
