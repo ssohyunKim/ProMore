@@ -46,13 +46,10 @@
 	select * from project
 </select>
 
-<select id="project_state" parameterType="String" resultType="java.lang.Integer" >
+<select id="project_cnt" parameterType="String" resultType="java.lang.String">
 	select apl_num from project_apply where apl_mem_id=#{aplMemId}
 </select>
 
-<!-- <select id="project_list" parameterType="Integer" resultType="com.promore.project.dto.ProjectDto">
-	select * from project
-</select> -->
 <select id="project_select" parameterType="Integer" resultType="java.util.HashMap">
 	select * from project where pro_num=#{proNum} 
 </select>
