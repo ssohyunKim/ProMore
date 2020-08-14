@@ -180,6 +180,65 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
+	
+	<!-- Report Read Model -->
+	<div class="modal fade" id="#reportReadModal" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
+
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">고객게시판 글 읽기</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<form>
+
+					<!-- modal-body -->
+					<div class="modal-body p-4">
+
+						<!-- 공지사항 글 제목 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<h5 class="modal-title form-control-plaintext font-weight-bold"
+									id="staticTitle"></h5>
+							</div>
+						</div>
+
+						<!-- 공지사항 글 내용 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<textarea readonly class="form-control-plaintext" rows="20"
+									id="staticContent"></textarea>
+							</div>
+						</div>
+
+						<!-- 파일 첨부 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
+								</span> <a class="mx-2">첨부파일 없음</a>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- modal-footer -->
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-warning" data-toggle="modal"
+							data-target="#">수정하기</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+					</div>
+
+				</form>
+
+			</div>
+		</div>
+	</div>
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
