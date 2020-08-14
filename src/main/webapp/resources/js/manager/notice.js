@@ -1,29 +1,24 @@
 /**
  * 
  */
-var notnum = "";
-
-$('#noticeReadModal').on('show', function() {
-	var getIdFromRow = $(event.target).closest('a').data('id')
-    consol.log($(getIdFromRow))
-})
+var notNum = "";
 
 $(document).ready(function() {
     $('#noticeDeleteModal').on('show.bs.modal', function(event) {          
-        notnum = $(event.relatedTarget).data('notnum');
+        notNum = $(event.relatedTarget).data('num');
     });
     
     $('#noticeReadModal').on('show.bs.modal', function(event) {          
-        nottitle = $(event.relatedTarget).data('nottitle');
-        notcontent = $(event.relatedTarget).data('notcontent');
+        notTitle = $(event.relatedTarget).data('title');
+        notContent = $(event.relatedTarget).data('content');
         
-        $('#staticTitle').text(nottitle);
-        $('#staticContent').text(notcontent);
+        $('#staticTitle').text(notTitle);
+        $('#staticContent').text(notContent);
     });
 });
 
 
 function noticeDelete(root)
 {
-    location.href = root + '/manager/noticeDeleteOk.do?notNum=' + notnum;
+    location.href = root + '/manager/noticeDeleteOk.do?notNum=' + notNum;
 }

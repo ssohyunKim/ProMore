@@ -92,8 +92,8 @@
 													<td><label>${reportDto.cusId}</label></td>
 													<td><a href="#" data-toggle="modal"
 														data-target="#reportReadModal"
-														data-nottitle="${reportDto.cusTitle}"
-														data-notcontent="${reportDto.cusContent}">${reportDto.cusTitle}</a></td>
+														data-custitle="${reportDto.cusTitle}"
+														data-cuscontent="${reportDto.cusContent}">${reportDto.cusTitle}</a></td>
 													<td>${reportDto.cusContent}</td>
 
 													<c:if test="${reportDto.cusFileSize>0}">
@@ -182,7 +182,7 @@
 	</a>
 	
 	<!-- Report Read Model -->
-	<div class="modal fade" id="#reportReadModal" tabindex="-1"
+	<div class="modal fade" id="reportReadModal" tabindex="-1"
 		role="dialog">
 		<div class="modal-dialog modal-lg mt-5" role="document">
 			<div class="modal-content">
@@ -228,9 +228,7 @@
 					</div>
 
 					<!-- modal-footer -->
-					<div class="modal-footer justify-content-between">
-						<button type="button" class="btn btn-warning" data-toggle="modal"
-							data-target="#">수정하기</button>
+					<div class="modal-footer justify-content-right">
 						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 					</div>
 
@@ -260,5 +258,9 @@
 
 	<!-- Page level custom scripts -->
 	<script src="${root}/resources/js/demo/datatables-demo.js"></script>
+	
+	<!-- Modal JavaScript-->
+	<script src="${root}/resources/js/manager/report.js"></script>
+	
 </body>
 </html>

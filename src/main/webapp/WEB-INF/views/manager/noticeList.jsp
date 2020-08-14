@@ -88,7 +88,7 @@
 														<td><label>${noticeDto.notNum}</label></td>
 														<td><a href="#" data-toggle="modal"
 															data-target="#noticeReadModal"
-															data-nottitle="${noticeDto.notTitle}" data-notcontent="${noticeDto.notContent}">${noticeDto.notTitle}</a></td>
+															data-title="${noticeDto.notTitle}" data-content="${noticeDto.notContent}">${noticeDto.notTitle}</a></td>
 														<td>${noticeDto.notReadCount}</td>
 														<td><fmt:formatDate value="${noticeDto.notWriteDate}"
 																pattern="yyyy-MM-dd" /></td>
@@ -102,7 +102,7 @@
 														</c:if>
 
 														<td><a href="#" data-toggle="modal"
-															data-target="#noticeDeleteModal" data-notnum="${noticeDto.notNum}">삭제</a></td>
+															data-target="#noticeDeleteModal" data-num="${noticeDto.notNum}">삭제</a></td>
 													</tr>
 													
 												</c:forEach>
