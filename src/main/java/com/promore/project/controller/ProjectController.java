@@ -46,22 +46,25 @@ public class ProjectController {
 	}
 	
 	//프로젝트 현황
-		@RequestMapping(value="/project/pjtState.do", method=RequestMethod.GET)
-		public ModelAndView projectState(HttpServletRequest request, HttpServletResponse response) {
-			  ModelAndView mav = new ModelAndView();
-			  HttpSession session = request.getSession(); 
-			  String aplMemId = (String)session.getAttribute("aplMemId");
-			  
-			  HAspect.logger.info(HAspect.logMsg+"ModelAndView" + aplMemId);
-			  session.setAttribute("aplMemId", aplMemId);
-			  mav.addObject("request", request);
-			  mav.addObject("aplMemId", aplMemId);
-			  
-			  projectservice.projectState(mav, aplMemId); 
-			  return mav;
+	@RequestMapping(value="/project/pjtState.do", method=RequestMethod.GET)
+	public ModelAndView projectState(HttpServletRequest request, HttpServletResponse response) {
+		  ModelAndView mav = new ModelAndView();
+		  HttpSession session = request.getSession(); 
+		  String id = (String)session.getAttribute("id");
+		  
+		  HAspect.logger.info(HAspect.logMsg+"ModelAndView" + id);
+		  session.setAttribute("aplMemId", id);
+		  mav.addObject("request", request);
+		  mav.addObject("aplMemId", id);
+		  
+		  //회원 pjt_번호
+		  projectservice.projectCnt(mav, id); 
+		  //pjt 테이블 전체 가져오기
+		  projectservice.projectList(mav);
+		  
+		  return mav;
 
-		}
-		
+	}
 		
 	
 	

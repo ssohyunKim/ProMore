@@ -57,7 +57,7 @@
 							</br>
 							<p>최대인원 : ${projectDto.proMax}명</p>
 						</div>
-						<a href="${root}/workspace/workspace.do">
+						<a href="${root}/workspace/workspace.do?proNum=${projectDto.proNum}">
 						<div class="flip-card-back1">
 							<p>${projectDto.proManager}</p>
 							</br>

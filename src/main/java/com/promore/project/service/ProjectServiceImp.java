@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
@@ -50,34 +49,20 @@ public class ProjectServiceImp implements ProjectService {
 		
 	}
 	
+
 	@Override
-	public void projectState(ModelAndView mav, String memid) {
-		// TODO Auto-generated method stub
+	public void projectCnt(ModelAndView mav, String id) {
+		//번호 가져오기
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		ProjectDto projectDto = new ProjectDto();
 		
-		 HAspect.logger.info(HAspect.logMsg+ "state id check" + memid); 
+		 HAspect.logger.info(HAspect.logMsg+ "state id check" + id); 
 		//번호 가져오기
-		 List<Integer> projectCnt = projectDao.projectState(memid);
-		 
-		 
-		 List<Object> State = null;
-		 int cnt=0;
-		 //1,2,3
-		 for(Integer proNum : projectCnt) {
-
-			 State = projectDao.projectStatenum(proNum); 
-			 System.out.println(State);
-			 mav.addObject("projectState"+cnt, State);
-			 cnt++;
-		 }
+		 List<String> projectCnt = projectDao.projectState(id);
+		 mav.addObject("projectCnt", projectCnt);
 		
-		 mav.addObject("cnt",cnt);
-		// mav.addObject("projectState", projectAll);
-		mav.setViewName("project/pjtState");
 	}
-	
 	
 	
 }

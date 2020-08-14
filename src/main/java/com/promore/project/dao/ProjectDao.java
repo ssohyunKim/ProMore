@@ -8,9 +8,7 @@ import com.promore.project.dto.ProjectDto;
 public interface ProjectDao {
 	public int projectWrite(ProjectDto projectDto);
 
-	public List<Integer> projectState(String memid);
-
-	public List<Object> projectStatenum(Integer proNum);
+	public List<String> projectState(String id);
 
 	public int projectCount();
 

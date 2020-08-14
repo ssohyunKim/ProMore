@@ -40,39 +40,52 @@
 
 
 			<!-- 여기에 코드를 넣어주세요!! -->
-		<div class="row">
+		<c:forEach var="projectCnt" items="${projectCnt}">
+				<c:set var="loop_flag" value="false" />
+				<c:forEach var="projectDto" items="${projectDtoArray}">
+				  <c:if test="${not loop_flag }">
+				  		<c:set var="proname" value="${projectDto.proNum}"/>
+				  			<c:if test="${projectCnt eq proname}">
+				  			<c:set var="loop_flag" value="true" />
+									<div class="row">
+								
+										<div class="col-xl-3 col-md-6 mb-4">
+							              <div class="card border-left-info shadow h-100 py-2">
+							                <div class="card-body">
+							                  <div class="row no-gutters align-items-center">
+							                    <div class="col mr-2">
+							                      <div class="text-s font-weight-bold text-info text-uppercase mb-1">${projectDto.proName}</div>
+							                      <div class="row no-gutters align-items-center">
+							                        <div class="col-auto">
+							                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${projectDto.proState}</div>
+							                        </div>
+							                        <div class="col">
+							                          <div class="progress progress-sm mr-2">
+							                            <div class="progress-bar bg-info" role="progressbar" style="width: ${projectDto.proState}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+							                          </div>
+							                        </div>
+							                      </div>
+							                    </div>
+							                    <div class="col-auto">
+							                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+							                    </div>
+							                  </div>
+							                </div>
+							              </div>
+							            </div>
+								</div>
+								
+							</c:if>
+						</c:if>
+					</c:forEach>
+				</c:forEach>
 			
-			<div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-s font-weight-bold text-info text-uppercase mb-1">웹사이트 프로젝트</div>
-                      <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                        </div>
-                        <div class="col">
-                          <div class="progress progress-sm mr-2">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-	</div>
-		
-					<!-- /.container-fluid -->
-
+		 
+					
 			</div>
 
       </div>
+      
       <!-- End of Main Content -->
 
       <!-- Footer -->

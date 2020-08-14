@@ -38,29 +38,9 @@ public class ProjectDaoImp implements ProjectDao {
 	}
 	
 	@Override
-	public List<Integer> projectState(String aplMemId) {
+	public List<String> projectState(String id) {
 		// TODO Auto-generated method stub
-		System.out.println("마지막 memid" + aplMemId);
-		return sqlSessionTemplate.selectList("project_state", aplMemId);
-		// project table로 한 번 더 접근
-		// pro_num과 같은 것 중 state, name가져오기
-
-		/*
-		 * List<Object> list = null; for(Integer proNum : projectState) { list =
-		 * sqlSessionTemplate.selectList("project_select", proNum);
-		 * System.out.println(proNum + " : " + list); return list;
-		 * 
-		 * }
-		 * 
-		 * return list;
-		 */
-
-		// state && Name 함께 key,value값으로 담음
-		// 값 보내줌
+		//번호
+		return sqlSessionTemplate.selectList("project_cnt", id);
 	}
-	@Override
-	public List<Object> projectStatenum(Integer proNum) {
-		return sqlSessionTemplate.selectList("project_select", proNum);
-	}
-	
 }
