@@ -103,7 +103,7 @@ $(function(){
 								<a href="#"
 									data-name="${projectDto.proName}"
 									data-cnt = "${projectDto.proCnt}"
-									data-content"${projectDto.proContent}"
+									data-content="${projectDto.proContent}"
 									data-toggle="modal"
 									data-target="#projectReadModal">
 									<div class="alert alert-primary bg-primary p-3 rounded-lg text-center">

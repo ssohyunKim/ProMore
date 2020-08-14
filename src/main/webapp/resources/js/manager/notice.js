@@ -24,7 +24,7 @@ $(document).ready(function() {
 
     if (fileName != "") {
       $('#fileName').text(fileName);
-      var url = root + "/manager/fileDownload.do?notNum=" + notNum;
+      var url = root + "/manager/noticeFileDownload.do?notNum=" + notNum;
       $('#fileName').attr("href", url);
     } else {
       $('#fileName').html("첨부파일 없음");

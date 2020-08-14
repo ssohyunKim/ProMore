@@ -29,6 +29,37 @@ import com.promore.member.dto.MemberDto;
 public class ManagerServiceImp implements ManagerService {
 	@Autowired
 	private ManagerDao managerDao;
+	
+	@Override
+	public void memberList(ModelAndView mav) {
+		int memberCount = managerDao.memberCount();
+		HAspect.logger.info(HAspect.logMsg + memberCount);
+		
+		List<MemberDto> memberDtoArray = managerDao.memberList();
+		
+		mav.addObject("memberCount", memberCount);
+		mav.addObject("memberDtoArray", memberDtoArray);
+		
+		HAspect.logger.info(HAspect.logMsg + memberDtoArray);
+		
+	}
+	
+	@Override
+	public void memberDelete(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		
+		int memNum = Integer.parseInt(request.getParameter("memNum"));
+		HAspect.logger.info(HAspect.logMsg + memNum);
+		
+		MemberDto memberDto = managerDao.memberSelect(memNum);
+		HAspect.logger.info(HAspect.logMsg + memberDto);
+		
+		int check = managerDao.memberDelete(memNum);
+		
+		mav.addObject("check", check);
+		mav.setViewName("manager/memberDeleteOk");
+	}
 
 	@Override
 	public void noticeList(ModelAndView mav) {
@@ -129,7 +160,7 @@ public class ManagerServiceImp implements ManagerService {
 		mav.setViewName("manager/noticeUpdateOk");
 	}
 
-	public void fileDownload(ModelAndView mav) {
+	public void noticeFileDownload(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		HttpServletResponse response = (HttpServletResponse) map.get("response");
@@ -221,35 +252,75 @@ public class ManagerServiceImp implements ManagerService {
 
 		HAspect.logger.info(HAspect.logMsg + reportArray.size());
 	}
-
+	
 	@Override
-	public void memberList(ModelAndView mav) {
-		int memberCount = managerDao.memberCount();
-		HAspect.logger.info(HAspect.logMsg + memberCount);
+	public void reportFileDownload(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		HttpServletResponse response = (HttpServletResponse) map.get("response");
 
-		List<MemberDto> memberDtoArray = managerDao.memberList();
+		int cusNum = Integer.parseInt(request.getParameter("cusNum"));
+		HAspect.logger.info(HAspect.logMsg + cusNum);
 
-		mav.addObject("memberCount", memberCount);
-		mav.addObject("memberDtoArray", memberDtoArray);
+		CustomerDto customerDto = managerDao.reportSelect(cusNum);
+		HAspect.logger.info(HAspect.logMsg + customerDto);
 
-		HAspect.logger.info(HAspect.logMsg + memberDtoArray);
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
 
+		try {
+			int index = customerDto.getCusFileName().indexOf("_") + 1;
+			String fName = customerDto.getCusFileName().substring(index);
+			String fileName = new String(fName.getBytes("utf-8"), "ISO-8859-1");
+
+			long fileSize = customerDto.getCusFileSize();
+			String path = customerDto.getCusFilePath();
+
+			response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+			response.setContentType("application/octet-stream");
+			response.setContentLength((int) fileSize);
+
+			bis = new BufferedInputStream(new FileInputStream(path), 1024);
+			bos = new BufferedOutputStream(response.getOutputStream(), 1024);
+
+			while (true) {
+				int data = bis.read();
+				if (data == -1) break;
+				bos.write(data);
+			}
+			bos.flush();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			try {
+				if (bis != null)
+					bis.close();
+				if (bos != null)
+					bos.close();
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
+		}
 	}
-
+	
 	@Override
-	public void memberDelete(ModelAndView mav) {
+	public void reportStateChange(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 
-		int memNum = Integer.parseInt(request.getParameter("memNum"));
-		HAspect.logger.info(HAspect.logMsg + memNum);
+		int cusNum = Integer.parseInt(request.getParameter("cusNum"));
+		HAspect.logger.info(HAspect.logMsg + cusNum);
 
-		MemberDto memberDto = managerDao.memberSelect(memNum);
-		HAspect.logger.info(HAspect.logMsg + memberDto);
-
-		int check = managerDao.memberDelete(memNum);
+		int check = managerDao.reportStateChange(cusNum);
 
 		mav.addObject("check", check);
-		mav.setViewName("manager/memberDeleteOk");
+		mav.setViewName("manager/reportStateChangeOk");
+		
 	}
 }

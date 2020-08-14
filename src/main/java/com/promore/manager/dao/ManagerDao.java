@@ -8,6 +8,14 @@ import com.promore.member.dto.MemberDto;
 
 public interface ManagerDao {
 	
+	public int memberCount();
+	
+	public List<MemberDto> memberList();
+	
+	public int memberDelete(int memNum);
+	
+	public MemberDto memberSelect(int memNum);
+	
 	public int noticeWrite(NoticeDto noticeDto);
 	
 	public int noticeCount();
@@ -18,17 +26,14 @@ public interface ManagerDao {
 	
 	public int noticeDelete(int notNum);
 	
+	public int noticeUpdate(NoticeDto noticeDto);
+
 	public int reportCount();
 	
 	public List<CustomerDto> reportList();
 
-	public int memberCount();
-
-	public List<MemberDto> memberList();
-
-	public int memberDelete(int memNum);
-
-	public MemberDto memberSelect(int memNum);
+	public CustomerDto reportSelect(int cusNum);
 	
-	public int noticeUpdate(NoticeDto noticeDto);
+	public int reportStateChange(int cusNum);
+	
 }

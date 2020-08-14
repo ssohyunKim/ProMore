@@ -53,7 +53,7 @@
 					</div>
 
 					<!-- 여기에 코드를 넣어주세요!! -->
-
+					<!--  style="width: 80%;" -->
 					<div class="card shadow mb-4">
 						<!-- Card Header -->
 						<div class="card-header py-3 form-inline justify-content-between">
@@ -69,45 +69,60 @@
 						<div class="card-body">
 							<div class="table-responsive">
 								<form id="dataForm">
-									<table class="table table-bordered" id="dataTable" width="100%"
-										cellspacing="0">
-										<thead>
+									<table class="table table-bordered" id="dataTable">
+										<thead class="text-center">
 											<tr>
-												<th>글 번호</th>
-												<th>글 제목</th>
+												<th>공지 번호</th>
 												<th>조회수</th>
+												<th>제목</th>
 												<th>작성 일자</th>
 												<th>첨부 파일</th>
-												<th>게시글 관리</th>
+												<th>관리</th>
 											</tr>
 										</thead>
 										<tbody>
 											<c:if test="${noticeCount>0}">
 												<c:forEach var="noticeDto" items="${noticeDtoArray}">
 													<tr>
-														<td><label>${noticeDto.notNum}</label></td>
-														<td><a href="#" data-toggle="modal"
+														<!-- 공지사항 글 번호 -->
+														<td width="10%" class="text-center"><label>${noticeDto.notNum}</label></td>
+														
+														<!-- 공지사항 조회수 -->
+														<td width="10%" class="text-center">${noticeDto.notReadCount}</td>
+														
+														<!-- 공지사항 글 제목 -->
+														<td width="30%"><a href="#" data-toggle="modal"
 															data-target="#noticeReadModal"
 															data-num="${noticeDto.notNum}"
 															data-title="${noticeDto.notTitle}"
 															data-content="${noticeDto.notContent}"
 															data-file="${noticeDto.notFileName}"
-															data-root="${root}">${noticeDto.notTitle}</a></td>
-														<td>${noticeDto.notReadCount}</td>
-														<td><fmt:formatDate value="${noticeDto.notWriteDate}"
-																pattern="yyyy-MM-dd" /></td>
+															data-root="${root}">
+															${noticeDto.notTitle}
+															</a>
+														</td>
+														
+														<!-- 공지사항 작성일 -->
+														<td width="15%" class="text-center">
+															<fmt:formatDate value="${noticeDto.notWriteDate}" pattern="yyyy-MM-dd" />
+														</td>
 
+														<!-- 공지사항 첨부파일 -->
 														<c:if test="${noticeDto.notFileSize>0}">
-															<td><a href="${root}/manager/fileDownload.do?notNum=${noticeDto.notNum}">${noticeDto.notFileName}</a></td>
+															<td width="25%"><a href="${root}/manager/noticeFileDownload.do?notNum=${noticeDto.notNum}">${noticeDto.notFileName}</a></td>
 														</c:if>
 
 														<c:if test="${noticeDto.notFileSize==0}">
-															<td><a>첨부파일 없음</a></td>
+															<td width="25%"><a>첨부파일 없음</a></td>
 														</c:if>
 
-														<td><a href="#" data-toggle="modal"
+														<!-- 공지사항 삭제 버튼 -->
+														<td width="10%" class="text-center"><a href="#" data-toggle="modal"
 															data-target="#noticeDeleteModal"
-															data-num="${noticeDto.notNum}">삭제</a></td>
+															data-num="${noticeDto.notNum}">
+															삭제
+															</a>
+														</td>
 													</tr>
 
 												</c:forEach>
@@ -337,9 +352,13 @@
 		role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
+			
+				<!-- modal-body -->
 				<div class="modal-body">
 					<h5 class="modal-title">공지사항을 삭제하시겠습니까?</h5>
 				</div>
+				
+				<!-- modal-footer -->
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 					<button type="button" class="btn btn-primary"
