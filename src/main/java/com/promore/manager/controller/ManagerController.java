@@ -70,7 +70,7 @@ public class ManagerController extends MultiActionController {
 	
 	@RequestMapping(value = "/manager/reportList.do", method = RequestMethod.GET)
 	public ModelAndView reportList(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("reportList.do");
+		//System.out.println("reportList.do");
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
@@ -79,5 +79,17 @@ public class ManagerController extends MultiActionController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(value = "/manager/memberDeleteOk.do", method = RequestMethod.GET)
+	public ModelAndView memberDelete(HttpServletRequest request, HttpServletResponse response) {
+		//System.out.println("memberDeleteOk.do");
+		
+		ModelAndView mav = new ModelAndView("manager/memberDeleteOk");
+		mav.addObject("request", request);
+		managerService.memberDelete(mav);
+		 
+		return mav;
+	}
+	
 	
 }
