@@ -56,6 +56,20 @@ public class ManagerController extends MultiActionController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/manager/noticeUpdateOk.do", method = RequestMethod.POST)
+	public ModelAndView noticeUpdateOk(HttpServletRequest request, HttpServletResponse response, NoticeDto noticeDto) {		
+		System.out.println("noticeUpdateOk.do");
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", multipartRequest);
+		mav.addObject("noticeDto", noticeDto);
+		
+		managerService.noticeUpdateOk(mav);
+		
+		return mav;
+	}
+	
 	@RequestMapping(value = "/manager/noticeDeleteOk.do", method = RequestMethod.GET)
 	public ModelAndView noticeDelete(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("noticeDeleteOk.do");

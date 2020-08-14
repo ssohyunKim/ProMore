@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.promore.aop.HAspect;
 import com.promore.project.dao.ProjectDao;
 import com.promore.project.dto.ProjectDto;
-import com.promore.projectapply.dto.ProjectApplyDto;
 
 @Component
 public class ProjectServiceImp implements ProjectService {

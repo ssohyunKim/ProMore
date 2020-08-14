@@ -16,4 +16,5 @@ public interface ManagerService {
 
 	public void memberDelete(ModelAndView mav);
 	
+	public void noticeUpdateOk(ModelAndView mav);
 }

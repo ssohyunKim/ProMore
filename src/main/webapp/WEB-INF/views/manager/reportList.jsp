@@ -104,7 +104,7 @@
 														<td>첨부파일 없음</td>
 													</c:if>
 
-													<td><a id="state" href="#" data-toggle="modal"
+													<td><a id="state${reportDto.cusNum}" href="#" data-toggle="modal"
 														data-target="#reportStateModal"
 														data-cusnum="${reportDto.cusNum}">접수대기중</a></td>
 												</tr>

@@ -30,5 +30,5 @@ public interface ManagerDao {
 
 	public MemberDto memberSelect(int memNum);
 	
-	
+	public int noticeUpdate(NoticeDto noticeDto);
 }
