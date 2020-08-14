@@ -11,5 +11,7 @@ public interface ManagerService {
 	public void noticeDelete(ModelAndView mav);
 	
 	public void reportList(ModelAndView mav);
+
+	public void memberList(ModelAndView mav);
 	
 }

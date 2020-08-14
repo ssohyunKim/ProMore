@@ -118,6 +118,14 @@ public class ManagerServiceImp implements ManagerService {
 		HAspect.logger.info(HAspect.logMsg + reportArray.size());
 	}
 
+	@Override
+	public void memberList(ModelAndView mav) {
+		int memberCount = managerDao.memberCount();
+		HAspect.logger.info(HAspect.logMsg + memberCount);
+		
+	}
+
+
 	/*
 	 * public void fileDownload(ModelAndView mav) { Map<String, Object> map =
 	 * mav.getModelMap(); HttpServletRequest request = (HttpServletRequest)

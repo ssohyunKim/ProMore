@@ -23,7 +23,11 @@ public class ManagerController extends MultiActionController {
 	public ModelAndView memberList(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("memberList.do");
 		
-		return new ModelAndView("/manager/memberList");
+		ModelAndView mav = new ModelAndView("/manager/memberList");
+		mav.addObject("request", request);
+		managerService.memberList(mav);
+		
+		return mav;
 	}
 	
 	@RequestMapping(value = "/manager/noticeList.do", method = RequestMethod.GET)

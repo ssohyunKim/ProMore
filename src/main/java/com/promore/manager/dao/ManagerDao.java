@@ -20,6 +20,8 @@ public interface ManagerDao {
 	public int reportCount();
 	
 	public List<CustomerDto> reportList();
+
+	public int memberCount();
 	
 	
 }
