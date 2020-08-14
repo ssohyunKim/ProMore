@@ -18,4 +18,8 @@ public interface WorkspaceDao {
 	public int updateWork(WorkspaceDto workspaceDto);
 
 	public int deleteWork(WorkspaceDto workspaceDto);
+
+	public int workCount(String id);
+
+	public List<WorkspaceDto> workList(String id);
 }

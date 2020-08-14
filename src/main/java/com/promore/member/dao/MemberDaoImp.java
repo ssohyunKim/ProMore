@@ -28,9 +28,14 @@ public class MemberDaoImp implements MemberDao {
 	}
 	
 	@Override
-	public String getPw(Map<String, Object> paramMap) {
-		String value = (String) sqlSessionTemplate.selectOne("memPassword", paramMap);
-		return value;
+	public String getPw(String memId, String memEmail) {
+		HashMap<String, String> hmap = new HashMap<String, String>();
+		
+		HAspect.logger.info(HAspect.logMsg + memId + "\t" + memEmail);
+		
+		hmap.put("memId", memId);
+		hmap.put("memEmail", memEmail);
+		return sqlSessionTemplate.selectOne("member_password", hmap);
 	}
 	
 	@Override

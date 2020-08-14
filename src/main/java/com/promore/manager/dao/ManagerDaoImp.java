@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.promore.aop.HAspect;
 import com.promore.customer.dto.CustomerDto;
 import com.promore.manager.dto.NoticeDto;
+import com.promore.member.dto.MemberDto;
 
 @Component
 public class ManagerDaoImp implements ManagerDao {
@@ -83,5 +84,23 @@ public class ManagerDaoImp implements ManagerDao {
 	public int memberCount() {
 		return sqlSessionTemplate.selectOne("member_count");
 	}
+
+	@Override
+	public List<MemberDto> memberList() {
+		return sqlSessionTemplate.selectList("member_list");
+	}
+
+	@Override
+	public int memberDelete(int memNum) {
+		return sqlSessionTemplate.delete("member_delete", memNum);
+	}
+
+	@Override
+	public MemberDto memberSelect(int memNum) {
+		return sqlSessionTemplate.selectOne("member_select", memNum);
+	}
+
+
+	
 	
 }

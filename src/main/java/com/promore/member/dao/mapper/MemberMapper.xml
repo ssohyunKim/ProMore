@@ -32,8 +32,11 @@
 				mem_email = #{memEmail}, mem_mailing = #{memMailing}, mem_skills = #{memSkills}
 		where mem_num = #{memNum}
 	</update>
-
 	
+	<select id="member_password" parameterType="java.util.Map" resultType="String">
+		select mem_password from member where mem_id=#{memId} and mem_Email=#{memEmail}
+	</select>
+
 	
 </mapper>
 

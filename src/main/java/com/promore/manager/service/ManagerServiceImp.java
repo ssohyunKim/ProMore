@@ -17,12 +17,14 @@ import com.promore.aop.HAspect;
 import com.promore.customer.dto.CustomerDto;
 import com.promore.manager.dao.ManagerDao;
 import com.promore.manager.dto.NoticeDto;
+import com.promore.member.dao.MemberDao;
+import com.promore.member.dto.MemberDto;
 
 @Component
 public class ManagerServiceImp implements ManagerService {
 	@Autowired
 	private ManagerDao managerDao;
-
+	
 	@Override
 	public void noticeWriteOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
@@ -122,6 +124,31 @@ public class ManagerServiceImp implements ManagerService {
 	public void memberList(ModelAndView mav) {
 		int memberCount = managerDao.memberCount();
 		HAspect.logger.info(HAspect.logMsg + memberCount);
+		
+		List<MemberDto> memberDtoArray = managerDao.memberList();
+		
+		mav.addObject("memberCount", memberCount);
+		mav.addObject("memberDtoArray", memberDtoArray);
+		
+		HAspect.logger.info(HAspect.logMsg + memberDtoArray);
+		
+	}
+
+	@Override
+	public void memberDelete(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest)map.get("request");
+		
+		int memNum = Integer.parseInt(request.getParameter("memNum"));
+		HAspect.logger.info(HAspect.logMsg + memNum);
+		
+		MemberDto memberDto = managerDao.memberSelect(memNum);
+		HAspect.logger.info(HAspect.logMsg + memberDto);
+		
+		int check = managerDao.memberDelete(memNum);
+		
+		mav.addObject("check", check);
+		mav.setViewName("manager/memberDeleteOk");
 		
 	}
 

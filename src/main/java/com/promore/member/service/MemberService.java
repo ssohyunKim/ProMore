@@ -12,9 +12,9 @@ public interface MemberService {
 	
 	public void memberLoginOk(ModelAndView mav);
 	
-	String getPw(Map<String, Object> paramMap);
-	
 	public void memberUpdate(ModelAndView mav);
 	
 	public void memberUpdateOk(ModelAndView mav);
+	
+	public void sendEmail(ModelAndView mav);
 }

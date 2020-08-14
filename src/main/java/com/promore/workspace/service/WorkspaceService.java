@@ -9,4 +9,5 @@ public interface WorkspaceService {
 	public void editWork(ModelAndView mav);
 	public void deleteWork(ModelAndView mav);
 	public void getAllWork(ModelAndView mav);
+	public void workState(ModelAndView mav, String id);
 }

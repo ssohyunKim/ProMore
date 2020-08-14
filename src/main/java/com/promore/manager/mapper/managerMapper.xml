@@ -5,9 +5,32 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 	<mapper namespace="com.promore.manager.mapper.managerMapper">
+		<resultMap type="com.promore.member.dto.MemberDto" id="member_dto">
+			<result column="MEM_NUM" property="memNum"/>
+			<result column="MEM_ID" property="memId"/>
+			<result column="MEM_NAME" property="memName"/>
+			<result column="MEM_NICKNAME" property="memNickname"/>
+			<result column="MEM_PASSWORD" property="memPassword"/>
+			<result column="MEM_LEVEL" property="memLevel"/>
+			<result column="MEM_PHONE" property="memPhone"/>
+			<result column="MEM_EMAIL" property="memEmail"/>
+			<result column="MEM_MAILING" property="memMailing"/>
+			<result column="MEM_SKILLS" property="memSkills"/>
+			<result column="MEM_REG_DATE" property="memRegDate"/>
+		</resultMap>
+	
+	
 		<select id="member_count" resultType="int">
 			select count(*) from member		
 		</select>
+		
+		<select id="member_list" resultMap="member_dto">
+			select * from member order by MEM_NUM desc
+		</select>
+		
+		<delete id="member_delete" >
+			delete from member where MEM_NUM = #{memNum}
+		</delete>
 	
 	
 	</mapper>

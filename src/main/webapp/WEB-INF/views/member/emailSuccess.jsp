@@ -10,7 +10,7 @@
 </head>
 <body>
 	<script type="text/javascript">
-		alert("메일이 정상적으로 발송되었습니다.");
+		alert("메일이 발송되었습니다.");
 		location.href="${root}/member/forgot-password.do";
 	</script>
 </body>

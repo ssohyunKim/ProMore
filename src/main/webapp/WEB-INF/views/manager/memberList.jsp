@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,95 +74,24 @@
 											<th>회원 관리</th>
 										</tr>
 									</thead>
-									<tfoot>
-										<tr>
-											<th>회원 번호</th>
-											<th>회원 ID</th>
-											<th>회원 이름</th>
-											<th>회원 닉네임</th>
-											<th>회원 이메일</th>
-											<th>회원 등급</th>
-											<th>회원 가입 날짜</th>
-											<th>회원 관리</th>
-										</tr>
-									</tfoot>
+									
 									<tbody>
-										<c:if test="${noticeCount>0}">
-												<c:forEach var="noticeDto" items="${noticeDtoArray}">
+										<c:if test="${memberCount>0}">
+												<c:forEach var="memberDto" items="${memberDtoArray}">
 													<tr>
-														<td><label>${noticeDto.notNum}</label></td>
-														<td><a href="#" data-toggle="modal"
-															data-target="#noticeReadModal"
-															data-nottitle="${noticeDto.notTitle}" data-notcontent="${noticeDto.notContent}">${noticeDto.notTitle}</a></td>
-														<td>${noticeDto.notReadCount}</td>
-														<td><fmt:formatDate value="${noticeDto.notWriteDate}"
+														<td>${memberDto.memNum}</td>
+														<td>${memberDto.memId}</td>
+														<td>${memberDto.memName}</td>	
+														<td>${memberDto.memNickname}</td>	
+														<td>${memberDto.memEmail}</td>	
+														<td>${memberDto.memLevel}</td>	
+														<td><fmt:formatDate value="${memberDto.memRegDate}"
 																pattern="yyyy-MM-dd" /></td>
-
-														<c:if test="${noticeDto.notFileSize>0}">
-															<td><a href="#">${noticeDto.notFileName}</a></td>
-														</c:if>
-
-														<c:if test="${noticeDto.notFileSize==0}">
-															<td>첨부파일 없음</td>
-														</c:if>
-
 														<td><a href="#" data-toggle="modal"
-															data-target="#noticeDeleteModal" data-notnum="${noticeDto.notNum}">삭제</a></td>
+															data-target="#memberDeleteModal" data-memnum="${memberDto.memNum}">탈퇴 처리</a></td>
 													</tr>
 													
 												</c:forEach>
-									
-									
-										<tr>
-											<td>58011</td>
-											<td>adams1234</td>
-											<td>Adams</td>
-											<td>dami</td>
-											<td>abc@naver.com</td>
-											<td>팀원</td>
-											<td>2020/07/29</td>
-											<td><a href="#">탈퇴 처리</a></td>
-										</tr>
-										<tr>
-											<td>58012</td>
-											<td>brad88</td>
-											<td>Bradley</td>
-											<td>braaaad</td>
-											<td>def@gmail.com</td>
-											<td>팀장</td>
-											<td>2020/07/28</td>
-											<td><a href="#">탈퇴 처리</a></td>
-										</tr>
-										<tr>
-											<td>58013</td>
-											<td>coco3356</td>
-											<td>Cohen</td>
-											<td>coco</td>
-											<td>hig@daum.net</td>
-											<td>팀원</td>
-											<td>2020/07/27</td>
-											<td><a href="#">탈퇴 처리</a></td>
-										</tr>
-										<tr>
-											<td>58014</td>
-											<td>donadona12</td>
-											<td>Donnely</td>
-											<td>dana</td>
-											<td>jkl@gmail.com</td>
-											<td>팀장</td>
-											<td>2020/07/22</td>
-											<td><a href="#">탈퇴 처리</a></td>
-										</tr>
-										<tr>
-											<td>58015</td>
-											<td>eman4956</td>
-											<td>Eastman</td>
-											<td>eeee10</td>
-											<td>mnop@gamil.com</td>
-											<td>팀원</td>
-											<td>2020/07/10</td>
-											<td><a href="#">탈퇴 처리</a></td>
-										</tr>
 										</c:if>
 									</tbody>
 								</table>
@@ -190,6 +120,21 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
+	
+		<!-- member Delete Model -->
+	<div class="modal fade" id="memberDeleteModal" tabindex="-1" role="dialog" >
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<h5 class="modal-title">회원을 삭제하시겠습니까?</h5>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" onclick="memberDelete('${root}')">삭제</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
@@ -199,7 +144,7 @@
 	<script src="${root}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="${root}/sresources/js/sb-admin-2.min.js"></script>
+	<script src="${root}/resources/js/sb-admin-2.min.js"></script>
 	
 	<!-- Page level plugins -->
 	<script src="${root}/resources/vendor/datatables/jquery.dataTables.min.js"></script>
@@ -207,5 +152,8 @@
 
 	<!-- Page level custom scripts -->
 	<script src="${root}/resources/js/demo/datatables-demo.js"></script>
+	
+	<!-- Modal JavaScript-->
+	<script src="${root}/resources/js/manager/member.js"></script>
 </body>
 </html>

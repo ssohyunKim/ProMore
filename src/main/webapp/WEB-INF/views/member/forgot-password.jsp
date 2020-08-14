@@ -41,6 +41,9 @@
                     <p class="mb-4">아래에 이메일 주소를 입력하시면 비밀번호를 알려드립니다!</p>
                   </div>
                   <form class="user" action="${root}/member/sendPw.do" method="get">
+                  	<div class="form-group">
+                      <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="아이디를 입력하세요..." name="memId">
+                    </div>
                     <div class="form-group">
                       <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="이메일 주소를 입력하세요..." name="memEmail">
                     </div>

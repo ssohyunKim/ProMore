@@ -8,7 +8,7 @@ public interface MemberDao {
 	
 	public String loginOk(String memId, String memPassword);
 		
-	String getPw(Map<String, Object> paramMap);
+	public String getPw(String memId, String memEmail);
 	
 	public MemberDto memberSelect(int memNum);
 	

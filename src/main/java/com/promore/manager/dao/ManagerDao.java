@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.promore.customer.dto.CustomerDto;
 import com.promore.manager.dto.NoticeDto;
+import com.promore.member.dto.MemberDto;
 
 public interface ManagerDao {
 	
@@ -22,6 +23,12 @@ public interface ManagerDao {
 	public List<CustomerDto> reportList();
 
 	public int memberCount();
+
+	public List<MemberDto> memberList();
+
+	public int memberDelete(int memNum);
+
+	public MemberDto memberSelect(int memNum);
 	
 	
 }
