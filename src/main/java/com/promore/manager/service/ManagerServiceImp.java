@@ -86,12 +86,9 @@ public class ManagerServiceImp implements ManagerService {
 	public void noticeUpdateOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		NoticeDto noticeDto = (NoticeDto) map.get("noticeDto");
+		MultipartHttpServletRequest request = (MultipartHttpServletRequest) map.get("request");
 		
-		System.out.println(noticeDto.getNotNum());
-		
-		MultipartHttpServletRequest multipartResolver = (MultipartHttpServletRequest) map.get("request");
-		
-		MultipartFile upFile = multipartResolver.getFile("file");
+		MultipartFile upFile = request.getFile("file");
 		
 		if (upFile.getSize() != 0) {
 			// 저장경로, 파일명, 사이즈

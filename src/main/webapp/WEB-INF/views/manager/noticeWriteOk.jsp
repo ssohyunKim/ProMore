@@ -9,7 +9,7 @@
 	<head>
 	<meta charset="UTF-8">
 	<title>공지사항 작성 확인</title>
-	</head>
+</head>
 <body>
 	${check}
 	

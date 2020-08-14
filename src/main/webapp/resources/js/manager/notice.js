@@ -30,7 +30,7 @@ $(document).ready(function() {
 
   $('#noticeUpdateModal').on('show.bs.modal', function(event) {
     var a = $('.fileName');
-
+    
     $('#updateNum').val(notNum);
     $('#updateTitle').val(notTitle);
     $('#updateContent').html(notContent);
@@ -41,18 +41,6 @@ $(document).ready(function() {
     } else {
       a.html("첨부파일 없음");
     }
-  });
-
-  $("#updateForm").submit(function(event) {
-    event.preventDefault();
-    var url = $(this).attr("action");
-    var data = $(this).serialize();
-    data = data.concat([{name:"notNum",value:notNum}]);
-
-    $.post(url, data)
-      .done(function(data) {
-        console.log('--->', data);
-      });
   });
 
   var fileTarget = $('#fileupload');

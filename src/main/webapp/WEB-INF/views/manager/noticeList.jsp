@@ -88,6 +88,7 @@
 														<td><label>${noticeDto.notNum}</label></td>
 														<td><a href="#" data-toggle="modal"
 															data-target="#noticeReadModal"
+															data-num="${noticeDto.notNum}"
 															data-title="${noticeDto.notTitle}"
 															data-content="${noticeDto.notContent}"
 															data-file="${noticeDto.notFileName}">${noticeDto.notTitle}</a></td>
@@ -156,8 +157,6 @@
 
 				<form action="${root}/manager/noticeWriteOk.do" method="post"
 					enctype="multipart/form-data">
-
-					<%-- <input type="hidden" name="notNum" value="${notNum}" /> --%>
 
 					<!-- modal-body -->
 					<div class="modal-body">
@@ -281,7 +280,7 @@
 
 				<form id="updateForm" action="${root}/manager/noticeUpdateOk.do" method="post" enctype="multipart/form-data">
 				
-				<input type="hidden" id="updateNum" name="notNum">
+				<input type="hidden" id="updateNum" name="notNum" value="">
 
 					<!-- modal-body -->
 					<div class="modal-body p-4">
