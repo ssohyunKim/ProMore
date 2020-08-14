@@ -76,11 +76,7 @@
 		work_content = #{workContent},
 		work_state = #{workState},
 		work_start_date = #{workStartDate},
-		work_end_date = #{workEndDate},
-		work_file_name = #{workFileName,
-		jdbcType=VARCHAR},
-		work_file_path = #{workFilePath, jdbcType=VARCHAR},
-		work_file_size = #{workFileSize, jdbcType=INTEGER}
+		work_end_date = #{workEndDate}
 		where work_num =
 		#{workNum}
 	</update>

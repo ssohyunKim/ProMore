@@ -87,8 +87,7 @@
 							<!-- Card Body -->
 							<div class="card-body">
 
-								<form id="work-form" name="createWorkForm" method="post"
-									onsubmit="return writeToServer(this);" class="writeForm">
+								<form id="work-form" onsubmit="return writeToServer(this);">
 									<div class="o-hidden">
 										<input id="pro-num" type="hidden" name="proNum"
 											value="${proNum }" />
@@ -310,17 +309,27 @@
 												</div>
 
 												<!-- file-down -->
-												<c:if test="${item.workFileSize > 0 }">
-													<div class="file-down p-1 rounded clearfix"
-														style="background-color: #ddd">
-														<span class="left-column float-left"> <i
-															class="fas fa-file"></i> <span class="work-file-name">${fn:substringAfter(item.workFileName, "_") }</span>
-														</span> <span class="right-column float-right"> <a
-															class="mr-2" href="${root }/workspace/download.do?workNum=${item.workNum }"><i class="fas fa-download">&nbsp;다운로드</i></a>
-															<a class="delete-file" href="${root }/workspace/delete-file.do?workNum=${item.workNum }"><i class="fas fa-trash">&nbsp;삭제</i></a>
-														</span>
-													</div>
-												</c:if>
+												<div
+													class="file-down p-1 rounded clearfix ${item.workFileSize == 0? 'd-none': '' }"
+													style="background-color: #ddd">
+													<span class="left-column float-left"> <i
+														class="fas fa-file"></i> <span class="work-file-name">${fn:substringAfter(item.workFileName, "_") }</span>
+													</span> <span class="right-column float-right"> <a
+														class="download-file mr-2"
+														href="${root }/workspace/download.do?workNum=${item.workNum }"><i
+															class="fas fa-download">&nbsp;다운로드</i></a> <a
+														class="delete-file d-none"
+														href="${root }/workspace/delete-file.do?workNum=${item.workNum }"><i
+															class="fas fa-trash">&nbsp;삭제</i></a>
+													</span>
+												</div>
+												<!-- file-up -->
+												<div class="file-up input-group pt-2 pb-2 col-8 d-none">
+													<span class="icon mt-2"> <i
+														class="fas fa-paperclip fa-lg"></i>
+													</span> <input type="file" class="input-file form-control mx-2"
+														name="inputFile" />
+												</div>
 
 												<!-- 더보기 -->
 												<!-- 로그인 한 유저가 작성자인 경우만 보이게 -->
@@ -597,7 +606,7 @@
 						<div class="float-left">
 							<div class="btn-group">
 								<button type="button" class="receiver-search btn btn-primary"
-									data-toggle="modal" data-target="#managerModal">담당자</button>
+									data-toggle="modal" data-target="#managerModal" disabled>담당자</button>
 							</div>
 
 							<!-- 선택된 담당자 -->
@@ -633,15 +642,23 @@
 					</div>
 
 					<!-- file-down -->
-					<div class="file-down p-1 rounded reply-file clearfix d-none"
+					<div class="file-down p-1 rounded clearfix d-none"
 						style="background-color: #ddd">
 						<span class="left-column float-left"> <i
-							class="fas fa-file"></i> <span class="reply-file-name">요구사항
+							class="fas fa-file"></i> <span class="work-file-name">요구사항
 								분석서.doc</span>
-						</span> <span class="right-column float-right"> <a class="mr-2"
-							href="#"><i class="fas fa-download">&nbsp;다운로드</i></a> <a
-							href="#"><i class="fas fa-trash">&nbsp;삭제</i></a>
+						</span> <span class="right-column float-right"> <a
+							class="download-file mr-2" href="#"><i
+								class="fas fa-download">&nbsp;다운로드</i></a> <a
+							class="delete-file d-none" href=""><i class="fas fa-trash">&nbsp;삭제</i></a>
 						</span>
+					</div>
+
+					<!-- file-up -->
+					<div class="file-up input-group pt-2 pb-2 col-8 d-none">
+						<span class="icon mt-2"> <i class="fas fa-paperclip fa-lg"></i>
+						</span> <input type="file" class="input-file form-control mx-2"
+							name="inputFile" />
 					</div>
 
 					<!-- 더보기 -->
@@ -655,7 +672,6 @@
 						<button class="work-edit-ok btn btn-primary" type="submit">올리기</button>
 						<button class="work-edit-cancel btn btn-warning" type="button">취소</button>
 					</div>
-
 				</div>
 			</form>
 

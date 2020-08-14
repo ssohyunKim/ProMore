@@ -64,7 +64,7 @@ public class WorkspaceServiceImp implements WorkspaceService {
 
 		MultipartFile uploadFile = req.getFile("inputFile");
 
-		if (uploadFile.getSize() > 0) {
+		if (uploadFile != null && uploadFile.getSize() > 0) {
 			String fileName = Long.toString(System.currentTimeMillis()) + "_" + uploadFile.getOriginalFilename();
 			Long fileSize = uploadFile.getSize();
 
@@ -96,10 +96,12 @@ public class WorkspaceServiceImp implements WorkspaceService {
 	}
 
 	@Override
+	@Transactional
 	public void editWork(ModelAndView mav) {
+		int chk = 1;
 		Map<String, Object> model = mav.getModel();
 
-		HttpServletRequest req = (HttpServletRequest) model.get("req");
+		MultipartHttpServletRequest req = (MultipartHttpServletRequest) model.get("req");
 
 		WorkspaceDto workspaceDto = new WorkspaceDto();
 		workspaceDto.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
@@ -116,7 +118,43 @@ public class WorkspaceServiceImp implements WorkspaceService {
 			e.printStackTrace();
 		}
 
-		mav.addObject("chk", workspaceDao.updateWork(workspaceDto));
+		MultipartFile uploadFile = req.getFile("inputFile");
+
+		if (uploadFile != null && uploadFile.getSize() > 0) {
+			// 기존 파일 삭제
+			WorkspaceDto existingFileInfo = new WorkspaceDto();
+			existingFileInfo.setWorkNum(workspaceDto.getWorkNum());
+			existingFileInfo = workspaceDao.selectFileInfo(workspaceDto);
+			if (existingFileInfo.getWorkFileSize() > 0)
+				deleteFile(mav);
+
+			String fileName = Long.toString(System.currentTimeMillis()) + "_" + uploadFile.getOriginalFilename();
+			Long fileSize = uploadFile.getSize();
+
+			File store = new File("C:\\pds\\");
+			store.mkdir();
+
+			if (store.exists() && store.isDirectory()) {
+				File dstFile = new File(store, fileName);
+
+				try {
+					uploadFile.transferTo(dstFile);
+
+					workspaceDto.setWorkFilePath(dstFile.getAbsolutePath());
+					workspaceDto.setWorkFileName(fileName);
+					workspaceDto.setWorkFileSize(fileSize);
+
+					chk = workspaceDao.updateFileInfo(workspaceDto);
+				} catch (Exception e) {
+					e.printStackTrace();
+					mav.addObject("num", 0);
+					return;
+				}
+			}
+		}
+
+		if (chk == 1)
+			mav.addObject("chk", workspaceDao.updateWork(workspaceDto));
 	}
 
 	@Override
@@ -155,9 +193,10 @@ public class WorkspaceServiceImp implements WorkspaceService {
 
 		WorkspaceDto deletedFileInfo = workspaceDao.selectFileInfo(updatedFileInfo);
 		String path = deletedFileInfo.getWorkFilePath();
+		System.out.println(path);
 		File file = new File(path);
-		
-		if(workspaceDao.updateFileInfo(updatedFileInfo) == 1 && file.delete()) 
+
+		if (workspaceDao.updateFileInfo(updatedFileInfo) == 1 && file != null && file.delete())
 			mav.addObject("chk", 1);
 		else
 			mav.addObject("chk", 0);

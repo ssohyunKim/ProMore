@@ -1,89 +1,3 @@
-$(function () {
-  //   $("#date1").datepicker({
-  //     dateFormat: "yy-mm-dd",
-  //     monthNames: [
-  //       "1월",
-  //       "2월",
-  //       "3월",
-  //       "4월",
-  //       "5월",
-  //       "6월",
-  //       "7월",
-  //       "8월",
-  //       "9월",
-  //       "10월",
-  //       "11월",
-  //       "12월",
-  //     ],
-  //     dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
-  //     changeMonth: true,
-  //     changeYear: true,
-  //     currentText: "Today",
-  //     showOtherMonths: true,
-  //     yearRange: "2010:2020",
-  //   });
-  //   $("#date2").datepicker({
-  //     dateFormat: "yy-mm-dd",
-  //     monthNames: [
-  //       "1월",
-  //       "2월",
-  //       "3월",
-  //       "4월",
-  //       "5월",
-  //       "6월",
-  //       "7월",
-  //       "8월",
-  //       "9월",
-  //       "10월",
-  //       "11월",
-  //       "12월",
-  //     ],
-  //     dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
-  //     changeMonth: true,
-  //     changeYear: true,
-  //     currentText: "Today",
-  //     showOtherMonths: true,
-  //     yearRange: "2010:2020",
-  //   });
-  //   $("#btn").click(function () {
-  //     $("#resultDate").text($("#date1").val());
-  //   });
-  //   $("#btn").click(function () {
-  //     $("#resultDate").text($("#date2").val());
-  //   });
-  //   $(".addIndex").click(function () {
-  //     //alert("확인");
-  //     $(".addIndexDiv").css("display", "block");
-  //     $(".addIndex").css("display", "none");
-  //   });
-  //   $("#manager")
-  //     .children("a")
-  //     .eq(0)
-  //     .click(function () {
-  //       //alert("왕아아아");
-  //       var test = $("#manager").children("a").eq(0).text();
-  //       //alert(test);
-  //       $("#managerWho").html(test);
-  //     });
-  //   $("#manager")
-  //     .children("a")
-  //     .eq(1)
-  //     .click(function () {
-  //       //alert("왕아아아");
-  //       var test = $("#manager").children("a").eq(1).text();
-  //       $("#managerWho").html(test);
-  //     });
-  //   $("#manager")
-  //     .children("a")
-  //     .eq(2)
-  //     .click(function () {
-  //       //alert("왕아아아");
-  //       var test = $("#manager").children("a").eq(2).text();
-  //       //alert(test);
-  //       $("#managerWho").html(test);
-  //     });
-});
-
 var koreanDays = ["일", "월", "화", "수", "목", "금", "토"];
 var beforeEditState = {};
 
@@ -95,10 +9,45 @@ function managerSelect(root) {
   //"주소","윈도우이름","가로세로스크롤"
 }
 
+// 서버 렌더링 후 만들어진 일감 목록 리스너 설정
+function init() {
+  var workList = document.querySelector("#work-list");
+
+  var workEdit = workList.querySelectorAll(".work-edit");
+  var editCancelBtn = workList.querySelectorAll(".work-edit-cancel");
+  var editOkBtn = workList.querySelectorAll(".work-edit-ok");
+
+  var deleteBtn = workList.querySelectorAll(".work-delete");
+  var deleteFileBtn = workList.querySelectorAll(".delete-file");
+
+  // 일감 삭제 버튼
+  [].forEach.call(workEdit, function (item) {
+    item.onclick = editWork;
+  });
+
+  // 일감 수정 취소 버튼
+  [].forEach.call(editCancelBtn, function (item) {
+    item.onclick = cancelEdit;
+  });
+
+  // 일감 수정 전송 버튼
+  [].forEach.call(editOkBtn, function (item) {
+    item.onclick = okEdit;
+  });
+
+  // 일감 수정 전송 버튼
+  [].forEach.call(deleteBtn, function (item) {
+    item.onclick = deleteWork;
+  });
+
+  // 파일 삭제 전송 버튼
+  [].forEach.call(deleteFileBtn, function (item) {
+    item.onclick = deleteFile;
+  });
+}
+
+// 작성 폼 내용을 바탕으로 템플릿에 값을 채워 넣어 복사
 function writeToServer(obj) {
-  //   $("#workRead").css("display", "block");
-  //   $("#alarm").css("display", "block");
-  //   $(".toast").toast("show");
   var workForm = $("#work-form");
 
   var workSender = workForm.find(".work-sender").val();
@@ -180,6 +129,21 @@ function writeToServer(obj) {
       copyWorkTmpl.querySelector(".work-edit-ok").onclick = okEdit;
       copyWorkTmpl.querySelector(".work-delete").onclick = deleteWork;
 
+      // 업로드 하는 파일이 있을 때
+      var uploadingFile = data.get("inputFile");
+      if (uploadingFile !== null && uploadingFile.size > 0) {
+        var fileDown = $tmpl.find(".file-down");
+        fileDown.removeClass("d-none");
+        fileDown.find(".work-file-name").text(uploadingFile.name);
+        fileDown
+          .find(".download-file")
+          .attr("href", root + "/workspace/download.do?workNum=" + num);
+        fileDown
+          .find(".delete-file")
+          .attr("href", root + "/workspace/delete-file.do?workNum=" + num);
+        fileDown.find(".delete-file").click(deleteFile);
+      }
+
       $form = $(workForm);
       $form.find(".work-subject").val("");
       $form
@@ -205,40 +169,6 @@ function writeToServer(obj) {
     });
 
   return false;
-}
-
-function init() {
-  var workList = document.querySelector("#work-list");
-  var workEdit = workList.querySelectorAll(".work-edit");
-  var editCancelBtn = workList.querySelectorAll(".work-edit-cancel");
-  var editOkBtn = workList.querySelectorAll(".work-edit-ok");
-  var deleteBtn = workList.querySelectorAll(".work-delete");
-  var deleteFileBtn = workList.querySelectorAll(".delete-file");
-
-  // 일감 삭제 버튼
-  [].forEach.call(workEdit, function (item) {
-    item.onclick = editWork;
-  });
-
-  // 일감 수정 취소 버튼
-  [].forEach.call(editCancelBtn, function (item) {
-    item.onclick = cancelEdit;
-  });
-
-  // 일감 수정 전송 버튼
-  [].forEach.call(editOkBtn, function (item) {
-    item.onclick = okEdit;
-  });
-
-  // 일감 수정 전송 버튼
-  [].forEach.call(deleteBtn, function (item) {
-    item.onclick = deleteWork;
-  });
-
-  // 파일 삭제 전송 버튼
-  [].forEach.call(deleteFileBtn, function (item) {
-    item.onclick = deleteFile;
-  });
 }
 
 function editWork(e) {
@@ -272,6 +202,10 @@ function editWork(e) {
   work.querySelector("textarea.work-content").innerText = work.querySelector(
     "div.work-content"
   ).innerText;
+
+  work.querySelector(".file-up").classList.remove("d-none");
+  work.querySelector(".download-file").classList.add("d-none");
+  work.querySelector(".delete-file").classList.remove("d-none");
 
   work.querySelector(".more").classList.add("d-none");
   work.querySelector(".edit-more").classList.remove("d-none");
@@ -309,6 +243,10 @@ function cancelEdit(e) {
   work.querySelector("div.work-content").classList.remove("d-none");
   work.querySelector("textarea.work-content").classList.add("d-none");
 
+  work.querySelector(".file-up").classList.add("d-none");
+  work.querySelector(".download-file").classList.remove("d-none");
+  work.querySelector(".delete-file").classList.add("d-none");
+
   work.querySelector(".more").classList.remove("d-none");
   work.querySelector(".edit-more").classList.add("d-none");
 }
@@ -328,21 +266,41 @@ function okEdit(e) {
   else if (workStateVar === "진행") workState = 1;
   else if (workStateVar === "완료") workState = 2;
 
-  var data = {
-    workNum: work.id.substr(8),
-    workReceiver: form.querySelector(".work-receiver").innerText,
-    workSubject: form.querySelector("input.work-subject").value,
-    workContent: form.querySelector("textarea.work-content").value,
-    workState: workState,
-    workStartDate: form.querySelector(".work-start-date").value,
-    workEndDate: form.querySelector(".work-end-date").value,
-  };
+  //   var data = {
+  //  workNum: work.id.substr(8),
+  //  workReceiver: form.querySelector(".work-receiver").innerText,
+  //  workSubject: form.querySelector("input.work-subject").value,
+  //  workContent: form.querySelector("textarea.work-content").value,
+  //  workState: workState,
+  //  workStartDate: form.querySelector(".work-start-date").value,
+  //  workEndDate: form.querySelector(".work-end-date").value,
+  //   };
+
+  data = new FormData(form);
+  data.delete("workState");
+
+  data.append("workNum", work.id.substr(8));
+  data.append("workReceiver", form.querySelector(".work-receiver").innerText);
+  data.append("workState", workState);
+
+  var fileDown = form.querySelector(".file-down");
+  if (
+    fileDown !== null &&
+    !fileDown.classList.contains("d-none") &&
+    data.get("inputFile").size > 0
+  ) {
+    var choose = confirm("파일을 대체하시겠습니까?");
+    if (!choose) data.delete("inputFile");
+  }
 
   $.ajax({
     url: root + "/workspace/edit-work.do",
     method: "post",
     data: data,
     dataType: "text",
+    enctype: "multipart/form-data",
+    contentType: false,
+    processData: false,
   })
     .then(function () {
       work.querySelector(".writer-row").classList.remove("d-none");
@@ -359,6 +317,28 @@ function okEdit(e) {
           i.setAttribute("disabled", "");
         });
 
+      // 업로드 하는 파일이 있을 때
+      $work = $(work);
+      var uploadingFile = data.get("inputFile");
+      if (uploadingFile !== null && uploadingFile.size > 0) {
+        var fileDown = $work.find(".file-down");
+        fileDown.removeClass("d-none");
+        fileDown.find(".work-file-name").text(uploadingFile.name);
+        fileDown
+          .find(".download-file")
+          .attr(
+            "href",
+            root + "/workspace/download.do?workNum=" + data.get("workNum")
+          );
+        fileDown
+          .find(".delete-file")
+          .attr(
+            "href",
+            root + "/workspace/delete-file.do?workNum=" + data.get("workNum")
+          );
+        //   fileDown.find(".delete-file").click(deleteFile);
+      }
+
       work.querySelector(".receiver-search").setAttribute("disabled", "");
 
       work.querySelector(".work-start-date").setAttribute("readonly", "");
@@ -370,8 +350,14 @@ function okEdit(e) {
       ).value;
       work.querySelector("textarea.work-content").classList.add("d-none");
 
+      work.querySelector(".file-up").classList.add("d-none");
+      work.querySelector(".download-file").classList.remove("d-none");
+      work.querySelector(".delete-file").classList.add("d-none");
+
       work.querySelector(".more").classList.remove("d-none");
       work.querySelector(".edit-more").classList.add("d-none");
+
+      work.querySelector(".input-file").value = "";
     })
     .catch(function () {
       alert("수정 되지 못했습니다. 다시 시도해주세요.");
@@ -419,7 +405,7 @@ function deleteFile(e) {
       chk = parseInt(chk.trim());
       if (chk === 0) throw new Error();
       else if (chk === 1) {
-        work.querySelector(".file-down").remove();
+        work.querySelector(".file-down").classList.add("d-none");
       }
     })
     .catch(function () {
