@@ -17,26 +17,6 @@ public class ManagerDaoImp implements ManagerDao {
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	@Override
-	public int memberCount() {
-		return sqlSessionTemplate.selectOne("member_count");
-	}
-	
-	@Override
-	public List<MemberDto> memberList() {
-		return sqlSessionTemplate.selectList("member_list");
-	}
-	
-	@Override
-	public int memberDelete(int memNum) {
-		return sqlSessionTemplate.delete("member_delete", memNum);
-	}
-	
-	@Override
-	public MemberDto memberSelect(int memNum) {
-		return sqlSessionTemplate.selectOne("member_select", memNum);
-	}
-	
-	@Override
 	public int noticeWrite(NoticeDto noticeDto) {
 		
 		HAspect.logger.info(HAspect.logMsg + "noticeWriteOk - Dao");
@@ -113,14 +93,24 @@ public class ManagerDaoImp implements ManagerDao {
 		
 		return list;
 	}
-	
+
 	@Override
-	public CustomerDto reportSelect(int cusNum) {
-		return sqlSessionTemplate.selectOne("report_select", cusNum);
+	public int memberCount() {
+		return sqlSessionTemplate.selectOne("member_count");
 	}
-	
+
 	@Override
-	public int reportStateChange(int cusNum) {
-		return sqlSessionTemplate.update("report_state_change", cusNum);
+	public List<MemberDto> memberList() {
+		return sqlSessionTemplate.selectList("member_list");
+	}
+
+	@Override
+	public int memberDelete(int memNum) {
+		return sqlSessionTemplate.delete("member_delete", memNum);
+	}
+
+	@Override
+	public MemberDto memberSelect(int memNum) {
+		return sqlSessionTemplate.selectOne("member_select", memNum);
 	}
 }

@@ -62,24 +62,25 @@
 						<!-- Card Body -->
 						<div class="card-body">
 							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable">
-									<thead class="text-center">
+								<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0">
+									<thead>
 										<tr>
-											<th>문의/신고 번호</th>
-											<th>작성자 ID</th>
-											<th>제목</th>
+											<th>글 번호</th>
+											<th>글쓴이 ID</th>
+											<th>글 제목</th>
+											<th>글 내용</th>
 											<th>첨부 파일</th>
-											<th>접수 유형</th>
 											<th>접수 현황</th>
 										</tr>
 									</thead>
-									<tfoot class="text-center">
+									<tfoot>
 										<tr>
-											<th>문의/신고 번호</th>
-											<th>작성자 ID</th>
-											<th>제목</th>
+											<th>글 번호</th>
+											<th>글쓴이 ID</th>
+											<th>글 제목</th>
+											<th>글 내용</th>
 											<th>첨부 파일</th>
-											<th>접수 유형</th>
 											<th>접수 현황</th>
 										</tr>
 									</tfoot>
@@ -87,49 +88,25 @@
 										<c:if test="${reportCount>0}">
 											<c:forEach var="reportDto" items="${reportArray}">
 												<tr>
-													<!-- 문의/신고 번호 -->
-													<td width="10%" class="text-center"><label>${reportDto.cusNum}</label></td>
-													
-													<!-- 작성자 ID -->
-													<td width="10%" class="text-center"><label>${reportDto.cusId}</label></td>
-													
-													<!-- 제목 -->
-													<td width="35%" ><a href="#" data-toggle="modal"
+													<td><label>${reportDto.cusNum}</label></td>
+													<td><label>${reportDto.cusId}</label></td>
+													<td><a href="#" data-toggle="modal"
 														data-target="#reportReadModal"
-														data-num="${reportDto.cusNum}"
 														data-custitle="${reportDto.cusTitle}"
-														data-cuscontent="${reportDto.cusContent}"
-														data-file="${reportDto.cusFileName}"
-														data-root="${root}">
-														${reportDto.cusTitle}
-														</a>
-													</td>
-													
-													<!-- 첨부 파일 -->
+														data-cuscontent="${reportDto.cusContent}">${reportDto.cusTitle}</a></td>
+													<td>${reportDto.cusContent}</td>
+
 													<c:if test="${reportDto.cusFileSize>0}">
-														<td width="25%"><a href="${root}/manager/reportFileDownload.do?cusNum=${reportDto.cusNum}">${reportDto.cusFileName}</a></td>
+														<td><a href="#">${reportDto.cusFileName}</a></td>
 													</c:if>
 
 													<c:if test="${reportDto.cusFileSize==0}">
-														<td width="25%">첨부파일 없음</td>
+														<td>첨부파일 없음</td>
 													</c:if>
 
-													<!-- 접수유형 -->
-													<td width="10%" class="text-center">${reportDto.cusCate}</td>
-
-													<!-- 접수 현황 -->													
-													<c:if test="${reportDto.cusState==0}">
-														<td width="10%" class="text-center"><a href="#" data-toggle="modal"
-																data-target="#reportStateModal"
-																data-cusnum="${reportDto.cusNum}">
-																접수 대기중
-															</a>
-														</td>
-													</c:if>
-													
-													<c:if test="${reportDto.cusState==1}">
-														<td width="10%" class="text-center"><a>접수 완료</a></td>
-													</c:if>
+													<td><a id="state${reportDto.cusNum}" href="#" data-toggle="modal"
+														data-target="#reportStateModal"
+														data-cusnum="${reportDto.cusNum}">접수대기중</a></td>
 												</tr>
 											</c:forEach>
 										</c:if>
@@ -203,7 +180,7 @@
 						<div class="form-group row">
 							<div class="col-sm-12">
 								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
-								</span> <a id="fileName"></a>
+								</span> <a class="mx-2">첨부파일 없음</a>
 							</div>
 						</div>
 
@@ -228,7 +205,7 @@
 
 				<!-- modal-header -->
 				<div class="modal-header">
-					<h5 class="m-0 font-weight-bold text-primary p-2">접수 처리가 완료되었습니까?</h5>
+					<h5 class="m-0 font-weight-bold text-primary p-2">접수 처리</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -237,17 +214,19 @@
 
 				<!-- modal-body -->
 				<div class="modal-body p-4">
+
+					<!-- 접수 완료 -->
 					<div class="form-group row">
 						<div class="col-sm-12">
-							<h5 class="modal-title form-control-plaintext font-weight-bold">이메일 회신을 완료했으면 확인 버튼을 눌러 접수 상태를 접수 완료로 변경하세요.</h5>
+							<h5 class="modal-title form-control-plaintext font-weight-bold">접수를 완료하세요.</h5>
 						</div>
 					</div>
+
 				</div>
 
 				<!-- modal-footer -->
 				<div class="modal-footer justify-content-right">
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="reportStateChange('${root}');">확인</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="reportStateChange();">확인</button>
 				</div>
 			</div>
 		</div>
