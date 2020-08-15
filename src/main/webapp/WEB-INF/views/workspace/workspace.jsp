@@ -560,14 +560,25 @@
 						</div>
 					</div>
 
-
-					<!-- modal-footer -->
+					<!-- 팀장이면 modal-footer -->
+					<c:if test="${memLevel=='팀장'}">
 					<div class="modal-footer justify-content-right">
 						<div>
 							<button id="deleteBtn" type="button" class="btn btn-secondary">삭제</button>
 							<button id="updateBtn" type="button" class="btn btn-primary">수정</button>
 						</div>
 					</div>
+					</c:if>
+					<!-- 팀원이면 modal-footer -->
+					<c:if test="${memLevel=='팀원'}">
+					<div class="modal-footer justify-content-right">
+						<div>
+							<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">확인</button>
+						</div>
+					</div>
+					</c:if>
+					
 				</div>
 
 			</div>

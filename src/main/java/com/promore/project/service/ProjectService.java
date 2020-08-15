@@ -23,4 +23,7 @@ public interface ProjectService {
 	public void projectApplyOk(ModelAndView mav, String aplMemId);
 
 
+	public void projectApplyAdd(ModelAndView mav, String aplMemId);
+
+
 }

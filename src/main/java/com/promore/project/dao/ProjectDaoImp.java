@@ -53,7 +53,7 @@ public class ProjectDaoImp implements ProjectDao {
 	
 	@Override
 	public List<String> projectState(String id) {
-		//ë²ˆí˜¸
+		//¹øÈ£
 		return sqlSessionTemplate.selectList("project_cnt", id);
 	}
 	
@@ -62,12 +62,18 @@ public class ProjectDaoImp implements ProjectDao {
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		hMap.put("aplNum", aplNum);
 		hMap.put("aplMemId", aplMemId);
-		//mapìœ¼ë¡œ ë„˜ê²¨ì£¼ê¸°
+		//mapÀ¸·Î ³Ñ°ÜÁÖ±â
 		return sqlSessionTemplate.insert("project_apply", hMap);
 	}
 	
 	@Override
 	public int projectApplyCnt(int aplNum) {
 		return sqlSessionTemplate.update("project_apply_cnt", aplNum);
+	}
+	
+	@Override
+	public int projectApplyAdd(String aplMemId) {
+		return sqlSessionTemplate.insert("project_apply_add", aplMemId);
+		
 	}
 }

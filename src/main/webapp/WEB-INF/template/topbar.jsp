@@ -4,6 +4,32 @@
 
 <c:set var="root" value="${pageContext.request.contextPath}" />
 
+<script type="text/javascript">
+	function pressEnterkey() {
+		if (window.event.keyCode == 13) {
+			searchText();
+		}
+	}
+	function searchText() {
+		var input, filter, txtValue;
+
+		input = document.getElementById('myInput');
+		filter = input.value.toUpperCase();
+
+		var projectName = document.getElementsByClassName('projectName');
+
+		for (var i = 0; i < projectName.length; i++) {
+			txtValue = projectName[i].innerText.replace(/\s/gi, "");
+
+			if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				document.getElementsByClassName('flip-card')[i].style.display = "block";
+			} else {
+				document.getElementsByClassName('flip-card')[i].style.display = "none";
+			}
+		}
+	}
+</script>
+
 <!-- Top bar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -14,14 +40,13 @@
 	</button>
 
 	<!-- Top bar Search -->
-	<form
-		class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+	<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" onsubmit="return false">
 		<div class="input-group">
-			<input type="text" class="form-control bg-light border-0 small"
-				placeholder="Search for..." aria-label="Search"
+			<input id="myInput" onkeypress="pressEnterkey()" type="text" class="form-control bg-light border-0 small"
+				placeholder="Search for..." aria-label="Search" 
 				aria-describedby="basic-addon2">
 			<div class="input-group-append">
-				<button class="btn btn-primary" type="button">
+				<button class="btn btn-primary" type="button" onclick="searchText()">
 					<i class="fas fa-search fa-sm"></i>
 				</button>
 			</div>
@@ -142,7 +167,7 @@
 			<a class="nav-link dropdown-toggle" href="#" id="userDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> 
-				<span class="mr-2 d-none d-lg-inline text-gray-600 small">${memName}</span>
+				<span class="mr-2 d-none d-lg-inline text-gray-600 small"><b style="font-size: 1rem;">${memberDto.memName}</b> 님 환영합니다!</span>
 				<img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
 			</a> 
 		
@@ -155,24 +180,28 @@
 				
 				<!-- 정보 -->
 				<div class="dropdown-item d-flex align-self-center py-3">
+					<label class="small text-gray-500 m-0" style="width: 35% !important;">아이디</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memId}</label>
+				</div> 
+				<div class="dropdown-item d-flex align-self-center py-3">
 					<label class="small text-gray-500 m-0" style="width: 35% !important;">등급</label>
-					<label class="font-weight m-0" style="width: 65% !important;">${memLevel}</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memLevel}</label>
 				</div> 
 				<div class="dropdown-item d-flex align-self-center py-3">
 					<label class="small text-gray-500 m-0" style="width: 35% !important;">이름</label>
-					<label class="font-weight m-0" style="width: 65% !important;">${memName}</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memName}</label>
 				</div> 
 				<div class="dropdown-item d-flex align-self-center py-3">
 					<label class="small text-gray-500 m-0" style="width: 35% !important;">닉네임</label>
-					<label class="font-weight m-0" style="width: 65% !important;">${memNickname}</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memNickname}</label>
 				</div> 
 				<div class="dropdown-item d-flex align-self-center py-3">
 					<label class="small text-gray-500 m-0" style="width: 35% !important;">휴대폰 번호</label>
-					<label class="font-weight m-0" style="width: 65% !important;">${memPhone}</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memPhone}</label>
 				</div> 
 				<div class="dropdown-item d-flex align-self-center py-3">
 					<label class="small text-gray-500 m-0" style="width: 35% !important;">이메일 주소</label>
-					<label class="font-weight m-0" style="width: 65% !important;">${memEmail}</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memEmail}</label>
 				</div>
 				
 				<a href="#" class="dropdown-item d-flex justify-content-center align-self-center"

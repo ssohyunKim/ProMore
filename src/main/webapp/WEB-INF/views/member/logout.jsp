@@ -9,16 +9,9 @@
 	<title>로그아웃 - 세션 종료</title>
 </head>
 <body>
-	<c:remove var="memId" scope="session"/>
-	<c:remove var="memLevel" scope="session"/>
-	<c:remove var="memPassword" scope="session"/>
-	<c:remove var="memName" scope="session"/>
-	<c:remove var="memNickname" scope="session"/>
-	<c:remove var="memLevel" scope="session"/>
-	<c:remove var="memPhone" scope="session"/>
-	<c:remove var="memEmail" scope="session"/>
-	<c:remove var="memSkills" scope="session"/>
-	
+
+	<c:remove var="memberDto" scope="session"/>
+	 
 	<script type="text/javascript">
 		alert("로그아웃 되었습니다.");
 		location.href="${root}/index.jsp";
