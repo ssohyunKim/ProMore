@@ -4,7 +4,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-<mapper namespace="dto.projectApplyDto">  
+<mapper namespace="dto.projectapplyDto">  
 	
 	
 	<resultMap type="com.promore.projectapply.dto.ProjectApplyDto" id="projectapply_dto">
@@ -13,8 +13,8 @@
 		<result column="apl_mem_id" property="aplMemId"/>
 	</resultMap>
 	
-<select id="projectapply_list" resultMap="projectapply_dto">
-	select * from project_apply
+<select id="project_apply_list" parameterType="String" resultMap="projectapply_dto">
+		select * from project_apply where apl_mem_id=#{aplMemId}
 </select>	
 	
 	

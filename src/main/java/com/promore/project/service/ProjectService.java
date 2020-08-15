@@ -13,8 +13,6 @@ public interface ProjectService {
 	public void projectCnt(ModelAndView mav, String id);
 
 
-	public void proApplyList(ModelAndView mav);
-
 
 	public void projectUpdateOk(ModelAndView mav);
 

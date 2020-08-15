@@ -6,18 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.promore.project.dto.ProjectDto;
 import com.promore.projectapply.dao.ProjectApplyDao;
+import com.promore.projectapply.dto.ProjectApplyDto;
 
 @Component
 public class ProjectApplyServiceImp implements ProjectApplyService {
 	@Autowired
 	private ProjectApplyDao projectapplyDao;
-	
+
 	@Override
-	public void proApplyList(ModelAndView mav) {
-		List<ProjectApplyDao> projectDtoArray = projectapplyDao.projectList();
+	public void proApplyList(ModelAndView mav, String aplMemId) {
+		List<ProjectApplyDto> projectapplyDtoArray = projectapplyDao.projectList(aplMemId);
+	
+		System.out.println("applyDto" + projectapplyDtoArray);
+		mav.addObject("projectApplyDto", projectapplyDtoArray);
 		
 	}
-	
 }

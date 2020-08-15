@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <c:set var="root" value="${pageContext.request.contextPath}"/>
+<c:set var = "id" value="user" scope="session"/>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">

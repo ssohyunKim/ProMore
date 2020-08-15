@@ -28,9 +28,13 @@ public class ProjectController {
 	public ModelAndView projectMain(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView(); 
 		mav.addObject("request",request);
+		HttpSession session = request.getSession(); 
+		String aplMemId = (String)session.getAttribute("id");
+		System.out.println("mainid" + aplMemId);
+		mav.addObject("aplMemId", aplMemId);
 		
 		projectservice.projectList(mav);
-		projectapplyservice.proApplyList(mav);
+		projectapplyservice.proApplyList(mav, aplMemId);
 		return mav;
 	}
 

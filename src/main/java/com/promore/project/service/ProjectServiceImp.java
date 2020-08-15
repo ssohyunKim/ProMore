@@ -100,13 +100,5 @@ public class ProjectServiceImp implements ProjectService {
 		
 	}
 	
-	//apply리스트 가져오기
-	@Override
-	public void proApplyList(ModelAndView mav) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
 	
 }
