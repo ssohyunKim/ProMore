@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:set var="root" value="${pageContext.request.contextPath}" />
 <!-- Topbar -->
 <nav
 	class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -126,7 +128,7 @@
 				<h6 class="dropdown-header">My Profile</h6>
 				<a class="dropdown-item d-flex align-items-center" href="#">
 						<div class="small text-gray-500" style="width:60px; float:left; margin-right:30px;">이름</div>
-						<div class="font-weight" style="float:right;">최정윤</div>
+						<div class="font-weight" style="float:right;">하하하</div>
 				</a> 
 					
 
