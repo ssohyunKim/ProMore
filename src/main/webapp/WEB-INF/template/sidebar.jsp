@@ -7,11 +7,12 @@
 <!-- 사용자용 ID -->
 <%-- <c:set var = "id" value="user" scope="session"/> --%>
 <!-- 사용자용 회원 번호 -->
-<c:set var = "num" value="2" scope="session"/>
-<c:set var = "pass" value="1234" scope="session"/>
+<%-- <c:set var = "memId" value="${memberDto.memId}" scope="session"/>
+<c:set var = "memPassword" value="${memberDto.memPassword}" scope="session"/> --%>
+
 
 <!-- 매니저용 ID -->
-<c:set var="id" value="manager" scope="session" />
+<%-- <c:set var="id" value="manager" scope="session" /> --%>
 
 <!-- Sidebar -->
 <ul
@@ -25,7 +26,7 @@
          <i class="fas fa-laugh-wink"></i>
       </div>
       <div class="sidebar-brand-text mx-3">
-         PROMORE <sup></sup>
+        PROMORE<sup></sup>
       </div>
    </a>
 
@@ -44,7 +45,7 @@
 
    <!-- 마이페이지 -->
 
-   <c:if test="${id=='user'}">
+   <c:if test="${memLevel=='팀원' || memLevel=='팀장'}">
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item active"><a class="nav-link collapsed"
          href="#" data-toggle="collapse" data-target="#collapsePages"
@@ -55,14 +56,14 @@
             aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                <h6 class="collapse-header">My Page</h6>
-               <a class="collapse-item" href="${root}/member/memberUpdate.do?memNum=${num}">회원 수정</a>
+               <a class="collapse-item" href="${root}/member/memberUpdate.do?memNum=${memNum}">회원 수정</a>
                <a class="collapse-item" href="#">회원 탈퇴</a>
                <div class="collapse-divider"></div>
             </div>
          </div></li>
    </c:if>
 
-   <c:if test="${id=='manager'}">
+   <c:if test="${memLevel=='관리자'}">
       <!-- Nav Item - Manager Collapse Menu -->
       <li class="nav-item active"><a class="nav-link collapsed"
          href="#" data-toggle="collapse" data-target="#collapseManager"

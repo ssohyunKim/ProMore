@@ -57,6 +57,20 @@ public class ManagerDaoImp implements ManagerDao {
 	}
 	
 	@Override
+	public int noticeUpdate(NoticeDto noticeDto) {
+		
+		int check = 0;
+		
+		if(noticeDto.getNotFileSize()!=0) {
+			check = sqlSessionTemplate.update("notice_update", noticeDto);
+		} else {
+			check = sqlSessionTemplate.update("notice_update_without_file", noticeDto);
+		}
+		
+		return check;
+	}
+	
+	@Override
 	public int noticeDelete(int notNum) {
 		return sqlSessionTemplate.delete("notice_delete", notNum);
 	}
@@ -79,6 +93,16 @@ public class ManagerDaoImp implements ManagerDao {
 		
 		return list;
 	}
+	
+	@Override
+	public CustomerDto reportSelect(int cusNum) {
+		return sqlSessionTemplate.selectOne("report_select", cusNum);
+	}
+	
+	@Override
+	public int reportStateChange(int cusNum) {
+		return sqlSessionTemplate.update("report_state_change", cusNum);
+	}
 
 	@Override
 	public int memberCount() {
@@ -99,8 +123,4 @@ public class ManagerDaoImp implements ManagerDao {
 	public MemberDto memberSelect(int memNum) {
 		return sqlSessionTemplate.selectOne("member_select", memNum);
 	}
-
-
-	
-	
 }

@@ -27,13 +27,61 @@
 	href="${root}/resources/css/workspace/jquery-ui.theme.css" />
 <%-- <link rel="stylesheet"
       href="${root}/resources/css/workspace/workspace.css" /> --%>
-
 <!-- Bootstrap -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
 <!-- 일감댓글 -->
 <link rel="stylesheet" href="${root}/resources/css/workspace/reply.css" />
+<!-- jQuery -->
+ <script type="text/javascript" src="${root}/resources/jquery.js"></script>
 </head>
+<script type="text/javascript">
+var name="";
+var content="";
+var max="";
+
+$(function(){
+	$('#projectReadModal').on('show.bs.modal', function(event) {
+		name = $(event.relatedTarget).data('name');
+		$('input[name="proName"]').val(name);
+		
+		max = $(event.relatedTarget).data('max');
+	 	$('select[name="proMax"]').val(max).attr("selected", "selected");
+		$('select[name="proMax"] option').attr('disabled', true);
+		
+		content = $(event.relatedTarget).data('content');
+		$('textarea[name="proContent"]').text(content);
+		
+	});
+	
+	$('#updateBtn').click(function(){
+		$('#projectUpdateModal').modal();
+		
+		$('input[name="proName"]').val(name);
+		
+		$('select[name="proMax"]').val(max).prop("selected", true);
+		$('select[name="proMax"] option').attr('disabled', false);
+		
+		$('textarea[name="proContent"]').text(content);
+
+		$('#projectReadModal').modal().hide();
+	});
+	
+	$('#deleteBtn').click(function(){
+		$('#removeConfirmModal').modal();
+	});
+	
+	
+	$('.modal').on('hide.bs.modal', function(event){
+		location.reload();
+	});
+});
+
+function projectDelete(root){
+	location.href = root + '/project/delete.do?proNum=' +${proNum};
+}
+
+</script>
 
 <body id="page-top">
 	<!-- Page Wrapper -->
@@ -56,7 +104,7 @@
 					<!-- Page Heading -->
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">일감 관리</h1>
+						<h1 class="h3 mb-0 text-gray-800">일감 관리</h1>					
 					</div>
 
 					<!--    
@@ -70,13 +118,21 @@
 					<div class="card shadow p-4 col-xl-8 bg-light">
 
 						<!-- 프로젝트 상세 보기 -->
-						<a href="#" class="text-decoration-none" data-toggle="modal"
-							data-target="#ReadModal">
-							<div
-								class="alert alert-primary bg-primary p-3 rounded-lg text-center">
-								<b class="text-white font-weight-bolder">ProMore</b>
-							</div>
-						</a>
+						<c:forEach var="projectDto" items="${projectDtoArray}">
+							<c:if test="${projectDto.proNum eq proNum}">
+								<a href="#"
+									data-name="${projectDto.proName}"
+									data-max = "${projectDto.proMax}"
+									data-content = "${projectDto.proContent}"
+									data-toggle="modal"
+									data-target="#projectReadModal">
+									<div class="alert alert-primary bg-primary p-3 rounded-lg text-center">
+										<b class="text-white font-weight-bolder">
+										ProMore</b>
+									</div>
+								</a>
+							</c:if>
+						</c:forEach>
 
 						<!-- 일감 작성 폼 -->
 						<div class="card shadow mb-4 border-bottom-primary">
@@ -453,8 +509,8 @@
 		class="fas fa-angle-up"></i>
 	</a>
 
-	<!-- Read Model -->
-	<div class="modal fade" id="ReadModal" tabindex="-1" role="dialog">
+	<!--Project Read Model -->
+	<div class="modal fade" id="projectReadModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg mt-5" role="document">
 			<div class="modal-content">
 
@@ -470,51 +526,124 @@
 				<!-- modal-body -->
 				<div class="modal-body">
 
-					<!--프로젝트 제목 && 인원수 -->
-					<div class="form-group row">
-						<div class="col-sm-12">
-							<input type="text" class="form-control" id="inputTitle"
-								style="display: inline; width: 85%; margin-right: 30px;"
-								placeholder="제목을 입력하세요."> &ensp;인원수
-							<div class="dropdown mb-4 bg-light"
-								style="float: right; width: 100">
-								<button class="btn dropdown-toggle" type="button"
-									id="dropdownMenuButton" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false">1</button>
-								<div class="dropdown-menu animated--fade-in"
-									aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" href="#">2</a> <a
-										class="dropdown-item" href="#">3</a> <a class="dropdown-item"
-										href="#">4</a> <a class="dropdown-item" href="#">5</a>
+					<!-- 프로젝트 제목 && 인원수  -->
+			                  <div class="form-group row">
+			                     <div class="col-sm-10">
+			                        <input type="text" class="form-control-plaintext" name="proName" style="display: inline;"  placeholder="제목을 입력하세요." readonly>
+			                     </div>
+			                    <p style="margin: 6px 13px 0px 0px">인원수</p>
+			                     <div class="col-sm-1.5" style="display: inline;">
+			                        <select name="proMax" class="form-control-plaintext" readonly>
+			                            <option value="2">2</option>
+			                            <option value="3">3</option>
+			                            <option value="4">4</option>
+			                            <option value="5">5</option>
+			                        </select>
+			                     </div>
+			                  </div>
+	
+							<!-- 글 내용 -->
+							<div class="form-group row">
+								<div class="col-sm-12">
+									<textarea class="form-control-plaintext" rows="20" name="proContent" placeholder="글을 입력하세요." readonly></textarea>
 								</div>
+							</div>
+								
 
+							<!-- modal-footer -->
+							<div class="modal-footer justify-content-right">
+								<div>
+									<button id="deleteBtn" type="button" class="btn btn-secondary">삭제</button>
+									<button id="updateBtn" type="button" class="btn btn-primary">수정</button>
+								</div>
+							</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+	
+	<!--Project Update Model -->
+	<div class="modal fade" id="projectUpdateModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
+
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">프로젝트 읽기</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+
+		<form action="${root}/project/update.do" name="updateForm" method="post">	
+				<input id="proNum" type="hidden" name="proNum" value="${proNum}" />
+				<!-- modal-body -->
+				<div class="modal-body">
+
+					<!-- 프로젝트 제목 && 인원수  -->
+			                  <div class="form-group row">
+			                     <div class="col-sm-10">
+			                        <input type="text" class="form-control" name="proName" style="display: inline;"  placeholder="제목을 입력하세요.">
+			                     </div>
+			                    <p style="margin: 6px 13px 0px 0px">인원수</p>
+			                     <div class="col-sm-1.5" style="display: inline;">
+			                        <select name="proMax" class="form-control">
+			                            <option value="2">2</option>
+			                            <option value="3">3</option>
+			                            <option value="4">4</option>
+			                            <option value="5">5</option>
+			                        </select>
+			                     </div>
+			                  </div>
+	
+							<!-- 글 내용 -->
+							<div class="form-group row">
+								<div class="col-sm-12">
+									<textarea class="form-control-plaintext" rows="20" name="proContent" placeholder="글을 입력하세요."></textarea>
+								</div>
+							</div>
+								
+
+							<!-- modal-footer -->
+							<div class="modal-footer justify-content-right">
+								<div>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+									<button type="submit" class="btn btn-primary">확인</button>
+								</div>
 							</div>
 						</div>
+				</form>
 
-						<!-- 글 내용 -->
-					</div>
-					<div class="form-group row">
-						<div class="col-sm-12">
-							<textarea class="form-control" rows="20" id="inputContent"
-								placeholder="글을 입력하세요."></textarea>
-						</div>
-					</div>
-
-					<!-- modal-footer -->
-					<div class="modal-footer justify-content-between">
-						<button type="reset" class="btn btn-warning">초기화</button>
-
-						<div>
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">취소</button>
-							<button type="button" class="btn btn-primary">수정</button>
-						</div>
-					</div>
+			</div>
+		</div>
+	</div>
+	
+<!--remove Confirm Model -->
+<div class="modal fade" id="removeConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">삭제</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">정말 삭제하시겠습니까?</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">아니요</button>
+					<button class="btn btn-primary" type="button" onclick="projectDelete('${root}')">네</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
+	
+	
+	
 	<!-- 담당자 버튼 누를 시 뜨는 모달 -->
 	<div class="modal fade" id="managerModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog col-sm-6" role="document">

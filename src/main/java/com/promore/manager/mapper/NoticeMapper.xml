@@ -61,6 +61,14 @@
 		select * from notice where not_num = #{notNum}
 	</select>
 	
+	<update id="notice_update" parameterType="com.promore.manager.dto.NoticeDto">
+		update notice set not_title = #{notTitle}, not_content = #{notContent}, not_file_name = #{notFileName}, not_file_path = #{notFilePath}, not_file_size = #{notFileSize} where not_num = #{notNum}
+	</update>
+	
+	<update id="notice_update_without_file" parameterType="com.promore.manager.dto.NoticeDto">
+		update notice set not_title = #{notTitle}, not_content = #{notContent} where not_num = #{notNum}
+	</update>
+	
 	<delete id="notice_delete">
 		delete from notice where not_num = #{notNum}
 	</delete>

@@ -51,21 +51,20 @@ public class MemberServiceImp implements MemberService {
 		String memId = request.getParameter("memId");
 		String memPassword=request.getParameter("memPassword");
 		
-		String memLevel=memberDao.loginOk(memId, memPassword);
+		MemberDto memberDto=memberDao.loginOk(memId, memPassword);
 		HAspect.logger.info(HAspect.logMsg + memId);
 		HAspect.logger.info(HAspect.logMsg + memPassword);
-		HAspect.logger.info(HAspect.logMsg + memLevel);
+		HAspect.logger.info(HAspect.logMsg +"우예"+ memberDto);
 		
-		mav.addObject("memLevel", memLevel);
-		mav.addObject("memId", memId);
-		mav.addObject("memPassword", memPassword);
+		
+		mav.addObject("memberDto", memberDto);
 		mav.setViewName("member/loginOk");
+		
 		
 		System.out.println("OK3");
 		
 	}
 
-	
 	@Override
 	public void memberUpdate(ModelAndView mav) {
 		

@@ -1,20 +1,20 @@
 package com.promore.project.service;
 
+import java.util.Date;
 import java.util.List;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.promore.aop.HAspect;
+import com.promore.customer.dto.CustomerDto;
 import com.promore.project.dao.ProjectDao;
 import com.promore.project.dto.ProjectDto;
-import com.promore.projectapply.dto.ProjectApplyDto;
 
 @Component
 public class ProjectServiceImp implements ProjectService {
@@ -41,6 +41,40 @@ public class ProjectServiceImp implements ProjectService {
 	  mav.setViewName("project/writeOk");
 	}
 	
+	
+	@Override
+	public void projectUpdateOk(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest)map.get("request");
+		int proNum = Integer.parseInt(request.getParameter("proNum"));
+		System.out.println("proNum" + proNum);
+		ProjectDto projectDto = (ProjectDto) map.get("projectDto");
+		System.out.println("DTO" + projectDto);
+		
+		int check = projectDao.projectUpdateOk(projectDto);
+		HAspect.logger.info(HAspect.logMsg + check);
+		
+		mav.addObject("check", check);
+		mav.addObject("proNum", proNum);
+		mav.setViewName("project/updateOk");
+
+		
+	}
+	
+	@Override
+	public void projectDeleteOk(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest)map.get("request");
+		
+		int proNum = Integer.parseInt(request.getParameter("proNum"));
+		int check = projectDao.projectDeleteOk(proNum);
+		
+		mav.addObject("check", check);
+		mav.setViewName("project/deleteOk");
+		
+		
+	}
+	
 	@Override
 	public void projectList(ModelAndView mav) {
 		int projectCount = projectDao.projectCount();
@@ -51,32 +85,26 @@ public class ProjectServiceImp implements ProjectService {
 		
 	}
 	
+
 	@Override
-	public void projectState(ModelAndView mav, String memid) {
-		// TODO Auto-generated method stub
+	public void projectCnt(ModelAndView mav, String id) {
+		//번호 가져오기
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		ProjectDto projectDto = new ProjectDto();
 		
-		 HAspect.logger.info(HAspect.logMsg+ "state id check" + memid); 
+		 HAspect.logger.info(HAspect.logMsg+ "state id check" + id); 
 		//번호 가져오기
-		 List<Integer> projectCnt = projectDao.projectState(memid);
-		 
-		 
-		 List<Object> State = null;
-		 int cnt=0;
-		 //1,2,3
-		 for(Integer proNum : projectCnt) {
-
-			 State = projectDao.projectStatenum(proNum); 
-			 System.out.println(State);
-			 mav.addObject("projectState"+cnt, State);
-			 cnt++;
-		 }
+		 List<String> projectCnt = projectDao.projectState(id);
+		 mav.addObject("projectCnt", projectCnt);
 		
-		 mav.addObject("cnt",cnt);
-		// mav.addObject("projectState", projectAll);
-		mav.setViewName("project/pjtState");
+	}
+	
+	//apply리스트 가져오기
+	@Override
+	public void proApplyList(ModelAndView mav) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

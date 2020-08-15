@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.mapper.NoticeMapper">
+	<!-- column: 데이터베이스 property : data -->
+	<resultMap type="com.promore.manager.dto.NoticeDto" id="NoticeDto">
+		<result column="NOT_NUM" property="notNum"/>
+		<result column="NOT_TITLE" property="notTitle"/>
+		<result column="NOT_CONTENT" property="notContent"/>
+		<result column="NOT_WRITE_DATE" property="notWriteDate"/>
+		
+		<result column="NOT_FILE_NAME" property="notFileName"/>
+		<result column="NOT_FILE_PATH" property="notFilePath"/>
+		<result column="NOT_FILE_SIZE" property="notFileSize"/>
+		
+		<result column="NOT_READ_COUNT" property="notReadCount"/>
+	</resultMap>
+	
+	<!-- 조회수 증가  -->
+	<update id="notice_board_update" parameterType="int">
+		update notice set not_read_count = not_read_count + 1 where not_num = #{notNum}
+	</update>
+	
+	<!-- 리스트 가져오기 -->
+	<select id="notice_board_list" resultMap="NoticeDto">
+		select * from notice
+	</select>
+</mapper>

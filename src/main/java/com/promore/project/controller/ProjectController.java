@@ -12,14 +12,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.promore.aop.HAspect;
+import com.promore.customer.dto.CustomerDto;
 import com.promore.project.dto.ProjectDto;
 import com.promore.project.service.ProjectService;
+import com.promore.projectApply.service.ProjectApplyService;
 
 @Controller
 public class ProjectController {
 	@Autowired
 	private ProjectService projectservice;
-	
+	@Autowired
+	private ProjectApplyService projectapplyservice;
 	
 	@RequestMapping(value = "/project/main.do", method = RequestMethod.GET)
 	public ModelAndView projectMain(HttpServletRequest request, HttpServletResponse response) {
@@ -27,6 +30,7 @@ public class ProjectController {
 		mav.addObject("request",request);
 		
 		projectservice.projectList(mav);
+		projectapplyservice.proApplyList(mav);
 		return mav;
 	}
 
@@ -46,23 +50,47 @@ public class ProjectController {
 	}
 	
 	//프로젝트 현황
-		@RequestMapping(value="/project/pjtState.do", method=RequestMethod.GET)
-		public ModelAndView projectState(HttpServletRequest request, HttpServletResponse response) {
-			  ModelAndView mav = new ModelAndView();
-			  HttpSession session = request.getSession(); 
-			  String aplMemId = (String)session.getAttribute("aplMemId");
-			  
-			  HAspect.logger.info(HAspect.logMsg+"ModelAndView" + aplMemId);
-			  session.setAttribute("aplMemId", aplMemId);
-			  mav.addObject("request", request);
-			  mav.addObject("aplMemId", aplMemId);
-			  
-			  projectservice.projectState(mav, aplMemId); 
-			  return mav;
+	@RequestMapping(value="/project/pjtState.do", method=RequestMethod.GET)
+	public ModelAndView projectState(HttpServletRequest request, HttpServletResponse response) {
+		  ModelAndView mav = new ModelAndView();
+		  HttpSession session = request.getSession(); 
+		  String id = (String)session.getAttribute("id");
+		  
+		  HAspect.logger.info(HAspect.logMsg+"ModelAndView" + id);
+		  session.setAttribute("aplMemId", id);
+		  mav.addObject("request", request);
+		  mav.addObject("aplMemId", id);
+		  
+		  //회원 pjt_번호
+		  projectservice.projectCnt(mav, id); 
+		  //pjt 테이블 전체 가져오기
+		  projectservice.projectList(mav);
+		  
+		  return mav;
 
-		}
-		
-		
+	}
 	
+	//프로젝트 수정
+	@RequestMapping(value="/project/update.do", method=RequestMethod.POST)
+	public ModelAndView projectUpdate(HttpServletRequest request, HttpServletResponse response,ProjectDto projectDto) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("request", request);
+		mav.addObject("projectDto", projectDto);
+		
+		projectservice.projectUpdateOk(mav);
+		return mav;
+	}
+	//프로젝트 삭제
+	@RequestMapping(value="/project/delete.do", method=RequestMethod.GET)
+	public ModelAndView projectdDelete(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		
+		projectservice.projectDeleteOk(mav);
+			
+		return mav;		
+	}
+
 	
 }

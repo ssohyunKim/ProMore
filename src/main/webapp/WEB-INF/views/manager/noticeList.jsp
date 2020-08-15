@@ -57,7 +57,10 @@
 					<div class="card shadow mb-4">
 						<!-- Card Header -->
 						<div class="card-header py-3 form-inline justify-content-between">
+							<!-- 테이블 제목 -->
 							<h5 class="m-0 font-weight-bold text-primary p-2">공지사항 글 목록</h5>
+
+							<!-- 글쓰기 버튼 -->
 							<a href="#" class="btn btn-primary btn-circle btn-md"
 								data-toggle="modal" data-target="#noticeCreateModal"> <i
 								class="fas fa-pen"></i>
@@ -68,48 +71,59 @@
 						<!-- 공지사항 리스트 -->
 						<div class="card-body">
 							<div class="table-responsive">
-								<form id="dataForm">
-									<table class="table table-bordered" id="dataTable" width="100%"
-										cellspacing="0">
-										<thead>
-											<tr>
-												<th>글 번호</th>
-												<th>글 제목</th>
-												<th>조회수</th>
-												<th>작성 일자</th>
-												<th>첨부 파일</th>
-												<th>게시글 관리</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${noticeCount>0}">
-												<c:forEach var="noticeDto" items="${noticeDtoArray}">
-													<tr>
-														<td><label>${noticeDto.notNum}</label></td>
-														<td><a href="#" data-toggle="modal"
-															data-target="#noticeReadModal"
-															data-title="${noticeDto.notTitle}" data-content="${noticeDto.notContent}">${noticeDto.notTitle}</a></td>
-														<td>${noticeDto.notReadCount}</td>
-														<td><fmt:formatDate value="${noticeDto.notWriteDate}"
-																pattern="yyyy-MM-dd" /></td>
+								<table class="table table-bordered" id="dataTable">
+									<thead class="text-center">
+										<tr>
+											<th>공지 번호</th>
+											<th>조회수</th>
+											<th>제목</th>
+											<th>작성 일자</th>
+											<th>첨부 파일</th>
+											<th>게시글 관리</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${noticeCount>0}">
+											<c:forEach var="noticeDto" items="${noticeDtoArray}">
+												<tr>
+													<!-- 공지 번호 -->
+													<td width="10%" class="text-center"><label>${noticeDto.notNum}</label></td>
 
-														<c:if test="${noticeDto.notFileSize>0}">
-															<td><a href="#">${noticeDto.notFileName}</a></td>
-														</c:if>
+													<!-- 조회수 -->
+													<td width="10%" class="text-center">${noticeDto.notReadCount}</td>
 
-														<c:if test="${noticeDto.notFileSize==0}">
-															<td>첨부파일 없음</td>
-														</c:if>
+													<!-- 제목 -->
+													<td width="30%"><a href="#" data-toggle="modal"
+														data-target="#noticeReadModal"
+														data-num="${noticeDto.notNum}"
+														data-title="${noticeDto.notTitle}"
+														data-content="${noticeDto.notContent}"
+														data-file="${noticeDto.notFileName}" data-root="${root}">${noticeDto.notTitle}</a></td>
 
-														<td><a href="#" data-toggle="modal"
-															data-target="#noticeDeleteModal" data-num="${noticeDto.notNum}">삭제</a></td>
-													</tr>
-													
-												</c:forEach>
-											</c:if>
-										</tbody>
-									</table>
-								</form>
+													<!-- 작성 일자 -->
+													<td width="10%" class="text-center"><fmt:formatDate
+															value="${noticeDto.notWriteDate}" pattern="yyyy-MM-dd" /></td>
+
+													<!-- 첨부 파일 -->
+													<c:if test="${noticeDto.notFileSize>0}">
+														<td width="15%"><a
+															href="${root}/manager/noticeFileDownload.do?notNum=${noticeDto.notNum}">${noticeDto.notFileName}</a></td>
+													</c:if>
+
+													<c:if test="${noticeDto.notFileSize==0}">
+														<td width="15%"><a>첨부파일 없음</a></td>
+													</c:if>
+
+													<!-- 삭제 -->
+													<td width="10%" class="text-center"><a href="#"
+														data-toggle="modal" data-target="#noticeDeleteModal"
+														data-num="${noticeDto.notNum}">삭제</a></td>
+												</tr>
+
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -154,8 +168,6 @@
 
 				<form action="${root}/manager/noticeWriteOk.do" method="post"
 					enctype="multipart/form-data">
-
-					<%-- <input type="hidden" name="notNum" value="${notNum}" /> --%>
 
 					<!-- modal-body -->
 					<div class="modal-body">
@@ -243,7 +255,7 @@
 						<div class="form-group row">
 							<div class="col-sm-12">
 								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
-								</span> <a class="mx-2">첨부파일 없음</a>
+								</span> <a id="fileName"></a>
 							</div>
 						</div>
 
@@ -252,7 +264,7 @@
 					<!-- modal-footer -->
 					<div class="modal-footer justify-content-between">
 						<button type="button" class="btn btn-warning" data-toggle="modal"
-							data-target="#noticeUpdateModal">수정하기</button>
+							data-dismiss="modal" data-target="#noticeUpdateModal">수정하기</button>
 						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 					</div>
 
@@ -277,7 +289,10 @@
 					</button>
 				</div>
 
-				<form>
+				<form id="updateForm" action="${root}/manager/noticeUpdateOk.do"
+					method="post" enctype="multipart/form-data">
+
+					<input type="hidden" id="updateNum" name="notNum" value="">
 
 					<!-- modal-body -->
 					<div class="modal-body p-4">
@@ -285,15 +300,16 @@
 						<!-- 공지사항 글 제목 -->
 						<div class="form-group row">
 							<div class="col-sm-12">
-								<input type="text" class="form-control" id="inputTitle"
-									value="기존 제목">
+								<input type="text" class="form-control" id="updateTitle"
+									name="notTitle" placeholder="제목을 입력하세요.">
 							</div>
 						</div>
 
 						<!-- 공지사항 글 내용 -->
 						<div class="form-group row">
 							<div class="col-sm-12">
-								<textarea class="form-control" rows="20" id="inputContent">기존 글 내용</textarea>
+								<textarea class="form-control" rows="20" id="updateContent"
+									name="notContent" placeholder="내용을 입력하세요."></textarea>
 							</div>
 						</div>
 
@@ -301,7 +317,9 @@
 						<div class="form-group row">
 							<div class="col-sm-12">
 								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
-								</span> <input type="file" class="mx-2" id="changeFile" value="첨부파일 없음" />
+								</span> <label for="fileupload" class="btn btn-secondary btn-sm">파일
+									선택</label> <input type="file" id="fileupload" name="file"
+									style="display: none;"> <a class="fileName">첨부파일 없음</a>
 							</div>
 						</div>
 
@@ -309,7 +327,7 @@
 
 					<!-- modal-footer -->
 					<div class="modal-footer justify-content-between">
-						<button type="reset" class="btn btn-warning">초기화</button>
+						<button type="reset" class="btn btn-warning">내용 전체 삭제</button>
 
 						<div>
 							<button type="button" class="btn btn-secondary"
@@ -325,7 +343,8 @@
 	</div>
 
 	<!-- Notice Delete Model -->
-	<div class="modal fade" id="noticeDeleteModal" tabindex="-1" role="dialog" >
+	<div class="modal fade" id="noticeDeleteModal" tabindex="-1"
+		role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-body">
@@ -333,7 +352,8 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" onclick="noticeDelete('${root}');">삭제</button>
+					<button type="button" class="btn btn-primary"
+						onclick="noticeDelete('${root}');">삭제</button>
 				</div>
 			</div>
 		</div>

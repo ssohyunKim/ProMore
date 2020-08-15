@@ -10,6 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta name="google-signin-client_id" content="233392212481-rtrid3kc01hk4jhlhdv0o2jj33cvdi94.apps.googleusercontent.com">
 
   <title>로그인 페이지</title>
 
@@ -21,6 +22,7 @@
   <link href="resources/css/sb-admin-2.min.css?after" rel="stylesheet">
   <script type="text/javascript" src="${root}/resources/js/workspace/jquery-3.5.1.js"></script>
   <script type="text/javascript" src="${root}/resources/js/workspace/customCheck.js" ></script> 
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
  
 </head>
 
@@ -61,7 +63,7 @@
                                  	프로젝트메인
                     </a>
                     <hr>
-                    <a href="index.html" class="btn btn-google btn-user btn-block">
+                    <a href="index.html" onclick="${root}/resources/js/member/googlelogin.js"  class="btn btn-google btn-user btn-block">
                       <i class="fab fa-google fa-fw"></i> Goolge계정으로 로그인하기
                     </a>
                     <a href="index.html" class="btn btn-facebook btn-user btn-block">

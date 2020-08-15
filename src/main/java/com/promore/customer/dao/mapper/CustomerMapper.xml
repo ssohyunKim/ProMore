@@ -5,38 +5,23 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dao.mapper.CustomerMapper">
+	<!-- column: 데이터베이스 property : data -->
 	<resultMap type="com.promore.customer.dto.CustomerDto" id="CustomerDto">
-		<!-- column: 데이터베이스 property : data -->
 		<result column="cus_num" property="cusNum" />
 		<result column="cus_title" property="cusTitle" />
 		<result column="cus_cate" property="cusCate" />
 		<result column="cus_id" property="cusId" />
-		
 		<result column="cus_date" property="cusDate" />
+
 		<result column="cus_content" property="cusContent" />
 		<result column="cus_file_name" property="cusFileName" />
 		<result column="cus_file_path" property="cusFilePath" />
 		<result column="cus_file_size" property="cusFileSize" />
-		
-		<result column="cus_group_number" property="cusGroupNumber" />
-		<result column="cus_sequence_number" property="cusSequenceNumber" />
-		<result column="cus_sequence_level" property="cusSequenceLevel" />
+		<result column="cus_state" property="cusState" />
 	</resultMap>
-	
-	<!-- 그룹번호 가져오기 -->
-	<select id="customer_board_group_number_max" resultType="int">
-		select 
-		nvl(max(cus_group_number), 0) from customer_board
-	</select>
-	
-	<!-- 글순서(sequence number)증가 -->
-	<update id="customer_board_writer_number" parameterType="java.util.HashMap">
-         update customer_board set cus_sequence_number=cus_sequence_number+1
-         where cus_group_number=#{cusGroupNumber} and cus_sequence_number>#{cusSequenceNumber}
-   	</update>
  
  	<!-- 글쓰기 -->
-	<insert id="customer_board_insert" parameterType="com.promore.customer.dto.CustomerDto">
+	<insert id="customer_board_insert_file" parameterType="com.promore.customer.dto.CustomerDto">
 		insert into customer_board
 		values (customer_board_cus_num_seq.nextval,
 			#{cusTitle},
@@ -47,9 +32,24 @@
 			#{cusFileName},
 			#{cusFilePath},
 			#{cusFileSize},
-			#{cusGroupNumber},
-			#{cusSequenceNumber},
-			#{cusSequenceLevel})
+			#{cusState})
+	</insert>
+	<insert id="customer_board_insert" parameterType="com.promore.customer.dto.CustomerDto">
+		insert into customer_board(
+			cus_num,
+			cus_title,
+			cus_cate,
+			cus_id,
+			cus_date,
+			cus_content,
+			cus_state
+		)values (customer_board_cus_num_seq.nextval,
+			#{cusTitle},
+			#{cusCate},
+			#{cusId},
+			#{cusDate},
+			#{cusContent},
+			#{cusState})
 	</insert>
 	
 	<!--  글목록 가져오기 -->
@@ -59,7 +59,28 @@
 	
 	<!-- 작성글 삭제하기 -->
 	<delete id="customer_board_delete" parameterType="int" >
-      delete from customer_board where cus_num=#{cusNum}
+      	delete from customer_board where cus_num=#{cusNum}
    	</delete>
-
+   	
+   	<!-- 작성글 수정하기 -->
+  	<update id="customer_board_update_file" parameterType="java.util.HashMap">
+   		update customer_board set 
+   			cus_title=#{customerDto.cusTitle}, 
+   			cus_cate=#{customerDto.cusCate}, 
+   			cus_date=#{customerDto.cusDate},
+   			cus_content=#{customerDto.cusContent}, 
+   			cus_file_name=#{customerDto.cusFileName},
+   			cus_file_path=#{customerDto.cusFilePath}, 
+   			cus_file_size=#{customerDto.cusFileSize}
+   		where cus_num=#{cusNum}
+   	</update>
+   	
+  	<update id="customer_board_update" parameterType="java.util.HashMap">
+   		update customer_board set 
+   			cus_title=#{customerDto.cusTitle}, 
+   			cus_cate=#{customerDto.cusCate}, 
+   			cus_date=#{customerDto.cusDate},
+   			cus_content=#{customerDto.cusContent}
+   		where cus_num=#{cusNum}
+   	</update>
 </mapper>

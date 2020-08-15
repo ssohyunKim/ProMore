@@ -56,6 +56,31 @@ public class ManagerController extends MultiActionController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/manager/noticeUpdateOk.do", method = RequestMethod.POST)
+	public ModelAndView noticeUpdateOk(HttpServletRequest request, HttpServletResponse response, NoticeDto noticeDto) {		
+		System.out.println("noticeUpdateOk.do");
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", multipartRequest);
+		mav.addObject("noticeDto", noticeDto);
+		
+		managerService.noticeUpdateOk(mav);
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/manager/noticeFileDownload.do", method = RequestMethod.GET)
+	public void noticeFileDownload(HttpServletRequest request, HttpServletResponse response) {		
+		System.out.println("noticeFileDownload.do");
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("response", response);
+		
+		managerService.noticeFileDownload(mav);
+	}
+	
 	@RequestMapping(value = "/manager/noticeDeleteOk.do", method = RequestMethod.GET)
 	public ModelAndView noticeDelete(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("noticeDeleteOk.do");
@@ -70,7 +95,7 @@ public class ManagerController extends MultiActionController {
 	
 	@RequestMapping(value = "/manager/reportList.do", method = RequestMethod.GET)
 	public ModelAndView reportList(HttpServletRequest request, HttpServletResponse response) {
-		//System.out.println("reportList.do");
+		System.out.println("reportList.do");
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
@@ -80,9 +105,32 @@ public class ManagerController extends MultiActionController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/manager/reportFileDownload.do", method = RequestMethod.GET)
+	public void reportFileDownload(HttpServletRequest request, HttpServletResponse response) {		
+		System.out.println("reportFileDownload.do");
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		mav.addObject("response", response);
+		
+		managerService.reportFileDownload(mav);
+	}
+	
+	@RequestMapping(value = "/manager/reportStateChange.do", method = RequestMethod.GET)
+	public ModelAndView reportStateChange(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("reportStateChange.do");
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		
+		managerService.reportStateChange(mav);
+		
+		return mav;
+	}
+	
 	@RequestMapping(value = "/manager/memberDeleteOk.do", method = RequestMethod.GET)
 	public ModelAndView memberDelete(HttpServletRequest request, HttpServletResponse response) {
-		//System.out.println("memberDeleteOk.do");
+		System.out.println("memberDeleteOk.do");
 		
 		ModelAndView mav = new ModelAndView("manager/memberDeleteOk");
 		mav.addObject("request", request);
