@@ -7,23 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.promore.manager.dto.NoticeDto;
 import com.promore.member.dto.MemberDto;
 import com.promore.member.service.MemberService;
 
 @Controller
 public class MemberController {
-
 	@Autowired
 	private MemberService memberService;
 	
 	
 	@RequestMapping(value = "/member/loginOk.do", method = RequestMethod.POST)
 	public ModelAndView loginOk(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("OK1");
 		
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("request", request);
@@ -38,10 +34,13 @@ public class MemberController {
 		
 		return "member/register";
 	}
+	
 	@RequestMapping(value = "/member/registerOk.do", method = RequestMethod.POST)
 	public String registerOk(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav=new ModelAndView();
+		
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
+		
 		memberService.memberRegister(mav);
 		
 		return "redirect:../../"+request.getContextPath();
@@ -100,7 +99,5 @@ public class MemberController {
 		
 		return mav;
 	}
-	
-	
 	
 }

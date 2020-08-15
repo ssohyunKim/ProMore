@@ -1,7 +1,5 @@
 package com.promore.member.dao;
 
-import java.util.Map;
-
 import com.promore.member.dto.MemberDto;
 
 public interface MemberDao {

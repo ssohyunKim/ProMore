@@ -5,8 +5,8 @@
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>로그아웃 - 세션 종료</title>
 </head>
 <body>
 
