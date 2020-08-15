@@ -11,10 +11,15 @@
 <body>
 
 	<c:if test="${memberDto.memLevel!=null}">
+		<c:set var="memNum" value="${memberDto.memNum}" scope="session"/>
 		<c:set var="memId" value="${memberDto.memId}" scope="session"/>
 		<c:set var="memPassword" value="${memberDto.memPassword}" scope="session"/>
 		<c:set var="memName" value="${memberDto.memName}" scope="session"/>
+		<c:set var="memNickname" value="${memberDto.memNickname}" scope="session"/>
 		<c:set var="memLevel" value="${memberDto.memLevel}" scope="session"/>
+		<c:set var="memPhone" value="${memberDto.memPhone}" scope="session"/>
+		<c:set var="memEmail" value="${memberDto.memEmail}" scope="session"/>
+		<c:set var="memSkills" value="${memberDto.memSkills}" scope="session"/>
 	
 		<script type="text/javascript">
 			alert("로그인 성공");

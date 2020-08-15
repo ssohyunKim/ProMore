@@ -114,7 +114,7 @@
 			class="nav-link dropdown-toggle" href="#" id="userDropdown"
 			role="button" data-toggle="dropdown" aria-haspopup="true"
 			aria-expanded="false"> <span
-				class="mr-2 d-none d-lg-inline text-gray-600 small">관리자</span> <img
+				class="mr-2 d-none d-lg-inline text-gray-600 small">${memName}</span> <img
 				class="img-profile rounded-circle"
 				src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
 		</a> 
@@ -128,34 +128,34 @@
 				<h6 class="dropdown-header">My Profile</h6>
 				<a class="dropdown-item d-flex align-items-center" href="#">
 						<div class="small text-gray-500" style="width:60px; float:left; margin-right:30px;">이름</div>
-						<div class="font-weight" style="float:right;">하하하</div>
+						<div class="font-weight" style="float:right;">${memName}</div>
 				</a> 
 					
 
 					<a class="dropdown-item d-flex align-items-center" href="#">
 							<div class="small text-gray-500" style="width:60px; float:left; margin-right:30px;">닉네임</div>
-							<div class="font-weight" style="float:right;">yunnie</div>
+							<div class="font-weight" style="float:right;">${memNickname}</div>
 					</a> 
 
 					<a class="dropdown-item d-flex align-items-center" href="#">
 							<div class="small text-gray-500" style="width:60px; float:left; margin-right:30px;">등급</div>
-							<div class="font-weight" style="float:right;">팀원</div>
+							<div class="font-weight" style="float:right;">${memLevel}</div>
 					</a> 
 
 					<a class="dropdown-item d-flex align-items-center" href="#">
 							<div class="small text-gray-500" style="width:60px; float:left; margin-right:30px;">휴대폰 번호</div>
-							<div class="font-weight" style="float:right;">010-1234-5678</div>
+							<div class="font-weight" style="float:right;">${memPhone}</div>
 					</a> 
 
 					<a class="dropdown-item d-flex align-items-center" href="#">
 							<div class="small text-gray-500" style="width:60px; float:left; margin-right:30px;">이메일 주소</div>
-							<div class="font-weight" style="float:right;">email@example.com</div>
+							<div class="font-weight" style="float:right;">${memEmail}</div>
 					</a> 
 					
 					
 					<a class="dropdown-item d-flex align-items-center" href="#">
 							<div class="small text-gray-500" style="width:60px; float:left; margin-right:30px;">보유기술</div>
-							<div class="font-weight" style="float:right; width:180px" >ooo 경력(n년), 프로그래밍(c++, java사용가능)..</div>
+							<div class="font-weight" style="float:right; width:180px" >${memSkills}</div>
 					</a> 
 
 					 
@@ -238,5 +238,3 @@
 			</li>
 	</ul>
 </nav>
-
- 
