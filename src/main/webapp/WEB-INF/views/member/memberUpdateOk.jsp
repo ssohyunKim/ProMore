@@ -16,14 +16,14 @@
 	<c:if test="${check > 0}">
 		<script type="text/javascript">
 			alert("회원 정보가 수정되었습니다.");
-			location.href = "${root}/member/memberUpdate.do?memNum=" + ;
+			location.href = "${root}/member/memberUpdate.do?memNum=${memberDto.memNum}";
 		</script>
 	</c:if>
 
 	<c:if test="${check == 0}">
 		<script type="text/javascript">
 			alert("회원 정보 수정 실패");
-			location.href = "${root}/member/memberUpdate.do?memNum=" + ;
+			location.href = "${root}/member/memberUpdate.do?memNum=${memberDto.memNum}";
 		</script>
 	</c:if>
 </body>

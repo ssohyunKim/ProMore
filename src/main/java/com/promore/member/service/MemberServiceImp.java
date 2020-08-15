@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -64,11 +65,17 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public void memberUpdateOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		HttpSession session = request.getSession();
+		
 		MemberDto memberDto = (MemberDto) map.get("memberDto");
 		HAspect.logger.info(HAspect.logMsg + memberDto);
-
+		
 		int check = memberDao.memberUpdate(memberDto);
 		HAspect.logger.info(HAspect.logMsg + check);
+		
+		memberDto = memberDao.memberSelect(Integer.parseInt(request.getParameter("memNum")));
+		session.setAttribute("memberDto", memberDto);
 
 		mav.addObject("check", check);
 		mav.setViewName("member/memberUpdateOk");

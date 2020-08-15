@@ -87,7 +87,7 @@ function projectApply(root){
 			</div>	
 		</c:if>
 
-		<c:if test="${projectCount>0}">		
+		<c:if test="${projectCount>=0}">   		
 		 	<c:forEach var="projectDto" items="${projectDtoArray}">		 	
 				<div class="flip-card">
 					<div class="flip-card-inner">

@@ -142,7 +142,7 @@
 			<a class="nav-link dropdown-toggle" href="#" id="userDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> 
-				<span class="mr-2 d-none d-lg-inline text-gray-600 small">${memName}</span>
+				<span class="mr-2 d-none d-lg-inline text-gray-600 small"><b style="font-size: 1rem;">${memberDto.memName}</b> 님 환영합니다!</span>
 				<img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
 			</a> 
 		
@@ -155,24 +155,28 @@
 				
 				<!-- 정보 -->
 				<div class="dropdown-item d-flex align-self-center py-3">
+					<label class="small text-gray-500 m-0" style="width: 35% !important;">아이디</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memId}</label>
+				</div> 
+				<div class="dropdown-item d-flex align-self-center py-3">
 					<label class="small text-gray-500 m-0" style="width: 35% !important;">등급</label>
-					<label class="font-weight m-0" style="width: 65% !important;">${memLevel}</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memLevel}</label>
 				</div> 
 				<div class="dropdown-item d-flex align-self-center py-3">
 					<label class="small text-gray-500 m-0" style="width: 35% !important;">이름</label>
-					<label class="font-weight m-0" style="width: 65% !important;">${memName}</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memName}</label>
 				</div> 
 				<div class="dropdown-item d-flex align-self-center py-3">
 					<label class="small text-gray-500 m-0" style="width: 35% !important;">닉네임</label>
-					<label class="font-weight m-0" style="width: 65% !important;">${memNickname}</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memNickname}</label>
 				</div> 
 				<div class="dropdown-item d-flex align-self-center py-3">
 					<label class="small text-gray-500 m-0" style="width: 35% !important;">휴대폰 번호</label>
-					<label class="font-weight m-0" style="width: 65% !important;">${memPhone}</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memPhone}</label>
 				</div> 
 				<div class="dropdown-item d-flex align-self-center py-3">
 					<label class="small text-gray-500 m-0" style="width: 35% !important;">이메일 주소</label>
-					<label class="font-weight m-0" style="width: 65% !important;">${memEmail}</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memEmail}</label>
 				</div>
 				
 				<a href="#" class="dropdown-item d-flex justify-content-center align-self-center"
