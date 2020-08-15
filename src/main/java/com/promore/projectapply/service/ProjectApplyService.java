@@ -1,4 +1,4 @@
-package com.promore.projectApply.service;
+package com.promore.projectapply.service;
 
 import org.springframework.web.servlet.ModelAndView;
 

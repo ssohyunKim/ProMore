@@ -7,7 +7,7 @@
 <mapper namespace="dto.projectApplyDto">  
 	
 	
-	<resultMap type="com.promore.projectApply.dto.ProjectApplyDto" id="projectapply_dto">
+	<resultMap type="com.promore.projectapply.dto.ProjectApplyDto" id="projectapply_dto">
 		<result column="apl_no" property="aplNo"/>
 		<result column="apl_num" property="aplNum"/>
 		<result column="apl_mem_id" property="aplMemId"/>

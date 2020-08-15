@@ -1,4 +1,4 @@
-package com.promore.projectApply.dto;
+package com.promore.projectapply.dto;
 
 public class ProjectApplyDto {
 	

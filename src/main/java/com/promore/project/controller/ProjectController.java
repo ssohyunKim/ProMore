@@ -15,7 +15,7 @@ import com.promore.aop.HAspect;
 import com.promore.customer.dto.CustomerDto;
 import com.promore.project.dto.ProjectDto;
 import com.promore.project.service.ProjectService;
-import com.promore.projectApply.service.ProjectApplyService;
+import com.promore.projectapply.service.ProjectApplyService;
 
 @Controller
 public class ProjectController {

@@ -1,4 +1,4 @@
-package com.promore.projectApply.dao;
+package com.promore.projectapply.dao;
 
 import java.util.List;
 

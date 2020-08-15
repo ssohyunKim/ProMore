@@ -1,4 +1,4 @@
-package com.promore.projectApply.service;
+package com.promore.projectapply.service;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.promore.project.dto.ProjectDto;
-import com.promore.projectApply.dao.ProjectApplyDao;
+import com.promore.projectapply.dao.ProjectApplyDao;
 
 @Component
 public class ProjectApplyServiceImp implements ProjectApplyService {
