@@ -175,7 +175,7 @@
 					<label class="font-weight m-0" style="width: 65% !important;">${memEmail}</label>
 				</div>
 				
-				<a href="#" class="dropdown-item d-flex justify-content-center align-self-center py-3 "
+				<a href="#" class="dropdown-item d-flex justify-content-center align-self-center"
 					data-toggle="modal" data-target="#logoutModal"> 
 					<i class="fas fa-sign-out-alt mt-1 mr-2 text-gray-400"></i>
 					<label class="small text-gray-500 m-0">로그아웃</label>
