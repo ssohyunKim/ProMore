@@ -1,5 +1,7 @@
 package com.promore.member.dto;
 
+import java.util.Date;
+
 public class MemberDto {
 	private int memNum;
 	private String memId;
@@ -11,13 +13,13 @@ public class MemberDto {
 	private String memEmail;
 	private int memMailing;
 	private String memSkills;
-	private String memRegDate;
+	private Date memRegDate;
 
 	public MemberDto() {
 	}
 
 	public MemberDto(int memNum, String memId, String memName, String memNickname, String memPassword, String memLevel,
-			String memPhone, String memEmail, int memMailing, String memSkills, String memRegDate) {
+			String memPhone, String memEmail, int memMailing, String memSkills, Date memRegDate) {
 		this.memNum = memNum;
 		this.memId = memId;
 		this.memName = memName;
@@ -111,11 +113,11 @@ public class MemberDto {
 		this.memSkills = memSkills;
 	}
 
-	public String getMemRegDate() {
+	public Date getMemRegDate() {
 		return memRegDate;
 	}
 
-	public void setMemRegDate(String memRegDate) {
+	public void setMemRegDate(Date memRegDate) {
 		this.memRegDate = memRegDate;
 	}
 
