@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%
+	pageContext.setAttribute("newLineChar", "\n");
+%>
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -33,54 +36,56 @@
 <!-- 일감댓글 -->
 <link rel="stylesheet" href="${root}/resources/css/workspace/reply.css" />
 <!-- jQuery -->
- <script type="text/javascript" src="${root}/resources/jquery.js"></script>
+<script type="text/javascript" src="${root}/resources/jquery.js"></script>
 </head>
 <script type="text/javascript">
-var name="";
-var content="";
-var max="";
+	var name = "";
+	var content = "";
+	var max = "";
 
-$(function(){
-	$('#projectReadModal').on('show.bs.modal', function(event) {
-		name = $(event.relatedTarget).data('name');
-		$('input[name="proName"]').val(name);
-		
-		max = $(event.relatedTarget).data('max');
-	 	$('select[name="proMax"]').val(max).attr("selected", "selected");
-		$('select[name="proMax"] option').attr('disabled', true);
-		
-		content = $(event.relatedTarget).data('content');
-		$('textarea[name="proContent"]').text(content);
-		
-	});
-	
-	$('#updateBtn').click(function(){
-		$('#projectUpdateModal').modal();
-		
-		$('input[name="proName"]').val(name);
-		
-		$('select[name="proMax"]').val(max).prop("selected", true);
-		$('select[name="proMax"] option').attr('disabled', false);
-		
-		$('textarea[name="proContent"]').text(content);
+	$(function() {
+		$('#projectReadModal').on('show.bs.modal', function(event) {
+			name = $(event.relatedTarget).data('name');
+			$('input[name="proName"]').val(name);
 
-		$('#projectReadModal').modal().hide();
-	});
-	
-	$('#deleteBtn').click(function(){
-		$('#removeConfirmModal').modal();
-	});
-	
-	
-	$('.modal').on('hide.bs.modal', function(event){
-		location.reload();
-	});
-});
+			max = $(event.relatedTarget).data('max');
+			$('select[name="proMax"]').val(max).attr("selected", "selected");
+			$('select[name="proMax"] option').attr('disabled', true);
 
-function projectDelete(root){
-	location.href = root + '/project/delete.do?proNum=' +${proNum};
-}
+			content = $(event.relatedTarget).data('content');
+			$('textarea[name="proContent"]').text(content);
 
+		});
+
+		$('#updateBtn').click(function() {
+			$('#projectUpdateModal').modal();
+
+			$('input[name="proName"]').val(name);
+
+			$('select[name="proMax"]').val(max).prop("selected", true);
+			$('select[name="proMax"] option').attr('disabled', false);
+
+			$('textarea[name="proContent"]').text(content);
+
+			$('#projectReadModal').modal().hide();
+		});
+
+		$('#deleteBtn').click(function() {
+			$('#removeConfirmModal').modal();
+		});
+
+		$('.modal').on('hide.bs.modal', function(event) {
+			location.reload();
+		});
+	});
+
+	function projectDelete(root) {
+		location.href = root + '/project/delete.do?proNum=' + $
+		{
+			proNum
+		}
+		;
+	}
 </script>
 
 <body id="page-top">
@@ -104,7 +109,7 @@ function projectDelete(root){
 					<!-- Page Heading -->
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">일감 관리</h1>					
+						<h1 class="h3 mb-0 text-gray-800">일감 관리</h1>
 					</div>
 
 					<!--    
@@ -120,15 +125,13 @@ function projectDelete(root){
 						<!-- 프로젝트 상세 보기 -->
 						<c:forEach var="projectDto" items="${projectDtoArray}">
 							<c:if test="${projectDto.proNum eq proNum}">
-								<a href="#"
-									data-name="${projectDto.proName}"
-									data-max = "${projectDto.proMax}"
-									data-content = "${projectDto.proContent}"
-									data-toggle="modal"
+								<a href="#" data-name="${projectDto.proName}"
+									data-max="${projectDto.proMax}"
+									data-content="${projectDto.proContent}" data-toggle="modal"
 									data-target="#projectReadModal">
-									<div class="alert alert-primary bg-primary p-3 rounded-lg text-center">
-										<b class="text-white font-weight-bolder">
-										ProMore</b>
+									<div
+										class="alert alert-primary bg-primary p-3 rounded-lg text-center">
+										<b class="text-white font-weight-bolder"> ProMore</b>
 									</div>
 								</a>
 							</c:if>
@@ -219,7 +222,7 @@ function projectDelete(root){
 
 										<!-- 일감 내용 -->
 										<div class="pt-2 pb-2">
-											<textarea class="form-control work-content"
+											<textarea class="form-control work-content autosize"
 												name="workContent" placeholder="업무내용을 입력하세요" required>123</textarea>
 										</div>
 
@@ -356,9 +359,9 @@ function projectDelete(root){
 
 												<!-- content -->
 												<div class="pb-3">
-													<div class="work-content p-3">${item.workContent }</div>
+													<div class="work-content p-3">${fn:replace(item.workContent, newLineChar, "<br>" )}</div>
 													<textarea name="workContent"
-														class="work-content form-control d-none"
+														class="work-content form-control d-none autosize"
 														placeholder="업무내용을 입력하세요" required>${item.workContent }</textarea>
 												</div>
 
@@ -413,74 +416,75 @@ function projectDelete(root){
 
 												<!-- 댓글 리스트 영역 -->
 												<div class="container reply-list">
-													<%-- 
-													<c:forEach var="reply" items="${item.reply }">
+													<c:forEach var="reply" items="${item.workReplyDto }">
+														<!-- 댓글 템플릿 -->
+														<div id="reply-no-${reply.replyNum }"
+															class="row clearfix mb-3">
+															<!-- avatar -->
+															<div class="left-column float-left">
+																<img src="${root }/resources/img/avatar.png" width="50"
+																	height="50" />
+															</div>
+															<!-- writer, write-date, reply-like, reply-edit, reply-delete -->
+															<div class="right-column ml-2">
+																<div class="writer-info">
+																	<span class="reply-writer">${reply.replyId }</span>&nbsp;&nbsp;&nbsp; <span
+																		class="reply-write-date"><fmt:formatDate
+																			value="${reply.replyDate }"
+																			pattern="yyyy-MM-dd HH:mm:ss" /></span><span class="ml-3">
+																		<i class="far fa-thumbs-up"></i> <a class="reply-like"
+																		href="#">좋아요</a>
+																	</span> |&nbsp;<a class="reply-edit" href="#">수정</a> |&nbsp;<a
+																		class="reply-delete" href="#">삭제</a>
+																</div>
+																<div class="reply-content p-2">${fn:replace(reply.replyContent, newLineChar, "<br>") }</div>
+																<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
+																<div
+																	class="reply-file-down clearfix bg-info ${reply.replyFileSize == 0? 'd-none': '' }">
+																	<span class="left-column float-left"> <i
+																		class="fas fa-file"></i> <span class="reply-file-name">업로드파일명.ext</span>
+																	</span> <span class="right-column float-right"> <a
+																		href="#">다운로드</a> |&nbsp;<a href="#">삭제</a>
+																	</span>
+																</div>
+																<!-- file-up(일감 수정 버튼 누를 때 보일 파일 버튼을 위해 d-none 추가) -->
+															</div>
+														</div>
 													</c:forEach>
-													--%>
-													<div class="row clearfix d-none mb-3">
-														<div class="left-column float-left">
-															<!-- 아바타 -->
-															<img src="${root }/resources/img/avatar.png" width="50"
-																height="50" />
-														</div>
-														<div class="right-column ml-2">
-															<div class="writer-info">
-																<span class="reply-writer">정한우</span> <span
-																	class="reply-write-date">2020-08-04 16:25</span> <span
-																	class="reply-like ml-3"> <i
-																	class="far fa-thumbs-up"></i> <a
-																	href="/work-reply/like">좋아요</a>
-																</span> |&nbsp;<a href="#">수정</a> |&nbsp;<a href="#">삭제</a>
-															</div>
-															<div class="reply-content">Trust You</div>
-															<!-- 파일 다운로드 템플릿 -->
-															<div id="file-download-tmpl"
-																class="reply-file clearfix bg-info d-none">
-																<span class="left-column float-left"> <i
-																	class="fas fa-file"></i> <span class="reply-file-name">요구사항
-																		분석서.doc</span>
-																</span> <span class="right-column float-right"> <a
-																	href="#">다운로드</a> |&nbsp;<a href="#">삭제</a>
-																</span>
-															</div>
-														</div>
-													</div>
 												</div>
 
 												<!-- reply-form -->
-												<div class="container">
-													<form class="reply-form"
-														action="${root }/work-reply/add-reply.do">
-														<!-- avatar, reply-form, submit(작성) -->
-														<div class="row">
-															<div class="input-group mb-3">
-																<!-- avatar -->
-																<div class="input-group-append">
-																	<img src="${root }/resources/img/avatar.png" width="50"
-																		height="50" />
-																</div>
-																<!-- reply-form -->
-																<textarea class="reply-content form-control"
-																	placeholder="댓글을 작성하세요." name="replyContent" required></textarea>
-																<!-- submit -->
-																<div class="input-group-append">
-																	<button class="btn btn-outline-secondary" type="submit">작성</button>
-																</div>
+												<form class="reply-form"
+													action="${root }/work-reply/add-reply.do">
+													<!-- avatar, reply-form, submit(작성) -->
+													<div class="row">
+														<div class="input-group mb-3">
+															<!-- avatar -->
+															<div class="input-group-append">
+																<img src="${root }/resources/img/avatar.png" width="50"
+																	height="50" />
+															</div>
+															<!-- reply-form -->
+															<textarea class="reply-content form-control autosize"
+																placeholder="댓글을 작성하세요." name="replyContent" required></textarea>
+															<!-- submit -->
+															<div class="input-group-append">
+																<button class="btn btn-outline-secondary" type="submit">작성</button>
 															</div>
 														</div>
-														<!-- input-file -->
-														<div class="row">
-															<div class="right-column ml-2 col-lg-8 float-right">
-																<div class="form-group clearfix position-relative">
-																	<span class="float-left"> <i
-																		class="fas fa-paperclip fa-lg mt-3 mr-2"></i>
-																	</span> <input class="input-file form-control" type="file"
-																		name="inputFile" style="width: calc(100% - 50px)">
-																</div>
+													</div>
+													<!-- input-file -->
+													<div class="row">
+														<div class="right-column ml-2 col-lg-8 float-right">
+															<div class="form-group clearfix position-relative">
+																<span class="float-left"> <i
+																	class="fas fa-paperclip fa-lg mt-3 mr-2"></i>
+																</span> <input class="input-file form-control" type="file"
+																	name="inputFile" style="width: calc(100% - 50px)">
 															</div>
 														</div>
-													</form>
-												</div>
+													</div>
+												</form>
 												<!-- End of reply-form -->
 											</div>
 										</div>
@@ -510,7 +514,8 @@ function projectDelete(root){
 	</a>
 
 	<!--Project Read Model -->
-	<div class="modal fade" id="projectReadModal" tabindex="-1" role="dialog">
+	<div class="modal fade" id="projectReadModal" tabindex="-1"
+		role="dialog">
 		<div class="modal-dialog modal-lg mt-5" role="document">
 			<div class="modal-content">
 
@@ -527,45 +532,48 @@ function projectDelete(root){
 				<div class="modal-body">
 
 					<!-- 프로젝트 제목 && 인원수  -->
-			                  <div class="form-group row">
-			                     <div class="col-sm-10">
-			                        <input type="text" class="form-control-plaintext" name="proName" style="display: inline;"  placeholder="제목을 입력하세요." readonly>
-			                     </div>
-			                    <p style="margin: 6px 13px 0px 0px">인원수</p>
-			                     <div class="col-sm-1.5" style="display: inline;">
-			                        <select name="proMax" class="form-control-plaintext" readonly>
-			                            <option value="2">2</option>
-			                            <option value="3">3</option>
-			                            <option value="4">4</option>
-			                            <option value="5">5</option>
-			                        </select>
-			                     </div>
-			                  </div>
-	
-							<!-- 글 내용 -->
-							<div class="form-group row">
-								<div class="col-sm-12">
-									<textarea class="form-control-plaintext" rows="20" name="proContent" placeholder="글을 입력하세요." readonly></textarea>
-								</div>
-							</div>
-								
+					<div class="form-group row">
+						<div class="col-sm-10">
+							<input type="text" class="form-control-plaintext" name="proName"
+								style="display: inline;" placeholder="제목을 입력하세요." readonly>
+						</div>
+						<p style="margin: 6px 13px 0px 0px">인원수</p>
+						<div class="col-sm-1.5" style="display: inline;">
+							<select name="proMax" class="form-control-plaintext" readonly>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+					</div>
 
-							<!-- modal-footer -->
-							<div class="modal-footer justify-content-right">
-								<div>
-									<button id="deleteBtn" type="button" class="btn btn-secondary">삭제</button>
-									<button id="updateBtn" type="button" class="btn btn-primary">수정</button>
-								</div>
-							</div>
+					<!-- 글 내용 -->
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<textarea class="form-control-plaintext" rows="20"
+								name="proContent" placeholder="글을 입력하세요." readonly></textarea>
+						</div>
+					</div>
+
+
+					<!-- modal-footer -->
+					<div class="modal-footer justify-content-right">
+						<div>
+							<button id="deleteBtn" type="button" class="btn btn-secondary">삭제</button>
+							<button id="updateBtn" type="button" class="btn btn-primary">수정</button>
+						</div>
+					</div>
 				</div>
 
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<!--Project Update Model -->
-	<div class="modal fade" id="projectUpdateModal" tabindex="-1" role="dialog">
+	<div class="modal fade" id="projectUpdateModal" tabindex="-1"
+		role="dialog">
 		<div class="modal-dialog modal-lg mt-5" role="document">
 			<div class="modal-content">
 
@@ -579,71 +587,79 @@ function projectDelete(root){
 				</div>
 
 
-		<form action="${root}/project/update.do" name="updateForm" method="post">	
-				<input id="proNum" type="hidden" name="proNum" value="${proNum}" />
-				<!-- modal-body -->
-				<div class="modal-body">
+				<form action="${root}/project/update.do" name="updateForm"
+					method="post">
+					<input id="proNum" type="hidden" name="proNum" value="${proNum}" />
+					<!-- modal-body -->
+					<div class="modal-body">
 
-					<!-- 프로젝트 제목 && 인원수  -->
-			                  <div class="form-group row">
-			                     <div class="col-sm-10">
-			                        <input type="text" class="form-control" name="proName" style="display: inline;"  placeholder="제목을 입력하세요.">
-			                     </div>
-			                    <p style="margin: 6px 13px 0px 0px">인원수</p>
-			                     <div class="col-sm-1.5" style="display: inline;">
-			                        <select name="proMax" class="form-control">
-			                            <option value="2">2</option>
-			                            <option value="3">3</option>
-			                            <option value="4">4</option>
-			                            <option value="5">5</option>
-			                        </select>
-			                     </div>
-			                  </div>
-	
-							<!-- 글 내용 -->
-							<div class="form-group row">
-								<div class="col-sm-12">
-									<textarea class="form-control-plaintext" rows="20" name="proContent" placeholder="글을 입력하세요."></textarea>
-								</div>
+						<!-- 프로젝트 제목 && 인원수  -->
+						<div class="form-group row">
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="proName"
+									style="display: inline;" placeholder="제목을 입력하세요.">
 							</div>
-								
-
-							<!-- modal-footer -->
-							<div class="modal-footer justify-content-right">
-								<div>
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-									<button type="submit" class="btn btn-primary">확인</button>
-								</div>
+							<p style="margin: 6px 13px 0px 0px">인원수</p>
+							<div class="col-sm-1.5" style="display: inline;">
+								<select name="proMax" class="form-control">
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+								</select>
 							</div>
 						</div>
+
+						<!-- 글 내용 -->
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<textarea class="form-control-plaintext" rows="20"
+									name="proContent" placeholder="글을 입력하세요."></textarea>
+							</div>
+						</div>
+
+
+						<!-- modal-footer -->
+						<div class="modal-footer justify-content-right">
+							<div>
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">취소</button>
+								<button type="submit" class="btn btn-primary">확인</button>
+							</div>
+						</div>
+					</div>
 				</form>
 
 			</div>
 		</div>
 	</div>
-	
-<!--remove Confirm Model -->
-<div class="modal fade" id="removeConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+	<!--remove Confirm Model -->
+	<div class="modal fade" id="removeConfirmModal" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">삭제</h5>
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
 				<div class="modal-body">정말 삭제하시겠습니까?</div>
 				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">아니요</button>
-					<button class="btn btn-primary" type="button" onclick="projectDelete('${root}')">네</button>
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">아니요</button>
+					<button class="btn btn-primary" type="button"
+						onclick="projectDelete('${root}')">네</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	
-	
-	
+
+
+
 	<!-- 담당자 버튼 누를 시 뜨는 모달 -->
 	<div class="modal fade" id="managerModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog col-sm-6" role="document">
@@ -695,21 +711,22 @@ function projectDelete(root){
 		<!-- writer, write-date, reply-like, reply-edit, reply-delete -->
 		<div class="right-column ml-2">
 			<div class="writer-info">
-				<span class="reply-writer">정한우</span> <span class="reply-write-date">2020-08-04
-					16:25</span> <span class="ml-3"> <i class="far fa-thumbs-up"></i> <a
+				<span class="reply-writer">작성자</span>&nbsp;&nbsp;&nbsp; <span class="reply-write-date">작성일</span>
+				<span class="ml-3"> <i class="far fa-thumbs-up"></i> <a
 					class="reply-like" href="#">좋아요</a>
 				</span> |&nbsp;<a class="reply-edit" href="#">수정</a> |&nbsp;<a
 					class="reply-delete" href="#">삭제</a>
 			</div>
-			<div class="reply-content">Trust You</div>
+			<div class="reply-content p-2">댓글 내용</div>
 			<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
 			<div class="reply-file-down clearfix bg-info d-none">
 				<span class="left-column float-left"> <i class="fas fa-file"></i>
-					<span class="reply-file-name">요구사항 분석서.doc</span>
+					<span class="reply-file-name">업로드파일명.ext</span>
 				</span> <span class="right-column float-right"> <a href="#">다운로드</a>
 					|&nbsp;<a href="#">삭제</a>
 				</span>
 			</div>
+
 			<!-- file-up(일감 수정 버튼 누를 때 보일 파일 버튼을 위해 d-none 추가) -->
 		</div>
 	</div>
@@ -794,7 +811,7 @@ function projectDelete(root){
 					<div class="pb-3">
 						<div class="work-content p-3">내용</div>
 						<textarea name="workContent"
-							class="form-control work-content d-none"
+							class="form-control work-content d-none autosize"
 							placeholder="업무내용을 입력하세요" required>내용</textarea>
 					</div>
 
@@ -844,38 +861,36 @@ function projectDelete(root){
 					<div class="container reply-list"></div>
 
 					<!-- reply-form -->
-					<div class="container">
-						<form class="reply-form" action="${root }/work-reply/add-reply.do">
-							<!-- avatar, reply-form, submit(작성) -->
-							<div class="row">
-								<div class="input-group mb-3">
-									<!-- avatar -->
-									<div class="input-group-append">
-										<img src="${root }/resources/img/avatar.png" width="50"
-											height="50" />
-									</div>
-									<!-- reply-form -->
-									<textarea class="reply-content form-control"
-										placeholder="댓글을 작성하세요." name="replyContent" required></textarea>
-									<!-- submit -->
-									<div class="input-group-append">
-										<button class="btn btn-outline-secondary" type="submit">작성</button>
-									</div>
+					<form class="reply-form" action="${root }/work-reply/add-reply.do">
+						<!-- avatar, reply-form, submit(작성) -->
+						<div class="row">
+							<div class="input-group mb-3">
+								<!-- avatar -->
+								<div class="input-group-append">
+									<img src="${root }/resources/img/avatar.png" width="50"
+										height="50" />
+								</div>
+								<!-- reply-form -->
+								<textarea class="reply-content form-control autosize"
+									placeholder="댓글을 작성하세요." name="replyContent" required></textarea>
+								<!-- submit -->
+								<div class="input-group-append">
+									<button class="btn btn-outline-secondary" type="submit">작성</button>
 								</div>
 							</div>
-							<!-- input-file -->
-							<div class="row">
-								<div class="right-column ml-2 col-lg-8 float-right">
-									<div class="form-group clearfix position-relative">
-										<span class="float-left"> <i
-											class="fas fa-paperclip fa-lg mt-3 mr-2"></i>
-										</span> <input class="input-file form-control" type="file"
-											name="inputFile" style="width: calc(100% - 50px)">
-									</div>
+						</div>
+						<!-- input-file -->
+						<div class="row">
+							<div class="right-column ml-2 col-lg-8 float-right">
+								<div class="form-group clearfix position-relative">
+									<span class="float-left"> <i
+										class="fas fa-paperclip fa-lg mt-3 mr-2"></i>
+									</span> <input class="input-file form-control" type="file"
+										name="inputFile" style="width: calc(100% - 50px)">
 								</div>
 							</div>
-						</form>
-					</div>
+						</div>
+					</form>
 					<!-- End of reply-form -->
 				</div>
 				<!-- End of Card Body(댓글 리스트) -->

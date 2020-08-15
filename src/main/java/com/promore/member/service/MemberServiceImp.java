@@ -1,7 +1,5 @@
 package com.promore.member.service;
 
-import java.io.File;
-import java.util.Date;
 import java.util.Map;
 
 import javax.mail.MessagingException;
@@ -13,12 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.promore.aop.HAspect;
-import com.promore.manager.dto.NoticeDto;
 import com.promore.member.dao.MemberDao;
 import com.promore.member.dto.MemberDto;
 
@@ -32,19 +27,8 @@ public class MemberServiceImp implements MemberService {
 	private JavaMailSender mailSender;
 	
 	@Override
-	public void main(ModelAndView mav) {
-		mav.setViewName("project/main");
-		
-	}
-	
-	@Override
-	public void memberLogin(ModelAndView mav) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
 	public void memberLoginOk(ModelAndView mav) {
+		
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		
@@ -59,10 +43,6 @@ public class MemberServiceImp implements MemberService {
 		
 		mav.addObject("memberDto", memberDto);
 		mav.setViewName("member/loginOk");
-		
-		
-		System.out.println("OK3");
-		
 	}
 
 	@Override
@@ -129,18 +109,21 @@ public class MemberServiceImp implements MemberService {
 	
 	@Override
 	public void memberRegister(ModelAndView mav) {
-		MemberDto memberDto = new MemberDto();
+		
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
-		memberDto.setMem_id(request.getParameter("mem_id"));
-		memberDto.setMem_name(request.getParameter("mem_name"));
-		memberDto.setMem_nickname(request.getParameter("mem_nickname"));
-		memberDto.setMem_password(request.getParameter("mem_password"));
-		memberDto.setMem_level(request.getParameter("memLevel"));
-		memberDto.setMem_phone(request.getParameter("mem_phone"));
-		memberDto.setMem_email(request.getParameter("mem_email"));
-		memberDto.setMem_mailing(request.getParameter("mailcheck").equals("yes")?1:0);
-		memberDto.setMem_skills(request.getParameter("Skill"));
+		
+		MemberDto memberDto = new MemberDto();
+		
+		memberDto.setMemId(request.getParameter("mem_id"));
+		memberDto.setMemName(request.getParameter("mem_name"));
+		memberDto.setMemNickname(request.getParameter("mem_nickname"));
+		memberDto.setMemPassword(request.getParameter("mem_password"));
+		memberDto.setMemLevel(request.getParameter("memLevel"));
+		memberDto.setMemPhone(request.getParameter("mem_phone"));
+		memberDto.setMemEmail(request.getParameter("mem_email"));
+		memberDto.setMemMailing(request.getParameter("mailcheck").equals("yes")?1:0);
+		memberDto.setMemSkills(request.getParameter("Skill"));
 		
 		memberDao.memberRegister(memberDto);
 		

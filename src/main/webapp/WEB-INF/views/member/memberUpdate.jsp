@@ -69,15 +69,15 @@
 
 								<!-- Card Body -->
 								<div class="card-body">
-									<form name="updateForm" onsubmit="return memberUpdate(this, ${memberDto.memPassword});">
+									<form name="updateForm" action="${root}/member/memberUpdateOk.do" method="post" onsubmit="return memberUpdateCheck(this, '${memberDto.memPassword}');">
 									
-										<input type="hidden" name = "num" value="${memberDto.memNum}" />
+										<input type="hidden" name = "memNum" value="${memberDto.memNum}" />
 									
 										<!-- 아이디 -->
 										<div class="form-group row">
 											<label for="staticId" class="col-sm-3 col-form-label">아이디</label>
 											<div class="col-sm-9">
-												<input type="text" readonly class="form-control-plaintext"
+												<input type="text" readonly class="form-control-plaintext" name="memId"
 													id="staticId" value="${memberDto.memId}">
 											</div>
 										</div>
@@ -86,7 +86,7 @@
 										<div class="form-group row">
 											<label for="staticName" class="col-sm-3 col-form-label">이름</label>
 											<div class="col-sm-9">
-												<input type="text" readonly class="form-control-plaintext"
+												<input type="text" readonly class="form-control-plaintext" name="memName"
 													id="staticName" value="${memberDto.memName}">
 											</div>
 										</div>
@@ -95,7 +95,7 @@
 										<div class="form-group row">
 											<label for="changeNickName" class="col-sm-3 col-form-label">닉네임</label>
 											<div class="col-sm-9">
-												<input type="text" class="form-control" id="changeNickName" name="nickname"
+												<input type="text" class="form-control" id="changeNickName" name="memNickname"
 													value="${memberDto.memNickname}">
 											</div>
 										</div>
@@ -123,7 +123,7 @@
 										<div class="form-group row">
 											<label for="staticLevel" class="col-sm-3 col-form-label">등급</label>
 											<div class="col-sm-9">
-												<input type="text" readonly class="form-control-plaintext"
+												<input type="text" readonly class="form-control-plaintext" name="memLevel"
 													id="staticLevel" value="${memberDto.memLevel}">
 											</div>
 										</div>
@@ -133,7 +133,7 @@
 											<label for="changePhone" class="col-sm-3 col-form-label">휴대폰
 												번호</label>
 											<div class="col-sm-9">
-												<input type="phone" class="form-control" id="changePhone" name="phone"
+												<input type="phone" class="form-control" id="changePhone" name="memPhone"
 													value="${memberDto.memPhone}"> <span
 													class="m-0 pl-2">('-'을 제외한 숫자만 입력해주세요. ex :
 													01012345678)</span>
@@ -144,7 +144,7 @@
 										<div class="form-group row">
 											<label for="changeEmail" class="col-sm-3 col-form-label">이메일</label>
 											<div class="col-sm-9">
-												<input type="email" class="form-control" id="changeEmail"
+												<input type="email" class="form-control" id="changeEmail" name="memEmail"
 													value="${memberDto.memEmail}">
 											</div>
 										</div>
@@ -155,21 +155,21 @@
 											<div class="col-sm-9">
 												<div class="form-check-inline">
 													<label class="form-check-label"> <input
-														type="radio" class="form-check-input" id="yes"
-														name="InputMailing" value="1">수신
+														type="radio" class="form-check-input" id="yes" name="memMailing"
+														value="1">수신
 													</label>
 												</div>
 												<div class="form-check-inline">
 													<label class="form-check-label"> <input
-														type="radio" class="form-check-input" id="no"
-														name="InputMailing" value="0">수신 안함
+														type="radio" class="form-check-input" id="no" name="memMailing"
+														value="0">수신 안함
 													</label>
 												</div>
 
 												<script type="text/javascript">
-													for (var i = 0; i < updateForm.InputMailing.length; i++) {
-														if (updateForm.InputMailing[i].value == "${memberDto.memMailing}") {
-															updateForm.InputMailing[i].checked = true;
+													for (var i = 0; i < updateForm.memMailing.length; i++) {
+														if (updateForm.memMailing[i].value == "${memberDto.memMailing}") {
+															updateForm.memMailing[i].checked = true;
 														}
 													}
 												</script>
@@ -180,7 +180,7 @@
 										<div class="form-group row">
 											<label for="comment" class="col-sm-3 col-form-label">보유기술</label>
 											<div class="col-sm-9">
-												<textarea class="form-control" rows="5" id="comment" name="skills">${memberDto.memSkills}</textarea>
+												<textarea class="form-control" rows="5" id="comment" name="memSkills">${memberDto.memSkills}</textarea>
 											</div>
 										</div>
 

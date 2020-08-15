@@ -1,5 +1,6 @@
 package com.promore.workspace.service;
 
+import java.beans.Transient;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +27,7 @@ public class WorkspaceServiceImp implements WorkspaceService {
 	private WorkspaceDao workspaceDao;
 
 	@Override
+	@Transactional
 	public void getAllWork(ModelAndView mav) {
 		Map<String, Object> model = mav.getModel();
 
@@ -34,6 +36,10 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		workspaceDto.setProNum(Integer.parseInt(req.getParameter("proNum")));
 
 		List<WorkspaceDto> list = workspaceDao.selectAllWork(workspaceDto);
+
+		for (WorkspaceDto dto : list)
+			dto.setWorkReplyDto(workspaceDao.selectAllReply(dto));
+
 		mav.addObject("proNum", workspaceDto.getProNum());
 		mav.addObject("list", list);
 
@@ -153,7 +159,7 @@ public class WorkspaceServiceImp implements WorkspaceService {
 				}
 			}
 		}
-		
+
 		System.out.println(workspaceDto);
 
 		if (chk == 1)
@@ -161,15 +167,17 @@ public class WorkspaceServiceImp implements WorkspaceService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteWork(ModelAndView mav) {
 		Map<String, Object> model = mav.getModel();
 
 		HttpServletRequest req = (HttpServletRequest) model.get("req");
 
 		WorkspaceDto workspaceDto = new WorkspaceDto();
-		workspaceDto.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
 
-		mav.addObject("chk", workspaceDao.deleteWork(workspaceDto));
+		workspaceDto.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
+		if (workspaceDao.deleteAllReply(workspaceDto) >= 1)
+			mav.addObject("chk", workspaceDao.deleteWork(workspaceDto));
 	}
 
 	@Override
@@ -244,8 +252,59 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		}
 		System.out.println(workReplyDto);
 
-		if (workspaceDao.insertReply(workReplyDto)== 1)
+		if (workspaceDao.insertReply(workReplyDto) == 1)
 			mav.addObject("num", workspaceDao.selectReplyNum());
+	}
+
+	@Override
+	public void deleteReply(ModelAndView mav) {
+		Map<String, Object> model = mav.getModel();
+		HttpServletRequest req = (HttpServletRequest) model.get("req");
+
+		WorkReplyDto workReplyDto = new WorkReplyDto();
+		workReplyDto.setReplyNum(Integer.parseInt(req.getParameter("replyNum")));
+
+		mav.addObject("chk", workspaceDao.deleteReply(workReplyDto));
+	}
+
+	@Override
+	public void editReply(ModelAndView mav) {
+		Map<String, Object> model = mav.getModel();
+		MultipartHttpServletRequest req = (MultipartHttpServletRequest) model.get("req");
+
+		WorkReplyDto workReplyDto = new WorkReplyDto();
+//		workReplyDto.setReplyId(session.getAttribute("id"));
+		workReplyDto.setReplyId(req.getParameter("replyId"));
+		workReplyDto.setReplyContent(req.getParameter("replyContent"));
+		workReplyDto.setReplyNum(Integer.parseInt(req.getParameter("replyNum")));
+
+//		MultipartFile uploadFile = req.getFile("inputFile");
+//
+//		if (uploadFile != null && uploadFile.getSize() > 0) {
+//			String fileName = Long.toString(System.currentTimeMillis()) + "_" + uploadFile.getOriginalFilename();
+//			long fileSize = uploadFile.getSize();
+//
+//			File store = new File("C:\\pds\\");
+//			store.mkdir();
+//
+//			if (store.exists() && store.isDirectory()) {
+//				File dstFile = new File(store, fileName);
+//
+//				try {
+//					uploadFile.transferTo(dstFile);
+//
+//					workReplyDto.setReplyFilePath(dstFile.getAbsolutePath());
+//					workReplyDto.setReplyFileName(fileName);
+//					workReplyDto.setReplyFileSize(fileSize);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//					mav.addObject("num", 0);
+//					return;
+//				}
+//			}
+//		}
+
+		mav.addObject("chk", workspaceDao.updateReply(workReplyDto));
 	}
 
 	@Override
@@ -261,5 +320,4 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		mav.setViewName("workspace/workState");
 
 	}
-
 }

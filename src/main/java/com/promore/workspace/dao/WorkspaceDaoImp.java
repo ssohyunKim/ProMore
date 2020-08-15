@@ -50,14 +50,14 @@ public class WorkspaceDaoImp implements WorkspaceDao {
 	public int updateFileInfo(WorkspaceDto workspaceDto) {
 		return sqlSessionTemplate.update("WorkspaceMapper.update_file_info", workspaceDto);
 	}
-	
-	//일감 개수
+
+	// 일감 개수
 	@Override
 	public int workCount(String id) {
 		return sqlSessionTemplate.selectOne("work_cnt", id);
 	}
-	
-	//일감 리스트
+
+	// 일감 리스트
 	@Override
 	public List<WorkspaceDto> workList(String id) {
 		// TODO Auto-generated method stub
@@ -74,5 +74,25 @@ public class WorkspaceDaoImp implements WorkspaceDao {
 	public int insertReply(WorkReplyDto workReplyDto) {
 		return sqlSessionTemplate.insert("WorkReplyMapper.insert_reply", workReplyDto);
 	}
-	
+
+	@Override
+	public List<WorkReplyDto> selectAllReply(WorkspaceDto workspaceDto) {
+		return sqlSessionTemplate.selectList("WorkReplyMapper.select_reply", workspaceDto);
+	}
+
+	@Override
+	public int deleteReply(WorkReplyDto workReplyDto) {
+		return sqlSessionTemplate.delete("WorkReplyMapper.delete_reply", workReplyDto);
+	}
+
+	@Override
+	public int deleteAllReply(WorkspaceDto workspaceDto) {
+		return sqlSessionTemplate.delete("WorkReplyMapper.delete_all_reply", workspaceDto);
+	}
+
+	@Override
+	public int updateReply(WorkReplyDto workReplyDto) {
+		return sqlSessionTemplate.update("WorkReplyMapper.update_reply", workReplyDto);
+	}
+
 }

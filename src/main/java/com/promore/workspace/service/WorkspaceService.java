@@ -18,4 +18,8 @@ public interface WorkspaceService {
 	public void workState(ModelAndView mav, String id);
 
 	public void addReply(ModelAndView mav);
+
+	public void deleteReply(ModelAndView mav);
+
+	public void editReply(ModelAndView mav);
 }

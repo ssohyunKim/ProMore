@@ -77,21 +77,20 @@
 									
 									<tbody>
 										<c:if test="${memberCount>0}">
-												<c:forEach var="memberDto" items="${memberDtoArray}">
-													<tr>
-														<td>${memberDto.memNum}</td>
-														<td>${memberDto.memId}</td>
-														<td>${memberDto.memName}</td>	
-														<td>${memberDto.memNickname}</td>	
-														<td>${memberDto.memEmail}</td>	
-														<td>${memberDto.memLevel}</td>	
-														<td><fmt:formatDate value="${memberDto.memRegDate}"
-																pattern="yyyy-MM-dd" /></td>
-														<td><a href="#" data-toggle="modal"
-															data-target="#memberDeleteModal" data-memnum="${memberDto.memNum}">탈퇴 처리</a></td>
-													</tr>
-													
-												</c:forEach>
+											<c:forEach var="memberDto" items="${memberDtoArray}">
+												<tr>
+													<td>${memberDto.memNum}</td>
+													<td>${memberDto.memId}</td>
+													<td>${memberDto.memName}</td>	
+													<td>${memberDto.memNickname}</td>	
+													<td>${memberDto.memEmail}</td>	
+													<td>${memberDto.memLevel}</td>	
+													<td><fmt:formatDate value="${memberDto.memRegDate}"
+															pattern="yyyy-MM-dd" /></td>
+													<td><a href="#" data-toggle="modal"
+														data-target="#memberDeleteModal" data-memnum="${memberDto.memNum}" data-name="${memberDto.memName}">탈퇴 처리</a></td>
+												</tr>
+											</c:forEach>
 										</c:if>
 									</tbody>
 								</table>
@@ -126,7 +125,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-body">
-					<h5 class="modal-title">회원을 삭제하시겠습니까?</h5>
+					<h5 id="memberDeleteTitle" class="modal-title"></h5>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>

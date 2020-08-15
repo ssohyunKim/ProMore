@@ -40,15 +40,15 @@
 	<insert id="member_insert" parameterType="com.promore.member.dto.MemberDto">
 		insert into MEMBER 
 		values(member_mem_num_seq.NEXTVAL, 
-				#{mem_id}, 
-				#{mem_name}, 
-				#{mem_nickname},
-				#{mem_password}, 
-				#{mem_level}, 
-				#{mem_phone}, 
-				#{mem_email}, 
-				#{mem_mailing}, 
-				#{mem_skills}, 
+				#{memId}, 
+				#{memName}, 
+				#{memNickname},
+				#{memPassword}, 
+				#{memLevel}, 
+				#{memPhone}, 
+				#{memEmail}, 
+				#{memMailing}, 
+				#{memSkills}, 
 				SYSDATE)
 	</insert>	
 </mapper>
