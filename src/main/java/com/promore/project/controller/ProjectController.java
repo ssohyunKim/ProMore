@@ -2,6 +2,7 @@ package com.promore.project.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +16,6 @@ import com.promore.aop.HAspect;
 import com.promore.customer.dto.CustomerDto;
 import com.promore.project.dto.ProjectDto;
 import com.promore.project.service.ProjectService;
-import com.promore.projectapply.service.ProjectApplyService;
 
 @Controller
 public class ProjectController {
