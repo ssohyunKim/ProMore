@@ -22,4 +22,6 @@ public interface ProjectDao {
 
 	public int projectApplyCnt(int aplNum);
 
+	public int projectApplyAdd(String aplMemId);
+
 }

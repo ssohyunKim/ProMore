@@ -29,7 +29,7 @@ public class ProjectController {
 		mav.addObject("request",request);
 		HttpSession session = request.getSession(); 
 		String id = (String)session.getAttribute("id");
-		/* System.out.println("mainid" + aplMemId); */
+		 System.out.println("mainid" + id); 
 		mav.addObject("aplMemId", id);
 		
 		projectservice.projectList(mav);
@@ -49,6 +49,8 @@ public class ProjectController {
 		mav.addObject("aplMemId", aplMemId);
 		
 		projectservice.projectWrite(mav, aplMemId);
+		System.out.println("신청 완료했습니다.");
+		projectservice.projectApplyAdd(mav, aplMemId);
 		return mav;
 	}
 	

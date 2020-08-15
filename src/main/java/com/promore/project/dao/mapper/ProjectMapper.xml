@@ -86,5 +86,18 @@
 	where pro_num=#{proNum}
 </update>
 
+<insert id="project_apply_add" parameterType="String">
+	insert into project_apply (
+			apl_no,
+			apl_num,
+			apl_mem_id
+			)
+			values(
+				project_apl_no_seq.nextval,
+				project_apl_no_seq.nextval,
+				#{aplMemId}
+			)
+</insert>
+
 
 </mapper>

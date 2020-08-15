@@ -20,13 +20,14 @@ import com.promore.project.dto.ProjectDto;
 public class ProjectServiceImp implements ProjectService {
 	@Autowired 
 	private ProjectDao projectDao;
-	 
+	
 
 	@Override
 	public void projectWrite(ModelAndView mav, String aplMemId) {
 	Map<String, Object> map = mav.getModelMap();
 	HttpServletRequest request = (HttpServletRequest)map.get("request");
 	ProjectDto projectDto = (ProjectDto) map.get("projectDto");	
+	
 	System.out.println("멤버id 체크" + aplMemId);
 
 	  projectDto.setProName(projectDto.getProName());
@@ -34,7 +35,9 @@ public class ProjectServiceImp implements ProjectService {
 	  projectDto.setProManager(aplMemId);
 	  projectDto.setProState(0); 
 	  projectDto.setProMax(projectDto.getProMax());
-	  projectDto.setProCnt(0);
+	  projectDto.setProCnt(1);
+	  
+	  
 		  
 	  int check =  projectDao.projectWrite(projectDto);
 	  mav.addObject("check", check);
@@ -85,16 +88,27 @@ public class ProjectServiceImp implements ProjectService {
 		
 	}
 	
+	@Override
+	public void projectApplyAdd(ModelAndView mav, String aplMemId) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest)map.get("request");
+		
+		System.out.println("%%%프로젝트 신청자:" + aplMemId);
+		//프로젝트에 추가
+		int check = projectDao.projectApplyAdd(aplMemId);
+		
+		
+	}
 
 	@Override
-	public void projectCnt(ModelAndView mav, String id) {
+	public void projectCnt(ModelAndView mav, String aplMemId) {
 		//번호 가져오기
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		ProjectDto projectDto = new ProjectDto();
 		
 		//번호 가져오기
-		 List<String> projectCnt = projectDao.projectState(id);
+		 List<String> projectCnt = projectDao.projectState(aplMemId);
 		 
 		 mav.addObject("projectCnt", projectCnt);
 		
@@ -106,8 +120,10 @@ public class ProjectServiceImp implements ProjectService {
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		
 		int aplNum = Integer.parseInt(request.getParameter("proNum"));
-		System.out.println("%%%프로젝트 신청번호" + aplNum);
-		System.out.println("%%%프로젝트 신청자:" + aplMemId);
+		/*
+		 * System.out.println("%%%프로젝트 신청번호" + aplNum);
+		 * System.out.println("%%%프로젝트 신청자:" + aplMemId);
+		 */
 		int check = projectDao.projectApply(aplNum, aplMemId);
 		//숫자 증가
 		projectDao.projectApplyCnt(aplNum);
@@ -115,7 +131,6 @@ public class ProjectServiceImp implements ProjectService {
 		mav.addObject("check", check);
 		mav.addObject("proNum", aplNum);
 		mav.setViewName("project/applyOk");
-		
 		
 	}
 	
