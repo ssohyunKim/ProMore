@@ -1,33 +1,64 @@
+// all
+var replyTmpl = document.querySelector("#reply-tmpl");
 function init() {
-  var replyForm = document.querySelector(".reply-form");
-  var replyList = document.querySelector(".reply-list");
-  var replyTmpl = document.querySelector("#reply-tmpl");
-  var replyFileSel = document.querySelector("#reply-file-select");
-  var uploadProgress = document.querySelector(".upload-progress");
+  // static
+  var replyForm = document.querySelectorAll("[id^='work-no-'] .reply-form");
 
-  // 리스너
-  replyForm.onsubmit = function (e) {
-    e.preventDefault();
-
-    var myReplyContent = document.querySelector("#reply-my-content");
-    var replyContent = myReplyContent.value.replace("/\n/g", "<br/>");
-    myReplyContent.value = "";
-
-    // 업로드할 파일 없음
-    if (replyFileSel.files.length === 0) {
-    }
-
-    //AJAX
-    // ...
-
-    var copyReply = replyTmpl.cloneNode(true);
-    copyReply.classList.remove("d-none");
-    replyList.appendChild(copyReply);
-
-    copyReply.querySelector(".reply-content").innerText = replyContent;
-    // copyReply.querySelector(".reply-writer").innerText = replyContent;
-    // copyReply.querySelector(".reply-write-date").innerText = replyContent;
-  };
+  // static
+  [].forEach.call(replyForm, function (form) {
+    form.onsubmit = addReply;
+  });
 }
 
 init();
+
+// onsubmit에 추가
+function addReply(e) {
+  e.preventDefault();
+
+  var work = this.closest("[id^='work-no-']");
+  var list = work.querySelector(".reply-list");
+  var replyContent = this["replyContent"];
+  var workNum = work.id.substr(8);
+
+  var data = new FormData(this);
+
+  // id -> 현재 세션의 아이디로 변경
+  data.append("replyId", id);
+  data.append("workNum", workNum);
+
+  $.ajax({
+    url: root + "/work-reply/add-reply.do",
+    method: "post",
+    data: data,
+    dataType: "text",
+    enctype: "multipart/form-data",
+    contentType: false,
+    processData: false,
+  })
+    .then(function (num) {
+      if (parseInt(num.trim()) <= 0) return new Error();
+
+      var copyReply = replyTmpl.cloneNode(true);
+      copyReply.classList.remove("d-none");
+      copyReply.removeAttribute("id");
+      list.appendChild(copyReply);
+
+      // 가짜 데이터 바인딩
+      copyReply.querySelector(".reply-writer").innerText = id;
+      copyReply.querySelector(".reply-write-date").innerText =
+        moment(Date.now()).format("yyyy-MM-DD") +
+        moment(Date.now()).format(" HH:mm:ss");
+      copyReply.querySelector(
+        ".reply-content"
+      ).innerHTML = replyContent.value.replace(/\n/g, "<br/>");
+      replyContent.value = "";
+
+      copyReply.querySelector(".reply-like").onclick = null;
+      copyReply.querySelector(".reply-edit").onclick = null;
+      copyReply.querySelector(".reply-edit").onclick = null;
+    })
+    .catch(function (num) {
+      alert("댓글을 작성하는데 실패했습니다.");
+    });
+}

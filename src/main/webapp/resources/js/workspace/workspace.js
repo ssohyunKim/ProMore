@@ -124,6 +124,7 @@ function writeToServer(obj) {
       $tmpl.find(".work-start-date").val(workStartDate);
       $tmpl.find(".work-end-date").val(workEndDate);
       $tmpl.find(".work-content").text(workContent);
+      copyWorkTmpl.querySelector(".reply-form").onsubmit = addReply;
       copyWorkTmpl.querySelector(".work-edit").onclick = editWork;
       copyWorkTmpl.querySelector(".work-edit-cancel").onclick = cancelEdit;
       copyWorkTmpl.querySelector(".work-edit-ok").onclick = okEdit;

@@ -43,7 +43,6 @@ public class WorkspaceController {
 		mav.addObject("req", req);
 		workspaceService.getAllWork(mav);
 		
-		
 		//프로젝트 정보(추가)
 		projectservice.projectList(mav);
 
@@ -144,6 +143,23 @@ public class WorkspaceController {
 			e.printStackTrace();
 		}
 	}
+	
+	// 댓글 작성
+	@RequestMapping(value = "/work-reply/add-reply.do", method = RequestMethod.POST)
+	public void addReply(HttpServletRequest req, HttpServletResponse resp) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("req", req);
+		workspaceService.addReply(mav);
+
+		resp.setHeader("Content-Type", "plain/text;charset=utf-8");
+		try {
+			resp.getWriter().println(mav.getModel().get("num"));
+			resp.flushBuffer();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 //	@RequestMapping("/workspace/workList.do") // 댓글 리스트
 //	@ResponseBody

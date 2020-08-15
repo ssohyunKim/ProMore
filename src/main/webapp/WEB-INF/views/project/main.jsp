@@ -39,7 +39,6 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
            <h1 class="h3 mb-0 text-gray-800">프로젝트 글보기</h1>
-           <a href="${root }/workspace/workspace.do?proNum=1">개발용 맨처음 만들 프로젝트로</a>
         </div>
 
 		<!-- 글 작성 버튼 -->
@@ -57,7 +56,7 @@
 							</br>
 							<p>최대인원 : ${projectDto.proMax}명</p>
 						</div>
-						<a href="${root}/workspace/workspace.do">
+						<a href="${root}/workspace/workspace.do?proNum=${projectDto.proNum}">
 						<div class="flip-card-back1">
 							<p>${projectDto.proManager}</p>
 							</br>

@@ -69,9 +69,9 @@
 
 					<!-- css tabs -->
 					<h2>CSS Tabs</h2>
-					<input id="tab1" type="radio" name="tabs"> <label
+					<input id="tab1" type="radio" name="tabs" checked> <label
 						for="tab1">나의 일감 현황</label> <input id="tab2" type="radio"
-						name="tabs" checked> <label for="tab2">나의 일감 일정</label>
+						name="tabs"> <label for="tab2">나의 일감 일정</label>
 
 
 					<section id="content1">

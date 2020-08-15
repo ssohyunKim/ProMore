@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.promore.workspace.dao.WorkspaceDao;
+import com.promore.workspace.dto.WorkReplyDto;
 import com.promore.workspace.dto.WorkspaceDto;
 
 @Component
@@ -152,6 +153,8 @@ public class WorkspaceServiceImp implements WorkspaceService {
 				}
 			}
 		}
+		
+		System.out.println(workspaceDto);
 
 		if (chk == 1)
 			mav.addObject("chk", workspaceDao.updateWork(workspaceDto));
@@ -201,19 +204,62 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		else
 			mav.addObject("chk", 0);
 	}
-	
+
+	@Override
+	@Transactional
+	public void addReply(ModelAndView mav) {
+		Map<String, Object> model = mav.getModel();
+		MultipartHttpServletRequest req = (MultipartHttpServletRequest) model.get("req");
+
+		WorkReplyDto workReplyDto = new WorkReplyDto();
+//		workReplyDto.setReplyId(session.getAttribute("id"));
+		workReplyDto.setReplyId(req.getParameter("replyId"));
+		workReplyDto.setReplyContent(req.getParameter("replyContent"));
+		workReplyDto.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
+
+		MultipartFile uploadFile = req.getFile("inputFile");
+
+		if (uploadFile != null && uploadFile.getSize() > 0) {
+			String fileName = Long.toString(System.currentTimeMillis()) + "_" + uploadFile.getOriginalFilename();
+			long fileSize = uploadFile.getSize();
+
+			File store = new File("C:\\pds\\");
+			store.mkdir();
+
+			if (store.exists() && store.isDirectory()) {
+				File dstFile = new File(store, fileName);
+
+				try {
+					uploadFile.transferTo(dstFile);
+
+					workReplyDto.setReplyFilePath(dstFile.getAbsolutePath());
+					workReplyDto.setReplyFileName(fileName);
+					workReplyDto.setReplyFileSize(fileSize);
+				} catch (Exception e) {
+					e.printStackTrace();
+					mav.addObject("num", 0);
+					return;
+				}
+			}
+		}
+		System.out.println(workReplyDto);
+
+		if (workspaceDao.insertReply(workReplyDto)== 1)
+			mav.addObject("num", workspaceDao.selectReplyNum());
+	}
+
 	@Override
 	public void workState(ModelAndView mav, String id) {
 		int workCount = workspaceDao.workCount(id);
 		System.out.println("workStatOk" + workCount);
-		
+
 		List<WorkspaceDto> workDtoArr = workspaceDao.workList(id);
 		System.out.println("workstate" + workDtoArr);
-		
+
 		mav.addObject("workDtoArray", workDtoArr);
 		mav.addObject("workCount", workCount);
 		mav.setViewName("workspace/workState");
-		
+
 	}
-	
+
 }

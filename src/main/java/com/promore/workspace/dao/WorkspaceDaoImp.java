@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.promore.aop.HAspect;
+import com.promore.workspace.dto.WorkReplyDto;
 import com.promore.workspace.dto.WorkspaceDto;
 
 @Component
@@ -62,6 +63,16 @@ public class WorkspaceDaoImp implements WorkspaceDao {
 		// TODO Auto-generated method stub
 		System.out.println("worklist" + id);
 		return sqlSessionTemplate.selectList("work_list", id);
+	}
+
+	@Override
+	public int selectReplyNum() {
+		return sqlSessionTemplate.selectOne("WorkReplyMapper.select_reply_num");
+	}
+
+	@Override
+	public int insertReply(WorkReplyDto workReplyDto) {
+		return sqlSessionTemplate.insert("WorkReplyMapper.insert_reply", workReplyDto);
 	}
 	
 }

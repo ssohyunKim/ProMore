@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WorkReplyMapper">
+
+	<resultMap type="com.promore.workspace.dto.WorkReplyDto"
+		id="work_reply_dto">
+		<result column="reply_num" property="replyNum" />
+		<result column="reply_id" property="replyId" />
+		<result column="reply_date" property="replyDate" />
+		<result column="reply_like" property="replyLike" />
+		<result column="reply_content" property="replyContent" />
+		<result column="reply_file_name" property="replyFileName" />
+		<result column="reply_file_path" property="replyFilePath" />
+		<result column="reply_file_size" property="replyFileSize" />
+		<result column="work_num" property="workNum" />
+	</resultMap>
+
+	<select id="select_reply_num" resultType="int">
+		select
+		work_reply_reply_num_seq.currval from dual
+	</select>
+
+	<insert id="insert_reply"
+		parameterType="com.promore.workspace.dto.WorkReplyDto">
+		insert into work_reply(
+		reply_num,
+		reply_id,
+		reply_date,
+		reply_like,
+		reply_content,
+		work_num
+		)
+		values(
+		work_reply_reply_num_seq.nextval,
+		#{replyId},
+		sysdate,
+		0,
+		#{replyContent},
+		#{workNum}
+		)
+	</insert>
+
+	<insert id="insert_file_info"
+		parameterType="com.promore.workspace.dto.WorkReplyDto">
+		insert into work_reply(
+		reply_file_name,
+		reply_file_path,
+		reply_file_size
+		)
+		values(
+		#{replyFileName, jdbcType=VARCHAR},
+		#{replyFilePath, jdbcType=VARCHAR},
+		#{replyFileSize, jdbcType=INTEGER}
+		)
+	</insert>
+
+</mapper>

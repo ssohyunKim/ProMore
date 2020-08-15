@@ -33,9 +33,6 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
 <!-- 일감댓글 -->
 <link rel="stylesheet" href="${root}/resources/css/workspace/reply.css" />
-<script>
-	var root = "${root }";
-</script>
 </head>
 
 <body id="page-top">
@@ -104,7 +101,8 @@
 											<!-- 일감 제목 -->
 											<div class="pb-2 float-left">
 												<input type="text" class="form-control work-subject"
-													name="workSubject" placeholder="업무명을 입력하세요" required>
+													name="workSubject" placeholder="업무명을 입력하세요" required
+													value="123">
 											</div>
 
 											<!-- 상태 -->
@@ -149,7 +147,7 @@
 														class="fas fa-calendar-alt fa-lg mr-2"></i>
 													</span> <input class="form-control work-start-date"
 														name="workStartDate" type="date" id="date1"
-														placeholder="시작일 추가" required />
+														placeholder="시작일 추가" required value="2020-08-15" />
 												</div>
 
 												<!-- 마감일 추가 -->
@@ -158,7 +156,7 @@
 														class="fas fa-calendar-alt fa-lg mr-2"></i>
 													</span> <input class="form-control work-end-date"
 														name="workEndDate" type="date" id="date2"
-														placeholder="마감일 추가" required />
+														placeholder="마감일 추가" required value="2020-08-15" />
 												</div>
 											</div>
 										</div>
@@ -166,7 +164,7 @@
 										<!-- 일감 내용 -->
 										<div class="pt-2 pb-2">
 											<textarea class="form-control work-content"
-												name="workContent" placeholder="업무내용을 입력하세요" required></textarea>
+												name="workContent" placeholder="업무내용을 입력하세요" required>123</textarea>
 										</div>
 
 										<!-- 파일 첨부 -->
@@ -359,8 +357,11 @@
 
 												<!-- 댓글 리스트 영역 -->
 												<div class="container reply-list">
-													<!-- 댓글 템플릿 -->
-													<div id="reply-tmpl" class="row clearfix d-none mb-3">
+													<%-- 
+													<c:forEach var="reply" items="${item.reply }">
+													</c:forEach>
+													--%>
+													<div class="row clearfix d-none mb-3">
 														<div class="left-column float-left">
 															<!-- 아바타 -->
 															<img src="${root }/resources/img/avatar.png" width="50"
@@ -390,26 +391,28 @@
 													</div>
 												</div>
 
-												<!-- 댓글 작성 폼 -->
+												<!-- reply-form -->
 												<div class="container">
-													<form class="reply-form" action="/work-reply/write"
-														method="post" enctype="multipart/form-data">
-														<!-- 아바타, textarea, 작성버튼 -->
+													<form class="reply-form"
+														action="${root }/work-reply/add-reply.do">
+														<!-- avatar, reply-form, submit(작성) -->
 														<div class="row">
 															<div class="input-group mb-3">
+																<!-- avatar -->
 																<div class="input-group-append">
-																	<!-- 아바타 -->
 																	<img src="${root }/resources/img/avatar.png" width="50"
 																		height="50" />
 																</div>
-																<textarea class="reply-my-content form-control"
-																	placeholder="댓글을 작성하세요." name="reply-content" required></textarea>
+																<!-- reply-form -->
+																<textarea class="reply-content form-control"
+																	placeholder="댓글을 작성하세요." name="replyContent" required></textarea>
+																<!-- submit -->
 																<div class="input-group-append">
 																	<button class="btn btn-outline-secondary" type="submit">작성</button>
 																</div>
 															</div>
 														</div>
-														<!-- 업로드 -->
+														<!-- input-file -->
 														<div class="row">
 															<div class="right-column ml-2 col-lg-8 float-right">
 																<div class="form-group clearfix position-relative">
@@ -422,7 +425,7 @@
 														</div>
 													</form>
 												</div>
-												<!-- End of 댓글 작성 폼 -->
+												<!-- End of reply-form -->
 											</div>
 										</div>
 										<!-- End of 일감 댓글 전체 -->
@@ -554,17 +557,42 @@
 		</div>
 	</div>
 
-	<!-- 실시간 템플릿 -->
+	<!-- 댓글 템플릿 -->
+	<div id="reply-tmpl" class="row clearfix d-none mb-3">
+		<!-- avatar -->
+		<div class="left-column float-left">
+			<img src="${root }/resources/img/avatar.png" width="50" height="50" />
+		</div>
+		<!-- writer, write-date, reply-like, reply-edit, reply-delete -->
+		<div class="right-column ml-2">
+			<div class="writer-info">
+				<span class="reply-writer">정한우</span> <span class="reply-write-date">2020-08-04
+					16:25</span> <span class="ml-3"> <i class="far fa-thumbs-up"></i> <a
+					class="reply-like" href="#">좋아요</a>
+				</span> |&nbsp;<a class="reply-edit" href="#">수정</a> |&nbsp;<a
+					class="reply-delete" href="#">삭제</a>
+			</div>
+			<div class="reply-content">Trust You</div>
+			<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
+			<div class="reply-file-down clearfix bg-info d-none">
+				<span class="left-column float-left"> <i class="fas fa-file"></i>
+					<span class="reply-file-name">요구사항 분석서.doc</span>
+				</span> <span class="right-column float-right"> <a href="#">다운로드</a>
+					|&nbsp;<a href="#">삭제</a>
+				</span>
+			</div>
+			<!-- file-up(일감 수정 버튼 누를 때 보일 파일 버튼을 위해 d-none 추가) -->
+		</div>
+	</div>
+
+	<!-- 일감 템플릿(가짜 데이터를 바인딩해서 사용) -->
 	<div id="work-tmpl" class="card shadow mb-4 border-bottom-primary"
 		style="display: none">
-
 		<!-- Card Body -->
 		<div class="card-body">
-
 			<form>
 				<div class="o-hidden">
-
-					<!-- writer -->
+					<!-- sender, write-date -->
 					<div class="writer-row clearfix"
 						style="border-bottom: 1px solid #aaa">
 						<img class="left-column float-left"
@@ -598,7 +626,7 @@
 						</div>
 					</div>
 
-					<!-- date -->
+					<!-- receiver, start-date, end-date -->
 					<div class="clearfix pt-2 pb-2"
 						style="border-bottom: 1px solid #aaa">
 
@@ -609,13 +637,13 @@
 									data-toggle="modal" data-target="#managerModal" disabled>담당자</button>
 							</div>
 
-							<!-- 선택된 담당자 -->
+							<!-- receiver -->
 							<label class="work-receiver p-2" name="workReceiver">이형은</label>
 						</div>
 
-						<!-- date picker -->
+						<!-- start-date, end-date -->
 						<div class="float-right pt-1">
-							<!-- 시작일 추가 -->
+							<!-- start-date -->
 							<div class="form-check-inline">
 								<span class="icon"> <i
 									class="fas fa-calendar-alt fa-lg mr-2"></i>
@@ -623,7 +651,7 @@
 									name="workStartDate" type="date" placeholder="시작일 추가" required />
 							</div>
 
-							<!-- 마감일 추가 -->
+							<!-- end-date -->
 							<div class="form-check-inline m-0">
 								<span class="icon"> <i
 									class="fas fa-calendar-alt fa-lg mr-2"></i>
@@ -641,7 +669,7 @@
 							placeholder="업무내용을 입력하세요" required>내용</textarea>
 					</div>
 
-					<!-- file-down -->
+					<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
 					<div class="file-down p-1 rounded clearfix d-none"
 						style="background-color: #ddd">
 						<span class="left-column float-left"> <i
@@ -654,20 +682,20 @@
 						</span>
 					</div>
 
-					<!-- file-up -->
+					<!-- file-up(일감 수정 버튼 누를 때 보일 파일 버튼을 위해 d-none 추가했음) -->
 					<div class="file-up input-group pt-2 pb-2 col-8 d-none">
 						<span class="icon mt-2"> <i class="fas fa-paperclip fa-lg"></i>
 						</span> <input type="file" class="input-file form-control mx-2"
 							name="inputFile" />
 					</div>
 
-					<!-- 더보기 -->
-					<!-- 로그인 한 유저가 작성자인 경우만 보이게 -->
+					<!-- more -->
 					<div class="more float-right mt-2">
 						<a class="work-edit mr-2" href="#"><i class="fas fa-pen">&nbsp;일감
 								수정</i></a> <a class="work-delete" href="#"><i class="fas fa-trash">&nbsp;일감
 								삭제</i></a>
 					</div>
+					<!-- edit-more -->
 					<div class="edit-more float-right mt-2 d-none">
 						<button class="work-edit-ok btn btn-primary" type="submit">올리기</button>
 						<button class="work-edit-cancel btn btn-warning" type="button">취소</button>
@@ -675,74 +703,43 @@
 				</div>
 			</form>
 
-			<!-- 일감 댓글 전체 -->
+			<!-- 일감 댓글 리스트 -->
 			<div class="work-reply-list card mb-4 m-4">
-
 				<!-- Card Header -->
 				<div class="card-header">
 					<p>댓글</p>
 				</div>
-
 				<!-- Card Body -->
 				<div class="card-body">
-
 					<!-- 댓글 리스트 영역 -->
-					<div class="container reply-list">
-						<!-- 댓글 템플릿 -->
-						<div id="reply-tmpl" class="row clearfix d-none mb-3">
-							<div class="left-column float-left">
-								<!-- 아바타 -->
-								<img src="${root }/resources/img/avatar.png" width="50"
-									height="50" />
-							</div>
-							<div class="right-column ml-2">
-								<div class="writer-info">
-									<span class="reply-writer">정한우</span> <span
-										class="reply-write-date">2020-08-04 16:25</span> <span
-										class="reply-like ml-3"> <i class="far fa-thumbs-up"></i>
-										<a href="/work-reply/like">좋아요</a>
-									</span> |&nbsp;<a href="#">수정</a> |&nbsp;<a href="#">삭제</a>
-								</div>
-								<div class="reply-content">Trust You</div>
-								<!-- 파일 다운로드 템플릿 -->
-								<div id="file-download-tmpl"
-									class="reply-file clearfix bg-info d-none">
-									<span class="left-column float-left"> <i
-										class="fas fa-file"></i> <span class="reply-file-name">요구사항
-											분석서.doc</span>
-									</span> <span class="right-column float-right"> <a href="#">다운로드</a>
-										|&nbsp;<a href="#">삭제</a>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
+					<div class="container reply-list"></div>
 
-					<!-- 댓글 작성 폼 -->
+					<!-- reply-form -->
 					<div class="container">
-						<form class="reply-form" action="/work-reply/write" method="post"
-							enctype="multipart/form-data">
-							<!-- 아바타, textarea, 작성버튼 -->
+						<form class="reply-form" action="${root }/work-reply/add-reply.do">
+							<!-- avatar, reply-form, submit(작성) -->
 							<div class="row">
 								<div class="input-group mb-3">
+									<!-- avatar -->
 									<div class="input-group-append">
-										<!-- 아바타 -->
 										<img src="${root }/resources/img/avatar.png" width="50"
 											height="50" />
 									</div>
-									<textarea class="reply-my-content form-control"
-										placeholder="댓글을 작성하세요." name="reply-content" required></textarea>
+									<!-- reply-form -->
+									<textarea class="reply-content form-control"
+										placeholder="댓글을 작성하세요." name="replyContent" required></textarea>
+									<!-- submit -->
 									<div class="input-group-append">
 										<button class="btn btn-outline-secondary" type="submit">작성</button>
 									</div>
 								</div>
 							</div>
-							<!-- 업로드 -->
+							<!-- input-file -->
 							<div class="row">
 								<div class="right-column ml-2 col-lg-8 float-right">
 									<div class="form-group clearfix position-relative">
 										<span class="float-left"> <i
-											class="fas fa-paperclip fa-lg mr-2 mt-3"></i>
+											class="fas fa-paperclip fa-lg mt-3 mr-2"></i>
 										</span> <input class="input-file form-control" type="file"
 											name="inputFile" style="width: calc(100% - 50px)">
 									</div>
@@ -750,14 +747,15 @@
 							</div>
 						</form>
 					</div>
-					<!-- End of 댓글 작성 폼 -->
+					<!-- End of reply-form -->
 				</div>
+				<!-- End of Card Body(댓글 리스트) -->
 			</div>
 			<!-- End of 일감 댓글 전체 -->
 		</div>
-		<!-- End of Card Body -->
+		<!-- End of Card Body(일감 템플릿) -->
 	</div>
-
+	<!-- 일감 템플릿 -->
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
@@ -772,12 +770,15 @@
 
 	<!-- Custom scripts for all pages-->
 	<script src="${root}/resources/js/sb-admin-2.min.js"></script>
-	<script type="text/javascript"
-		src="${root}/resources/js/workspace/workspace.js"></script>
 	<!-- moment(캘린더) -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
 	<!-- 일감댓글 -->
+	<script>
+		var root = "${root }";
+		var id = "${id}";
+	</script>
 	<script src="${root}/resources/js/workspace/reply.js"></script>
+	<script src="${root}/resources/js/workspace/workspace.js"></script>
 </body>
 </html>

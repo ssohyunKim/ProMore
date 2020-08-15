@@ -2,6 +2,7 @@ package com.promore.workspace.dao;
 
 import java.util.List;
 
+import com.promore.workspace.dto.WorkReplyDto;
 import com.promore.workspace.dto.WorkspaceDto;
 
 public interface WorkspaceDao {
@@ -22,4 +23,8 @@ public interface WorkspaceDao {
 	public int workCount(String id);
 
 	public List<WorkspaceDto> workList(String id);
+
+	public int selectReplyNum();
+
+	public int insertReply(WorkReplyDto workReplyDto);
 }
