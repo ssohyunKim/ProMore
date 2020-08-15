@@ -103,8 +103,8 @@ function projectApply(root){
 				<div class="flip-card">
 					<div class="flip-card-inner">
 						<div class="flip-card-front1">
-							<p>${projectDto.proName}</p>
-							</br>
+							<p class="projectName">${projectDto.proName}</p>
+							<br/>
 							<p>최대인원 : ${projectDto.proMax}명</p>
 						</div>
 						
@@ -121,7 +121,7 @@ function projectApply(root){
 									<a href="${root}/workspace/workspace.do?proNum=${projectDto.proNum}">
 									<div class="flip-card-back1">
 										<p>${projectDto.proManager}</p>
-										</br>
+										<br/>
 										<p>현재인원 : ${projectDto.proCnt}명</p>
 									</div>
 									</a>
@@ -145,7 +145,7 @@ function projectApply(root){
 									data-target="#fullApplyModal">
 									<div class="flip-card-back1">
 										<p>${projectDto.proManager}</p>
-										</br>
+										<br/>
 										<p>현재인원 : ${projectDto.proCnt}명</p>
 									</div>
 									</a>
@@ -170,7 +170,7 @@ function projectApply(root){
 										data-target="#mainReadModal">
 										<div class="flip-card-back1">
 											<p>${projectDto.proManager}</p>
-											</br>
+											<br/>
 											<p>현재인원 : ${projectDto.proCnt}명</p>
 										</div>
 										</a>
