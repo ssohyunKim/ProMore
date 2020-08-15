@@ -27,13 +27,26 @@ public class ProjectDaoImp implements ProjectDao {
 	}
 	
 	@Override
+	public int projectUpdateOk(ProjectDto projectDto) {
+		Map<String, Object> hMap = new HashMap<String, Object>();
+		hMap.put("projectDto", projectDto);
+		
+		return sqlSessionTemplate.update("project_update", hMap);
+	}
+	
+	@Override
+	public int projectDeleteOk(int proNum) {
+		return sqlSessionTemplate.delete("project_delete", proNum);
+		
+	}
+	
+	@Override
 	public int projectCount() {
 		return sqlSessionTemplate.selectOne("project_count");
 	}
 	
 	@Override
 	public List<ProjectDto> projectList() {
-		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectList("project_list");
 	}
 	
@@ -43,4 +56,6 @@ public class ProjectDaoImp implements ProjectDao {
 		//번호
 		return sqlSessionTemplate.selectList("project_cnt", id);
 	}
+	
+	
 }

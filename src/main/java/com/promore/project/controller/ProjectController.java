@@ -12,14 +12,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.promore.aop.HAspect;
+import com.promore.customer.dto.CustomerDto;
 import com.promore.project.dto.ProjectDto;
 import com.promore.project.service.ProjectService;
+import com.promore.projectApply.service.ProjectApplyService;
 
 @Controller
 public class ProjectController {
 	@Autowired
 	private ProjectService projectservice;
-	
+	@Autowired
+	private ProjectApplyService projectapplyservice;
 	
 	@RequestMapping(value = "/project/main.do", method = RequestMethod.GET)
 	public ModelAndView projectMain(HttpServletRequest request, HttpServletResponse response) {
@@ -27,6 +30,7 @@ public class ProjectController {
 		mav.addObject("request",request);
 		
 		projectservice.projectList(mav);
+		projectapplyservice.proApplyList(mav);
 		return mav;
 	}
 
@@ -65,7 +69,28 @@ public class ProjectController {
 		  return mav;
 
 	}
-		
 	
+	//프로젝트 수정
+	@RequestMapping(value="/project/update.do", method=RequestMethod.POST)
+	public ModelAndView projectUpdate(HttpServletRequest request, HttpServletResponse response,ProjectDto projectDto) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("request", request);
+		mav.addObject("projectDto", projectDto);
+		
+		projectservice.projectUpdateOk(mav);
+		return mav;
+	}
+	//프로젝트 삭제
+	@RequestMapping(value="/project/delete.do", method=RequestMethod.GET)
+	public ModelAndView projectdDelete(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		
+		projectservice.projectDeleteOk(mav);
+			
+		return mav;		
+	}
+
 	
 }

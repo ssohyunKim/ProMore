@@ -54,4 +54,16 @@
 	select * from project where pro_num=#{proNum} 
 </select>
 
+<update id="project_update" parameterType="java.util.HashMap">
+	update project set
+		pro_name = #{projectDto.proName},
+		pro_content = #{projectDto.proContent},
+		pro_max =  #{projectDto.proMax}
+	where pro_num = #{projectDto.proNum}
+</update>
+
+<delete id="project_delete" parameterType="int">
+	delete from project where pro_num=#{proNum}
+</delete>
+
 </mapper>

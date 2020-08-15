@@ -41,25 +41,48 @@
 <script type="text/javascript">
 var name="";
 var content="";
-var cnt="";
+var max="";
 
 $(function(){
 	$('#projectReadModal').on('show.bs.modal', function(event) {
-		title = $(event.relatedTarget).data('name');
+		name = $(event.relatedTarget).data('name');
 		$('input[name="proName"]').val(name);
 		
-		cnt = $(event.relatedTarget).data('cnt');
-	 	$('select[name="proCnt"]').val(cnt).attr("selected", "selected");
-		$('select[name="proCnt"] option').attr('disabled', true);
+		max = $(event.relatedTarget).data('max');
+	 	$('select[name="proMax"]').val(max).attr("selected", "selected");
+		$('select[name="proMax"] option').attr('disabled', true);
 		
 		content = $(event.relatedTarget).data('content');
 		$('textarea[name="proContent"]').text(content);
 		
 	});
+	
+	$('#updateBtn').click(function(){
+		$('#projectUpdateModal').modal();
+		
+		$('input[name="proName"]').val(name);
+		
+		$('select[name="proMax"]').val(max).prop("selected", true);
+		$('select[name="proMax"] option').attr('disabled', false);
+		
+		$('textarea[name="proContent"]').text(content);
+
+		$('#projectReadModal').modal().hide();
+	});
+	
+	$('#deleteBtn').click(function(){
+		$('#removeConfirmModal').modal();
+	});
+	
+	
 	$('.modal').on('hide.bs.modal', function(event){
 		location.reload();
 	});
 });
+
+function projectDelete(root){
+	location.href = root + '/project/delete.do?proNum=' +${proNum};
+}
 
 </script>
 
@@ -102,8 +125,8 @@ $(function(){
 							<c:if test="${projectDto.proNum eq proNum}">
 								<a href="#"
 									data-name="${projectDto.proName}"
-									data-cnt = "${projectDto.proCnt}"
-									data-content"${projectDto.proContent}"
+									data-max = "${projectDto.proMax}"
+									data-content = "${projectDto.proContent}"
 									data-toggle="modal"
 									data-target="#projectReadModal">
 									<div class="alert alert-primary bg-primary p-3 rounded-lg text-center">
@@ -483,7 +506,7 @@ $(function(){
 		class="fas fa-angle-up"></i>
 	</a>
 
-	<!--Pjt Read Model -->
+	<!--Project Read Model -->
 	<div class="modal fade" id="projectReadModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg mt-5" role="document">
 			<div class="modal-content">
@@ -507,7 +530,7 @@ $(function(){
 			                     </div>
 			                    <p style="margin: 6px 13px 0px 0px">인원수</p>
 			                     <div class="col-sm-1.5" style="display: inline;">
-			                        <select name="proCnt" class="form-control-plaintext" readonly>
+			                        <select name="proMax" class="form-control-plaintext" readonly>
 			                            <option value="2">2</option>
 			                            <option value="3">3</option>
 			                            <option value="4">4</option>
@@ -536,7 +559,88 @@ $(function(){
 			</div>
 		</div>
 	</div>
+	
+	
+	<!--Project Update Model -->
+	<div class="modal fade" id="projectUpdateModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
 
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">프로젝트 읽기</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+
+		<form action="${root}/project/update.do" name="updateForm" method="post">	
+				<input id="proNum" type="hidden" name="proNum" value="${proNum}" />
+				<!-- modal-body -->
+				<div class="modal-body">
+
+					<!-- 프로젝트 제목 && 인원수  -->
+			                  <div class="form-group row">
+			                     <div class="col-sm-10">
+			                        <input type="text" class="form-control" name="proName" style="display: inline;"  placeholder="제목을 입력하세요.">
+			                     </div>
+			                    <p style="margin: 6px 13px 0px 0px">인원수</p>
+			                     <div class="col-sm-1.5" style="display: inline;">
+			                        <select name="proMax" class="form-control">
+			                            <option value="2">2</option>
+			                            <option value="3">3</option>
+			                            <option value="4">4</option>
+			                            <option value="5">5</option>
+			                        </select>
+			                     </div>
+			                  </div>
+	
+							<!-- 글 내용 -->
+							<div class="form-group row">
+								<div class="col-sm-12">
+									<textarea class="form-control-plaintext" rows="20" name="proContent" placeholder="글을 입력하세요."></textarea>
+								</div>
+							</div>
+								
+
+							<!-- modal-footer -->
+							<div class="modal-footer justify-content-right">
+								<div>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+									<button type="submit" class="btn btn-primary">확인</button>
+								</div>
+							</div>
+						</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+	
+<!--remove Confirm Model -->
+<div class="modal fade" id="removeConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">삭제</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">정말 삭제하시겠습니까?</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">아니요</button>
+					<button class="btn btn-primary" type="button" onclick="projectDelete('${root}')">네</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	
+	
 	<!-- 담당자 버튼 누를 시 뜨는 모달 -->
 	<div class="modal fade" id="managerModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog col-sm-6" role="document">

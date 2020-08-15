@@ -14,4 +14,8 @@ public interface ProjectDao {
 
 	public List<ProjectDto> projectList();
 
+	public int projectUpdateOk(ProjectDto projectDto);
+
+	public int projectDeleteOk(int proNum);
+
 }
