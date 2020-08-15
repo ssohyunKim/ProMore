@@ -8,7 +8,7 @@
   <c:set var="root" value="${pageContext.request.contextPath}" />	
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>PROMORE</title>
+  <title>고객게시판</title>
   <!-- Custom fonts for this template-->
   <link href="${root}/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -16,8 +16,45 @@
   <link href="${root}/resources/css/sb-admin-2.min.css" rel="stylesheet">
   <link rel="stylesheet" href="${root}/resources/css/pjtmain.css">
   <script type="text/javascript" src="${root}/resources/jquery.js"></script>
-  <script type="text/javascript" src="${root}/resources/js/project/project.js"></script>
 </head>
+<script type="text/javascript">
+var proNum="";
+var name="";
+var content="";
+var max="";
+
+$(function(){
+	$('#mainReadModal').on('show.bs.modal', function(event) {
+		proNum = $(event.relatedTarget).data('num');
+		
+		name = $(event.relatedTarget).data('name');
+		$('input[name="proName"]').val(name);
+		
+		max = $(event.relatedTarget).data('max');
+	 	$('select[name="proMax"]').val(max).attr("selected", "selected");
+		$('select[name="proMax"] option').attr('disabled', true);
+		
+		content = $(event.relatedTarget).data('content');
+		$('textarea[name="proContent"]').text(content);
+		
+	});
+	
+	$('#applyBtn').click(function(){
+		$('#applyConfirmModal').modal();
+	});
+	
+	$('#fullApplyModal').click(function(){
+		$('#fullConfirmModal').modal();
+	});
+	
+});
+
+function projectApply(root){
+	location.href = root + '/project/projectApply.do?proNum='+proNum;
+}
+
+</script>
+
 <body id="page-top">
  <!-- Page Wrapper -->
   <div id="wrapper">
@@ -39,16 +76,16 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
            <h1 class="h3 mb-0 text-gray-800">프로젝트 글보기</h1>
-     						${projectApplyDto}
-						
 	    </div>
 
 		<!-- 글 작성 버튼 -->
 		<div>
-			<a href="#" class="btn btn-primary btn-circle btn-md" data-toggle="modal" data-target="#WriteModal" style="float:right">
+			<a href="#" class="btn btn-primary btn-circle btn-md" data-toggle="modal" data-target="#projectWriteModal" style="float:right">
 				<i class="fas fa-pen"></i>
 			</a>
 		</div>	
+		
+
 		<c:if test="${projectCount>0}">		
 		 	<c:forEach var="projectDto" items="${projectDtoArray}">		 	
 				<div class="flip-card">
@@ -58,19 +95,75 @@
 							</br>
 							<p>최대인원 : ${projectDto.proMax}명</p>
 						</div>
-						<a href="${root}/workspace/workspace.do?proNum=${projectDto.proNum}">
-						<div class="flip-card-back1">
-							<p>${projectDto.proManager}</p>
-							</br>
-							<p>현재인원 : ${projectDto.proCnt}명</p>
-						</div>
-						</a>
+						
+						<!-- 프로젝트 팀장, 팀원-->
+						
+						<c:forEach var="projectCnt" items="${projectCnt}">
+							<c:set var="pronum" value="${projectDto.proNum}"/>
+								<c:if test="${projectCnt eq pronum}">
+									<a href="${root}/workspace/workspace.do?proNum=${projectDto.proNum}">
+									<div class="flip-card-back1">
+										<p>${projectDto.proManager}</p>
+										</br>
+										<p>현재인원 : ${projectDto.proCnt}명</p>
+									</div>
+									</a>
+								</c:if>
+						</c:forEach>
+						
+						<!-- 프로젝트 아닌 사람 -->
+						<c:forEach var="projectCnt" items="${projectCnt}">
+							<c:set var="pronum" value="${projectDto.proNum}"/>
+								<c:if test="${projectCnt ne pronum}">
+									<c:if test = "${projectDto.proCnt < projectDto.proMax}">
+									<a href="#"
+									data-num = "${projectDto.proNum}"
+									data-name="${projectDto.proName}"
+									data-max = "${projectDto.proMax}"
+									data-content = "${projectDto.proContent}"
+									data-toggle="modal"
+									data-target="#mainReadModal">
+									<div class="flip-card-back1">
+										<p>${projectDto.proManager}</p>
+										</br>
+										<p>현재인원 : ${projectDto.proCnt}명</p>
+									</div>
+									</a>
+									</c:if>
+								</c:if>
+						</c:forEach>
+						
+						
+						<!-- 프로젝트 아닌 사람 -->
+						<c:forEach var="projectCnt" items="${projectCnt}">
+							<c:set var="pronum" value="${projectDto.proNum}"/>
+								<c:if test="${projectCnt ne pronum}">
+									<c:if test = "${projectDto.proCnt == projectDto.proMax}">
+									<a href="#"
+									data-num = "${projectDto.proNum}"
+									data-name="${projectDto.proName}"
+									data-max = "${projectDto.proMax}"
+									data-content = "${projectDto.proContent}"
+									data-toggle="modal"
+									data-target="#fullApplyModal">
+									<div class="flip-card-back1">
+										<p>${projectDto.proManager}</p>
+										</br>
+										<p>현재인원 : ${projectDto.proCnt}명</p>
+									</div>
+									</a>
+									</c:if>
+								</c:if>
+						</c:forEach>
+						
+						
 					</div>
 				</div>
-				 </c:forEach>
+		</c:forEach>
   <%--     </c:forEach> --%>
          <!-- /.container-fluid -->
-</c:if>
+	</c:if>
+
 	</div>
 	</div>
       <!-- End of Main Content -->
@@ -95,22 +188,22 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">로그아웃을 누르면 정말 로그아웃 됩니다.</div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-          <a class="btn btn-primary" href="${root}/member/logout.do">로그아웃</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
         </div>
       </div>
     </div>
   </div>
 
 <!-- Write Model -->
-<div class="modal fade" id="WriteModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="projectWriteModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-lg mt-5" role="document">
 		<div class="modal-content">
 
@@ -121,8 +214,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 				</div>
-					<form id="createform" action="${root}/project/writeOk.do" method="post"
-									onsubmit="return boardCheck(this)">
+					<form id="createform" action="${root}/project/writeOk.do" method="post">
 				<!-- modal-body -->
 						<div class="modal-body">
 						
@@ -134,7 +226,7 @@
 			                    		<p style="margin: 6px 13px 0px 0px">인원수</p>
 			                     <div class="col-sm-1.5" style="display: inline;" >
 			                     	              
-			                             <select name="proCnt" class="form-control">
+			                       <select name="proMax" class="form-control">
 			                            <option value="2">2</option>
 			                            <option value="3">3</option>
 			                            <option value="4">4</option>
@@ -165,6 +257,96 @@
 	</div>
 </div>
 </div>
+
+<!--Project Read Model -->
+	<div class="modal fade" id="mainReadModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg mt-5" role="document">
+			<div class="modal-content">
+
+				<!-- modal-header -->
+				<div class="modal-header">
+					<h5 class="m-0 font-weight-bold text-primary p-2">프로젝트 읽기</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<input id="proNum" type="hidden" name="proNum" value="" />
+				<!-- modal-body -->
+				<div class="modal-body">
+
+					<!-- 프로젝트 제목 && 인원수  -->
+			                  <div class="form-group row">
+			                     <div class="col-sm-10">
+			                        <input type="text" class="form-control-plaintext" name="proName" style="display: inline;"  placeholder="제목을 입력하세요." readonly>
+			                     </div>
+			                    <p style="margin: 6px 13px 0px 0px">인원수</p>
+			                     <div class="col-sm-1.5" style="display: inline;">
+			                        <select name="proMax" class="form-control-plaintext" readonly>
+			                            <option value="2">2</option>
+			                            <option value="3">3</option>
+			                            <option value="4">4</option>
+			                            <option value="5">5</option>
+			                        </select>
+			                     </div>
+			                  </div>
+	
+							<!-- 글 내용 -->
+							<div class="form-group row">
+								<div class="col-sm-12">
+									<textarea class="form-control-plaintext" rows="20" name="proContent" placeholder="글을 입력하세요." readonly></textarea>
+								</div>
+							</div>
+								
+
+							<!-- modal-footer -->
+							<div class="modal-footer justify-content-right">
+								<div>
+									<button id="applyBtn" type="button" class="btn btn-secondary">신청</button>
+									<button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+								</div>
+							</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+<!--apply Confirm Model -->
+<div class="modal fade" id="applyConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">신청</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">정말 신청하시겠습니까?</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">아니요</button>
+					<button class="btn btn-primary" type="button" onclick="projectApply('${root}')">네</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- fullConfirmModal -->
+<div class="modal fade" id="applyConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">신청</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">신청이 마감되었습니다</div>
+			</div>
+		</div>
+	</div>
+
 
 	<!-- Bootstrap core JavaScript -->
 	<script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
