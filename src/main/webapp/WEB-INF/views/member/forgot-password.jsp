@@ -32,37 +32,49 @@
         <div class="card o-hidden border-0 shadow-lg my-5">
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
-            <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
-              <div class="col-lg-6">
-                <div class="p-5">
+            <div class="row justify-content-center">
+            
+            	<!-- password head -->
+              <div class="col-lg-8">
+                <div class="px-5 pt-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-2">비밀번호를 잊어버리셨나요?</h1>
                     <p class="mb-4">아래에 이메일 주소를 입력하시면 비밀번호를 알려드립니다!</p>
                   </div>
-                  <form class="user" action="${root}/member/sendPw.do" method="get">
-                  	<div class="form-group">
-                      <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="아이디를 입력하세요..." name="memId">
-                    </div>
-                    <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="이메일 주소를 입력하세요..." name="memEmail">
-                    </div>
-                    <input type="submit" class="btn btn-primary btn-user btn-block" value="비밀번호 찾기">
-                  </form>
+                </div>
+              </div>
+               		<!-- password body -->
+               	<div class="col-lg-6">	
+                  <div class="px-5">
+	                  <form class="user" action="${root}/member/sendPw.do" method="get">
+	                  	<div class="form-group">
+	                      <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="아이디를 입력하세요..." name="memId">
+	                    </div>
+	                    <div class="form-group">
+	                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="이메일 주소를 입력하세요..." name="memEmail">
+	                    </div>
+	                    <input type="submit" class="btn btn-primary btn-user btn-block" value="비밀번호 찾기">
+	                  </form>
+                  </div>
+                  
+                  <!-- password footer -->
+                  <div class="text-center">
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="${root}/member/register.do">계정을 만드세요!</a>
+                    <a style="text-decoration: none;" class="small" href="${root}/member/register.do">계정을 만드세요!</a>
                   </div>
                   <div class="text-center">
-                    <a class="small" href="${root}/index.jsp">이미 계정이 있으신가요? 로그인하세요!</a>
+                    <label style="font-size: .8rem;">이미 계정이 있으신가요?</label>
+                    <a style="text-decoration: none;" class="small" href="${root}/index.jsp"> &nbsp;로그인하세요!</a>
+                  </div>
+                  </div>
+                  
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-      </div>
+    
 
     </div>
 
