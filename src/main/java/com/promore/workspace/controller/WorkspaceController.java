@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.promore.aop.HAspect;
 import com.promore.project.service.ProjectService;
+import com.promore.workspace.dto.WorkReplyDto;
 import com.promore.workspace.dto.WorkspaceDto;
 import com.promore.workspace.service.WorkspaceService;
 
@@ -105,18 +107,21 @@ public class WorkspaceController {
 		mav.addObject("req", req);
 		workspaceService.download(mav);
 
-		WorkspaceDto fileInfo = (WorkspaceDto) mav.getModel().get("fileInfo");
+		Map<String, Object> model = mav.getModel();
+		String fileName = (String) model.get("fileName");
+		String filePath = (String) model.get("filePath");
+		int fileSize = (Integer) model.get("fileSize");
+
 		try {
-			String fileNameToLatin1 = new String(
-					fileInfo.getWorkFileName().substring(fileInfo.getWorkFileName().indexOf("_") + 1).getBytes("UTF-8"),
+			String fileNameToLatin1 = new String(fileName.substring(fileName.indexOf("_") + 1).getBytes("UTF-8"),
 					"ISO-8859-1");
 
 			resp.setHeader("Content-Type", "application/octet-stream;charset=utf-8");
 			resp.setHeader("Content-Disposition", "attachment; filename=" + fileNameToLatin1);
-			resp.setContentLength((int) fileInfo.getWorkFileSize());
+			resp.setContentLength(fileSize);
 
 			BufferedOutputStream bos = new BufferedOutputStream(resp.getOutputStream(), 512);
-			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fileInfo.getWorkFilePath()), 512);
+			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(filePath), 512);
 
 			byte[] buff = new byte[512];
 			while (bis.read(buff) != -1)

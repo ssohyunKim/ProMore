@@ -419,39 +419,48 @@
 													<c:forEach var="reply" items="${item.workReplyDto }">
 														<!-- 댓글 템플릿 -->
 														<div id="reply-no-${reply.replyNum }"
-															class="row clearfix mb-3">
+															class="row clearfix mb-3 pb-1"
+															style="border-bottom: 1px solid #aaa">
 															<!-- avatar -->
 															<div class="left-column float-left">
 																<img src="${root }/resources/img/avatar.png" width="50"
 																	height="50" />
 															</div>
 															<!-- writer, write-date, reply-like, reply-edit, reply-delete -->
-															<div class="right-column ml-2">
-																<div class="writer-info">
-																	<span class="reply-writer">${reply.replyId }</span>&nbsp;&nbsp;&nbsp;
-																	<span class="reply-write-date"><fmt:formatDate
-																			value="${reply.replyDate }"
-																			pattern="yyyy-MM-dd HH:mm:ss" /></span><span class="ml-3">
-																		<i class="far fa-thumbs-up"></i> <span
-																		class="like-cnt"
-																		style="color: ${reply.canClickLike? '#000': '#f00'}">${reply.replyLike }</span>
-																		<c:if test="${reply.canClickLike }">
-																			<a class="reply-like" href="#">좋아요</a>
-																		</c:if>
+															<div class="right-column ml-2"
+																style="width: calc(100% - 85px);">
+																<div class="writer-info clearfix">
+																	<b class="reply-writer p-1 rounded float-left">${reply.replyId }</b>
+																	<span class="float-right"> <span class="ml-3">
+																			<i class="far fa-thumbs-up"></i> <span
+																			class="like-cnt"
+																			style="color: ${reply.canClickLike? '#000': '#f00'}">${reply.replyLike }</span>
+																			<c:if test="${reply.canClickLike }">
+																				<a class="reply-like" href="#">좋아요</a>
+																			</c:if>
 																	</span> |&nbsp;<a class="reply-edit" href="#">수정</a> |&nbsp;<a
-																		class="reply-delete" href="#">삭제</a>
+																		class="reply-delete" href="#">삭제</a>&nbsp;&nbsp;&nbsp;
+																		<span class="reply-write-date"><fmt:formatDate
+																				value="${reply.replyDate }"
+																				pattern="yyyy-MM-dd HH:mm:ss" /></span>
+																	</span>
 																</div>
 																<div class="reply-content p-2">${fn:replace(reply.replyContent, newLineChar, "<br>") }</div>
 																<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
 																<div
-																	class="reply-file-down clearfix bg-info ${reply.replyFileSize == 0? 'd-none': '' }">
+																	class="file-down p-1 rounded clearfix ${reply.replyFileSize == 0? 'd-none': '' }"
+																	style="background-color: #ddd">
 																	<span class="left-column float-left"> <i
-																		class="fas fa-file"></i> <span class="reply-file-name">업로드파일명.ext</span>
+																		class="fas fa-file"></i> <span class="work-file-name">${fn:substringAfter(reply.replyFileName, "_") }</span>
 																	</span> <span class="right-column float-right"> <a
-																		href="#">다운로드</a> |&nbsp;<a href="#">삭제</a>
+																		class="download-file mr-2"
+																		href="${root }/workspace/download.do?replyNum=${reply.replyNum }"><i
+																			class="fas fa-download">&nbsp;다운로드</i></a> <a
+																		class="delete-file d-none"
+																		href="${root }/workspace/download.do?replyNum=${reply.replyNum }"><i
+																			class="fas fa-trash">&nbsp;삭제</i></a>
 																	</span>
 																</div>
-																<!-- file-up(일감 수정 버튼 누를 때 보일 파일 버튼을 위해 d-none 추가) -->
 															</div>
 														</div>
 													</c:forEach>
@@ -459,7 +468,8 @@
 
 												<!-- reply-form -->
 												<form class="reply-form"
-													action="${root }/work-reply/add-reply.do">
+													action="${root }/work-reply/add-reply.do"
+													style="border-bottom: 1px solid #aaa">
 													<!-- avatar, reply-form, submit(작성) -->
 													<div class="row">
 														<div class="input-group mb-3">
@@ -477,6 +487,19 @@
 															</div>
 														</div>
 													</div>
+													<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
+													<div class="file-down p-1 rounded clearfix d-none"
+														style="background-color: #ddd">
+														<span class="left-column float-left"> <i
+															class="fas fa-file"></i> <span class="work-file-name">파일명</span>
+														</span> <span class="right-column float-right"> <a
+															class="download-file mr-2" href="#"><i
+																class="fas fa-download">&nbsp;다운로드</i></a> <a
+															class="delete-file d-none" href="#"><i
+																class="fas fa-trash">&nbsp;삭제</i></a>
+														</span>
+													</div>
+
 													<!-- input-file -->
 													<div class="row">
 														<div class="right-column ml-2 col-lg-8 float-right">
@@ -562,23 +585,23 @@
 
 					<!-- 팀장이면 modal-footer -->
 					<c:if test="${memLevel=='팀장'}">
-					<div class="modal-footer justify-content-right">
-						<div>
-							<button id="deleteBtn" type="button" class="btn btn-secondary">삭제</button>
-							<button id="updateBtn" type="button" class="btn btn-primary">수정</button>
+						<div class="modal-footer justify-content-right">
+							<div>
+								<button id="deleteBtn" type="button" class="btn btn-secondary">삭제</button>
+								<button id="updateBtn" type="button" class="btn btn-primary">수정</button>
+							</div>
 						</div>
-					</div>
 					</c:if>
 					<!-- 팀원이면 modal-footer -->
 					<c:if test="${memLevel=='팀원'}">
-					<div class="modal-footer justify-content-right">
-						<div>
-							<button type="button" class="btn btn-secondary"
+						<div class="modal-footer justify-content-right">
+							<div>
+								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">확인</button>
+							</div>
 						</div>
-					</div>
 					</c:if>
-					
+
 				</div>
 
 			</div>
@@ -718,32 +741,36 @@
 	</div>
 
 	<!-- 댓글 템플릿 -->
-	<div id="reply-tmpl" class="row clearfix d-none mb-3">
+	<div id="reply-tmpl" class="row clearfix d-none mb-3 pb-1"
+		style="border-bottom: 1px solid #aaa">
 		<!-- avatar -->
 		<div class="left-column float-left">
 			<img src="${root }/resources/img/avatar.png" width="50" height="50" />
 		</div>
 		<!-- writer, write-date, reply-like, reply-edit, reply-delete -->
-		<div class="right-column ml-2">
-			<div class="writer-info">
-				<span class="reply-writer">작성자</span>&nbsp;&nbsp;&nbsp; <span
-					class="reply-write-date">작성일</span> <span class="ml-3"> <i
-					class="far fa-thumbs-up"></i><span class="like-cnt"
-					style="color: #000">0</span> <a class="reply-like" href="#">좋아요</a>
+		<div class="right-column ml-2" style="width: calc(100% - 85px);">
+			<div class="writer-info clearfix">
+				<b class="reply-writer p-1 rounded float-left">작성자</b> <span
+					class="float-right"> <span class="ml-3"> <i
+						class="far fa-thumbs-up"></i><span class="like-cnt"
+						style="color: #000">0</span> <a class="reply-like" href="#">좋아요</a>
 				</span> |&nbsp;<a class="reply-edit" href="#">수정</a> |&nbsp;<a
-					class="reply-delete" href="#">삭제</a>
-			</div>
-			<div class="reply-content p-2">댓글 내용</div>
-			<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
-			<div class="reply-file-down clearfix bg-info d-none">
-				<span class="left-column float-left"> <i class="fas fa-file"></i>
-					<span class="reply-file-name">업로드파일명.ext</span>
-				</span> <span class="right-column float-right"> <a href="#">다운로드</a>
-					|&nbsp;<a href="#">삭제</a>
+					class="reply-delete" href="#">삭제</a> &nbsp;&nbsp;&nbsp;<span
+					class="reply-write-date">작성일</span>
 				</span>
 			</div>
+			<div class="reply-content p-2">댓글 내용</div>
 
-			<!-- file-up(일감 수정 버튼 누를 때 보일 파일 버튼을 위해 d-none 추가) -->
+			<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
+			<div class="file-down p-1 rounded clearfix d-none"
+				style="background-color: #ddd">
+				<span class="left-column float-left"> <i class="fas fa-file"></i>
+					<span class="work-file-name">파일명</span>
+				</span> <span class="right-column float-right"> <a
+					class="download-file mr-2" href="#"><i class="fas fa-download">&nbsp;다운로드</i></a>
+					<a class="delete-file d-none" href="#"><i class="fas fa-trash">&nbsp;삭제</i></a>
+				</span>
+			</div>
 		</div>
 	</div>
 
@@ -877,7 +904,8 @@
 					<div class="container reply-list"></div>
 
 					<!-- reply-form -->
-					<form class="reply-form" action="${root }/work-reply/add-reply.do">
+					<form class="reply-form" action="${root }/work-reply/add-reply.do"
+						style="border-bottom: 1px solid #aaa">
 						<!-- avatar, reply-form, submit(작성) -->
 						<div class="row">
 							<div class="input-group mb-3">
@@ -895,6 +923,18 @@
 								</div>
 							</div>
 						</div>
+						<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
+						<div class="file-down p-1 rounded clearfix d-none"
+							style="background-color: #ddd">
+							<span class="left-column float-left"> <i
+								class="fas fa-file"></i> <span class="work-file-name">파일명</span>
+							</span> <span class="right-column float-right"> <a
+								class="download-file mr-2" href="#"><i
+									class="fas fa-download">&nbsp;다운로드</i></a> <a
+								class="delete-file d-none" href="#"><i class="fas fa-trash">&nbsp;삭제</i></a>
+							</span>
+						</div>
+
 						<!-- input-file -->
 						<div class="row">
 							<div class="right-column ml-2 col-lg-8 float-right">
@@ -936,7 +976,8 @@
 	<!-- 일감댓글 -->
 	<script>
 		var root = "${root }";
-		var id = "${id}";
+		var id = "${id }";
+		var memId = "${memId }";
 	</script>
 	<script src="${root}/resources/js/workspace/reply.js"></script>
 	<script src="${root}/resources/js/workspace/workspace.js"></script>

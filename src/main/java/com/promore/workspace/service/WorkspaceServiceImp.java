@@ -1,17 +1,14 @@
 package com.promore.workspace.service;
 
-import java.beans.Transient;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.promore.calendar.dto.CalendarDto;
 import com.promore.workspace.dao.WorkspaceDao;
 import com.promore.workspace.dto.ReplyLikeDto;
 import com.promore.workspace.dto.WorkReplyDto;
@@ -47,6 +43,7 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		for (WorkspaceDto workDto : list) {
 			List<WorkReplyDto> replyDtos = workspaceDao.selectAllReply(workDto);
 			for (WorkReplyDto replyDto : replyDtos) {
+				System.out.println(replyDto);
 				ReplyLikeDto likeDto = new ReplyLikeDto();
 				likeDto.setMemId((String) sess.getAttribute("memId"));
 				likeDto.setReplyNum(replyDto.getReplyNum());
@@ -200,10 +197,35 @@ public class WorkspaceServiceImp implements WorkspaceService {
 
 		HttpServletRequest req = (HttpServletRequest) model.get("req");
 
-		WorkspaceDto workspaceDto = new WorkspaceDto();
-		workspaceDto.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
+		String workNum = null;
+		String replyNum = null;
+		WorkspaceDto workspaceDto = null;
+		WorkReplyDto workReplyDto = null;
+		String fileName = null;
+		String filePath = null;
+		int fileSize = 0;
 
-		mav.addObject("fileInfo", workspaceDao.selectFileInfo(workspaceDto));
+		if ((workNum = req.getParameter("workNum")) != null) {
+			workspaceDto = new WorkspaceDto();
+			workspaceDto.setWorkNum(Integer.parseInt(workNum));
+			workspaceDao.selectFileInfo(workspaceDto);
+
+			fileName = workspaceDto.getWorkFileName();
+			filePath = workspaceDto.getWorkFilePath();
+			fileSize = (int) workspaceDto.getWorkFileSize();
+		} else if ((replyNum = req.getParameter("replyNum")) != null) {
+			workReplyDto = new WorkReplyDto();
+			workReplyDto.setReplyNum(Integer.parseInt(replyNum));
+			workspaceDao.selectFileInfo_2(workReplyDto);
+
+			fileName = workReplyDto.getReplyFileName();
+			filePath = workReplyDto.getReplyFilePath();
+			fileSize = (int) workReplyDto.getReplyFileSize();
+		}
+
+		mav.addObject("fileName", fileName);
+		mav.addObject("filePath", filePath);
+		mav.addObject("fileSize", fileSize);
 	}
 
 	@Override
@@ -232,10 +254,10 @@ public class WorkspaceServiceImp implements WorkspaceService {
 	public void addReply(ModelAndView mav) {
 		Map<String, Object> model = mav.getModel();
 		MultipartHttpServletRequest req = (MultipartHttpServletRequest) model.get("req");
+		HttpSession sess = req.getSession();
 
 		WorkReplyDto workReplyDto = new WorkReplyDto();
-//		workReplyDto.setReplyId(session.getAttribute("id"));
-		workReplyDto.setReplyId(req.getParameter("replyId"));
+		workReplyDto.setReplyId((String) sess.getAttribute("memId"));
 		workReplyDto.setReplyContent(req.getParameter("replyContent"));
 		workReplyDto.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
 

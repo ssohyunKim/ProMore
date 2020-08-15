@@ -40,4 +40,6 @@ public interface WorkspaceDao {
 	public int selectLikeCnt(ReplyLikeDto replyLikeDto);
 
 	public int insertLike(ReplyLikeDto replyLikeDto);
+
+	WorkReplyDto selectFileInfo_2(WorkReplyDto workReplyDto);
 }

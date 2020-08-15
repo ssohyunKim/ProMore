@@ -30,6 +30,9 @@
 		reply_id,
 		reply_date,
 		reply_content,
+		reply_file_name,
+		reply_file_path,
+		reply_file_size,
 		work_num
 		)
 		values(
@@ -37,9 +40,27 @@
 		#{replyId},
 		sysdate,
 		#{replyContent},
+		#{replyFileName, jdbcType=VARCHAR},
+		#{replyFilePath,
+		jdbcType=VARCHAR},
+		#{replyFileSize, jdbcType=INTEGER},
 		#{workNum}
 		)
 	</insert>
+
+	<select id="select_file_info"
+		parameterType="com.promore.workspace.dto.WorkReplyDto"
+		resultMap="work_reply_dto">
+		select
+		reply_file_name,
+		reply_file_size,
+		reply_file_path
+		from
+		work_reply
+		where
+		reply_num = ${replyNum}
+	</select>
+
 
 	<insert id="insert_file_info"
 		parameterType="com.promore.workspace.dto.WorkReplyDto">

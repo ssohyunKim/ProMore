@@ -51,9 +51,7 @@ function addReply(e) {
 
   var data = new FormData(this);
 
-  // id -> 현재 세션의 아이디로 변경
-  var id = "로그인한 유저"; // 아래에서 쓰고 있음
-  data.append("replyId", id);
+  data.append("replyId", memId);
   data.append("workNum", workNum);
 
   $.ajax({
@@ -75,7 +73,7 @@ function addReply(e) {
       list.appendChild(copyReply);
 
       // 가짜 데이터 바인딩
-      copyReply.querySelector(".reply-writer").innerText = id;
+      copyReply.querySelector(".reply-writer").innerText = memId;
       copyReply.querySelector(".reply-write-date").innerText =
         moment(Date.now()).format("yyyy-MM-DD") +
         moment(Date.now()).format(" HH:mm:ss");
@@ -83,6 +81,19 @@ function addReply(e) {
         ".reply-content"
       ).innerHTML = replyContent.value.replace(/\n/g, "<br>");
       replyContent.value = "";
+
+      // 파일도 업로드 한다면
+      var inputFile = data.get("inputFile");
+      if (data.get("inputFile").size > 0) {
+        copyReply.querySelector(".file-down").classList.remove("d-none");
+        copyReply.querySelector(".work-file-name").innerText = inputFile.name;
+
+        work.querySelector(".input-file").value = "";
+        // dynamic
+        copyReply.querySelector(".download-file").onclick = downReplyFile;
+        copyReply.querySelector(".delete-file").onclick = deleteReplyFile;
+
+      }
 
       // dynamic
       copyReply.querySelector(".reply-like").onclick = likeReply;
@@ -152,9 +163,7 @@ function editReplyOk(e) {
 
   var data = new FormData(this);
 
-  // id -> 현재 세션의 아이디로 변경
-  var id = "로그인한 유저"; // 아래에서 쓰고 있음
-  data.append("replyId", id);
+  data.append("replyId", memId);
   data.append("replyNum", cachedForm.replyNum.trim());
 
   $.ajax({
@@ -223,4 +232,14 @@ function likeReply(e) {
     .catch(function () {
       alert("추천하는데 실패했습니다. 다시 시도해주세요.");
     });
+}
+
+function downReplyFile(e) {
+  e.preventDefault();
+
+
+}
+
+function deleteReplyFile(e) {
+  e.preventDefault();
 }

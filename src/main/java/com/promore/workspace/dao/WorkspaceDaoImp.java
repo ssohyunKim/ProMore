@@ -48,6 +48,11 @@ public class WorkspaceDaoImp implements WorkspaceDao {
 	}
 
 	@Override
+	public WorkReplyDto selectFileInfo_2(WorkReplyDto workReplyDto) {
+		return sqlSessionTemplate.selectOne("WorkReplyDto.select_file_info", workReplyDto);
+	}
+
+	@Override
 	public int updateFileInfo(WorkspaceDto workspaceDto) {
 		return sqlSessionTemplate.update("WorkspaceMapper.update_file_info", workspaceDto);
 	}
