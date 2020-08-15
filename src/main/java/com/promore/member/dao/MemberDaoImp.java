@@ -47,4 +47,9 @@ public class MemberDaoImp implements MemberDao {
 	public int memberUpdate(MemberDto memberDto) {
 		return sqlSessionTemplate.update("member_update", memberDto);
 	}
+	@Override
+	public int memberRegister(MemberDto memberDto) {
+		return sqlSessionTemplate.insert("member_insert", memberDto);
+	}
+
 }

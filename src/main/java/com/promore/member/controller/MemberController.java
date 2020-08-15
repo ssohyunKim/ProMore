@@ -20,6 +20,7 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	
 	@RequestMapping(value = "/member/loginOk.do", method = RequestMethod.POST)
 	public ModelAndView loginOk(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("OK1");
@@ -32,12 +33,20 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/member/register.do", method = RequestMethod.GET)
-	public ModelAndView memberList(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("Ok");
+	public String memberList(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("register.do - Ok");
 		
-		ModelAndView mav = new ModelAndView("member/register");
-		return mav;
+		return "member/register";
 	}
+	@RequestMapping(value = "/member/registerOk.do", method = RequestMethod.POST)
+	public String registerOk(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("request", request);
+		memberService.memberRegister(mav);
+		
+		return "redirect:../../"+request.getContextPath();
+	}
+	
 	
 	@RequestMapping(value = "/member/memberUpdate.do", method = RequestMethod.GET)
 	public ModelAndView memberUpdate(HttpServletRequest request, HttpServletResponse response) {
@@ -91,4 +100,7 @@ public class MemberController {
 		
 		return mav;
 	}
+	
+	
+	
 }

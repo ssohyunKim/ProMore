@@ -13,4 +13,6 @@ public interface MemberDao {
 	public MemberDto memberSelect(int memNum);
 	
 	public int memberUpdate(MemberDto memberDto);
+	
+	public int memberRegister(MemberDto member);
 }
