@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%
+	pageContext.setAttribute("newLineChar", "\n");
+%>
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -219,7 +222,7 @@
 
 										<!-- 일감 내용 -->
 										<div class="pt-2 pb-2">
-											<textarea class="form-control work-content"
+											<textarea class="form-control work-content autosize"
 												name="workContent" placeholder="업무내용을 입력하세요" required>123</textarea>
 										</div>
 
@@ -356,9 +359,9 @@
 
 												<!-- content -->
 												<div class="pb-3">
-													<div class="work-content p-3">${item.workContent }</div>
+													<div class="work-content p-3">${fn:replace(item.workContent, newLineChar, "<br>" )}</div>
 													<textarea name="workContent"
-														class="work-content form-control d-none"
+														class="work-content form-control d-none autosize"
 														placeholder="업무내용을 입력하세요" required>${item.workContent }</textarea>
 												</div>
 
@@ -415,7 +418,8 @@
 												<div class="container reply-list">
 													<c:forEach var="reply" items="${item.workReplyDto }">
 														<!-- 댓글 템플릿 -->
-														<div id="reply-no-${reply.replyNum }" class="row clearfix mb-3">
+														<div id="reply-no-${reply.replyNum }"
+															class="row clearfix mb-3">
 															<!-- avatar -->
 															<div class="left-column float-left">
 																<img src="${root }/resources/img/avatar.png" width="50"
@@ -424,16 +428,16 @@
 															<!-- writer, write-date, reply-like, reply-edit, reply-delete -->
 															<div class="right-column ml-2">
 																<div class="writer-info">
-																	<span class="reply-writer">${reply.replyId }</span> <span
+																	<span class="reply-writer">${reply.replyId }</span>&nbsp;&nbsp;&nbsp; <span
 																		class="reply-write-date"><fmt:formatDate
 																			value="${reply.replyDate }"
-																			pattern="yyyy-MM-dd HH:mm:ss" /></span> <span class="ml-3">
+																			pattern="yyyy-MM-dd HH:mm:ss" /></span><span class="ml-3">
 																		<i class="far fa-thumbs-up"></i> <a class="reply-like"
 																		href="#">좋아요</a>
 																	</span> |&nbsp;<a class="reply-edit" href="#">수정</a> |&nbsp;<a
 																		class="reply-delete" href="#">삭제</a>
 																</div>
-																<div class="reply-content">${reply.replyContent }</div>
+																<div class="reply-content p-2">${fn:replace(reply.replyContent, newLineChar, "<br>") }</div>
 																<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
 																<div
 																	class="reply-file-down clearfix bg-info ${reply.replyFileSize == 0? 'd-none': '' }">
@@ -450,39 +454,37 @@
 												</div>
 
 												<!-- reply-form -->
-												<div class="container">
-													<form class="reply-form"
-														action="${root }/work-reply/add-reply.do">
-														<!-- avatar, reply-form, submit(작성) -->
-														<div class="row">
-															<div class="input-group mb-3">
-																<!-- avatar -->
-																<div class="input-group-append">
-																	<img src="${root }/resources/img/avatar.png" width="50"
-																		height="50" />
-																</div>
-																<!-- reply-form -->
-																<textarea class="reply-content form-control"
-																	placeholder="댓글을 작성하세요." name="replyContent" required></textarea>
-																<!-- submit -->
-																<div class="input-group-append">
-																	<button class="btn btn-outline-secondary" type="submit">작성</button>
-																</div>
+												<form class="reply-form"
+													action="${root }/work-reply/add-reply.do">
+													<!-- avatar, reply-form, submit(작성) -->
+													<div class="row">
+														<div class="input-group mb-3">
+															<!-- avatar -->
+															<div class="input-group-append">
+																<img src="${root }/resources/img/avatar.png" width="50"
+																	height="50" />
+															</div>
+															<!-- reply-form -->
+															<textarea class="reply-content form-control autosize"
+																placeholder="댓글을 작성하세요." name="replyContent" required></textarea>
+															<!-- submit -->
+															<div class="input-group-append">
+																<button class="btn btn-outline-secondary" type="submit">작성</button>
 															</div>
 														</div>
-														<!-- input-file -->
-														<div class="row">
-															<div class="right-column ml-2 col-lg-8 float-right">
-																<div class="form-group clearfix position-relative">
-																	<span class="float-left"> <i
-																		class="fas fa-paperclip fa-lg mt-3 mr-2"></i>
-																	</span> <input class="input-file form-control" type="file"
-																		name="inputFile" style="width: calc(100% - 50px)">
-																</div>
+													</div>
+													<!-- input-file -->
+													<div class="row">
+														<div class="right-column ml-2 col-lg-8 float-right">
+															<div class="form-group clearfix position-relative">
+																<span class="float-left"> <i
+																	class="fas fa-paperclip fa-lg mt-3 mr-2"></i>
+																</span> <input class="input-file form-control" type="file"
+																	name="inputFile" style="width: calc(100% - 50px)">
 															</div>
 														</div>
-													</form>
-												</div>
+													</div>
+												</form>
 												<!-- End of reply-form -->
 											</div>
 										</div>
@@ -709,13 +711,13 @@
 		<!-- writer, write-date, reply-like, reply-edit, reply-delete -->
 		<div class="right-column ml-2">
 			<div class="writer-info">
-				<span class="reply-writer">작성자</span> <span class="reply-write-date">작성일</span>
+				<span class="reply-writer">작성자</span>&nbsp;&nbsp;&nbsp; <span class="reply-write-date">작성일</span>
 				<span class="ml-3"> <i class="far fa-thumbs-up"></i> <a
 					class="reply-like" href="#">좋아요</a>
 				</span> |&nbsp;<a class="reply-edit" href="#">수정</a> |&nbsp;<a
 					class="reply-delete" href="#">삭제</a>
 			</div>
-			<div class="reply-content">Trust You</div>
+			<div class="reply-content p-2">댓글 내용</div>
 			<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
 			<div class="reply-file-down clearfix bg-info d-none">
 				<span class="left-column float-left"> <i class="fas fa-file"></i>
@@ -809,7 +811,7 @@
 					<div class="pb-3">
 						<div class="work-content p-3">내용</div>
 						<textarea name="workContent"
-							class="form-control work-content d-none"
+							class="form-control work-content d-none autosize"
 							placeholder="업무내용을 입력하세요" required>내용</textarea>
 					</div>
 
@@ -859,38 +861,36 @@
 					<div class="container reply-list"></div>
 
 					<!-- reply-form -->
-					<div class="container">
-						<form class="reply-form" action="${root }/work-reply/add-reply.do">
-							<!-- avatar, reply-form, submit(작성) -->
-							<div class="row">
-								<div class="input-group mb-3">
-									<!-- avatar -->
-									<div class="input-group-append">
-										<img src="${root }/resources/img/avatar.png" width="50"
-											height="50" />
-									</div>
-									<!-- reply-form -->
-									<textarea class="reply-content form-control"
-										placeholder="댓글을 작성하세요." name="replyContent" required></textarea>
-									<!-- submit -->
-									<div class="input-group-append">
-										<button class="btn btn-outline-secondary" type="submit">작성</button>
-									</div>
+					<form class="reply-form" action="${root }/work-reply/add-reply.do">
+						<!-- avatar, reply-form, submit(작성) -->
+						<div class="row">
+							<div class="input-group mb-3">
+								<!-- avatar -->
+								<div class="input-group-append">
+									<img src="${root }/resources/img/avatar.png" width="50"
+										height="50" />
+								</div>
+								<!-- reply-form -->
+								<textarea class="reply-content form-control autosize"
+									placeholder="댓글을 작성하세요." name="replyContent" required></textarea>
+								<!-- submit -->
+								<div class="input-group-append">
+									<button class="btn btn-outline-secondary" type="submit">작성</button>
 								</div>
 							</div>
-							<!-- input-file -->
-							<div class="row">
-								<div class="right-column ml-2 col-lg-8 float-right">
-									<div class="form-group clearfix position-relative">
-										<span class="float-left"> <i
-											class="fas fa-paperclip fa-lg mt-3 mr-2"></i>
-										</span> <input class="input-file form-control" type="file"
-											name="inputFile" style="width: calc(100% - 50px)">
-									</div>
+						</div>
+						<!-- input-file -->
+						<div class="row">
+							<div class="right-column ml-2 col-lg-8 float-right">
+								<div class="form-group clearfix position-relative">
+									<span class="float-left"> <i
+										class="fas fa-paperclip fa-lg mt-3 mr-2"></i>
+									</span> <input class="input-file form-control" type="file"
+										name="inputFile" style="width: calc(100% - 50px)">
 								</div>
 							</div>
-						</form>
-					</div>
+						</div>
+					</form>
 					<!-- End of reply-form -->
 				</div>
 				<!-- End of Card Body(댓글 리스트) -->

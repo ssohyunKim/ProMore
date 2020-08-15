@@ -11,7 +11,6 @@
 		<result column="reply_num" property="replyNum" />
 		<result column="reply_id" property="replyId" />
 		<result column="reply_date" property="replyDate" />
-		<result column="reply_like" property="replyLike" />
 		<result column="reply_content" property="replyContent" />
 		<result column="reply_file_name" property="replyFileName" />
 		<result column="reply_file_path" property="replyFilePath" />
@@ -30,7 +29,6 @@
 		reply_num,
 		reply_id,
 		reply_date,
-		reply_like,
 		reply_content,
 		work_num
 		)
@@ -38,7 +36,6 @@
 		work_reply_reply_num_seq.nextval,
 		#{replyId},
 		sysdate,
-		0,
 		#{replyContent},
 		#{workNum}
 		)
@@ -62,22 +59,29 @@
 		parameterType="com.promore.workspace.dto.WorkspaceDto"
 		resultMap="work_reply_dto">
 		select * from work_reply
-		where work_num = ${workNum}
+		where work_num = #{workNum}
 		order by
-		reply_date
+		reply_num
 	</select>
 
 	<delete id="delete_reply"
 		parameterType="com.promore.workspace.dto.WorkReplyDto">
 		delete from work_reply
-		where reply_num = ${replyNum}
+		where reply_num = #{replyNum}
 	</delete>
 
 	<delete id="delete_all_reply"
 		parameterType="com.promore.workspace.dto.WorkspaceDto">
 		delete from work_reply
-		where work_num = ${workNum}
+		where work_num = #{workNum}
 	</delete>
 
+	<update id="update_reply"
+		parameterType="com.promore.workspace.dto.WorkReplyDto">
+		update work_reply set
+		reply_date = sysdate,
+		reply_content = #{replyContent}
+		where reply_num = #{replyNum}
+	</update>
 
 </mapper>

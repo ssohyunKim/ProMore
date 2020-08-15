@@ -33,4 +33,6 @@ public interface WorkspaceDao {
 	public int selectReplyNum();
 
 	public int insertReply(WorkReplyDto workReplyDto);
+
+	public int updateReply(WorkReplyDto workReplyDto);
 }

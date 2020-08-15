@@ -123,7 +123,7 @@ function writeToServer(obj) {
       $tmpl.find(".work-receiver").text(workReceiver);
       $tmpl.find(".work-start-date").val(workStartDate);
       $tmpl.find(".work-end-date").val(workEndDate);
-      $tmpl.find(".work-content").text(workContent);
+      $tmpl.find(".work-content").html(workContent.replace(/\n/g, "<br>"));
       copyWorkTmpl.querySelector(".reply-form").onsubmit = addReply;
       copyWorkTmpl.querySelector(".work-edit").onclick = editWork;
       copyWorkTmpl.querySelector(".work-edit-cancel").onclick = cancelEdit;
@@ -199,10 +199,13 @@ function editWork(e) {
   work.querySelector(".work-end-date").removeAttribute("readonly");
 
   work.querySelector("div.work-content").classList.add("d-none");
-  work.querySelector("textarea.work-content").classList.remove("d-none");
-  work.querySelector("textarea.work-content").innerText = work.querySelector(
-    "div.work-content"
-  ).innerText;
+  var textarea = work.querySelector("textarea.work-content");
+  textarea.classList.remove("d-none");
+  textarea.value = work
+    .querySelector("div.work-content")
+    .innerHTML.replace(/<br>/g, "\n");
+  textarea.style.height = textarea.scrollHeight + "px";
+  textarea.focus();
 
   work.querySelector(".file-up").classList.remove("d-none");
   work.querySelector(".download-file").classList.add("d-none");
@@ -346,9 +349,9 @@ function okEdit(e) {
       work.querySelector(".work-end-date").setAttribute("readonly", "");
 
       work.querySelector("div.work-content").classList.remove("d-none");
-      work.querySelector("div.work-content").innerText = work.querySelector(
-        "textarea.work-content"
-      ).value;
+      work.querySelector("div.work-content").innerHTML = work
+        .querySelector("textarea.work-content")
+        .value.replace(/\n/g, "<br>");
       work.querySelector("textarea.work-content").classList.add("d-none");
 
       work.querySelector(".file-up").classList.add("d-none");

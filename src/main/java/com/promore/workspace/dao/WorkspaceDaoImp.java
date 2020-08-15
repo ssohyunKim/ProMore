@@ -90,4 +90,9 @@ public class WorkspaceDaoImp implements WorkspaceDao {
 		return sqlSessionTemplate.delete("WorkReplyMapper.delete_all_reply", workspaceDto);
 	}
 
+	@Override
+	public int updateReply(WorkReplyDto workReplyDto) {
+		return sqlSessionTemplate.update("WorkReplyMapper.update_reply", workReplyDto);
+	}
+
 }

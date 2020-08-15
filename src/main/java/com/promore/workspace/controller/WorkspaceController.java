@@ -42,8 +42,8 @@ public class WorkspaceController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("req", req);
 		workspaceService.getAllWork(mav);
-		
-		//프로젝트 정보(추가)
+
+		// 프로젝트 정보(추가)
 		projectservice.projectList(mav);
 
 		return mav;
@@ -126,8 +126,7 @@ public class WorkspaceController {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	// 파일 삭제
 	@RequestMapping(value = "/workspace/delete-file.do", method = RequestMethod.GET)
 	public void deleteFile(HttpServletRequest req, HttpServletResponse resp) {
@@ -143,7 +142,7 @@ public class WorkspaceController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// 댓글 작성
 	@RequestMapping(value = "/work-reply/add-reply.do", method = RequestMethod.POST)
 	public void addReply(HttpServletRequest req, HttpServletResponse resp) {
@@ -159,7 +158,7 @@ public class WorkspaceController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// 댓글 삭제
 	@RequestMapping(value = "/work-reply/delete-reply.do", method = RequestMethod.GET)
 	public void deleteReply(HttpServletRequest req, HttpServletResponse resp) {
@@ -175,10 +174,25 @@ public class WorkspaceController {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	//추가사항
-	//일감 현황
+
+	// 댓글 수정
+	@RequestMapping(value = "/work-reply/edit-reply.do", method = RequestMethod.POST)
+	public void editReply(HttpServletRequest req, HttpServletResponse resp) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("req", req);
+		workspaceService.editReply(mav);
+
+		resp.setHeader("Content-Type", "plain/text;charset=utf-8");
+		try {
+			resp.getWriter().println(mav.getModel().get("chk"));
+			resp.flushBuffer();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 추가사항
+	// 일감 현황
 	@RequestMapping(value = "/workspace/workState.do", method = RequestMethod.GET)
 	public ModelAndView projectWorkState(HttpServletRequest request, HttpServletResponse response) {
 
@@ -189,16 +203,15 @@ public class WorkspaceController {
 		session.setAttribute("id", id);
 		mav.addObject("request", request);
 		mav.addObject("id", id);
-		
-		//일감 정보 가져오기
+
+		// 일감 정보 가져오기
 		workspaceService.workState(mav, id);
-		//프로젝트 이름 가져오기
-		
-		//프로젝트 테이블 가져오기
+		// 프로젝트 이름 가져오기
+
+		// 프로젝트 테이블 가져오기
 		projectservice.projectList(mav);
 
 		return mav;
 	}
-	
-	
+
 }

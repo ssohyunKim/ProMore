@@ -268,6 +268,46 @@ public class WorkspaceServiceImp implements WorkspaceService {
 	}
 
 	@Override
+	public void editReply(ModelAndView mav) {
+		Map<String, Object> model = mav.getModel();
+		MultipartHttpServletRequest req = (MultipartHttpServletRequest) model.get("req");
+
+		WorkReplyDto workReplyDto = new WorkReplyDto();
+//		workReplyDto.setReplyId(session.getAttribute("id"));
+		workReplyDto.setReplyId(req.getParameter("replyId"));
+		workReplyDto.setReplyContent(req.getParameter("replyContent"));
+		workReplyDto.setReplyNum(Integer.parseInt(req.getParameter("replyNum")));
+
+//		MultipartFile uploadFile = req.getFile("inputFile");
+//
+//		if (uploadFile != null && uploadFile.getSize() > 0) {
+//			String fileName = Long.toString(System.currentTimeMillis()) + "_" + uploadFile.getOriginalFilename();
+//			long fileSize = uploadFile.getSize();
+//
+//			File store = new File("C:\\pds\\");
+//			store.mkdir();
+//
+//			if (store.exists() && store.isDirectory()) {
+//				File dstFile = new File(store, fileName);
+//
+//				try {
+//					uploadFile.transferTo(dstFile);
+//
+//					workReplyDto.setReplyFilePath(dstFile.getAbsolutePath());
+//					workReplyDto.setReplyFileName(fileName);
+//					workReplyDto.setReplyFileSize(fileSize);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//					mav.addObject("num", 0);
+//					return;
+//				}
+//			}
+//		}
+
+		mav.addObject("chk", workspaceDao.updateReply(workReplyDto));
+	}
+
+	@Override
 	public void workState(ModelAndView mav, String id) {
 		int workCount = workspaceDao.workCount(id);
 		System.out.println("workStatOk" + workCount);
