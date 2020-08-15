@@ -45,7 +45,7 @@
 
    <!-- 마이페이지 -->
 
-   <c:if test="${memLevel=='팀원' || memLevel=='팀장'}">
+   <c:if test="${memberDto.memLevel=='팀원' || memberDto.memLevel=='팀장'}">
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item active"><a class="nav-link collapsed"
          href="#" data-toggle="collapse" data-target="#collapsePages"
@@ -56,14 +56,14 @@
             aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                <h6 class="collapse-header">My Page</h6>
-               <a class="collapse-item" href="${root}/member/memberUpdate.do?memNum=${memNum}">회원 수정</a>
+               <a class="collapse-item" href="${root}/member/memberUpdate.do?memNum=${memberDto.memNum}">회원 수정</a>
                <a class="collapse-item" href="#">회원 탈퇴</a>
                <div class="collapse-divider"></div>
             </div>
          </div></li>
    </c:if>
 
-   <c:if test="${memLevel=='관리자'}">
+   <c:if test="${memberDto.memLevel=='관리자'}">
       <!-- Nav Item - Manager Collapse Menu -->
       <li class="nav-item active"><a class="nav-link collapsed"
          href="#" data-toggle="collapse" data-target="#collapseManager"
@@ -101,7 +101,7 @@
    <!-- Divider -->
    <hr class="sidebar-divider">
 
-   <c:if test="${memLevel=='팀원' || memLevel=='팀장'}">
+   <c:if test="${memberDto.memLevel=='팀원' || memberDto.memLevel=='팀장'}">
    <!-- Heading -->
    <div class="sidebar-heading">Addons</div>
 
