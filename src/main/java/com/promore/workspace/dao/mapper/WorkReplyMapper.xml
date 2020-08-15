@@ -73,5 +73,11 @@
 		where reply_num = ${replyNum}
 	</delete>
 
+	<delete id="delete_all_reply"
+		parameterType="com.promore.workspace.dto.WorkspaceDto">
+		delete from work_reply
+		where work_num = ${workNum}
+	</delete>
+
 
 </mapper>

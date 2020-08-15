@@ -1,5 +1,6 @@
 package com.promore.workspace.service;
 
+import java.beans.Transient;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -166,15 +167,17 @@ public class WorkspaceServiceImp implements WorkspaceService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteWork(ModelAndView mav) {
 		Map<String, Object> model = mav.getModel();
 
 		HttpServletRequest req = (HttpServletRequest) model.get("req");
 
 		WorkspaceDto workspaceDto = new WorkspaceDto();
-		workspaceDto.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
 
-		mav.addObject("chk", workspaceDao.deleteWork(workspaceDto));
+		workspaceDto.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
+		if (workspaceDao.deleteAllReply(workspaceDto) >= 1)
+			mav.addObject("chk", workspaceDao.deleteWork(workspaceDto));
 	}
 
 	@Override
@@ -257,10 +260,10 @@ public class WorkspaceServiceImp implements WorkspaceService {
 	public void deleteReply(ModelAndView mav) {
 		Map<String, Object> model = mav.getModel();
 		HttpServletRequest req = (HttpServletRequest) model.get("req");
-		
+
 		WorkReplyDto workReplyDto = new WorkReplyDto();
 		workReplyDto.setReplyNum(Integer.parseInt(req.getParameter("replyNum")));
-		
+
 		mav.addObject("chk", workspaceDao.deleteReply(workReplyDto));
 	}
 

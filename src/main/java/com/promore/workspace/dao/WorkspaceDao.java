@@ -21,8 +21,10 @@ public interface WorkspaceDao {
 	public int updateWork(WorkspaceDto workspaceDto);
 
 	public int deleteWork(WorkspaceDto workspaceDto);
-	
+
 	public int deleteReply(WorkReplyDto workReplyDto);
+
+	public int deleteAllReply(WorkspaceDto workspaceDto);
 
 	public int workCount(String id);
 
