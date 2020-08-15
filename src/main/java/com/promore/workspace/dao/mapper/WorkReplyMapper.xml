@@ -58,4 +58,20 @@
 		)
 	</insert>
 
+	<select id="select_reply"
+		parameterType="com.promore.workspace.dto.WorkspaceDto"
+		resultMap="work_reply_dto">
+		select * from work_reply
+		where work_num = ${workNum}
+		order by
+		reply_date
+	</select>
+
+	<delete id="delete_reply"
+		parameterType="com.promore.workspace.dto.WorkReplyDto">
+		delete from work_reply
+		where reply_num = ${replyNum}
+	</delete>
+
+
 </mapper>

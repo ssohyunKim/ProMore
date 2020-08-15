@@ -1,12 +1,34 @@
-// all
+// single
 var replyTmpl = document.querySelector("#reply-tmpl");
+
 function init() {
   // static
-  var replyForm = document.querySelectorAll("[id^='work-no-'] .reply-form");
+  var replyForms = document.querySelectorAll("[id^='work-no-'] .reply-form");
+  var replyLikeBtns = document.querySelectorAll(
+    "[id^='reply-no-'] .reply-like"
+  );
+  var replyEditBtns = document.querySelectorAll(
+    "[id^='reply-no-'] .reply-edit"
+  );
+  var replyDeleteBtns = document.querySelectorAll(
+    "[id^='reply-no-'] .reply-delete"
+  );
 
   // static
-  [].forEach.call(replyForm, function (form) {
+  [].forEach.call(replyForms, function (form) {
     form.onsubmit = addReply;
+  });
+
+  [].forEach.call(replyLikeBtns, function (btn) {
+    // btn.onclick = likeReply;
+  });
+
+  [].forEach.call(replyEditBtns, function (btn) {
+    // btn.onclick = editReply;
+  });
+
+  [].forEach.call(replyDeleteBtns, function (btn) {
+    btn.onclick = deleteReply;
   });
 }
 
@@ -24,6 +46,7 @@ function addReply(e) {
   var data = new FormData(this);
 
   // id -> 현재 세션의 아이디로 변경
+  var id = "로그인한 유저"; // 아래에서 쓰고 있음
   data.append("replyId", id);
   data.append("workNum", workNum);
 
@@ -39,9 +62,10 @@ function addReply(e) {
     .then(function (num) {
       if (parseInt(num.trim()) <= 0) return new Error();
 
+      // dynamic
       var copyReply = replyTmpl.cloneNode(true);
       copyReply.classList.remove("d-none");
-      copyReply.removeAttribute("id");
+      copyReply.id = "reply-no-" + num;
       list.appendChild(copyReply);
 
       // 가짜 데이터 바인딩
@@ -54,11 +78,38 @@ function addReply(e) {
       ).innerHTML = replyContent.value.replace(/\n/g, "<br/>");
       replyContent.value = "";
 
-      copyReply.querySelector(".reply-like").onclick = null;
-      copyReply.querySelector(".reply-edit").onclick = null;
-      copyReply.querySelector(".reply-edit").onclick = null;
+      // dynamic
+      // copyReply.querySelector(".reply-like").onclick = likeReply;
+      // copyReply.querySelector(".reply-edit").onclick = editReply;
+      copyReply.querySelector(".reply-delete").onclick = deleteReply;
     })
     .catch(function (num) {
       alert("댓글을 작성하는데 실패했습니다.");
+    });
+}
+
+function deleteReply(e) {
+  e.preventDefault();
+
+  var reply = this.closest("[id^='reply-no-']");
+  var replyNum = reply.id.trim().substr(9);
+
+  var data = {
+    replyNum: replyNum,
+  };
+
+  $.ajax({
+    url: root + "/work-reply/delete-reply.do",
+    method: "get",
+    data: data,
+    dataType: "text",
+  })
+    .then(function (chk) {
+      if (chk.trim() !== "1") return new Error();
+
+      reply.remove();
+    })
+    .catch(function () {
+      alert("댓글이 삭제되지 못했습니다. 다시 시도해주세요.");
     });
 }

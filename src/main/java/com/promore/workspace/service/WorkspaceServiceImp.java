@@ -26,6 +26,7 @@ public class WorkspaceServiceImp implements WorkspaceService {
 	private WorkspaceDao workspaceDao;
 
 	@Override
+	@Transactional
 	public void getAllWork(ModelAndView mav) {
 		Map<String, Object> model = mav.getModel();
 
@@ -34,6 +35,10 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		workspaceDto.setProNum(Integer.parseInt(req.getParameter("proNum")));
 
 		List<WorkspaceDto> list = workspaceDao.selectAllWork(workspaceDto);
+
+		for (WorkspaceDto dto : list)
+			dto.setWorkReplyDto(workspaceDao.selectAllReply(dto));
+
 		mav.addObject("proNum", workspaceDto.getProNum());
 		mav.addObject("list", list);
 
@@ -153,7 +158,7 @@ public class WorkspaceServiceImp implements WorkspaceService {
 				}
 			}
 		}
-		
+
 		System.out.println(workspaceDto);
 
 		if (chk == 1)
@@ -244,8 +249,19 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		}
 		System.out.println(workReplyDto);
 
-		if (workspaceDao.insertReply(workReplyDto)== 1)
+		if (workspaceDao.insertReply(workReplyDto) == 1)
 			mav.addObject("num", workspaceDao.selectReplyNum());
+	}
+
+	@Override
+	public void deleteReply(ModelAndView mav) {
+		Map<String, Object> model = mav.getModel();
+		HttpServletRequest req = (HttpServletRequest) model.get("req");
+		
+		WorkReplyDto workReplyDto = new WorkReplyDto();
+		workReplyDto.setReplyNum(Integer.parseInt(req.getParameter("replyNum")));
+		
+		mav.addObject("chk", workspaceDao.deleteReply(workReplyDto));
 	}
 
 	@Override
@@ -261,5 +277,4 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		mav.setViewName("workspace/workState");
 
 	}
-
 }

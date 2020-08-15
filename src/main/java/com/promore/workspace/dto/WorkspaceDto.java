@@ -1,6 +1,7 @@
 package com.promore.workspace.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class WorkspaceDto {
 	private int workNum;
@@ -17,13 +18,15 @@ public class WorkspaceDto {
 	private String workFilePath;
 	private long workFileSize;
 	private int proNum;
+	private List<WorkReplyDto> workReplyDto;
 
 	public WorkspaceDto() {
 	}
 
 	public WorkspaceDto(int workNum, String workSender, String workReceiver, String workSubject, String workContent,
 			int workState, Date workStartDate, Date workEndDate, Date workWriteDate, String writeDate,
-			String workFileName, String workFilePath, long workFileSize, int proNum) {
+			String workFileName, String workFilePath, long workFileSize, int proNum, List<WorkReplyDto> workReplyDto) {
+		super();
 		this.workNum = workNum;
 		this.workSender = workSender;
 		this.workReceiver = workReceiver;
@@ -38,6 +41,7 @@ public class WorkspaceDto {
 		this.workFilePath = workFilePath;
 		this.workFileSize = workFileSize;
 		this.proNum = proNum;
+		this.workReplyDto = workReplyDto;
 	}
 
 	public int getWorkNum() {
@@ -152,12 +156,21 @@ public class WorkspaceDto {
 		this.proNum = proNum;
 	}
 
+	public List<WorkReplyDto> getWorkReplyDto() {
+		return workReplyDto;
+	}
+
+	public void setWorkReplyDto(List<WorkReplyDto> workReplyDto) {
+		this.workReplyDto = workReplyDto;
+	}
+
 	@Override
 	public String toString() {
 		return "WorkspaceDto [workNum=" + workNum + ", workSender=" + workSender + ", workReceiver=" + workReceiver
 				+ ", workSubject=" + workSubject + ", workContent=" + workContent + ", workState=" + workState
 				+ ", workStartDate=" + workStartDate + ", workEndDate=" + workEndDate + ", workWriteDate="
 				+ workWriteDate + ", writeDate=" + writeDate + ", workFileName=" + workFileName + ", workFilePath="
-				+ workFilePath + ", workFileSize=" + workFileSize + ", proNum=" + proNum + "]";
+				+ workFilePath + ", workFileSize=" + workFileSize + ", proNum=" + proNum + ", workReplyDto="
+				+ workReplyDto + "]";
 	}
 }

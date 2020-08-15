@@ -160,23 +160,21 @@ public class WorkspaceController {
 		}
 	}
 	
+	// 댓글 삭제
+	@RequestMapping(value = "/work-reply/delete-reply.do", method = RequestMethod.GET)
+	public void deleteReply(HttpServletRequest req, HttpServletResponse resp) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("req", req);
+		workspaceService.deleteReply(mav);
 
-//	@RequestMapping("/workspace/workList.do") // 댓글 리스트
-//	@ResponseBody
-//	private List<WorkspaceDto> workServiceList(Model model) throws Exception {
-//		return workspaceService.workListService();
-//	}
-
-//	@RequestMapping("/workspace/workInsert.do") // 댓글 작성
-//	@ResponseBody
-//	private int workServiceInsert(@RequestParam HashMap<String, Object> paramMap) throws Exception {
-//
-//		WorkspaceDto workspaceDto = new WorkspaceDto();
-//		workspaceDto.setWorkNum((Integer) (paramMap.get("workNum")));
-//		workspaceDto.setWorkContent((String) paramMap.get("workContent"));
-//
-//		return workspaceService.workInsertService(workspaceDto);
-//	}
+		resp.setHeader("Content-Type", "plain/text;charset=utf-8");
+		try {
+			resp.getWriter().println(mav.getModel().get("chk"));
+			resp.flushBuffer();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	//추가사항
