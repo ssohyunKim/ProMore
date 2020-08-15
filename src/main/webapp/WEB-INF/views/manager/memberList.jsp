@@ -104,8 +104,10 @@
 
 			</div>
 			<!-- End of Main Content -->
-
+			
 			<!-- Footer -->
+			
+			<jsp:include page="/WEB-INF/template/footer.jsp" />
 			
 			<!-- End of Footer -->
 
@@ -120,7 +122,7 @@
 		class="fas fa-angle-up"></i>
 	</a>
 	
-		<!-- member Delete Model -->
+	<!-- member Delete Model -->
 	<div class="modal fade" id="memberDeleteModal" tabindex="-1" role="dialog" >
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">

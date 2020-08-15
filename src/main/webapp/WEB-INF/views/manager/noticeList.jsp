@@ -136,7 +136,9 @@
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-
+			
+			<jsp:include page="/WEB-INF/template/footer.jsp" />
+			
 			<!-- End of Footer -->
 
 		</div>
