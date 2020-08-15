@@ -78,13 +78,14 @@ function projectApply(root){
            <h1 class="h3 mb-0 text-gray-800">프로젝트 글보기</h1>
 	    </div>
 
-		<!-- 글 작성 버튼 -->
-		<div>
-			<a href="#" class="btn btn-primary btn-circle btn-md" data-toggle="modal" data-target="#projectWriteModal" style="float:right">
-				<i class="fas fa-pen"></i>
-			</a>
-		</div>	
-		
+		<!--팀장만  글 작성 버튼 -->
+		<c:if test= "${memLevel eq'팀장'}">
+			<div>
+				<a href="#" class="btn btn-primary btn-circle btn-md" data-toggle="modal" data-target="#projectWriteModal" style="float:right">
+					<i class="fas fa-pen"></i>
+				</a>
+			</div>	
+		</c:if>
 
 		<c:if test="${projectCount>0}">		
 		 	<c:forEach var="projectDto" items="${projectDtoArray}">		 	
