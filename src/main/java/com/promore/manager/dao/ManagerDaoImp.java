@@ -93,6 +93,16 @@ public class ManagerDaoImp implements ManagerDao {
 		
 		return list;
 	}
+	
+	@Override
+	public CustomerDto reportSelect(int cusNum) {
+		return sqlSessionTemplate.selectOne("report_select", cusNum);
+	}
+	
+	@Override
+	public int reportStateChange(int cusNum) {
+		return sqlSessionTemplate.update("report_state_change", cusNum);
+	}
 
 	@Override
 	public int memberCount() {

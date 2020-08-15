@@ -19,9 +19,7 @@
 		<result column="CUS_FILE_PATH" property="cusFilePath"/>
 		<result column="CUS_FILE_SIZE" property="cusFileSize"/>
 		
-		<result column="cus_group_number" property="cusGroupNumber"/>
-		<result column="cus_sequence_number" property="cusSequenceNumber"/>
-		<result column="cus_sequence_level" property="cusSequenceLevel"/>
+		<result column="cus_state" property="cusState" />
 	</resultMap>
 	
 	<select id="report_count" resultType="int">
@@ -31,5 +29,13 @@
 	<select id="report_list" resultMap="report_dto">
 		select * from customer_board order by cus_num desc
 	</select>
+
+	<select id="report_select" parameterType="int" resultMap="report_dto">
+		select * from customer_board where cus_num = #{cusNum}
+	</select>
+	
+	<update id="report_state_change" parameterType="int">
+		update customer_board set cus_state = 1 where cus_num = #{cusNum}
+	</update>
 	
 </mapper>

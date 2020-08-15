@@ -129,7 +129,7 @@ public class ManagerServiceImp implements ManagerService {
 		mav.setViewName("manager/noticeUpdateOk");
 	}
 
-	public void fileDownload(ModelAndView mav) {
+	public void noticeFileDownload(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		HttpServletResponse response = (HttpServletResponse) map.get("response");
@@ -221,6 +221,77 @@ public class ManagerServiceImp implements ManagerService {
 
 		HAspect.logger.info(HAspect.logMsg + reportArray.size());
 	}
+	
+	public void reportFileDownload(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		HttpServletResponse response = (HttpServletResponse) map.get("response");
+
+		int cusNum = Integer.parseInt(request.getParameter("cusNum"));
+		HAspect.logger.info(HAspect.logMsg + cusNum);
+
+		CustomerDto reportDto = managerDao.reportSelect(cusNum);
+		HAspect.logger.info(HAspect.logMsg + reportDto);
+
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+
+		try {
+			int index = reportDto.getCusFileName().indexOf("_") + 1;
+			String fName = reportDto.getCusFileName().substring(index);
+			String fileName = new String(fName.getBytes("utf-8"), "ISO-8859-1");
+
+			long fileSize = reportDto.getCusFileSize();
+			String path = reportDto.getCusFilePath();
+
+			response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+			response.setContentType("application/octet-stream");
+			response.setContentLength((int) fileSize);
+
+			bis = new BufferedInputStream(new FileInputStream(path), 1024);
+			bos = new BufferedOutputStream(response.getOutputStream(), 1024);
+
+			while (true) {
+				int data = bis.read();
+				if (data == -1) break;
+				bos.write(data);
+			}
+			bos.flush();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			try {
+				if (bis != null)
+					bis.close();
+				if (bos != null)
+					bos.close();
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@Override
+	public void reportStateChange(ModelAndView mav) {
+		
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+
+		int cusNum = Integer.parseInt(request.getParameter("cusNum"));
+		HAspect.logger.info(HAspect.logMsg + cusNum);
+
+		int check = managerDao.reportStateChange(cusNum);
+
+		mav.addObject("check", check);
+		mav.setViewName("manager/reportStateChangeOk");
+		
+	}
 
 	@Override
 	public void memberList(ModelAndView mav) {
@@ -252,4 +323,6 @@ public class ManagerServiceImp implements ManagerService {
 		mav.addObject("check", check);
 		mav.setViewName("manager/memberDeleteOk");
 	}
+	
+	
 }
