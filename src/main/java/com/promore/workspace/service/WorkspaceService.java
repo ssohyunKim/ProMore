@@ -22,4 +22,6 @@ public interface WorkspaceService {
 	public void deleteReply(ModelAndView mav);
 
 	public void editReply(ModelAndView mav);
+
+	public void likeReply(ModelAndView mav);
 }

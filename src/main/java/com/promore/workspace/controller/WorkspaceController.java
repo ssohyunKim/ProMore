@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -185,6 +186,22 @@ public class WorkspaceController {
 		resp.setHeader("Content-Type", "plain/text;charset=utf-8");
 		try {
 			resp.getWriter().println(mav.getModel().get("chk"));
+			resp.flushBuffer();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 좋아요 추가
+	@RequestMapping(value = "/work-reply/like-reply.do", method = RequestMethod.GET)
+	public void likeReply(HttpServletRequest req, HttpServletResponse resp) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("req", req);
+		workspaceService.likeReply(mav);
+
+		resp.setHeader("Content-Type", "application/json;charset=utf-8");
+		try {
+			resp.getWriter().println(((JSONObject) mav.getModel().get("jsonObj")).toJSONString());
 			resp.flushBuffer();
 		} catch (IOException e) {
 			e.printStackTrace();

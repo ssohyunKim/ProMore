@@ -2,6 +2,7 @@ package com.promore.workspace.dao;
 
 import java.util.List;
 
+import com.promore.workspace.dto.ReplyLikeDto;
 import com.promore.workspace.dto.WorkReplyDto;
 import com.promore.workspace.dto.WorkspaceDto;
 
@@ -24,8 +25,6 @@ public interface WorkspaceDao {
 
 	public int deleteReply(WorkReplyDto workReplyDto);
 
-	public int deleteAllReply(WorkspaceDto workspaceDto);
-
 	public int workCount(String id);
 
 	public List<WorkspaceDto> workList(String id);
@@ -35,4 +34,10 @@ public interface WorkspaceDao {
 	public int insertReply(WorkReplyDto workReplyDto);
 
 	public int updateReply(WorkReplyDto workReplyDto);
+
+	public int selectLikeForChk(ReplyLikeDto replyLikeDto);
+
+	public int selectLikeCnt(ReplyLikeDto replyLikeDto);
+
+	public int insertLike(ReplyLikeDto replyLikeDto);
 }

@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.promore.calendar.dto.CalendarDto;
 import com.promore.workspace.dao.WorkspaceDao;
+import com.promore.workspace.dto.ReplyLikeDto;
 import com.promore.workspace.dto.WorkReplyDto;
 import com.promore.workspace.dto.WorkspaceDto;
 
@@ -32,13 +37,24 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		Map<String, Object> model = mav.getModel();
 
 		HttpServletRequest req = (HttpServletRequest) model.get("req");
+		HttpSession sess = (HttpSession) req.getSession();
+
 		WorkspaceDto workspaceDto = new WorkspaceDto();
 		workspaceDto.setProNum(Integer.parseInt(req.getParameter("proNum")));
 
 		List<WorkspaceDto> list = workspaceDao.selectAllWork(workspaceDto);
 
-		for (WorkspaceDto dto : list)
-			dto.setWorkReplyDto(workspaceDao.selectAllReply(dto));
+		for (WorkspaceDto workDto : list) {
+			List<WorkReplyDto> replyDtos = workspaceDao.selectAllReply(workDto);
+			for (WorkReplyDto replyDto : replyDtos) {
+				ReplyLikeDto likeDto = new ReplyLikeDto();
+				likeDto.setMemId((String) sess.getAttribute("memId"));
+				likeDto.setReplyNum(replyDto.getReplyNum());
+				replyDto.setReplyLike(workspaceDao.selectLikeCnt(likeDto));
+				replyDto.setCanClickLike(workspaceDao.selectLikeForChk(likeDto) == 1 ? false : true);
+			}
+			workDto.setWorkReplyDto(replyDtos);
+		}
 
 		mav.addObject("proNum", workspaceDto.getProNum());
 		mav.addObject("list", list);
@@ -167,7 +183,6 @@ public class WorkspaceServiceImp implements WorkspaceService {
 	}
 
 	@Override
-	@Transactional
 	public void deleteWork(ModelAndView mav) {
 		Map<String, Object> model = mav.getModel();
 
@@ -176,8 +191,7 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		WorkspaceDto workspaceDto = new WorkspaceDto();
 
 		workspaceDto.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
-		if (workspaceDao.deleteAllReply(workspaceDto) >= 1)
-			mav.addObject("chk", workspaceDao.deleteWork(workspaceDto));
+		mav.addObject("chk", workspaceDao.deleteWork(workspaceDto));
 	}
 
 	@Override
@@ -305,6 +319,33 @@ public class WorkspaceServiceImp implements WorkspaceService {
 //		}
 
 		mav.addObject("chk", workspaceDao.updateReply(workReplyDto));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public void likeReply(ModelAndView mav) {
+		Map<String, Object> model = mav.getModel();
+		HttpServletRequest req = (HttpServletRequest) model.get("req");
+		HttpSession sess = (HttpSession) req.getSession();
+
+		ReplyLikeDto replyLikeDto = new ReplyLikeDto();
+
+		replyLikeDto.setMemId((String) sess.getAttribute("memId"));
+		replyLikeDto.setReplyNum(Integer.parseInt(req.getParameter("replyNum")));
+
+		JSONObject jsonObj = new JSONObject();
+		JSONObject jsonInObj = new JSONObject();
+
+		int chk = workspaceDao.selectLikeForChk(replyLikeDto);
+		jsonInObj.put("chk", chk);
+		if (chk == 0) {
+			workspaceDao.insertLike(replyLikeDto);
+			jsonInObj.put("cnt", workspaceDao.selectLikeCnt(replyLikeDto));
+		}
+		jsonObj.put("result", jsonInObj);
+
+		mav.addObject("jsonObj", jsonObj);
 	}
 
 	@Override

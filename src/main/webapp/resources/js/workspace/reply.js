@@ -26,7 +26,7 @@ function init() {
   });
 
   [].forEach.call(replyLikeBtns, function (btn) {
-    // btn.onclick = likeReply;
+    btn.onclick = likeReply;
   });
 
   [].forEach.call(replyEditBtns, function (btn) {
@@ -85,7 +85,7 @@ function addReply(e) {
       replyContent.value = "";
 
       // dynamic
-      // copyReply.querySelector(".reply-like").onclick = likeReply;
+      copyReply.querySelector(".reply-like").onclick = likeReply;
       copyReply.querySelector(".reply-edit").onclick = editReply;
       copyReply.querySelector(".reply-delete").onclick = deleteReply;
     })
@@ -120,6 +120,7 @@ function deleteReply(e) {
     });
 }
 
+// editReply 에서 사용됨
 var cachedReply;
 var cachedForm;
 
@@ -187,5 +188,39 @@ function editReplyOk(e) {
     })
     .catch(function () {
       alert("댓글을 수정하지 못했습니다. 다시 시도해주세요.");
+    });
+}
+
+function likeReply(e) {
+  e.preventDefault();
+
+  var reply = this.closest("[id^='reply-no-']");
+  var replyBtn = this;
+
+  var data = {
+    replyNum: reply.id.trim().substr(9),
+  };
+
+  $.ajax({
+    url: root + "/work-reply/like-reply.do",
+    method: "get",
+    data: data,
+    dataType: "json",
+  })
+    .then(function (data) {
+      var result = data.result;
+      if (result.chk > 0) {
+        alert("한 댓글 당 한번만 추천할 수 있습니다.");
+        return;
+      }
+
+      var likeCnt = reply.querySelector(".like-cnt");
+      likeCnt.innerText = result.cnt;
+      likeCnt.style.color = "#f00";
+
+      replyBtn.replaceWith(likeCnt);
+    })
+    .catch(function () {
+      alert("추천하는데 실패했습니다. 다시 시도해주세요.");
     });
 }

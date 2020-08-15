@@ -428,12 +428,16 @@
 															<!-- writer, write-date, reply-like, reply-edit, reply-delete -->
 															<div class="right-column ml-2">
 																<div class="writer-info">
-																	<span class="reply-writer">${reply.replyId }</span>&nbsp;&nbsp;&nbsp; <span
-																		class="reply-write-date"><fmt:formatDate
+																	<span class="reply-writer">${reply.replyId }</span>&nbsp;&nbsp;&nbsp;
+																	<span class="reply-write-date"><fmt:formatDate
 																			value="${reply.replyDate }"
 																			pattern="yyyy-MM-dd HH:mm:ss" /></span><span class="ml-3">
-																		<i class="far fa-thumbs-up"></i> <a class="reply-like"
-																		href="#">좋아요</a>
+																		<i class="far fa-thumbs-up"></i> <span
+																		class="like-cnt"
+																		style="color: ${reply.canClickLike? '#000': '#f00'}">${reply.replyLike }</span>
+																		<c:if test="${reply.canClickLike }">
+																			<a class="reply-like" href="#">좋아요</a>
+																		</c:if>
 																	</span> |&nbsp;<a class="reply-edit" href="#">수정</a> |&nbsp;<a
 																		class="reply-delete" href="#">삭제</a>
 																</div>
@@ -711,9 +715,10 @@
 		<!-- writer, write-date, reply-like, reply-edit, reply-delete -->
 		<div class="right-column ml-2">
 			<div class="writer-info">
-				<span class="reply-writer">작성자</span>&nbsp;&nbsp;&nbsp; <span class="reply-write-date">작성일</span>
-				<span class="ml-3"> <i class="far fa-thumbs-up"></i> <a
-					class="reply-like" href="#">좋아요</a>
+				<span class="reply-writer">작성자</span>&nbsp;&nbsp;&nbsp; <span
+					class="reply-write-date">작성일</span> <span class="ml-3"> <i
+					class="far fa-thumbs-up"></i><span class="like-cnt"
+					style="color: #000">0</span> <a class="reply-like" href="#">좋아요</a>
 				</span> |&nbsp;<a class="reply-edit" href="#">수정</a> |&nbsp;<a
 					class="reply-delete" href="#">삭제</a>
 			</div>

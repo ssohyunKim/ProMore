@@ -7,6 +7,7 @@ public class WorkReplyDto {
 	private String replyId;
 	private Date replyDate;
 	private int replyLike;
+	private boolean canClickLike;
 	private String replyContent;
 	private String replyFileName;
 	private String replyFilePath;
@@ -16,12 +17,13 @@ public class WorkReplyDto {
 	public WorkReplyDto() {
 	}
 
-	public WorkReplyDto(int replyNum, String replyId, Date replyDate, int replyLike, String replyContent,
-			String replyFileName, String replyFilePath, long replyFileSize, int workNum) {
+	public WorkReplyDto(int replyNum, String replyId, Date replyDate, int replyLike, boolean canClickLike,
+			String replyContent, String replyFileName, String replyFilePath, long replyFileSize, int workNum) {
 		this.replyNum = replyNum;
 		this.replyId = replyId;
 		this.replyDate = replyDate;
 		this.replyLike = replyLike;
+		this.canClickLike = canClickLike;
 		this.replyContent = replyContent;
 		this.replyFileName = replyFileName;
 		this.replyFilePath = replyFilePath;
@@ -59,6 +61,14 @@ public class WorkReplyDto {
 
 	public void setReplyLike(int replyLike) {
 		this.replyLike = replyLike;
+	}
+
+	public boolean isCanClickLike() {
+		return canClickLike;
+	}
+
+	public void setCanClickLike(boolean canClickLike) {
+		this.canClickLike = canClickLike;
 	}
 
 	public String getReplyContent() {
@@ -104,8 +114,8 @@ public class WorkReplyDto {
 	@Override
 	public String toString() {
 		return "WorkReplyDto [replyNum=" + replyNum + ", replyId=" + replyId + ", replyDate=" + replyDate
-				+ ", replyLike=" + replyLike + ", replyContent=" + replyContent + ", replyFileName=" + replyFileName
-				+ ", replyFilePath=" + replyFilePath + ", replyFileSize=" + replyFileSize + ", workNum=" + workNum
-				+ "]";
+				+ ", replyLike=" + replyLike + ", canClickLike=" + canClickLike + ", replyContent=" + replyContent
+				+ ", replyFileName=" + replyFileName + ", replyFilePath=" + replyFilePath + ", replyFileSize="
+				+ replyFileSize + ", workNum=" + workNum + "]";
 	}
 }

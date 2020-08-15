@@ -70,18 +70,35 @@
 		where reply_num = #{replyNum}
 	</delete>
 
-	<delete id="delete_all_reply"
-		parameterType="com.promore.workspace.dto.WorkspaceDto">
-		delete from work_reply
-		where work_num = #{workNum}
-	</delete>
-
 	<update id="update_reply"
 		parameterType="com.promore.workspace.dto.WorkReplyDto">
 		update work_reply set
 		reply_date = sysdate,
-		reply_content = #{replyContent}
+		reply_content
+		= #{replyContent}
 		where reply_num = #{replyNum}
 	</update>
+
+	<insert id="insert_like"
+		parameterType="com.promore.workspace.dto.ReplyLikeDto">
+		insert into reply_like
+		values(#{replyNum}, #{memId})
+	</insert>
+
+	<select id="select_like_cnt"
+		parameterType="com.promore.workspace.dto.ReplyLikeDto"
+		resultType="int">
+		select count(*) from reply_like
+		where reply_num =
+		#{replyNum}
+	</select>
+
+	<select id="select_like_for_chk"
+		parameterType="com.promore.workspace.dto.ReplyLikeDto"
+		resultType="int">
+		select count(*) from reply_like
+		where reply_num =
+		#{replyNum} and mem_id = #{memId}
+	</select>
 
 </mapper>

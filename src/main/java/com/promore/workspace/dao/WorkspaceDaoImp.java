@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.promore.aop.HAspect;
+import com.promore.workspace.dto.ReplyLikeDto;
 import com.promore.workspace.dto.WorkReplyDto;
 import com.promore.workspace.dto.WorkspaceDto;
 
@@ -86,13 +87,24 @@ public class WorkspaceDaoImp implements WorkspaceDao {
 	}
 
 	@Override
-	public int deleteAllReply(WorkspaceDto workspaceDto) {
-		return sqlSessionTemplate.delete("WorkReplyMapper.delete_all_reply", workspaceDto);
-	}
-
-	@Override
 	public int updateReply(WorkReplyDto workReplyDto) {
 		return sqlSessionTemplate.update("WorkReplyMapper.update_reply", workReplyDto);
 	}
+
+	@Override
+	public int insertLike(ReplyLikeDto replyLikeDto) {
+		return sqlSessionTemplate.insert("WorkReplyMapper.insert_like", replyLikeDto);
+	}
+
+	@Override
+	public int selectLikeForChk(ReplyLikeDto replyLikeDto) {
+		return sqlSessionTemplate.selectOne("WorkReplyMapper.select_like_for_chk", replyLikeDto);
+	}
+
+	@Override
+	public int selectLikeCnt(ReplyLikeDto replyLikeDto) {
+		return sqlSessionTemplate.selectOne("WorkReplyMapper.select_like_cnt", replyLikeDto);
+	}
+
 
 }
