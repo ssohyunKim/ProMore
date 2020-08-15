@@ -125,5 +125,28 @@ public class MemberServiceImp implements MemberService {
 		     e.printStackTrace();
 		}
 		mav.setViewName("member/emailSuccess");
-		}
 	}
+	
+	@Override
+	public void memberRegister(ModelAndView mav) {
+		MemberDto memberDto = new MemberDto();
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest)map.get("request");
+		memberDto.setMem_id(request.getParameter("mem_id"));
+		memberDto.setMem_name(request.getParameter("mem_name"));
+		memberDto.setMem_nickname(request.getParameter("mem_nickname"));
+		memberDto.setMem_password(request.getParameter("mem_password"));
+		memberDto.setMem_level(request.getParameter("memLevel"));
+		memberDto.setMem_phone(request.getParameter("mem_phone"));
+		memberDto.setMem_email(request.getParameter("mem_email"));
+		memberDto.setMem_mailing(request.getParameter("mailcheck").equals("yes")?1:0);
+		memberDto.setMem_skills(request.getParameter("Skill"));
+		
+		memberDao.memberRegister(memberDto);
+		
+	}
+	
+	
+	
+	
+}

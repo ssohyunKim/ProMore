@@ -17,4 +17,6 @@ public interface MemberService {
 	public void memberUpdateOk(ModelAndView mav);
 	
 	public void sendEmail(ModelAndView mav);
+	
+	public void memberRegister(ModelAndView mav);
 }

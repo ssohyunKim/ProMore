@@ -36,8 +36,21 @@
 	<select id="member_password" parameterType="java.util.Map" resultType="String">
 		select mem_password from member where mem_id=#{memId} and mem_Email=#{memEmail}
 	</select>
-
 	
+	<insert id="member_insert" parameterType="com.promore.member.dto.MemberDto">
+		insert into MEMBER 
+		values(member_mem_num_seq.NEXTVAL, 
+				#{mem_id}, 
+				#{mem_name}, 
+				#{mem_nickname},
+				#{mem_password}, 
+				#{mem_level}, 
+				#{mem_phone}, 
+				#{mem_email}, 
+				#{mem_mailing}, 
+				#{mem_skills}, 
+				SYSDATE)
+	</insert>	
 </mapper>
 
 
