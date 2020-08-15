@@ -14,6 +14,39 @@
   <!-- Custom styles for this template-->
   <link href="${root}/resources/css/sb-admin-2.min.css" rel="stylesheet">
 </head>
+<script type="text/javascript" src="${root}/resources/jquery.js"></script>
+<script type="text/javascript">
+var proNum=""
+var state ="";
+
+$(function(){
+	$('#projectStateReadModal').on('show.bs.modal', function(event) {
+		proNum = $(event.relatedTarget).data('num');
+
+		$('select[name="proState"]').val(state).prop("selected", "selected", "selected", "selected", "selected","selected", "selected","selected", "selected","selected", "selected");
+		$('select[name="proState"] option').attr('disabled', true);
+
+		
+	});
+	
+	$('#updateBtn').click(function(){
+		$('#projectStateUpdateModal').modal();
+		
+		$('select[name="proState"]').val(state).prop("selected", true);
+		$('select[name="proState"] option').attr('disabled', false);
+
+
+		$('#projectStateReadModal').modal().hide();
+		
+	});
+	
+	$('.modal').on('hide.bs.modal', function(event){
+		location.reload();
+	});
+})
+
+
+</script>
 <body id="page-top">
  <!-- Page Wrapper -->
   <div id="wrapper">
@@ -44,8 +77,8 @@
 				<c:set var="loop_flag" value="false" />
 				<c:forEach var="projectDto" items="${projectDtoArray}">
 				  <c:if test="${not loop_flag }">
-				  		<c:set var="proname" value="${projectDto.proNum}"/>
-				  			<c:if test="${projectCnt eq proname}">
+				  		<c:set var="proNum" value="${projectDto.proNum}"/>
+				  			<c:if test="${projectCnt eq proNum}">
 				  			<c:set var="loop_flag" value="true" />
 									<div class="row">
 								
@@ -67,7 +100,15 @@
 							                      </div>
 							                    </div>
 							                    <div class="col-auto">
+							                    <!-- 프로젝트 읽기 모달 -->
+							                    <a href="#"
+							                    	data-num="${projectDto.proNum}"
+							                    	data-state="${projectDto.proState}"
+							                    	data-toggle="modal" 
+													data-target="#projectStateReadModal">
+													
 							                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+							                    </a>
 							                    </div>
 							                  </div>
 							                </div>
@@ -121,6 +162,113 @@
       </div>
     </div>
   </div>
+
+<!-- #projectStateReadModal -->
+<div class="modal fade" id="projectStateReadModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-xs mt-5" role="document">
+			<div class="modal-content">
+				<!-- modal-header -->
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">프로젝트 현황</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					  
+					</div>
+						<input type="hidden" id="proNum" name="proNum" value="" />
+						<div class="modal-body">
+						<div class="form-group row">
+							<div class="col-sm-9">
+						  <div>프로젝트 현황</div>
+						  <div class="col-sm-3" style="display: inline;">
+			                        <select name="proMax" class="form-control-plaintext" readonly>
+			                            <option value="0">0</option>
+			                            <option value="10">10</option>
+			                            <option value="20">20</option>
+			                            <option value="30">30</option>
+			                            <option value="40">40</option>
+		                           		<option value="50">50</option>
+		                              	<option value="60">60</option>
+		                                <option value="70">70</option>
+		                                <option value="80">80</option>
+		                                <option value="90">90</option>
+		                                <option value="100">100</option>
+			                        </select>
+			                     </div>
+			                  </div>   
+			              </div>
+			           
+						
+					</div>
+					
+					<!-- modal-footer -->
+					<div class="modal-footer justify-content-between">
+						<button type="reset" class="btn btn-warning">초기화</button>
+						<div>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+							<button id="updateBtn" type="button" class="btn btn-primary">수정</button>
+						</div>
+					</div>         
+			</div>
+		</div>		
+	</div>		
+
+
+
+
+<!-- stateupdateModal -->
+	<div class="modal fade" id="projectStateUpdateModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-xs mt-5" role="document">
+			<div class="modal-content">
+				<!-- modal-header -->
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">프로젝트 현황 수정</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					  
+					</div>
+					<form action="${root}/project/projectStateUpdate.do" name="updateForm" method="post">
+						<input type="hidden" id="proNum" name="proNum" value=proNum />
+						<div class="modal-body">
+						<div class="form-group row">
+							<div class="col-sm-9">
+						  <div>프로젝트 현황${proNum}</div>
+						  <div class="col-sm-3" style="display: inline;">
+			                        <select name="proMax" class="form-control-plaintext">
+			                            <option value="10">10</option>
+			                            <option value="20">20</option>
+			                            <option value="30">30</option>
+			                            <option value="40">40</option>
+		                           		<option value="50">50</option>
+		                              	<option value="60">60</option>
+		                                <option value="70">70</option>
+		                                <option value="80">80</option>
+		                                <option value="90">90</option>
+		                                <option value="100">100</option>
+			                        </select>
+			                     </div>
+			                  </div>   
+			              </div>
+			           
+						
+					</div>
+					
+					<!-- modal-footer -->
+					<div class="modal-footer justify-content-between">
+						<button type="reset" class="btn btn-warning">초기화</button>
+						<div>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+							<button type="submit" class="btn btn-primary">작성 완료</button>
+						</div>
+					</div>
+				</form>
+			            
+			</div>
+		</div>		
+	</div>		
 
 
   <!-- Bootstrap core JavaScript -->

@@ -26,4 +26,7 @@ public interface ProjectService {
 	public void projectApplyAdd(ModelAndView mav, String aplMemId);
 
 
+	public void projectStateUpdateOk(ModelAndView mav);
+
+
 }
