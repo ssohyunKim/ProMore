@@ -101,7 +101,7 @@
    <!-- Divider -->
    <hr class="sidebar-divider">
 
-   <c:if test="${id=='user'}">
+   <c:if test="${memLevel=='팀원' || memLevel=='팀장'}">
    <!-- Heading -->
    <div class="sidebar-heading">Addons</div>
 
