@@ -17,10 +17,10 @@ public class MemberDaoImp implements MemberDao {
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	@Override
-	public String loginOk(String memId, String memPassword) {
+	public MemberDto loginOk(String memId, String memPassword) {
 		HashMap<String, String> hmap = new HashMap<String, String>();
 		
-		HAspect.logger.info(HAspect.logMsg + memId + memPassword);
+		HAspect.logger.info(HAspect.logMsg + memId +" : "+ memPassword);
 		
 		hmap.put("memId", memId);
 		hmap.put("memPassword", memPassword);
