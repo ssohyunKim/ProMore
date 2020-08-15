@@ -79,15 +79,15 @@ function projectApply(root){
 	    </div>
 
 		<!--팀장만  글 작성 버튼 -->
-		<c:if test= "${memLevel eq'팀장'}">
+		<%-- <c:if test= "${memLevel eq'팀장'}"> --%>
 			<div>
 				<a href="#" class="btn btn-primary btn-circle btn-md" data-toggle="modal" data-target="#projectWriteModal" style="float:right">
 					<i class="fas fa-pen"></i>
 				</a>
 			</div>	
-		</c:if>
+		<%-- </c:if> --%>
 
-		<c:if test="${projectCount>=0}">   		
+		<c:if test="${projectCount>=0}">		
 		 	<c:forEach var="projectDto" items="${projectDtoArray}">		 	
 				<div class="flip-card">
 					<div class="flip-card-inner">
