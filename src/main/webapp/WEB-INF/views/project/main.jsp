@@ -76,6 +76,17 @@ function projectApply(root){
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
            <h1 class="h3 mb-0 text-gray-800">프로젝트 글보기</h1>
+          
+          <c:forEach var="projectDto" items="${projectDtoArray}">
+          
+           <c:forEach var="projectCnt" items="${projectCnt}">
+							<c:set var="pronum" value="${projectDto.proNum}"/>
+							<c:if test="${projectCnt eq pronum}">
+								${pronum}
+							</c:if>
+			</c:forEach>
+           </c:forEach>
+           
 	    </div>
 
 		<!--팀장만  글 작성 버튼 -->
@@ -98,10 +109,15 @@ function projectApply(root){
 						</div>
 						
 						<!-- 프로젝트 팀장, 팀원-->
+						<!-- 모든 경우의 수 비교 -->
+						<c:set var="loop_flag" value="false"/>
 						
+						<c:if test="${not loop_flag}">
 						<c:forEach var="projectCnt" items="${projectCnt}">
 							<c:set var="pronum" value="${projectDto.proNum}"/>
 								<c:if test="${projectCnt eq pronum}">
+									
+									<c:set var="loop_flag" value="true"/>
 									<a href="${root}/workspace/workspace.do?proNum=${projectDto.proNum}">
 									<div class="flip-card-back1">
 										<p>${projectDto.proManager}</p>
@@ -111,35 +127,15 @@ function projectApply(root){
 									</a>
 								</c:if>
 						</c:forEach>
+						</c:if>
 						
 						<!-- 프로젝트 아닌 사람 -->
-						<c:forEach var="projectCnt" items="${projectCnt}">
-							<c:set var="pronum" value="${projectDto.proNum}"/>
-								<c:if test="${projectCnt ne pronum}">
-									<c:if test = "${projectDto.proCnt < projectDto.proMax}">
-									<a href="#"
-									data-num = "${projectDto.proNum}"
-									data-name="${projectDto.proName}"
-									data-max = "${projectDto.proMax}"
-									data-content = "${projectDto.proContent}"
-									data-toggle="modal"
-									data-target="#mainReadModal">
-									<div class="flip-card-back1">
-										<p>${projectDto.proManager}</p>
-										</br>
-										<p>현재인원 : ${projectDto.proCnt}명</p>
-									</div>
-									</a>
-									</c:if>
-								</c:if>
-						</c:forEach>
-						
-						
-						<!-- 프로젝트 아닌 사람 -->
+						<c:if test="${not loop_flag}">
 						<c:forEach var="projectCnt" items="${projectCnt}">
 							<c:set var="pronum" value="${projectDto.proNum}"/>
 								<c:if test="${projectCnt ne pronum}">
 									<c:if test = "${projectDto.proCnt == projectDto.proMax}">
+									<c:set var="loop_flag" value="true"/>
 									<a href="#"
 									data-num = "${projectDto.proNum}"
 									data-name="${projectDto.proName}"
@@ -156,6 +152,33 @@ function projectApply(root){
 									</c:if>
 								</c:if>
 						</c:forEach>
+						</c:if>
+						
+						<!-- 안되면 이리로 빠지게 한다. -->
+						<!-- 프로젝트 아닌 사람 -->
+						<c:if test="${not loop_flag}">
+							<c:forEach var="projectCnt" items="${projectCnt}">
+								<c:set var="pronum" value="${projectDto.proNum}"/>
+									<c:if test="${projectCnt ne pronum}">
+										<c:if test = "${projectDto.proCnt < projectDto.proMax}">
+										<a href="#"
+										data-num = "${projectDto.proNum}"
+										data-name="${projectDto.proName}"
+										data-max = "${projectDto.proMax}"
+										data-content = "${projectDto.proContent}"
+										data-toggle="modal"
+										data-target="#mainReadModal">
+										<div class="flip-card-back1">
+											<p>${projectDto.proManager}</p>
+											</br>
+											<p>현재인원 : ${projectDto.proCnt}명</p>
+										</div>
+										</a>
+										</c:if>
+									</c:if>
+							</c:forEach>
+						
+						</c:if>
 						
 						
 					</div>
