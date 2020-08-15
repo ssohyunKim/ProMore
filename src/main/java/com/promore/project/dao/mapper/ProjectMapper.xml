@@ -66,4 +66,25 @@
 	delete from project where pro_num=#{proNum}
 </delete>
 
+
+<insert id="project_apply" parameterType="java.util.HashMap">
+	insert into project_apply (
+			apl_no,
+			apl_num,
+			apl_mem_id
+			)
+			values(
+				project_apl_no_seq.nextval,
+				#{aplNum},
+				#{aplMemId}
+			)
+</insert>
+
+<update id="project_apply_cnt" parameterType="int">
+	update project set
+		pro_cnt = pro_cnt+1
+	where pro_num=#{proNum}
+</update>
+
+
 </mapper>

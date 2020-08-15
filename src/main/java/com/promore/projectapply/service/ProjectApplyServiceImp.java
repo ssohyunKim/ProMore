@@ -16,7 +16,7 @@ public class ProjectApplyServiceImp implements ProjectApplyService {
 
 	@Override
 	public void proApplyList(ModelAndView mav, String aplMemId) {
-		List<ProjectApplyDto> projectapplyDtoArray = projectapplyDao.projectList(aplMemId);
+		List<ProjectApplyDto> projectapplyDtoArray = projectapplyDao.projectApplyList(aplMemId);
 	
 		System.out.println("applyDto" + projectapplyDtoArray);
 		mav.addObject("projectApplyDto", projectapplyDtoArray);

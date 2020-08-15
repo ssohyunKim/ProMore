@@ -13,11 +13,10 @@
 		<result column="apl_mem_id" property="aplMemId"/>
 	</resultMap>
 	
+	
 <select id="project_apply_list" parameterType="String" resultMap="projectapply_dto">
 		select * from project_apply where apl_mem_id=#{aplMemId}
 </select>	
 	
-	
-	
-	
+
 </mapper>  

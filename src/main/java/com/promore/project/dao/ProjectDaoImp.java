@@ -22,6 +22,7 @@ public class ProjectDaoImp implements ProjectDao {
 	@Override
 	public int projectWrite(ProjectDto projectDto) {
 		int check = 0;
+		
 		check = sqlSessionTemplate.insert("project_insert", projectDto);
 		return check;
 	}
@@ -52,10 +53,21 @@ public class ProjectDaoImp implements ProjectDao {
 	
 	@Override
 	public List<String> projectState(String id) {
-		// TODO Auto-generated method stub
 		//번호
 		return sqlSessionTemplate.selectList("project_cnt", id);
 	}
 	
+	@Override
+	public int projectApply(int aplNum, String aplMemId) {
+		Map<String, Object> hMap = new HashMap<String, Object>();
+		hMap.put("aplNum", aplNum);
+		hMap.put("aplMemId", aplMemId);
+		//map으로 넘겨주기
+		return sqlSessionTemplate.insert("project_apply", hMap);
+	}
 	
+	@Override
+	public int projectApplyCnt(int aplNum) {
+		return sqlSessionTemplate.update("project_apply_cnt", aplNum);
+	}
 }

@@ -20,4 +20,7 @@ public interface ProjectService {
 	public void projectDeleteOk(ModelAndView mav);
 
 
+	public void projectApplyOk(ModelAndView mav, String aplMemId);
+
+
 }

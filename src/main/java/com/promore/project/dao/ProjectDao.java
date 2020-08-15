@@ -18,4 +18,8 @@ public interface ProjectDao {
 
 	public int projectDeleteOk(int proNum);
 
+	public int projectApply(int aplNum, String aplMemId);
+
+	public int projectApplyCnt(int aplNum);
+
 }

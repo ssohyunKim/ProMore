@@ -6,6 +6,6 @@ import com.promore.projectapply.dto.ProjectApplyDto;
 
 public interface ProjectApplyDao {
 
-	List<ProjectApplyDto> projectList(String aplMemId);
+	List<ProjectApplyDto> projectApplyList(String aplMemId);
 
 }

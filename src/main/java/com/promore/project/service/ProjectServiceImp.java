@@ -23,19 +23,19 @@ public class ProjectServiceImp implements ProjectService {
 	 
 
 	@Override
-	public void projectWrite(ModelAndView mav, String memid) {
+	public void projectWrite(ModelAndView mav, String aplMemId) {
 	Map<String, Object> map = mav.getModelMap();
 	HttpServletRequest request = (HttpServletRequest)map.get("request");
 	ProjectDto projectDto = (ProjectDto) map.get("projectDto");	
-	System.out.println("@@@@@@@" + memid);
+	System.out.println("멤버id 체크" + aplMemId);
+
 	  projectDto.setProName(projectDto.getProName());
 	  projectDto.setProContent(projectDto.getProContent());
-	  projectDto.setProManager(memid);
+	  projectDto.setProManager(aplMemId);
 	  projectDto.setProState(0); 
-	  projectDto.setProMax(projectDto.getProCnt());
+	  projectDto.setProMax(projectDto.getProMax());
 	  projectDto.setProCnt(0);
 		  
-	 
 	  int check =  projectDao.projectWrite(projectDto);
 	  mav.addObject("check", check);
 	  mav.setViewName("project/writeOk");
@@ -93,10 +93,29 @@ public class ProjectServiceImp implements ProjectService {
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		ProjectDto projectDto = new ProjectDto();
 		
-		 HAspect.logger.info(HAspect.logMsg+ "state id check" + id); 
 		//번호 가져오기
 		 List<String> projectCnt = projectDao.projectState(id);
+		 
 		 mav.addObject("projectCnt", projectCnt);
+		
+	}
+	
+	@Override
+	public void projectApplyOk(ModelAndView mav, String aplMemId) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest)map.get("request");
+		
+		int aplNum = Integer.parseInt(request.getParameter("proNum"));
+		System.out.println("%%%프로젝트 신청번호" + aplNum);
+		System.out.println("%%%프로젝트 신청자:" + aplMemId);
+		int check = projectDao.projectApply(aplNum, aplMemId);
+		//숫자 증가
+		projectDao.projectApplyCnt(aplNum);
+		
+		mav.addObject("check", check);
+		mav.addObject("proNum", aplNum);
+		mav.setViewName("project/applyOk");
+		
 		
 	}
 	

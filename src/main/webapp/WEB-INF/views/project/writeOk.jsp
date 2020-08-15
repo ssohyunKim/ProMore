@@ -9,8 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	${check}
-	
 	<c:if test = "${check > 0}">
 		<script type = "text/javascript">
 			alert("새로운 프로젝트을 작성했습니다.");

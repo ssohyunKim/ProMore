@@ -21,30 +21,29 @@ import com.promore.projectapply.service.ProjectApplyService;
 public class ProjectController {
 	@Autowired
 	private ProjectService projectservice;
-	@Autowired
-	private ProjectApplyService projectapplyservice;
+	
 	
 	@RequestMapping(value = "/project/main.do", method = RequestMethod.GET)
 	public ModelAndView projectMain(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView(); 
 		mav.addObject("request",request);
 		HttpSession session = request.getSession(); 
-		String aplMemId = (String)session.getAttribute("id");
-		System.out.println("mainid" + aplMemId);
-		mav.addObject("aplMemId", aplMemId);
+		String id = (String)session.getAttribute("id");
+		/* System.out.println("mainid" + aplMemId); */
+		mav.addObject("aplMemId", id);
 		
 		projectservice.projectList(mav);
-		projectapplyservice.proApplyList(mav, aplMemId);
+		projectservice.projectCnt(mav, id); 
 		return mav;
 	}
 
 	// 프로젝트 작성 완료
 	@RequestMapping(value = "/project/writeOk.do", method = RequestMethod.POST)
 	public ModelAndView projectWriteOk(HttpServletRequest request, HttpServletResponse response, ProjectDto projectDto) {
-	
 		ModelAndView mav = new ModelAndView(); 
 		HttpSession session = request.getSession(); 
 		String aplMemId = (String)session.getAttribute("id");
+		
 		mav.addObject("request",request);
 		mav.addObject("projectDto", projectDto);
 		mav.addObject("aplMemId", aplMemId);
@@ -95,6 +94,19 @@ public class ProjectController {
 			
 		return mav;		
 	}
-
+	
+	//프로젝트 신청
+	@RequestMapping(value="/project/projectApply.do", method=RequestMethod.GET)
+	public ModelAndView projectApply(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		HttpSession session = request.getSession(); 
+		String aplMemId = (String)session.getAttribute("id");
+		System.out.println("프로젝트 신청자 :" + aplMemId);
+		
+		projectservice.projectApplyOk(mav, aplMemId);
+			
+		return mav;		
+	}
 	
 }
