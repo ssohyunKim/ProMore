@@ -134,5 +134,15 @@ public class ProjectServiceImp implements ProjectService {
 		
 	}
 	
+	@Override
+	public void projectStateUpdateOk(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest)map.get("request");
+		
+		//int proNum = Integer.parseInt(request.getParameter("proNum")); 
+		//System.out.println("가능?" + proNum); 
+		
+	}
+	
 	
 }
