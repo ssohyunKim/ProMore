@@ -27,6 +27,7 @@
 	href="${root}/resources/css/workspace/jquery-ui.theme.css" />
 <%-- <link rel="stylesheet"
       href="${root}/resources/css/workspace/workspace.css" /> --%>
+
 <!-- Bootstrap -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
@@ -35,33 +36,7 @@
 <script>
 	var root = "${root }";
 </script>
-<!-- jQuery -->
- <script type="text/javascript" src="${root}/resources/jquery.js"></script>
 </head>
-<script type="text/javascript">
-var name="";
-var content="";
-var cnt="";
-
-$(function(){
-	$('#projectReadModal').on('show.bs.modal', function(event) {
-		title = $(event.relatedTarget).data('name');
-		$('input[name="proName"]').val(name);
-		
-		cnt = $(event.relatedTarget).data('cnt');
-	 	$('select[name="proCnt"]').val(cnt).attr("selected", "selected");
-		$('select[name="proCnt"] option').attr('disabled', true);
-		
-		content = $(event.relatedTarget).data('content');
-		$('textarea[name="proContent"]').text(content);
-		
-	});
-	$('.modal').on('hide.bs.modal', function(event){
-		location.reload();
-	});
-});
-
-</script>
 
 <body id="page-top">
 	<!-- Page Wrapper -->
@@ -84,7 +59,7 @@ $(function(){
 					<!-- Page Heading -->
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">일감 관리</h1>					
+						<h1 class="h3 mb-0 text-gray-800">일감 관리</h1>
 					</div>
 
 					<!--    
@@ -98,21 +73,13 @@ $(function(){
 					<div class="card shadow p-4 col-xl-8 bg-light">
 
 						<!-- 프로젝트 상세 보기 -->
-						<c:forEach var="projectDto" items="${projectDtoArray}">
-							<c:if test="${projectDto.proNum eq proNum}">
-								<a href="#"
-									data-name="${projectDto.proName}"
-									data-cnt = "${projectDto.proCnt}"
-									data-content"${projectDto.proContent}"
-									data-toggle="modal"
-									data-target="#projectReadModal">
-									<div class="alert alert-primary bg-primary p-3 rounded-lg text-center">
-										<b class="text-white font-weight-bolder">
-										ProMore</b>
-									</div>
-								</a>
-							</c:if>
-						</c:forEach>
+						<a href="#" class="text-decoration-none" data-toggle="modal"
+							data-target="#ReadModal">
+							<div
+								class="alert alert-primary bg-primary p-3 rounded-lg text-center">
+								<b class="text-white font-weight-bolder">ProMore</b>
+							</div>
+						</a>
 
 						<!-- 일감 작성 폼 -->
 						<div class="card shadow mb-4 border-bottom-primary">
@@ -483,8 +450,8 @@ $(function(){
 		class="fas fa-angle-up"></i>
 	</a>
 
-	<!--Pjt Read Model -->
-	<div class="modal fade" id="projectReadModal" tabindex="-1" role="dialog">
+	<!-- Read Model -->
+	<div class="modal fade" id="ReadModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg mt-5" role="document">
 			<div class="modal-content">
 
@@ -500,39 +467,47 @@ $(function(){
 				<!-- modal-body -->
 				<div class="modal-body">
 
-					<!-- 프로젝트 제목 && 인원수  -->
-			                  <div class="form-group row">
-			                     <div class="col-sm-10">
-			                        <input type="text" class="form-control-plaintext" name="proName" style="display: inline;"  placeholder="제목을 입력하세요." readonly>
-			                     </div>
-			                    <p style="margin: 6px 13px 0px 0px">인원수</p>
-			                     <div class="col-sm-1.5" style="display: inline;">
-			                        <select name="proCnt" class="form-control-plaintext" readonly>
-			                            <option value="2">2</option>
-			                            <option value="3">3</option>
-			                            <option value="4">4</option>
-			                            <option value="5">5</option>
-			                        </select>
-			                     </div>
-			                  </div>
-	
-							<!-- 글 내용 -->
-							<div class="form-group row">
-								<div class="col-sm-12">
-									<textarea class="form-control-plaintext" rows="20" name="proContent" placeholder="글을 입력하세요." readonly></textarea>
+					<!--프로젝트 제목 && 인원수 -->
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="inputTitle"
+								style="display: inline; width: 85%; margin-right: 30px;"
+								placeholder="제목을 입력하세요."> &ensp;인원수
+							<div class="dropdown mb-4 bg-light"
+								style="float: right; width: 100">
+								<button class="btn dropdown-toggle" type="button"
+									id="dropdownMenuButton" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">1</button>
+								<div class="dropdown-menu animated--fade-in"
+									aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="#">2</a> <a
+										class="dropdown-item" href="#">3</a> <a class="dropdown-item"
+										href="#">4</a> <a class="dropdown-item" href="#">5</a>
 								</div>
-							</div>
-								
 
-							<!-- modal-footer -->
-							<div class="modal-footer justify-content-right">
-								<div>
-									<button id="deleteBtn" type="button" class="btn btn-secondary">삭제</button>
-									<button id="updateBtn" type="button" class="btn btn-primary">수정</button>
-								</div>
 							</div>
+						</div>
+
+						<!-- 글 내용 -->
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<textarea class="form-control" rows="20" id="inputContent"
+								placeholder="글을 입력하세요."></textarea>
+						</div>
+					</div>
+
+					<!-- modal-footer -->
+					<div class="modal-footer justify-content-between">
+						<button type="reset" class="btn btn-warning">초기화</button>
+
+						<div>
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">취소</button>
+							<button type="button" class="btn btn-primary">수정</button>
+						</div>
+					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
