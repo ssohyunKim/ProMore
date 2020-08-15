@@ -1,12 +1,11 @@
 /**
  *
  */
-
 var memnum = "";
 var memberDto = "";
 var radio = "";
 
-function memberUpdate(obj, password) {
+function memberUpdateCheck(obj, password) {
 
   if (obj.password.value != obj.passwordCheck.value) {
     alert("비밀번호가 다릅니다. 비밀번호를 확인하세요.");
@@ -21,40 +20,11 @@ function memberUpdate(obj, password) {
     return false;
   }
 
-  for (var i = 0; i < obj.InputMailing.length; i++) {
-    if (obj.InputMailing[i].checked) {
-      radio = obj.InputMailing[i].value;
+  for (var i = 0; i < obj.memMailing.length; i++) {
+    if (obj.memMailing[i].checked) {
+      radio = obj.memMailing[i].value;
     }
   }
 
-  memberDto = {
-    memNum: obj.num.value,
-    memNickname: obj.nickname.value,
-    memPhone: obj.phone.value,
-    memEmail: obj.email.value,
-    memMailing: radio,
-    memSkills: obj.skills.value
-  };
-
-  $('#memberUpdateModal').modal();
-}
-
-function memberUpdateOk(root) {
-  var url = root + '/manager/memberUpdateOk.do';
-
-  $.ajax({
-    url: url,
-    type: "post",
-    dataType: "text",
-    success: writeProcess(memberDto),
-    error: failProcess()
-  });
-}
-
-function writeProcess(data) {
-  alert(data);
-}
-
-function failProcess() {
-  alert('실패');
+  //$('#memberUpdateModal').modal();
 }
