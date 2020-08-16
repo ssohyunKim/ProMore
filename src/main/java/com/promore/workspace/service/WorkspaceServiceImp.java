@@ -258,6 +258,7 @@ public class WorkspaceServiceImp implements WorkspaceService {
 			updatedFileInfo_2.setReplyNum(Integer.parseInt(replyNum));
 			deletedFileInfo_2 = workspaceDao.selectFileInfo_2(updatedFileInfo_2);
 			path = deletedFileInfo_2.getReplyFilePath();
+			System.out.println(deletedFileInfo_2);
 			file = new File(path);
 			if (workspaceDao.updateFileInfo_2(updatedFileInfo_2) == 1 && file != null && file.delete())
 				mav.addObject("chk", 1);

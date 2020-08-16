@@ -249,7 +249,7 @@ textarea {
 									<!-- Card Body -->
 									<div class="card-body">
 
-										<form>
+										<form class="team-work-form">
 											<div class="o-hidden">
 
 												<!-- sender, write-date -->
@@ -417,14 +417,18 @@ textarea {
 																			<c:if test="${reply.canClickLike }">
 																				<a class="reply-like" href="#">좋아요</a>
 																			</c:if>
-																	</span> |&nbsp;<a class="reply-edit" href="#">수정</a> |&nbsp;<a
-																		class="reply-delete" href="#">삭제</a>&nbsp;&nbsp;&nbsp;
-																		<span class="reply-write-date"><fmt:formatDate
+																	</span> <c:if
+																			test="${sessionScope.memberDto.memId == reply.replyId }">
+                                                                        |&nbsp;<a
+																				class="reply-edit" href="#">수정</a> |&nbsp;<a
+																				class="reply-delete" href="#">삭제</a>
+																		</c:if> &nbsp;&nbsp;&nbsp; <span class="reply-write-date"><fmt:formatDate
 																				value="${reply.replyDate }"
-																				pattern="yyyy-MM-dd HH:mm:ss" /></span>
+																				pattern="yyyy-MM-dd HH:mm:ss" /> </span>
 																	</span>
 																</div>
-																<div class="reply-content p-2">${fn:replace(reply.replyContent, newLineChar, "<br>") }</div>
+																<div class="reply-content p-2">${fn:replace(reply.replyContent, newLineChar, "
+																			<br>") }</div>
 																<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
 																<div
 																	class="file-down p-1 rounded clearfix ${reply.replyFileSize == 0? 'd-none': '' }"
@@ -680,7 +684,7 @@ textarea {
 			<div class="writer-info clearfix">
 				<b class="reply-writer p-1 rounded float-left">작성자</b> <span
 					class="float-right"> <span class="ml-3"> <i
-						class="far fa-thumbs-up"></i><span class="like-cnt"
+						class="far fa-thumbs-up">&nbsp;</i><span class="like-cnt"
 						style="color: #000">0</span> <a class="reply-like" href="#">좋아요</a>
 				</span> |&nbsp;<a class="reply-edit" href="#">수정</a> |&nbsp;<a
 					class="reply-delete" href="#">삭제</a> &nbsp;&nbsp;&nbsp;<span
@@ -693,7 +697,7 @@ textarea {
 			<div class="file-down p-1 rounded clearfix d-none"
 				style="background-color: #ddd">
 				<span class="left-column float-left"> <i class="fas fa-file"></i>
-					<span class="reply-file-name">파일명</span>
+					<span class="reply-file-name"></span> <!-- 파일명 공백으로 둘 것 -->
 				</span> <span class="right-column float-right"> <a
 					class="download-file mr-2" href="#"><i class="fas fa-download">&nbsp;다운로드</i></a>
 				</span>
@@ -706,7 +710,7 @@ textarea {
 		class="card shadow mb-4 border-bottom-primary d-none">
 		<!-- Card Body -->
 		<div class="card-body">
-			<form>
+			<form class="team-work-form">
 				<div class="o-hidden">
 					<!-- sender, write-date -->
 					<div class="clearfix" style="border-bottom: 1px solid #aaa">
@@ -750,8 +754,7 @@ textarea {
 							<span class="mr-2" style="font-size: 18px;">담당자</span> <span
 								class="work-receiver" style="font-size: 18px;"></span>
 						</div>
-						<div
-							class="work-receiver-wrap-2 float-left pt-1 pb-1 d-none">
+						<div class="work-receiver-wrap-2 float-left pt-1 pb-1 d-none">
 							<input class="work-receiver form-control" type="text"
 								name="workReceiver" placeholder="담당자 검색" required />
 						</div>

@@ -10,7 +10,7 @@ var workTmpl = document.querySelector("#work-tmpl"); // div
 function init() {
   var workEditBtns = workList.querySelectorAll(".work-edit");
   var editCancelBtns = workList.querySelectorAll(".work-edit-cancel");
-  var workNoForms = workList.querySelectorAll("[id^='work-no-'] form");
+  var workNoForms = workList.querySelectorAll("[id^='work-no-'] .team-work-form");
   var workContents = workList.querySelectorAll(".work-content");
 
   var deleteBtns = workList.querySelectorAll(".work-delete");

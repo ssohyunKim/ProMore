@@ -52,6 +52,7 @@ function addReply(e) {
   var list = work.querySelector(".reply-list");
   var replyContent = this["replyContent"];
   var workNum = work.id.substr(8);
+  var form = this;
 
   var data = new FormData(this);
 
@@ -84,7 +85,6 @@ function addReply(e) {
       copyReply.querySelector(
         ".reply-content"
       ).innerHTML = replyContent.value.replace(/\n/g, "<br>");
-      replyContent.value = "";
 
       // 파일도 업로드 한다면
       var inputFile = data.get("inputFile");
@@ -92,7 +92,6 @@ function addReply(e) {
         copyReply.querySelector(".file-down").classList.remove("d-none");
         copyReply.querySelector(".reply-file-name").innerText = inputFile.name;
 
-        work.querySelector(".input-file").value = "";
         // dynamic
         copyReply
           .querySelector(".download-file")
@@ -100,8 +99,15 @@ function addReply(e) {
             "href",
             root + "/workspace/download.do?replyNum=" + num
           );
-        // copyReply.querySelector(".delete-file").onclick = deleteReplyFile;
+
+        // var deleteFileBtn = copyReply.querySelector(".delete-file");
+        // deleteFileBtn.setAttribute(
+        //   "href",
+        //   root + "/workspace/delete-file.do?replyNum=" + num
+        // );
+        // deleteFileBtn.onclick = deleteReplyFile;
       }
+      form.reset();
 
       // dynamic
       copyReply.querySelector(".reply-like").onclick = likeReply;
@@ -148,6 +154,10 @@ function editReply(e) {
 
   var reply = this.closest("[id^='reply-no-']");
   var replyForm = reply.closest(".reply-list").nextElementSibling;
+  if (replyForm === null) {
+    alert("현재 댓글을 수정 중에는 다른 댓글을 수정할 수 없습니다.");
+    return;
+  }
   var replyContent = replyForm.querySelector(".reply-content");
   cachedForm = replyForm;
   cachedReply = reply.cloneNode(true);
@@ -212,6 +222,7 @@ function editReplyOk(e) {
         .querySelector(".reply-content")
         .value.replace(/\n/g, "<br>");
       cachedForm.replaceWith(cachedReply);
+      // 복제된 노드라서 원본 노드의 리스너 정보를 다시 바인딩
       if (cachedReply.querySelector(".reply-like"))
         cachedReply.querySelector(".reply-like").onclick = likeReply;
       cachedReply.querySelector(".reply-edit").onclick = editReply;
@@ -220,6 +231,7 @@ function editReplyOk(e) {
       // 파일이 업로드 되는 경우(cachedReply에 바인딩)
       if (data.get("inputFile").size > 0) {
         var inputFile = data.get("inputFile");
+        cachedReply.querySelector(".file-down").classList.remove("d-none");
         cachedReply.querySelector(".reply-file-name").innerText =
           inputFile.name;
         cachedReply
@@ -232,9 +244,10 @@ function editReplyOk(e) {
 
       // 폼 데이터 초기화
       cachedReply.parentNode.parentNode.appendChild(cachedForm);
-      cachedForm.querySelector(".reply-content").value = "";
+      cachedForm.reset();
+      fileDown.classList.add("d-none");
       cachedForm.querySelector(".reply-content").style.height = "60px";
-      cachedForm.onsubmit = editReply;
+      cachedForm.onsubmit = addReply;
     })
     .catch(function () {
       alert("댓글을 수정하지 못했습니다. 다시 시도해주세요.");
@@ -278,8 +291,6 @@ function likeReply(e) {
 function deleteReplyFile(e) {
   e.preventDefault();
 
-  var fileDown = e.target.closest(".file-down");
-
   var data = {
     replyNum: cachedForm.replyNum,
   };
@@ -293,7 +304,10 @@ function deleteReplyFile(e) {
     .then(function (chk) {
       if (chk.trim() !== "1") return new Error();
 
+      var fileDown = cachedReply.querySelector(".file-down");
       fileDown.classList.add("d-none");
+      fileDown.querySelector(".reply-file-name").innerText = "";
+      cachedForm.querySelector(".file-down").classList.add("d-none");
     })
     .catch(function () {
       alert("파일을 삭제하는데 실패하였습니다.");
