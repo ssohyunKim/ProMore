@@ -137,96 +137,87 @@
 							</c:if>
 						</c:forEach>
 
-						<!-- 일감 작성 폼 -->
 						<div class="card shadow mb-4 border-bottom-primary">
 
 							<!-- Card Body -->
 							<div class="card-body">
 
-								<form id="work-form" onsubmit="return writeToServer(this);">
+								<!-- 일감 생성 폼 -->
+								<form id="work-form">
 									<div class="o-hidden">
 										<input id="pro-num" type="hidden" name="proNum"
 											value="${proNum }" />
 
-										<!-- writer, state -->
+										<!-- sender, subject, state -->
 										<div class="clearfix" style="border-bottom: 1px solid #aaa">
+											<!-- sender -->
 											<input class="work-sender" type="hidden" name="workSender"
-												value="작성자" />
-											<!-- 
-											<input class="work-sender" type="hidden" name="workSender"
-												value="${sessionScope.id }" />
-											 -->
+												value="${sessionScope.memberDto.memId }" />
 
-											<!-- 일감 제목 -->
+											<!-- subject -->
 											<div class="pb-2 float-left">
-												<input type="text" class="form-control work-subject"
+												<input type="text" class="work-subject form-control"
 													name="workSubject" placeholder="업무명을 입력하세요" required
-													value="123">
+													value="더미데이터">
 											</div>
 
-											<!-- 상태 -->
-											<div class="btn-group btn-group-toggle workState float-right"
+											<!-- state -->
+											<!-- 0: 요청, 1: 진행, 2: 완료 -->
+											<div
+												class="btn-group btn-group-toggle work-state float-right"
 												data-toggle="buttons">
 												<label class="btn btn-primary active"> <input
-													type="radio" name="workState" checked value="요청">요청
+													type="radio" name="workState" checked value="0">요청
 												</label> <label class="btn btn-primary"> <input type="radio"
-													name="workState" value="진행">진행
+													name="workState" value="1">진행
 												</label> <label class="btn btn-primary"> <input type="radio"
-													name="workState" value="완료">완료
+													name="workState" value="2">완료
 												</label>
 											</div>
 										</div>
 
-										<!-- modal, date picker -->
-										<!-- 
-										<div
-											class="form-check-inline col justify-content-between pb-4">
-											</div>
-										 -->
-										<div class="clearfix pt-2 pb-2"
+										<!-- receiver, date picker -->
+										<div class="clearfix pt-2"
 											style="border-bottom: 1px solid #aaa">
 
-											<!-- modal -->
-											<div class="float-left">
-												<div class="btn-group">
-													<button type="button"
-														class="receiver-search btn btn-primary"
-														data-toggle="modal" data-target="#managerModal">담당자</button>
-												</div>
-
-												<!-- 선택된 담당자 -->
-												<label class="p-2 work-receiver" name="workReceiver">이형은</label>
+											<!-- receiver -->
+											<div class="work-receiver form-group float-left pt-1">
+												<input class="form-control" type="text" name="workReceiver"
+													placeholder="담당자 검색" required />
 											</div>
 
 											<!-- date picker -->
+											<jsp:useBean id="now" class="java.util.Date" />
 											<div class="float-right pt-1">
-												<!-- 시작일 추가 -->
+												<!-- start-date -->
 												<div class="form-check-inline">
 													<span class="icon"> <i
 														class="fas fa-calendar-alt fa-lg mr-2"></i>
 													</span> <input class="form-control work-start-date"
-														name="workStartDate" type="date" id="date1"
-														placeholder="시작일 추가" required value="2020-08-15" />
+														name="workStartDate" type="date" placeholder="시작일 추가"
+														required
+														value='<fmt:formatDate value="${now }" pattern="yyyy-MM-dd" />' />
 												</div>
 
-												<!-- 마감일 추가 -->
+												<!-- end-date -->
 												<div class="form-check-inline m-0">
 													<span class="icon"> <i
 														class="fas fa-calendar-alt fa-lg mr-2"></i>
 													</span> <input class="form-control work-end-date"
-														name="workEndDate" type="date" id="date2"
-														placeholder="마감일 추가" required value="2020-08-15" />
+														name="workEndDate" type="date" placeholder="마감일 추가"
+														required
+														value='<fmt:formatDate value="${now }" pattern="yyyy-MM-dd" />' />
 												</div>
 											</div>
 										</div>
 
-										<!-- 일감 내용 -->
+										<!-- content -->
 										<div class="pt-2 pb-2">
 											<textarea class="form-control work-content autosize"
-												name="workContent" placeholder="업무내용을 입력하세요" required>123</textarea>
+												name="workContent" placeholder="업무내용을 입력하세요" required>더미데이터</textarea>
 										</div>
 
-										<!-- 파일 첨부 -->
+										<!-- input-file -->
 										<div class="input-group pt-2 pb-2 col-8">
 											<span class="icon mt-2"> <i
 												class="fas fa-paperclip fa-lg"></i>
@@ -234,30 +225,22 @@
 												name="inputFile" />
 										</div>
 
-										<!-- 올리기 -->
+										<!-- save -->
 										<div class="d-flex flex-row-reverse">
 											<button type="submit" class="btn btn-primary">올리기</button>
 										</div>
 									</div>
 								</form>
+								<!-- End of 일감 생성 폼 -->
 							</div>
 						</div>
-						<!-- End of 일감 생성 폼 -->
-
-						<!--
-						<div id="alarm" class="progress" style="width:800px; height: 16px; margin-left: 180px; margin-bottom: 10px; display: inline-block">
-                        	<div id ="alarm" class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">새글이 등록되었습니다.</div>
-                        </div> 
-                        -->
-
 
 						<!-- 일감 리스트 -->
 						<div id="work-list">
 							<c:forEach var="item" items="${list }">
 								<!-- 작성된 일감 템플릿 -->
 								<div id="work-no-${item.workNum }"
-									class="card shadow mb-4 border-bottom-primary"
-									style="display: ${list.size() == 0? 'none': 'block'};">
+									class="card shadow mb-4 border-bottom-primary">
 
 									<!-- Card Body -->
 									<div class="card-body">
@@ -265,28 +248,22 @@
 										<form>
 											<div class="o-hidden">
 
-												<!-- writer -->
+												<!-- sender, write-date -->
 												<div class="writer-row clearfix"
 													style="border-bottom: 1px solid #aaa">
 													<img class="left-column float-left"
 														src="${root }/resources/img/avatar.png" width="50"
 														height="50" />
 													<div class="left-column float-left ml-2">
-														<p class="work-sender m-0" style="font-size: 14px">
-															${item.workSender }</p>
+														<b class="work-sender m-0" style="font-size: 14px">
+															${item.workSender }</b>
 														<p class="work-write-date" style="font-size: 14px">
 															<fmt:formatDate value="${item.workWriteDate }"
 																pattern="yyyy.MM.dd (E)" />
 														</p>
 													</div>
-													<!-- 작성자 -->
-													<%-- 
-                                                    // 이걸로 대체되야 함
-                                                    <input id="workSender" type="hidden" value="${sessionScope.id}"/>
-                                                    --%>
-													<!-- tmpl에서 id로 변경 -->
 													<input class="work-sender" type="hidden" name="workSender"
-														value="작성자" />
+														value="${sessionScope.memberDto.memId }" />
 												</div>
 												<!-- subject, state -->
 												<div class="clearfix pt-2 pb-2"
@@ -303,56 +280,54 @@
 													<div
 														class="work-state btn-group btn-group-toggle float-right"
 														data-toggle="buttons">
-														<label class="btn btn-primary active"> <input
-															type="radio" name="workState" value="요청"
-															${fn:trim(item.workState) == '0'? 'checked': 'disabled' }>요청
+														<label class="btn btn-primary"> <input
+															type="radio" name="workState" value="0">요청
 														</label> <label class="btn btn-primary"> <input
-															type="radio" name="workState" value="진행"
-															${fn:trim(item.workState) == '1'? 'checked': 'disabled' }>진행
+															type="radio" name="workState" value="1">진행
 														</label> <label class="btn btn-primary"> <input
-															type="radio" name="workState" value="완료"
-															${fn:trim(item.workState) == '2'? 'checked': 'disabled' }>완료
+															type="radio" name="workState" value="2">완료
 														</label>
+														<script>
+															var ws = document.querySelectorAll("[id^='work-no-${item.workNum}'] [name='workState']");
+															ws[parseInt(${item.workState})].click();
+														</script>
 													</div>
 												</div>
 
-												<!-- date -->
+												<!-- receiver, start-date, end-date -->
 												<div class="clearfix pt-2 pb-2"
 													style="border-bottom: 1px solid #aaa">
 
-													<!-- modal -->
-													<div class="float-left">
-														<div class="btn-group">
-															<button type="button"
-																class="receiver-search btn btn-primary"
-																data-toggle="modal" data-target="#managerModal" disabled>담당자</button>
-														</div>
-
-														<!-- 선택된 담당자 -->
-														<label class="p-2 work-receiver" id="workReceiver"
-															name="workReceiver">이형은</label>
+													<!-- receiver -->
+													<div class="float-left p-2">
+														<span class="mr-2" style="font-size: 18px;">담당자</span> <span
+															class="work-receiver" style="font-size: 18px;">${item.workReceiver }</span>
+													</div>
+													<div class="form-group float-left pt-1 d-none">
+														<input class="work-receiver form-control" type="text"
+															name="workReceiver" placeholder="담당자 검색" required />
 													</div>
 
-													<!-- date picker -->
+													<!-- start-date, end-date -->
 													<div class="float-right pt-1">
-														<!-- 시작일 추가 -->
+														<!-- start-date -->
 														<div class="form-check-inline">
 															<span class="icon"> <i
 																class="fas fa-calendar-alt fa-lg mr-2"></i>
 															</span> <input class="form-control work-start-date"
 																name="workStartDate"
 																value='<fmt:formatDate value="${item.workStartDate }" pattern="yyyy-MM-dd"/>'
-																type="date" placeholder="시작일 추가" readonly required />
+																type="date" placeholder="시작일 추가" required disabled />
 														</div>
 
-														<!-- 마감일 추가 -->
+														<!-- end-date -->
 														<div class="form-check-inline m-0">
 															<span class="icon"> <i
 																class="fas fa-calendar-alt fa-lg mr-2"></i>
 															</span> <input class="form-control work-end-date"
 																name="workEndDate"
 																value='<fmt:formatDate value="${item.workEndDate }" pattern="yyyy-MM-dd"/>'
-																type="date" placeholder="마감일 추가" readonly required />
+																type="date" placeholder="마감일 추가" required disabled />
 														</div>
 													</div>
 												</div>
@@ -388,22 +363,25 @@
 														name="inputFile" />
 												</div>
 
-												<!-- 더보기 -->
-												<!-- 로그인 한 유저가 작성자인 경우만 보이게 -->
-												<div class="more float-right mt-2">
-													<a class="work-edit mr-2" href="#"><i
-														class="fas fa-pen">&nbsp;일감 수정</i></a> <a class="work-delete"
-														href="#"><i class="fas fa-trash">&nbsp;일감 삭제</i></a>
-												</div>
-												<div class="edit-more float-right mt-2 d-none">
-													<button class="work-edit-ok btn btn-primary" type="submit">올리기</button>
-													<button class="work-edit-cancel btn btn-warning"
-														type="button">취소</button>
-												</div>
+												<c:if
+													test="${item.workSender == sessionScope.memberDto.memId }">
+													<!-- more -->
+													<div class="more float-right mt-2">
+														<a class="work-edit mr-2" href="#"><i
+															class="fas fa-pen">&nbsp;일감 수정</i></a> <a class="work-delete"
+															href="#"><i class="fas fa-trash">&nbsp;일감 삭제</i></a>
+													</div>
+													<!-- edit-more -->
+													<div class="edit-more float-right mt-2 d-none">
+														<button class="work-edit-ok btn btn-primary" type="submit">올리기</button>
+														<button class="work-edit-cancel btn btn-warning"
+															type="button">취소</button>
+													</div>
+												</c:if>
 											</div>
 										</form>
 
-										<!-- 일감 댓글 전체 -->
+										<!-- 일감 댓글 리스트 -->
 										<div class="work-reply-list card mb-4 m-4">
 
 											<!-- Card Header -->
@@ -484,7 +462,7 @@
 															</div>
 														</div>
 													</div>
-													<!-- file-down(수정하려는 댓글에 파일이 있다면 d-none 제거) -->
+													<!-- file-down(댓글 수정 버튼, 수정하려는 댓글에 파일이 있다면 보이도록 d-none 제거) -->
 													<div class="file-down p-1 mb-1 rounded clearfix d-none"
 														style="background-color: #ddd">
 														<span class="left-column float-left"> <i
@@ -689,51 +667,6 @@
 		</div>
 	</div>
 
-
-
-
-	<!-- 담당자 버튼 누를 시 뜨는 모달 -->
-	<div class="modal fade" id="managerModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog col-sm-6" role="document">
-			<div class="modal-content">
-
-				<!-- modal-header -->
-				<div class="modal-header">
-					<h5 class="m-0 font-weight-bold text-primary p-2">담당자 검색</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-
-				<!-- modal-body -->
-				<div class="modal-body">
-
-
-					<!--담당자 리스트 -->
-					<div class="form-group d-flex justify-content-center">
-						<div class="form-check-inline">
-							<input type="text"
-								class="form-control form-check-inline input-title"
-								placeholder="담당자를 검색하세요"> <input type="button"
-								class="btn btn-primary" value="검색">
-						</div>
-					</div>
-					<!-- 글 내용 -->
-					<div class="form-group row">
-						<div class="col-sm-12"></div>
-					</div>
-
-					<!-- modal-footer -->
-					<div
-						class="modal-footer justify-content-between d-flex flex-row-reverse">
-						<button type="reset" class="btn btn-warning" data-dismiss="modal">닫기</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<!-- 댓글 템플릿 -->
 	<div id="reply-tmpl" class="row clearfix d-none mb-3 pb-1"
 		style="border-bottom: 1px solid #aaa">
@@ -767,9 +700,9 @@
 		</div>
 	</div>
 
-	<!-- 일감 템플릿(가짜 데이터를 바인딩해서 사용) -->
-	<div id="work-tmpl" class="card shadow mb-4 border-bottom-primary"
-		style="display: none">
+	<!-- 일감 템플릿(올리기 버튼) -->
+	<div id="work-tmpl"
+		class="card shadow mb-4 border-bottom-primary d-none">
 		<!-- Card Body -->
 		<div class="card-body">
 			<form>
@@ -780,11 +713,11 @@
 						<img class="left-column float-left"
 							src="${root }/resources/img/avatar.png" width="50" height="50" />
 						<div class="left-column float-left ml-2">
-							<p class="work-sender m-0" style="font-size: 14px">작성자</p>
+							<b class="work-sender m-0" style="font-size: 14px">작성자</b>
 							<p class="work-write-date" style="font-size: 14px">작성일</p>
 						</div>
 						<input class="work-sender" type="hidden" name="workSender"
-							value="${sessionScope.id }" />
+							value="${sessionScope.memberDto.memId }" />
 					</div>
 					<!-- subject, state -->
 					<div class="clearfix pt-2 pb-2"
@@ -799,11 +732,11 @@
 						<div class="work-state btn-group btn-group-toggle float-right"
 							data-toggle="buttons">
 							<label class="btn btn-primary active"> <input
-								type="radio" name="workState" value="요청">요청
+								type="radio" name="workState" value="0">요청
 							</label> <label class="btn btn-primary"> <input type="radio"
-								name="workState" value="진행">진행
+								name="workState" value="1">진행
 							</label> <label class="btn btn-primary"> <input type="radio"
-								name="workState" value="완료">완료
+								name="workState" value="2">완료
 							</label>
 						</div>
 					</div>
@@ -812,15 +745,14 @@
 					<div class="clearfix pt-2 pb-2"
 						style="border-bottom: 1px solid #aaa">
 
-						<!-- modal -->
-						<div class="float-left">
-							<div class="btn-group">
-								<button type="button" class="receiver-search btn btn-primary"
-									data-toggle="modal" data-target="#managerModal" disabled>담당자</button>
-							</div>
-
-							<!-- receiver -->
-							<label class="work-receiver p-2" name="workReceiver">이형은</label>
+						<!-- receiver -->
+						<div class="float-left p-2">
+							<span class="mr-2" style="font-size: 18px;">담당자</span> <span
+								class="work-receiver" style="font-size: 18px;"></span>
+						</div>
+						<div class="form-group float-left pt-1 d-none">
+							<input class="work-receiver form-control" type="text"
+								name="workReceiver" placeholder="담당자 검색" required />
 						</div>
 
 						<!-- start-date, end-date -->
@@ -830,7 +762,8 @@
 								<span class="icon"> <i
 									class="fas fa-calendar-alt fa-lg mr-2"></i>
 								</span> <input class="form-control work-start-date"
-									name="workStartDate" type="date" placeholder="시작일 추가" required />
+									name="workStartDate" type="date" placeholder="시작일 추가" required
+									disabled />
 							</div>
 
 							<!-- end-date -->
@@ -838,14 +771,14 @@
 								<span class="icon"> <i
 									class="fas fa-calendar-alt fa-lg mr-2"></i>
 								</span> <input class="form-control work-end-date" name="workEndDate"
-									type="date" placeholder="마감일 추가" required />
+									type="date" placeholder="마감일 추가" required disabled />
 							</div>
 						</div>
 					</div>
 
 					<!-- content -->
 					<div class="pb-3">
-						<div class="work-content p-3">내용</div>
+						<p class="work-content p-3">내용</p>
 						<textarea name="workContent"
 							class="form-control work-content d-none autosize"
 							placeholder="업무내용을 입력하세요" required>내용</textarea>

@@ -1,85 +1,52 @@
 var koreanDays = ["일", "월", "화", "수", "목", "금", "토"];
 var beforeEditState = {};
+var workForm = document.querySelector("#work-form"); // form
+var workList = document.querySelector("#work-list"); // div
+var workTmpl = document.querySelector("#work-tmpl"); // div
 
-function managerSelect(root) {
-  //alert("확인"+root);
-  var url = root + "/workspace/manager.do";
-  alert(url);
-  window.open(url, "", "width=300px, height=200px");
-  //"주소","윈도우이름","가로세로스크롤"
-}
-
-// 서버 렌더링 후 만들어진 일감 목록 리스너 설정
+// 페이지 로딩 때마다 리스너 바인딩
 function init() {
-  var workList = document.querySelector("#work-list");
+  var workEditBtns = workList.querySelectorAll(".work-edit");
+  var editCancelBtns = workList.querySelectorAll(".work-edit-cancel");
+  var editOkBtns = workList.querySelectorAll(".work-edit-ok");
 
-  var workEdit = workList.querySelectorAll(".work-edit");
-  var editCancelBtn = workList.querySelectorAll(".work-edit-cancel");
-  var editOkBtn = workList.querySelectorAll(".work-edit-ok");
+  var deleteBtns = workList.querySelectorAll(".work-delete");
+  var deleteFileBtns = workList.querySelectorAll(".file-delete");
 
-  var deleteBtn = workList.querySelectorAll(".work-delete");
-  var deleteFileBtn = workList.querySelectorAll(".delete-file");
+  workForm.onsubmit = addWork;
 
   // 일감 삭제 버튼
-  [].forEach.call(workEdit, function (item) {
+  [].forEach.call(workEditBtns, function (item) {
     item.onclick = editWork;
   });
 
   // 일감 수정 취소 버튼
-  [].forEach.call(editCancelBtn, function (item) {
+  [].forEach.call(editCancelBtns, function (item) {
     item.onclick = cancelEdit;
   });
 
   // 일감 수정 전송 버튼
-  [].forEach.call(editOkBtn, function (item) {
+  [].forEach.call(editOkBtns, function (item) {
     item.onclick = okEdit;
   });
 
   // 일감 수정 전송 버튼
-  [].forEach.call(deleteBtn, function (item) {
+  [].forEach.call(deleteBtns, function (item) {
     item.onclick = deleteWork;
   });
 
   // 파일 삭제 전송 버튼
-  [].forEach.call(deleteFileBtn, function (item) {
+  [].forEach.call(deleteFileBtns, function (item) {
     item.onclick = deleteFile;
   });
 }
 
 // 작성 폼 내용을 바탕으로 템플릿에 값을 채워 넣어 복사
-function writeToServer(obj) {
-  var workForm = $("#work-form");
+// workForm에 바인딩
+function addWork(e) {
+  e.preventDefault();
 
-  var workSender = workForm.find(".work-sender").val();
-  var workStateVar = workForm
-    .find('input[name="workState"]:checked')
-    .val()
-    .trim();
-  var workState;
-  if (workStateVar === "요청") workState = 0;
-  else if (workStateVar === "진행") workState = 1;
-  else if (workStateVar === "완료") workState = 2;
-
-  var workReceiver = workForm.find(".work-receiver").text();
-  var workStartDate = workForm.find(".work-start-date").val();
-  var workEndDate = $(".work-end-date").val();
-  var workSubject = $(".work-subject").val();
-  var workContent = $(".work-content").val();
-  var proNum = $("#pro-num").val();
-
-  var data = new FormData(obj);
-  data.delete("workState");
-  data.append("workSender", workSender);
-  data.append("workReceiver", workReceiver);
-  //   data.append("workSubject", workSubject);
-  data.append("workState", workState);
-  //   data.append("workStartDate", workStartDate);
-  //   data.append("workEndDate", workEndDate);
-  //   data.append("workContent", workContent);
-  //   data.append("inputFile", inputFile);
-  data.append("proNum", proNum);
-
-  console.log(data);
+  var data = new FormData(this);
 
   $.ajax({
     url: root + "/workspace/add-work.do",
@@ -90,86 +57,71 @@ function writeToServer(obj) {
     contentType: false,
     processData: false,
   })
-    .then(function (num) {
-      num = num.trim();
-      if (parseInt(num) <= 0)
-        throw new Error("파일을 업로드하는데 실패하였습니다.");
+    .then(function (workNum) {
+      workNum = parseInt(workNum.trim());
+      if (workNum == 0) throw new Error();
 
-      var workTmpl = document.getElementById("work-tmpl");
       var copyWorkTmpl = workTmpl.cloneNode(true);
-      copyWorkTmpl.style.display = "block";
-      copyWorkTmpl.id = "work-no-" + num;
+      copyWorkTmpl.classList.remove("d-none");
+      copyWorkTmpl.id = "work-no-" + workNum;
 
-      $tmpl = $(copyWorkTmpl);
-      $tmpl.find(".work-sender").text(workSender);
-      $tmpl
-        .find(".work-write-date")
-        .text(
-          moment(Date.now()).format("yyyy.MM.DD") +
-            " (" +
-            koreanDays[new Date().getDay()] +
-            ")"
-        );
-      $tmpl.find(".work-subject").text(workSubject);
-      $tmpl.find("input[value='" + workStateVar + "']").attr("checked", "");
-      $tmpl
-        .find("input[name='workState']")
-        .not("input[value='" + workStateVar + "']")
-        .attr("disabled", "");
-      $tmpl
-        .find("input[value='" + workStateVar + "']")
-        .parent()
-        .addClass("active");
-      $tmpl.find(".work-receiver").text(workReceiver);
-      $tmpl.find(".work-start-date").val(workStartDate);
-      $tmpl.find(".work-end-date").val(workEndDate);
-      $tmpl.find(".work-content").html(workContent.replace(/\n/g, "<br>"));
+      copyWorkTmpl.querySelector("b.work-sender").innerText = data.get(
+        "workSender"
+      );
+      copyWorkTmpl.querySelector("p.work-write-date").innerText =
+        moment(Date.now()).format("yyyy.MM.DD") +
+        " (" +
+        koreanDays[new Date().getDay()] +
+        ")";
+      copyWorkTmpl.querySelector("h5.work-subject").innerText = data.get(
+        "workSubject"
+      );
+      copyWorkTmpl.querySelector("span.work-receiver").innerText = data.get(
+        "workReceiver"
+      );
+      copyWorkTmpl.querySelector(".work-start-date").value = data.get(
+        "workStartDate"
+      );
+      copyWorkTmpl.querySelector(".work-end-date").value = data.get(
+        "workEndDate"
+      );
+      copyWorkTmpl.querySelector("p.work-content").innerHTML = data
+        .get("workContent")
+        .replace(/\n/g, "<br>");
       copyWorkTmpl.querySelector(".reply-form").onsubmit = addReply;
       copyWorkTmpl.querySelector(".work-edit").onclick = editWork;
       copyWorkTmpl.querySelector(".work-edit-cancel").onclick = cancelEdit;
       copyWorkTmpl.querySelector(".work-edit-ok").onclick = okEdit;
       copyWorkTmpl.querySelector(".work-delete").onclick = deleteWork;
 
-      // 업로드 하는 파일이 있을 때
+      // 파일까지 업로드 한다면
       var uploadingFile = data.get("inputFile");
       if (uploadingFile !== null && uploadingFile.size > 0) {
-        var fileDown = $tmpl.find(".file-down");
-        fileDown.removeClass("d-none");
-        fileDown.find(".work-file-name").text(uploadingFile.name);
+        var fileDown = copyWorkTmpl.querySelector(".file-down");
+        fileDown.classList.remove("d-none");
+        fileDown.querySelector(".work-file-name").innerText =
+          uploadingFile.name;
         fileDown
-          .find(".download-file")
-          .attr("href", root + "/workspace/download.do?workNum=" + num);
-        fileDown
-          .find(".delete-file")
-          .attr("href", root + "/workspace/delete-file.do?workNum=" + num);
-        fileDown.find(".delete-file").click(deleteFile);
+          .querySelector(".download-file")
+          .setAttribute(
+            "href",
+            root + "/workspace/download.do?workNum=" + workNum
+          );
+        fileDown.querySelector(".delete-file").onclick = deleteFile;
       }
 
-      $form = $(workForm);
-      $form.find(".work-subject").val("");
-      $form
-        .find("input[value='" + workStateVar + "']")
-        .removeAttr("checked", "");
-      $form
-        .find("input[value='" + workStateVar + "']")
-        .parent()
-        .removeClass("active");
-      $form.find("input[value='요청']").attr("checked", "");
-      $form.find("input[value='요청']").parent().addClass("active");
-      // $form.find(".work-receiver").text('');
-      $form.find(".work-start-date").val("");
-      $form.find(".work-end-date").val("");
-      $form.find(".work-content").val("");
-      $form.find(".input-file").val("");
+      // 작성한 폼 내용 초기화
+      workForm.reset();
+      workForm.querySelectorAll("input[name='workState']")[0].click();
 
-      var workList = document.getElementById("work-list");
       workList.prepend(copyWorkTmpl);
+      copyWorkTmpl
+        .querySelectorAll("input[name='workState']")
+        [parseInt(data.get("workState"))].click();
     })
-    .catch(function (err) {
-      alert("일감을 작성하지 못했습니다. 다시 시도해주세요.");
+    .catch(function () {
+      alert("일감을 생성하지 못했습니다. 다시 시도해주세요.");
     });
-
-  return false;
 }
 
 function editWork(e) {
