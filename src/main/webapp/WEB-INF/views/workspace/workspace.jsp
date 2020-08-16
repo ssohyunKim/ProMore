@@ -85,11 +85,7 @@ textarea {
 	});
 
 	function projectDelete(root) {
-		location.href = root + '/project/delete.do?proNum=' + $
-		{
-			proNum
-		}
-		;
+		location.href = root + '/project/delete.do?proNum=' + encodeURI(${proNum});
 	}
 </script>
 
