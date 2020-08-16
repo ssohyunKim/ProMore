@@ -122,5 +122,17 @@ public class MemberController {
 
 		return mav;
 	}
+	
+	@RequestMapping(value = "/member/snsLoginOk.do", method = RequestMethod.GET)
+	public ModelAndView snsLoginOk(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("snsLoginOk.do");
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+
+		memberService.memberSnsLoginOk(mav);
+		
+		return mav;
+	}
 
 }

@@ -17,4 +17,6 @@ public interface MemberService {
 	public void memberDeleteOk(ModelAndView mav);
 
 	public void memberDelete(ModelAndView mav);
+	
+	public void memberSnsLoginOk(ModelAndView mav);
 }

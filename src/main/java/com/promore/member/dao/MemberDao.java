@@ -15,4 +15,6 @@ public interface MemberDao {
 	public int memberRegister(MemberDto member);
 
 	public int memberDelete(int memNum);
+	
+	public MemberDto snsLoginOk(String memEmail);
 }

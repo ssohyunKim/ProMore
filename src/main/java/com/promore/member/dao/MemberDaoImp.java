@@ -61,4 +61,9 @@ public class MemberDaoImp implements MemberDao {
 	public int memberDelete(int memNum) {
 		return sqlSessionTemplate.delete("member_delete", memNum);
 	}
+	
+	@Override
+	public MemberDto snsLoginOk(String memEmail) {	
+		return sqlSessionTemplate.selectOne("member_snsLogin", memEmail);
+	}
 }

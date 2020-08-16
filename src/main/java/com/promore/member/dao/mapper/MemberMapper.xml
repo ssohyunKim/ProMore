@@ -51,6 +51,10 @@
 				#{memSkills}, 
 				SYSDATE)
 	</insert>
+	
+	<select id="member_snsLogin" parameterType="String" resultMap="member_dto">
+		select * from member where mem_email=#{memEmail}
+	</select> 
 		
 </mapper>
 

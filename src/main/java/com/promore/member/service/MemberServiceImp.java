@@ -173,9 +173,21 @@ public class MemberServiceImp implements MemberService {
 		
 	}
 
+	@Override
+	public void memberSnsLoginOk(ModelAndView mav) {
+		
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest)map.get("request");
+		
+		String memEmail = request.getParameter("memEmail");
+		
+		MemberDto memberDto=memberDao.snsLoginOk(memEmail);
+		HAspect.logger.info(HAspect.logMsg + memEmail);
 
-	
-	
+		mav.addObject("memberDto", memberDto);
+		mav.setViewName("member/loginOk");
+		
+	}
 	
 	
 }

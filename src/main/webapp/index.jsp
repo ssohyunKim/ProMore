@@ -11,7 +11,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <meta name="google-signin-client_id" content="233392212481-rtrid3kc01hk4jhlhdv0o2jj33cvdi94.apps.googleusercontent.com">
 
   <title>[ProMore] - 프로젝트를 모아모아</title>
 
@@ -23,7 +22,72 @@
   <link href="resources/css/sb-admin-2.min.css?after" rel="stylesheet">
   <script type="text/javascript" src="${root}/resources/js/workspace/jquery-3.5.1.js"></script>
   <script type="text/javascript" src="${root}/resources/js/workspace/customCheck.js" ></script> 
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script>
+   	 function checkLoginStatus(){
+   		var loginBtn = document.querySelector('#googleloginBtn');
+		if(gauth.isSignedIn.get()){
+			console.log('logined');
+			loginBtn.value = 'Google계정 로그아웃하기';
+			var profile = gauth.currentUser.get().getBasicProfile();
+			console.log('ID: '+ profile.getId());
+			console.log('이름: ' + profile.getName());
+			console.log('프로필사진: ' + profile.getImageUrl());
+			console.log('이메일: ' + profile.getEmail());
+			
+			document.getElementById("snsEmail").value=profile.getEmail();
+			
+		}else{
+			console.log('logouted');
+			loginBtn.value = 'Goolge계정으로 로그인하기';
+		}
+   	 }
+  
+	 function init(){
+	 	console.log('init');
+	 	gapi.load('auth2', function() {
+		gauth = gapi.auth2.init({
+			client_id:'233392212481-5u4dtso80lluags0g8fk2gnag05frf3c.apps.googleusercontent.com'
+		})
+		gauth.then(function(){
+			console.log('googleAuth success');
+			checkLoginStatus();
+		}, function(){
+			console.log('googleAuth fail');
+		});
+	 	});
+	 }
+  </script>
+  
+  <script>
+	  var checkLoginStatus2 = function(response){
+			console.log(response);
+			//statusChangeCallback(response);
+			if(response.status === 'connected'){
+				document.querySelector('#faceBtn').value='Facebook계정 로그아웃하기';
+				FB.api('/me', {fields:'name,email'}, function(response) {
+			        var fb_data = jQuery.parseJSON(JSON.stringify(response));
+			        var email = fb_data.email;
+			        
+			        document.getElementById("snsEmail").value=email;
+			    });
+			}else{
+				document.querySelector('#faceBtn').value='Facebook계정으로 로그인하기';
+			}
+		}
+  
+	  window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '301300404268934',
+	      cookie     : true,                    
+	      xfbml      : true,                   
+	      version    : 'v8.0'           
+	    });
+	
+		
+	    FB.getLoginStatus(checkLoginStatus2);
+	    
+	  };
+  </script>
   
   <!-- favicon -->
  
@@ -90,15 +154,42 @@
                         <label class="custom-control-label" for="customCheck">아이디 기억하기</label>
                       </div>
                     </div>
-                    <input type="submit" class="btn btn-primary btn-user btn-block" value="로그인">      
+                    <input type="submit" class="btn btn-primary btn-user btn-block" value="로그인"> 
+                    </form>
                     <hr>
-                    <a href="index.html" onclick="${root}/resources/js/member/googlelogin.js"  class="btn btn-google btn-user btn-block">
-                      <i class="fab fa-google fa-fw"></i> Goolge계정으로 로그인하기
-                    </a>
-                    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                      <i class="fab fa-facebook-f fa-fw" ></i> Facebook계정으로 로그인하기
-                    </a>
-                  </form>
+                    <input type="button" id="googleloginBtn" class="btn btn-google btn-user btn-block" value="처리 중입니다..." onclick="
+                    	if(this.value === 'Goolge계정으로 로그인하기'){
+                    		gauth.signIn({
+                    			scope:'https://www.googleapis.com/auth/calendar.readonly'
+                    		}).then(function(){
+                    			console.log('gauth.signIn()');
+                    			checkLoginStatus();
+                    		});
+                    	}else{
+                    		gauth.signOut().then(function(){
+                    			console.log('gauth.signOut()');
+                    			checkLoginStatus();
+                    		});
+                    	}
+                    ">
+                    <input type="button" id="faceBtn" class="btn btn-facebook btn-user btn-block" value="Facebook계정으로 로그인하기" onclick="
+                    	if(this.value === 'Login'){
+                    		FB.login(function(res){
+                    			console.log('login =>', res);
+                    			checkLoginStatus2(res);
+                    		});
+                    	}else{
+							FB.login(function(res){
+								console.log('logout =>', res);
+								checkLoginStatus2(res);
+                    		});
+                    	}
+                    ">
+                     <br/>
+                     <form class="user" action="${root}/member/snsLoginOk.do">
+                     	<input type="hidden" id="snsEmail" name="memEmail">
+                    	<input type="submit" class="btn btn-primary btn-user btn-block" value="소셜계정 로그인  버튼">
+                     </form>
                   <hr>
                   <div class="text-center">
                     <a class="small" href="${root}/member/forgot-password.do">비밀번호를 잊어버렸나요?</a>
@@ -127,6 +218,9 @@
 
   <!-- Custom scripts for all pages-->
   <script src="resources/js/sb-admin-2.min.js"></script>
-
+  
+  <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+	
+  <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
 </body>
 </html>
