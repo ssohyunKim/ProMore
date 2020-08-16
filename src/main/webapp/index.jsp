@@ -24,6 +24,8 @@
   <script type="text/javascript" src="${root}/resources/js/workspace/jquery-3.5.1.js"></script>
   <script type="text/javascript" src="${root}/resources/js/workspace/customCheck.js" ></script> 
   <script src="https://apis.google.com/js/platform.js" async defer></script>
+  
+  <!-- favicon -->
  
 </head>
 <script type="text/javascript">
