@@ -138,10 +138,16 @@ public class ProjectServiceImp implements ProjectService {
 	public void projectStateUpdateOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
-		
-		//int proNum = Integer.parseInt(request.getParameter("proNum")); 
-		//System.out.println("가능?" + proNum); 
-		
+		ProjectDto projectDto = (ProjectDto) map.get("projectDto");	
+		int proNum = Integer.parseInt(request.getParameter("proNum"));
+		int proState = Integer.parseInt(request.getParameter("proState"));
+				
+		mav.addObject("proNum", proNum);
+		mav.addObject("proState", proState);
+		int check = projectDao.projectStateUpdate(proNum, proState);
+		mav.addObject("check", check);
+		mav.setViewName("project/projectStateUpdate");
+		 
 	}
 	
 	

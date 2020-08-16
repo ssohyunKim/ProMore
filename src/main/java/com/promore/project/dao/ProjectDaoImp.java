@@ -76,4 +76,20 @@ public class ProjectDaoImp implements ProjectDao {
 		return sqlSessionTemplate.insert("project_apply_add", aplMemId);
 		
 	}
+	/*
+	 * @Override public int projectStateUpdate(int proNum, int proState) { int check
+	 * = 0; check = sqlSessionTemplate.update("project_state_update", projectDto);
+	 * System.out.println("check" + check); return check;
+	 * 
+	 * }
+	 */
+	
+	@Override
+	public int projectStateUpdate(int proNum, int proState) {
+		Map<String, Object> hMap = new HashMap<String, Object>();
+		hMap.put("proNum", proNum);
+		hMap.put("proState", proState);
+		
+		return sqlSessionTemplate.update("project_state_update", hMap);
+	}
 }

@@ -22,7 +22,8 @@ var state ="";
 $(function(){
 	$('#projectStateReadModal').on('show.bs.modal', function(event) {
 		proNum = $(event.relatedTarget).data('num');
-
+	
+		state = $(event.relatedTarget).data('state');
 		$('select[name="proState"]').val(state).prop("selected", "selected", "selected", "selected", "selected","selected", "selected","selected", "selected","selected", "selected");
 		$('select[name="proState"] option').attr('disabled', true);
 
@@ -30,6 +31,8 @@ $(function(){
 	});
 	
 	$('#updateBtn').click(function(){
+		$('#proNum').val(proNum);
+	
 		$('#projectStateUpdateModal').modal();
 		
 		$('select[name="proState"]').val(state).prop("selected", true);
@@ -47,6 +50,7 @@ $(function(){
 
 
 </script>
+
 <body id="page-top">
  <!-- Page Wrapper -->
   <div id="wrapper">
@@ -101,14 +105,16 @@ $(function(){
 							                    </div>
 							                    <div class="col-auto">
 							                    <!-- 프로젝트 읽기 모달 -->
-							                    <a href="#"
-							                    	data-num="${projectDto.proNum}"
-							                    	data-state="${projectDto.proState}"
-							                    	data-toggle="modal" 
-													data-target="#projectStateReadModal">
-													
-							                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-							                    </a>
+							                    <c:if test= "${memLevel eq'팀장'}">
+								                    <a href="#"
+								                    	data-num="${projectDto.proNum}"
+								                    	data-state="${projectDto.proState}"
+								                    	data-toggle="modal" 
+														data-target="#projectStateReadModal">
+														
+								                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+								                    </a>
+							                    </c:if>
 							                    </div>
 							                  </div>
 							                </div>
@@ -176,13 +182,12 @@ $(function(){
 						</button>
 					  
 					</div>
-						<input type="hidden" id="proNum" name="proNum" value="" />
 						<div class="modal-body">
 						<div class="form-group row">
 							<div class="col-sm-9">
 						  <div>프로젝트 현황</div>
 						  <div class="col-sm-3" style="display: inline;">
-			                        <select name="proMax" class="form-control-plaintext" readonly>
+			                        <select name="proState" class="form-control-plaintext" readonly>
 			                            <option value="0">0</option>
 			                            <option value="10">10</option>
 			                            <option value="20">20</option>
@@ -232,12 +237,13 @@ $(function(){
 					</div>
 					<form action="${root}/project/projectStateUpdate.do" name="updateForm" method="post">
 						<input type="hidden" id="proNum" name="proNum" value=proNum />
+						
 						<div class="modal-body">
 						<div class="form-group row">
 							<div class="col-sm-9">
-						  <div>프로젝트 현황${proNum}</div>
+						  <div>프로젝트 현황</div>
 						  <div class="col-sm-3" style="display: inline;">
-			                        <select name="proMax" class="form-control-plaintext">
+			                        <select name="proState" class="form-control-plaintext">
 			                            <option value="10">10</option>
 			                            <option value="20">20</option>
 			                            <option value="30">30</option>

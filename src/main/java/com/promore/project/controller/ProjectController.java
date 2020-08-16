@@ -113,15 +113,17 @@ public class ProjectController {
 	
 	//프로젝트 현황 수정
 	@RequestMapping(value="/project/projectStateUpdate.do", method=RequestMethod.POST)
-	public ModelAndView projectStateUpdate(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView projectStateUpdate(HttpServletRequest request, HttpServletResponse response, ProjectDto projectDto) {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("request", request);
-		//mav.addObject("projectDto", projectDto);
-		//System.out.println("프로젝트 현황 수정:" + projectDto);
-		 projectservice.projectStateUpdateOk(mav); 
+		mav.addObject("projectDto", projectDto); 
+		  
+		projectservice.projectStateUpdateOk(mav); 
+		
 		return mav;
 	}
+	
 		
 	
 }

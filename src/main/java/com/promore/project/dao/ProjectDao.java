@@ -24,4 +24,7 @@ public interface ProjectDao {
 
 	public int projectApplyAdd(String aplMemId);
 
+
+	public int projectStateUpdate(int proNum, int proState);
+
 }

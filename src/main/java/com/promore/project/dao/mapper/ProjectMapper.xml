@@ -99,5 +99,11 @@
 			)
 </insert>
 
+<update id="project_state_update" parameterType="java.util.HashMap">
+	update project set
+		pro_state = #{proState}
+	where pro_num = #{proNum}
+</update>
+
 
 </mapper>
