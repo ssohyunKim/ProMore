@@ -1,8 +1,10 @@
-$("textarea.autosize").on("keydown keyup", function () {
-  $(this)
-    .height(1)
-    .height($(this).prop("scrollHeight") + 12);
-});
+function autosize(textarea) {
+  $(textarea).on("keydown keyup", function () {
+    $(this)
+      .height(1)
+      .height($(this).prop("scrollHeight") + 12);
+  });
+}
 
 // single
 var replyTmpl = document.querySelector("#reply-tmpl");
@@ -36,6 +38,8 @@ function init() {
   [].forEach.call(replyDeleteBtns, function (btn) {
     btn.onclick = deleteReply;
   });
+
+  [].forEach.call(document.querySelectorAll("textarea.autosize"), autosize);
 }
 
 init();

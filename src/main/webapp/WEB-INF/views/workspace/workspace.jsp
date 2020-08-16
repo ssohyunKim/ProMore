@@ -36,6 +36,11 @@
 <!-- 일감댓글 -->
 <link rel="stylesheet" href="${root}/resources/css/workspace/reply.css" />
 <!-- jQuery -->
+<style>
+textarea {
+	background-color: #E9ECEF !important;
+}
+</style>
 <script type="text/javascript" src="${root}/resources/jquery.js"></script>
 </head>
 <script type="text/javascript">
@@ -155,7 +160,7 @@
 												value="${sessionScope.memberDto.memId }" />
 
 											<!-- subject -->
-											<div class="pb-2 float-left">
+											<div class="float-left pb-2">
 												<input type="text" class="work-subject form-control"
 													name="workSubject" placeholder="업무명을 입력하세요" required
 													value="더미데이터">
@@ -212,10 +217,9 @@
 										</div>
 
 										<!-- content -->
-										<div class="pt-2 pb-2">
-											<textarea class="form-control work-content autosize"
-												name="workContent" placeholder="업무내용을 입력하세요" required>더미데이터</textarea>
-										</div>
+										<textarea
+											class="form-control mt-2 pt-2 pb-2 work-content autosize"
+											name="workContent" placeholder="업무내용을 입력하세요" required>더미데이터</textarea>
 
 										<!-- input-file -->
 										<div class="input-group pt-2 pb-2 col-8">
@@ -249,8 +253,7 @@
 											<div class="o-hidden">
 
 												<!-- sender, write-date -->
-												<div class="writer-row clearfix"
-													style="border-bottom: 1px solid #aaa">
+												<div class="clearfix" style="border-bottom: 1px solid #aaa">
 													<img class="left-column float-left"
 														src="${root }/resources/img/avatar.png" width="50"
 														height="50" />
@@ -269,12 +272,11 @@
 												<div class="clearfix pt-2 pb-2"
 													style="border-bottom: 1px solid #aaa">
 													<!-- subject -->
-													<div class="float-left mt-2">
-														<h5 class="work-subject pl-2">${item.workSubject }</h5>
+													<div class="float-left">
+														<h5 class="work-subject pl-2 mt-2">${item.workSubject }</h5>
 														<input type="text"
 															class="form-control work-subject d-none"
-															name="workSubject" value="${item.workSubject }"
-															placeholder="업무명을 입력하세요" required>
+															name="workSubject" placeholder="업무명을 입력하세요" required>
 													</div>
 													<!-- state -->
 													<div
@@ -299,11 +301,12 @@
 													style="border-bottom: 1px solid #aaa">
 
 													<!-- receiver -->
-													<div class="float-left p-2">
+													<div class="work-receiver-wrap float-left p-2">
 														<span class="mr-2" style="font-size: 18px;">담당자</span> <span
 															class="work-receiver" style="font-size: 18px;">${item.workReceiver }</span>
 													</div>
-													<div class="form-group float-left pt-1 d-none">
+													<div
+														class="work-receiver-wrap-2 float-left pt-1 pb-1 d-none">
 														<input class="work-receiver form-control" type="text"
 															name="workReceiver" placeholder="담당자 검색" required />
 													</div>
@@ -333,12 +336,10 @@
 												</div>
 
 												<!-- content -->
-												<div class="pb-3">
-													<div class="work-content p-3">${fn:replace(item.workContent, newLineChar, "<br>" )}</div>
-													<textarea name="workContent"
-														class="work-content form-control d-none autosize"
-														placeholder="업무내용을 입력하세요" required>${item.workContent }</textarea>
-												</div>
+												<textarea name="workContent"
+													class="work-content form-control mt-2 p-2 pb-3 autosize"
+													style="white-space: pre-wrap;" placeholder="업무내용을 입력하세요"
+													required disabled>${item.workContent }</textarea>
 
 												<!-- file-down -->
 												<div
@@ -708,8 +709,7 @@
 			<form>
 				<div class="o-hidden">
 					<!-- sender, write-date -->
-					<div class="writer-row clearfix"
-						style="border-bottom: 1px solid #aaa">
+					<div class="clearfix" style="border-bottom: 1px solid #aaa">
 						<img class="left-column float-left"
 							src="${root }/resources/img/avatar.png" width="50" height="50" />
 						<div class="left-column float-left ml-2">
@@ -723,8 +723,8 @@
 					<div class="clearfix pt-2 pb-2"
 						style="border-bottom: 1px solid #aaa">
 						<!-- subject -->
-						<div class="float-left mt-2">
-							<h5 class="work-subject pl-2">제목</h5>
+						<div class="float-left">
+							<h5 class="work-subject pl-2 mt-2">제목</h5>
 							<input type="text" class="form-control work-subject d-none"
 								name="workSubject" value="제목" placeholder="업무명을 입력하세요" required>
 						</div>
@@ -746,11 +746,12 @@
 						style="border-bottom: 1px solid #aaa">
 
 						<!-- receiver -->
-						<div class="float-left p-2">
+						<div class="work-receiver-wrap float-left p-2">
 							<span class="mr-2" style="font-size: 18px;">담당자</span> <span
 								class="work-receiver" style="font-size: 18px;"></span>
 						</div>
-						<div class="form-group float-left pt-1 d-none">
+						<div
+							class="work-receiver-wrap-2 float-left pt-1 pb-1 d-none">
 							<input class="work-receiver form-control" type="text"
 								name="workReceiver" placeholder="담당자 검색" required />
 						</div>
@@ -777,12 +778,10 @@
 					</div>
 
 					<!-- content -->
-					<div class="pb-3">
-						<p class="work-content p-3">내용</p>
-						<textarea name="workContent"
-							class="form-control work-content d-none autosize"
-							placeholder="업무내용을 입력하세요" required>내용</textarea>
-					</div>
+					<textarea name="workContent"
+						class="work-content form-control mt-2 p-2 pb-3 autosize"
+						style="white-space: pre-wrap;" placeholder="업무내용을 입력하세요" required
+						disabled>내용</textarea>
 
 					<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
 					<div class="file-down p-1 rounded clearfix d-none"

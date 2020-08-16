@@ -1,5 +1,7 @@
 var koreanDays = ["일", "월", "화", "수", "목", "금", "토"];
-var beforeEditState = {};
+var beforeEditState = "0";
+var beforeEditContent = "";
+var beforeEditHeight = "0px";
 var workForm = document.querySelector("#work-form"); // form
 var workList = document.querySelector("#work-list"); // div
 var workTmpl = document.querySelector("#work-tmpl"); // div
@@ -8,10 +10,11 @@ var workTmpl = document.querySelector("#work-tmpl"); // div
 function init() {
   var workEditBtns = workList.querySelectorAll(".work-edit");
   var editCancelBtns = workList.querySelectorAll(".work-edit-cancel");
-  var editOkBtns = workList.querySelectorAll(".work-edit-ok");
+  var workNoForms = workList.querySelectorAll("[id^='work-no-'] form");
+  var workContents = workList.querySelectorAll(".work-content");
 
   var deleteBtns = workList.querySelectorAll(".work-delete");
-  var deleteFileBtns = workList.querySelectorAll(".file-delete");
+  var deleteFileBtns = workList.querySelectorAll(".delete-file");
 
   workForm.onsubmit = addWork;
 
@@ -26,8 +29,8 @@ function init() {
   });
 
   // 일감 수정 전송 버튼
-  [].forEach.call(editOkBtns, function (item) {
-    item.onclick = okEdit;
+  [].forEach.call(workNoForms, function (item) {
+    item.onsubmit = okEdit;
   });
 
   // 일감 수정 전송 버튼
@@ -38,6 +41,11 @@ function init() {
   // 파일 삭제 전송 버튼
   [].forEach.call(deleteFileBtns, function (item) {
     item.onclick = deleteFile;
+  });
+
+  // workCotent 높이 설정
+  [].forEach.call(workContents, function (item) {
+    item.style.height = item.scrollHeight + "px";
   });
 }
 
@@ -85,13 +93,16 @@ function addWork(e) {
       copyWorkTmpl.querySelector(".work-end-date").value = data.get(
         "workEndDate"
       );
-      copyWorkTmpl.querySelector("p.work-content").innerHTML = data
-        .get("workContent")
-        .replace(/\n/g, "<br>");
+      var workContent = copyWorkTmpl.querySelector(".work-content");
+      workContent.value = data.get("workContent");
+      workContent.style.height =
+        workForm.querySelector(".work-content").scrollHeight + "px";
+      autosize(workContent);
+
       copyWorkTmpl.querySelector(".reply-form").onsubmit = addReply;
       copyWorkTmpl.querySelector(".work-edit").onclick = editWork;
       copyWorkTmpl.querySelector(".work-edit-cancel").onclick = cancelEdit;
-      copyWorkTmpl.querySelector(".work-edit-ok").onclick = okEdit;
+      copyWorkTmpl.querySelector("form").onsubmit = okEdit;
       copyWorkTmpl.querySelector(".work-delete").onclick = deleteWork;
 
       // 파일까지 업로드 한다면
@@ -107,11 +118,17 @@ function addWork(e) {
             "href",
             root + "/workspace/download.do?workNum=" + workNum
           );
-        fileDown.querySelector(".delete-file").onclick = deleteFile;
+        var deleteFileBtn = fileDown.querySelector(".delete-file");
+        deleteFileBtn.setAttribute(
+          "href",
+          root + "/workspace/delete-file.do?workNum=" + workNum
+        );
+        deleteFileBtn.onclick = deleteFile;
       }
 
       // 작성한 폼 내용 초기화
       workForm.reset();
+      workForm.querySelector(".work-content").style.height = "78px";
       workForm.querySelectorAll("input[name='workState']")[0].click();
 
       workList.prepend(copyWorkTmpl);
@@ -128,76 +145,67 @@ function editWork(e) {
   e.preventDefault();
 
   var work = e.target.closest("[id^='work-no-']");
-  work.querySelector(".writer-row").classList.add("d-none");
 
-  work.querySelector("h5.work-subject").classList.add("d-none");
-  work.querySelector("input.work-subject").classList.remove("d-none");
-  work.querySelector("input.work-subject").value = work.querySelector(
-    "h5.work-subject"
-  ).innerText;
+  var workSubjectH5 = work.querySelector("h5.work-subject");
+  var workSubjectInput = work.querySelector("input.work-subject");
+  workSubjectH5.classList.add("d-none");
+  workSubjectInput.classList.remove("d-none");
+  workSubjectInput.value = workSubjectH5.innerText;
 
-  work
-    .querySelectorAll("input[name='workState'][disabled]")
-    .forEach(function (i) {
-      i.removeAttribute("disabled");
-    });
-  beforeEditState.btnState = work
-    .querySelector("input[name='workState']:checked")
-    .value.trim();
+  beforeEditState = parseInt(
+    work.querySelector("input[name='workState']:checked").value.trim()
+  );
 
-  work.querySelector(".receiver-search").removeAttribute("disabled");
+  var workReceiverW = work.querySelector(".work-receiver-wrap");
+  var workReceiverW2 = work.querySelector(".work-receiver-wrap-2");
+  workReceiverW.classList.add("d-none");
+  workReceiverW2.classList.remove("d-none");
+  workReceiverW2.querySelector(
+    ".work-receiver"
+  ).value = workReceiverW.querySelector(".work-receiver").innerText;
 
-  work.querySelector(".work-start-date").removeAttribute("readonly");
-  work.querySelector(".work-end-date").removeAttribute("readonly");
+  work.querySelector(".work-start-date").removeAttribute("disabled");
+  work.querySelector(".work-end-date").removeAttribute("disabled");
 
-  work.querySelector("div.work-content").classList.add("d-none");
-  var textarea = work.querySelector("textarea.work-content");
-  textarea.classList.remove("d-none");
-  textarea.value = work
-    .querySelector("div.work-content")
-    .innerHTML.replace(/<br>/g, "\n");
-  textarea.style.height = textarea.scrollHeight + "px";
-  textarea.focus();
+  var workContent = work.querySelector(".work-content");
+  workContent.removeAttribute("disabled");
+  workContent.style.height = workContent.scrollHeight + "px";
+  workContent.focus();
+  beforeEditContent = workContent.value;
+  beforeEditHeight = workContent.scrollHeight + "px";
 
   work.querySelector(".file-up").classList.remove("d-none");
   work.querySelector(".download-file").classList.add("d-none");
   work.querySelector(".delete-file").classList.remove("d-none");
 
-  work.querySelector(".more").classList.add("d-none");
-  work.querySelector(".edit-more").classList.remove("d-none");
+  var more = work.querySelector(".more");
+  var editMore = work.querySelector(".edit-more");
+  if (more) {
+    more.classList.add("d-none");
+    editMore.classList.remove("d-none");
+  }
 }
 
 function cancelEdit(e) {
+  e.preventDefault();
+
   var work = e.target.closest("[id^='work-no-']");
-  work.querySelector(".writer-row").classList.remove("d-none");
 
   work.querySelector("h5.work-subject").classList.remove("d-none");
   work.querySelector("input.work-subject").classList.add("d-none");
 
-  work
-    .querySelector("input[value='" + beforeEditState.btnState + "']")
-    .setAttribute("checked", "");
-  work
-    .querySelector("input[value='" + beforeEditState.btnState + "']")
-    .parentNode.classList.add("active");
+  work.querySelectorAll("input[name='workState']")[beforeEditState].click();
 
-  work
-    .querySelectorAll(
-      "input[name='workState']:not([value='" + beforeEditState.btnState + "'])"
-    )
-    .forEach(function (i) {
-      i.setAttribute("disabled", "");
-      i.removeAttribute("checked", "");
-      i.parentNode.classList.remove("active");
-    });
+  work.querySelector(".work-receiver-wrap").classList.remove("d-none");
+  work.querySelector(".work-receiver-wrap-2").classList.add("d-none");
 
-  work.querySelector(".receiver-search").setAttribute("disabled", "");
+  work.querySelector(".work-start-date").setAttribute("disabled", "");
+  work.querySelector(".work-end-date").setAttribute("disabled", "");
 
-  work.querySelector(".work-start-date").setAttribute("readonly", "");
-  work.querySelector(".work-end-date").setAttribute("readonly", "");
-
-  work.querySelector("div.work-content").classList.remove("d-none");
-  work.querySelector("textarea.work-content").classList.add("d-none");
+  var workContent = work.querySelector(".work-content");
+  workContent.value = beforeEditContent;
+  workContent.style.height = beforeEditHeight;
+  workContent.setAttribute("disabled", "");
 
   work.querySelector(".file-up").classList.add("d-none");
   work.querySelector(".download-file").classList.remove("d-none");
@@ -210,38 +218,13 @@ function cancelEdit(e) {
 function okEdit(e) {
   e.preventDefault();
 
-  var work = e.target.closest("[id^='work-no-']");
-  var form = work.querySelector("form");
+  var work = this.closest("[id^='work-no-']");
+  var fileDown = this.querySelector(".file-down");
 
-  var workStateVar = $(form)
-    .find('input[name="workState"]:checked')
-    .val()
-    .trim();
-  var workState;
-  if (workStateVar === "요청") workState = 0;
-  else if (workStateVar === "진행") workState = 1;
-  else if (workStateVar === "완료") workState = 2;
-
-  //   var data = {
-  //  workNum: work.id.substr(8),
-  //  workReceiver: form.querySelector(".work-receiver").innerText,
-  //  workSubject: form.querySelector("input.work-subject").value,
-  //  workContent: form.querySelector("textarea.work-content").value,
-  //  workState: workState,
-  //  workStartDate: form.querySelector(".work-start-date").value,
-  //  workEndDate: form.querySelector(".work-end-date").value,
-  //   };
-
-  data = new FormData(form);
-  data.delete("workState");
-
+  data = new FormData(this);
   data.append("workNum", work.id.substr(8));
-  data.append("workReceiver", form.querySelector(".work-receiver").innerText);
-  data.append("workState", workState);
 
-  var fileDown = form.querySelector(".file-down");
   if (
-    fileDown !== null &&
     !fileDown.classList.contains("d-none") &&
     data.get("inputFile").size > 0
   ) {
@@ -259,52 +242,44 @@ function okEdit(e) {
     processData: false,
   })
     .then(function () {
-      work.querySelector(".writer-row").classList.remove("d-none");
-
-      work.querySelector("h5.work-subject").classList.remove("d-none");
-      work.querySelector("h5.work-subject").innerText = work.querySelector(
-        "input.work-subject"
-      ).value;
-      work.querySelector("input.work-subject").classList.add("d-none");
-
-      work
-        .querySelectorAll("input[name='workState']:not(:checked)")
-        .forEach(function (i) {
-          i.setAttribute("disabled", "");
-        });
-
-      // 업로드 하는 파일이 있을 때
-      $work = $(work);
+      // 서버에 업로드한 파일이 있다면
       var uploadingFile = data.get("inputFile");
       if (uploadingFile !== null && uploadingFile.size > 0) {
-        var fileDown = $work.find(".file-down");
-        fileDown.removeClass("d-none");
-        fileDown.find(".work-file-name").text(uploadingFile.name);
+        fileDown.classList.remove("d-none");
+        fileDown.querySelector(".work-file-name").innerText =
+          uploadingFile.name;
         fileDown
-          .find(".download-file")
-          .attr(
+          .querySelector(".download-file")
+          .setAttribute(
             "href",
             root + "/workspace/download.do?workNum=" + data.get("workNum")
           );
-        fileDown
-          .find(".delete-file")
-          .attr(
-            "href",
-            root + "/workspace/delete-file.do?workNum=" + data.get("workNum")
-          );
-        //   fileDown.find(".delete-file").click(deleteFile);
+        fileDown.querySelector(".delete-file").onclick = deleteFile;
       }
 
-      work.querySelector(".receiver-search").setAttribute("disabled", "");
+      var workSubjectH5 = work.querySelector("h5.work-subject");
+      var workSubjectInput = work.querySelector("input.work-subject");
+      workSubjectH5.classList.remove("d-none");
+      workSubjectInput.classList.add("d-none");
+      workSubjectH5.innerText = workSubjectInput.value;
 
-      work.querySelector(".work-start-date").setAttribute("readonly", "");
-      work.querySelector(".work-end-date").setAttribute("readonly", "");
+      work
+        .querySelectorAll("input[name='workState']")
+        [parseInt(data.get("workState"))].click();
 
-      work.querySelector("div.work-content").classList.remove("d-none");
-      work.querySelector("div.work-content").innerHTML = work
-        .querySelector("textarea.work-content")
-        .value.replace(/\n/g, "<br>");
-      work.querySelector("textarea.work-content").classList.add("d-none");
+      var workReceiverW = work.querySelector(".work-receiver-wrap");
+      var workReceiverW2 = work.querySelector(".work-receiver-wrap-2");
+      workReceiverW.classList.remove("d-none");
+      workReceiverW2.classList.add("d-none");
+      workReceiverW.querySelector(
+        ".work-receiver"
+      ).innerText = workReceiverW2.querySelector(".work-receiver").value;
+
+      work.querySelector(".work-start-date").setAttribute("disabled", "");
+      work.querySelector(".work-end-date").setAttribute("disabled", "");
+
+      var workContent = work.querySelector(".work-content");
+      workContent.setAttribute("disabled", "");
 
       work.querySelector(".file-up").classList.add("d-none");
       work.querySelector(".download-file").classList.remove("d-none");
