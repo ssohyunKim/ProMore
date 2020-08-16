@@ -41,7 +41,7 @@
 									<form action="${root}/member/registerOk.do" method="post" class="user">
 										<!-- 아이디 -->
 										<div class="form-group">
-											<input type="text" class="form-control form-control-user" id="mem_id" name="meme_id" placeholder="아이디를 입력해주세요" required>
+											<input type="text" class="form-control form-control-user" id="mem_id" name="mem_id" placeholder="아이디를 입력해주세요" required>
 											<div class="check_font" id="id_check"></div>
 										</div>
 										<!-- 이름 -->
@@ -68,11 +68,11 @@
 											<label>등급을 선택하세요  &nbsp;&nbsp; </label>
 											<div class="">
 												
-													<input type="radio" name="memLevel" value="팀장" required/>
-													<label for="">팀장 &nbsp; &nbsp;</label>
+													<input type="radio" name="memLevel" value="팀장" id="leader-btn" required/>
+													<label for="leader-btn">팀장 &nbsp; &nbsp;</label>
 												
-													<input type="radio" name="memLevel" value="팀원" required/>
-													<label for="">팀원</label>
+													<input type="radio" name="memLevel" value="팀원" id="member-btn" required/>
+													<label for="member-btn">팀원</label>
 											</div>	
 										</div>
 										<!-- 전화번호 -->
@@ -88,10 +88,10 @@
 										<!-- 이메일 수신 여부 -->
 										<div class="form-group" style="font-size: 0.8rem">
 												이메일 수신여부  &nbsp;
-												<input type="radio" name="mailcheck" value="yes"/>
-												<label for="yes">수신&nbsp; &nbsp;</label>
-												<input type="radio" name="mailcheck" value="no"/>
-												<label for="no">수신 안함</label>
+												<input type="radio" name="mailcheck" value="yes" id="mail-yes"/>
+												<label for="mail-yes">수신&nbsp; &nbsp;</label>
+												<input type="radio" name="mailcheck" value="no" id="mail-no"/>
+												<label for="mail-no">수신 안함</label>
 										</div>
 										<!-- 보유기술 -->
 										<div class="form-group">
