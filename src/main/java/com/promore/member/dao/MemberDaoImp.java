@@ -59,6 +59,6 @@ public class MemberDaoImp implements MemberDao {
 
 	@Override
 	public int memberDelete(int memNum) {
-		return sqlSessionTemplate.delete("member_Delete", memNum);
+		return sqlSessionTemplate.delete("member_delete", memNum);
 	}
 }

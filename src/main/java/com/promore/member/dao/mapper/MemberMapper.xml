@@ -51,10 +51,7 @@
 				#{memSkills}, 
 				SYSDATE)
 	</insert>
-	
-	<delete id="member_Delete" parameterType="Integer">
-		delete from member where MEM_NUM = #{memNum}
-	</delete>	
+		
 </mapper>
 
 
