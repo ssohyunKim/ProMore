@@ -557,7 +557,7 @@ textarea {
 					</div>
 
 					<!-- 팀장이면 modal-footer -->
-					<c:if test="${memLevel=='팀장'}">
+					<c:if test="${memberDto.memLevel=='팀장'}">
 						<div class="modal-footer justify-content-right">
 							<div>
 								<button id="deleteBtn" type="button" class="btn btn-secondary">삭제</button>
@@ -566,7 +566,7 @@ textarea {
 						</div>
 					</c:if>
 					<!-- 팀원이면 modal-footer -->
-					<c:if test="${memLevel=='팀원'}">
+					<c:if test="${memberDto.memLevel=='팀원'}">
 						<div class="modal-footer justify-content-right">
 							<div>
 								<button type="button" class="btn btn-secondary"

@@ -62,6 +62,8 @@ public class ProjectDaoImp implements ProjectDao {
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		hMap.put("aplNum", aplNum);
 		hMap.put("aplMemId", aplMemId);
+		
+		
 		//map으로 넘겨주기
 		return sqlSessionTemplate.insert("project_apply", hMap);
 	}
@@ -72,18 +74,16 @@ public class ProjectDaoImp implements ProjectDao {
 	}
 	
 	@Override
-	public int projectApplyAdd(String aplMemId) {
-		return sqlSessionTemplate.insert("project_apply_add", aplMemId);
+	public int projectApplyAdd(String memId) {
+		
+		System.out.println( " @@@" + memId);
+		
+		
+		
+		return sqlSessionTemplate.insert("project_apply_add", memId);
 		
 	}
-	/*
-	 * @Override public int projectStateUpdate(int proNum, int proState) { int check
-	 * = 0; check = sqlSessionTemplate.update("project_state_update", projectDto);
-	 * System.out.println("check" + check); return check;
-	 * 
-	 * }
-	 */
-	
+		
 	@Override
 	public int projectStateUpdate(int proNum, int proState) {
 		Map<String, Object> hMap = new HashMap<String, Object>();

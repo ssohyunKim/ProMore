@@ -105,7 +105,7 @@ $(function(){
 							                    </div>
 							                    <div class="col-auto">
 							                    <!-- 프로젝트 읽기 모달 -->
-							                    <c:if test= "${memLevel eq'팀장'}">
+							                    <c:if test= "${memberDto.memLevel eq'팀장'}">
 								                    <a href="#"
 								                    	data-num="${projectDto.proNum}"
 								                    	data-state="${projectDto.proState}"

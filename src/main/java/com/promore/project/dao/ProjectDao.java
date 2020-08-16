@@ -22,7 +22,7 @@ public interface ProjectDao {
 
 	public int projectApplyCnt(int aplNum);
 
-	public int projectApplyAdd(String aplMemId);
+	public int projectApplyAdd(String memId);
 
 
 	public int projectStateUpdate(int proNum, int proState);

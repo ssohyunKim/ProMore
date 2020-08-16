@@ -95,7 +95,7 @@
 			values(
 				project_apl_no_seq.nextval,
 				project_apl_no_seq.nextval,
-				#{aplMemId}
+				#{memId}
 			)
 </insert>
 
