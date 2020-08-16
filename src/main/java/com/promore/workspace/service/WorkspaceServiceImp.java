@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.promore.member.dto.MemberDto;
 import com.promore.workspace.dao.WorkspaceDao;
 import com.promore.workspace.dto.ReplyLikeDto;
 import com.promore.workspace.dto.WorkReplyDto;
@@ -43,9 +44,9 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		for (WorkspaceDto workDto : list) {
 			List<WorkReplyDto> replyDtos = workspaceDao.selectAllReply(workDto);
 			for (WorkReplyDto replyDto : replyDtos) {
-				System.out.println(replyDto);
 				ReplyLikeDto likeDto = new ReplyLikeDto();
-				likeDto.setMemId((String) sess.getAttribute("memId"));
+				MemberDto memberDto = (MemberDto) sess.getAttribute("memberDto");
+				likeDto.setMemId((String) memberDto.getMemId());
 				likeDto.setReplyNum(replyDto.getReplyNum());
 				replyDto.setReplyLike(workspaceDao.selectLikeCnt(likeDto));
 				replyDto.setCanClickLike(workspaceDao.selectLikeForChk(likeDto) == 1 ? false : true);
@@ -208,7 +209,7 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		if ((workNum = req.getParameter("workNum")) != null) {
 			workspaceDto = new WorkspaceDto();
 			workspaceDto.setWorkNum(Integer.parseInt(workNum));
-			workspaceDao.selectFileInfo(workspaceDto);
+			workspaceDto = workspaceDao.selectFileInfo(workspaceDto);
 
 			fileName = workspaceDto.getWorkFileName();
 			filePath = workspaceDto.getWorkFilePath();
@@ -216,7 +217,7 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		} else if ((replyNum = req.getParameter("replyNum")) != null) {
 			workReplyDto = new WorkReplyDto();
 			workReplyDto.setReplyNum(Integer.parseInt(replyNum));
-			workspaceDao.selectFileInfo_2(workReplyDto);
+			workReplyDto = workspaceDao.selectFileInfo_2(workReplyDto);
 
 			fileName = workReplyDto.getReplyFileName();
 			filePath = workReplyDto.getReplyFilePath();
@@ -235,18 +236,34 @@ public class WorkspaceServiceImp implements WorkspaceService {
 
 		HttpServletRequest req = (HttpServletRequest) model.get("req");
 
+		String workNum = null;
+		String replyNum = null;
 		WorkspaceDto updatedFileInfo = new WorkspaceDto();
-		updatedFileInfo.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
+		WorkReplyDto updatedFileInfo_2 = new WorkReplyDto();
+		WorkspaceDto deletedFileInfo = null;
+		WorkReplyDto deletedFileInfo_2 = null;
+		String path = null;
+		File file = null;
 
-		WorkspaceDto deletedFileInfo = workspaceDao.selectFileInfo(updatedFileInfo);
-		String path = deletedFileInfo.getWorkFilePath();
-		System.out.println(path);
-		File file = new File(path);
-
-		if (workspaceDao.updateFileInfo(updatedFileInfo) == 1 && file != null && file.delete())
-			mav.addObject("chk", 1);
-		else
-			mav.addObject("chk", 0);
+		if ((workNum = req.getParameter("workNum")) != null) {
+			updatedFileInfo.setWorkNum(Integer.parseInt(workNum));
+			deletedFileInfo = workspaceDao.selectFileInfo(updatedFileInfo);
+			path = deletedFileInfo.getWorkFilePath();
+			file = new File(path);
+			if (workspaceDao.updateFileInfo(updatedFileInfo) == 1 && file != null && file.delete())
+				mav.addObject("chk", 1);
+			else
+				mav.addObject("chk", 0);
+		} else if ((replyNum = req.getParameter("replyNum")) != null) {
+			updatedFileInfo_2.setReplyNum(Integer.parseInt(replyNum));
+			deletedFileInfo_2 = workspaceDao.selectFileInfo_2(updatedFileInfo_2);
+			path = deletedFileInfo_2.getReplyFilePath();
+			file = new File(path);
+			if (workspaceDao.updateFileInfo_2(updatedFileInfo_2) == 1 && file != null && file.delete())
+				mav.addObject("chk", 1);
+			else
+				mav.addObject("chk", 0);
+		}
 	}
 
 	@Override
@@ -257,7 +274,8 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		HttpSession sess = req.getSession();
 
 		WorkReplyDto workReplyDto = new WorkReplyDto();
-		workReplyDto.setReplyId((String) sess.getAttribute("memId"));
+		MemberDto memberDto = (MemberDto) sess.getAttribute("memberDto");
+		workReplyDto.setReplyId((String) memberDto.getMemId());
 		workReplyDto.setReplyContent(req.getParameter("replyContent"));
 		workReplyDto.setWorkNum(Integer.parseInt(req.getParameter("workNum")));
 
@@ -309,36 +327,36 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		MultipartHttpServletRequest req = (MultipartHttpServletRequest) model.get("req");
 
 		WorkReplyDto workReplyDto = new WorkReplyDto();
-//		workReplyDto.setReplyId(session.getAttribute("id"));
-		workReplyDto.setReplyId(req.getParameter("replyId"));
 		workReplyDto.setReplyContent(req.getParameter("replyContent"));
 		workReplyDto.setReplyNum(Integer.parseInt(req.getParameter("replyNum")));
 
-//		MultipartFile uploadFile = req.getFile("inputFile");
-//
-//		if (uploadFile != null && uploadFile.getSize() > 0) {
-//			String fileName = Long.toString(System.currentTimeMillis()) + "_" + uploadFile.getOriginalFilename();
-//			long fileSize = uploadFile.getSize();
-//
-//			File store = new File("C:\\pds\\");
-//			store.mkdir();
-//
-//			if (store.exists() && store.isDirectory()) {
-//				File dstFile = new File(store, fileName);
-//
-//				try {
-//					uploadFile.transferTo(dstFile);
-//
-//					workReplyDto.setReplyFilePath(dstFile.getAbsolutePath());
-//					workReplyDto.setReplyFileName(fileName);
-//					workReplyDto.setReplyFileSize(fileSize);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//					mav.addObject("num", 0);
-//					return;
-//				}
-//			}
-//		}
+		MultipartFile uploadFile = req.getFile("inputFile");
+
+		if (uploadFile != null && uploadFile.getSize() > 0) {
+			String fileName = Long.toString(System.currentTimeMillis()) + "_" + uploadFile.getOriginalFilename();
+			long fileSize = uploadFile.getSize();
+
+			File store = new File("C:\\pds\\");
+			store.mkdir();
+
+			if (store.exists() && store.isDirectory()) {
+				File dstFile = new File(store, fileName);
+
+				try {
+					uploadFile.transferTo(dstFile);
+
+					workReplyDto.setReplyFilePath(dstFile.getAbsolutePath());
+					workReplyDto.setReplyFileName(fileName);
+					workReplyDto.setReplyFileSize(fileSize);
+					
+					workspaceDao.updateFileInfo_2(workReplyDto);
+				} catch (Exception e) {
+					e.printStackTrace();
+					mav.addObject("num", 0);
+					return;
+				}
+			}
+		}
 
 		mav.addObject("chk", workspaceDao.updateReply(workReplyDto));
 	}
@@ -353,7 +371,8 @@ public class WorkspaceServiceImp implements WorkspaceService {
 
 		ReplyLikeDto replyLikeDto = new ReplyLikeDto();
 
-		replyLikeDto.setMemId((String) sess.getAttribute("memId"));
+		MemberDto memberDto = (MemberDto) sess.getAttribute("memberDto");
+		replyLikeDto.setMemId((String) memberDto.getMemId());
 		replyLikeDto.setReplyNum(Integer.parseInt(req.getParameter("replyNum")));
 
 		JSONObject jsonObj = new JSONObject();

@@ -451,14 +451,11 @@
 																	class="file-down p-1 rounded clearfix ${reply.replyFileSize == 0? 'd-none': '' }"
 																	style="background-color: #ddd">
 																	<span class="left-column float-left"> <i
-																		class="fas fa-file"></i> <span class="work-file-name">${fn:substringAfter(reply.replyFileName, "_") }</span>
+																		class="fas fa-file"></i> <span class="reply-file-name">${fn:substringAfter(reply.replyFileName, "_") }</span>
 																	</span> <span class="right-column float-right"> <a
 																		class="download-file mr-2"
 																		href="${root }/workspace/download.do?replyNum=${reply.replyNum }"><i
-																			class="fas fa-download">&nbsp;다운로드</i></a> <a
-																		class="delete-file d-none"
-																		href="${root }/workspace/download.do?replyNum=${reply.replyNum }"><i
-																			class="fas fa-trash">&nbsp;삭제</i></a>
+																			class="fas fa-download">&nbsp;다운로드</i></a>
 																	</span>
 																</div>
 															</div>
@@ -487,16 +484,13 @@
 															</div>
 														</div>
 													</div>
-													<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
-													<div class="file-down p-1 rounded clearfix d-none"
+													<!-- file-down(수정하려는 댓글에 파일이 있다면 d-none 제거) -->
+													<div class="file-down p-1 mb-1 rounded clearfix d-none"
 														style="background-color: #ddd">
 														<span class="left-column float-left"> <i
-															class="fas fa-file"></i> <span class="work-file-name">파일명</span>
+															class="fas fa-file"></i> <span class="reply-file-name">파일명</span>
 														</span> <span class="right-column float-right"> <a
-															class="download-file mr-2" href="#"><i
-																class="fas fa-download">&nbsp;다운로드</i></a> <a
-															class="delete-file d-none" href="#"><i
-																class="fas fa-trash">&nbsp;삭제</i></a>
+															class="delete-file" href="#"><i class="fas fa-trash">&nbsp;삭제</i></a>
 														</span>
 													</div>
 
@@ -765,10 +759,9 @@
 			<div class="file-down p-1 rounded clearfix d-none"
 				style="background-color: #ddd">
 				<span class="left-column float-left"> <i class="fas fa-file"></i>
-					<span class="work-file-name">파일명</span>
+					<span class="reply-file-name">파일명</span>
 				</span> <span class="right-column float-right"> <a
 					class="download-file mr-2" href="#"><i class="fas fa-download">&nbsp;다운로드</i></a>
-					<a class="delete-file d-none" href="#"><i class="fas fa-trash">&nbsp;삭제</i></a>
 				</span>
 			</div>
 		</div>
@@ -924,14 +917,12 @@
 							</div>
 						</div>
 						<!-- file-down(작성 폼에서 업로드한 파일이 있다면 d-none 제거) -->
-						<div class="file-down p-1 rounded clearfix d-none"
+						<div class="file-down p-1 mb-1 rounded clearfix d-none"
 							style="background-color: #ddd">
 							<span class="left-column float-left"> <i
-								class="fas fa-file"></i> <span class="work-file-name">파일명</span>
+								class="fas fa-file"></i> <span class="reply-file-name">파일명</span>
 							</span> <span class="right-column float-right"> <a
-								class="download-file mr-2" href="#"><i
-									class="fas fa-download">&nbsp;다운로드</i></a> <a
-								class="delete-file d-none" href="#"><i class="fas fa-trash">&nbsp;삭제</i></a>
+								class="delete-file" href="#"><i class="fas fa-trash">&nbsp;삭제</i></a>
 							</span>
 						</div>
 
@@ -977,7 +968,8 @@
 	<script>
 		var root = "${root }";
 		var id = "${id }";
-		var memId = "${memId }";
+		var memId = "${memberDto.memId }";
+		var memNickname = "${memberDto.memNickname }";
 	</script>
 	<script src="${root}/resources/js/workspace/reply.js"></script>
 	<script src="${root}/resources/js/workspace/workspace.js"></script>

@@ -61,6 +61,17 @@
 		reply_num = ${replyNum}
 	</select>
 
+	<update id="update_file_info"
+		parameterType="com.promore.workspace.dto.WorkspaceDto">
+		update work_reply set
+		reply_file_name = #{replyFileName,
+		jdbcType=VARCHAR},
+		reply_file_path = #{replyFilePath,
+		jdbcType=VARCHAR},
+		reply_file_size = #{replyFileSize, jdbcType=INTEGER}
+		where reply_num =
+		#{replyNum}
+	</update>
 
 	<insert id="insert_file_info"
 		parameterType="com.promore.workspace.dto.WorkReplyDto">

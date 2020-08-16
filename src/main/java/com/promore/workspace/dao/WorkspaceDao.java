@@ -13,7 +13,11 @@ public interface WorkspaceDao {
 
 	public WorkspaceDto selectFileInfo(WorkspaceDto workspaceDto);
 
+	public WorkReplyDto selectFileInfo_2(WorkReplyDto workReplyDto);
+
 	public int updateFileInfo(WorkspaceDto workspaceDto);
+
+	public int updateFileInfo_2(WorkReplyDto workReplyDto);
 
 	public int selectWorkNum();
 
@@ -41,5 +45,4 @@ public interface WorkspaceDao {
 
 	public int insertLike(ReplyLikeDto replyLikeDto);
 
-	WorkReplyDto selectFileInfo_2(WorkReplyDto workReplyDto);
 }

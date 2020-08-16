@@ -86,13 +86,17 @@ function addReply(e) {
       var inputFile = data.get("inputFile");
       if (data.get("inputFile").size > 0) {
         copyReply.querySelector(".file-down").classList.remove("d-none");
-        copyReply.querySelector(".work-file-name").innerText = inputFile.name;
+        copyReply.querySelector(".reply-file-name").innerText = inputFile.name;
 
         work.querySelector(".input-file").value = "";
         // dynamic
-        copyReply.querySelector(".download-file").onclick = downReplyFile;
-        copyReply.querySelector(".delete-file").onclick = deleteReplyFile;
-
+        copyReply
+          .querySelector(".download-file")
+          .setAttribute(
+            "href",
+            root + "/workspace/download.do?replyNum=" + num
+          );
+        // copyReply.querySelector(".delete-file").onclick = deleteReplyFile;
       }
 
       // dynamic
@@ -131,7 +135,7 @@ function deleteReply(e) {
     });
 }
 
-// editReply 에서 사용됨
+// editReply, deleteReplyFile 에서 사용됨
 var cachedReply;
 var cachedForm;
 
@@ -155,6 +159,15 @@ function editReply(e) {
   replyContent.style.height = replyContent.scrollHeight + "px";
   replyContent.focus();
 
+  // 업로드된 파일이 있다면 파일 다운로드 가짜 데이터 바인딩
+  if (reply.querySelector(".reply-file-name").innerText) {
+    replyForm.querySelector(".file-down").classList.remove("d-none");
+    replyForm.querySelector(".reply-file-name").innerText = reply.querySelector(
+      ".reply-file-name"
+    ).innerText;
+    replyForm.querySelector(".delete-file").onclick = deleteReplyFile;
+  }
+
   replyForm.onsubmit = editReplyOk;
 }
 
@@ -162,9 +175,19 @@ function editReplyOk(e) {
   e.preventDefault();
 
   var data = new FormData(this);
+  var fileDown = this.querySelector(".file-down");
 
   data.append("replyId", memId);
   data.append("replyNum", cachedForm.replyNum.trim());
+
+  // 기존 파일이 있는 경우
+  if (
+    !fileDown.classList.contains("d-none") &&
+    data.get("inputFile").size > 0
+  ) {
+    var choose = confirm("기존 파일을 대체하시겠습니까?");
+    if (!choose) return;
+  }
 
   $.ajax({
     url: root + "/work-reply/edit-reply.do",
@@ -185,9 +208,23 @@ function editReplyOk(e) {
         .querySelector(".reply-content")
         .value.replace(/\n/g, "<br>");
       cachedForm.replaceWith(cachedReply);
-      // copyReply.querySelector(".reply-like").onclick = likeReply;
+      if (cachedReply.querySelector(".reply-like"))
+        cachedReply.querySelector(".reply-like").onclick = likeReply;
       cachedReply.querySelector(".reply-edit").onclick = editReply;
       cachedReply.querySelector(".reply-delete").onclick = deleteReply;
+
+      // 파일이 업로드 되는 경우(cachedReply에 바인딩)
+      if (data.get("inputFile").size > 0) {
+        var inputFile = data.get("inputFile");
+        cachedReply.querySelector(".reply-file-name").innerText =
+          inputFile.name;
+        cachedReply
+          .querySelector(".download-file")
+          .setAttribute(
+            "href",
+            root + "/workspace/download.do?replyNum=" + cachedForm.replyNum
+          );
+      }
 
       // 폼 데이터 초기화
       cachedReply.parentNode.parentNode.appendChild(cachedForm);
@@ -234,12 +271,27 @@ function likeReply(e) {
     });
 }
 
-function downReplyFile(e) {
-  e.preventDefault();
-
-
-}
-
 function deleteReplyFile(e) {
   e.preventDefault();
+
+  var fileDown = e.target.closest(".file-down");
+
+  var data = {
+    replyNum: cachedForm.replyNum,
+  };
+
+  $.ajax({
+    url: root + "/workspace/delete-file.do",
+    method: "get",
+    data: data,
+    dataType: "text",
+  })
+    .then(function (chk) {
+      if (chk.trim() !== "1") return new Error();
+
+      fileDown.classList.add("d-none");
+    })
+    .catch(function () {
+      alert("파일을 삭제하는데 실패하였습니다.");
+    });
 }
