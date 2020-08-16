@@ -48,9 +48,11 @@ public class ProjectController {
 		mav.addObject("projectDto", projectDto);
 		mav.addObject("aplMemId", aplMemId);
 		
+		
+		projectservice.projectApplyAdd(mav, aplMemId);
 		projectservice.projectWrite(mav, aplMemId);
 		System.out.println("신청 완료했습니다.");
-		projectservice.projectApplyAdd(mav, aplMemId);
+		
 		return mav;
 	}
 	

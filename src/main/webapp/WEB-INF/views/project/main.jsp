@@ -76,27 +76,16 @@ function projectApply(root){
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
            <h1 class="h3 mb-0 text-gray-800">프로젝트 글보기</h1>
-          
-          <c:forEach var="projectDto" items="${projectDtoArray}">
-          
-           <c:forEach var="projectCnt" items="${projectCnt}">
-							<c:set var="pronum" value="${projectDto.proNum}"/>
-							<c:if test="${projectCnt eq pronum}">
-								${pronum}
-							</c:if>
-			</c:forEach>
-           </c:forEach>
-           
 	    </div>
 
 		<!--팀장만  글 작성 버튼 -->
-		<%-- <c:if test= "${memLevel eq'팀장'}"> --%>
+		<c:if test= "${memberDto.memLevel eq'팀장'}"> 
 			<div>
 				<a href="#" class="btn btn-primary btn-circle btn-md" data-toggle="modal" data-target="#projectWriteModal" style="float:right">
 					<i class="fas fa-pen"></i>
 				</a>
 			</div>	
-		<%-- </c:if> --%>
+		</c:if>
 
 		<c:if test="${projectCount>=0}">		
 		 	<c:forEach var="projectDto" items="${projectDtoArray}">		 	

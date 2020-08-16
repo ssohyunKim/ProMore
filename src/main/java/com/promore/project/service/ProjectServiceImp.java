@@ -89,13 +89,17 @@ public class ProjectServiceImp implements ProjectService {
 	}
 	
 	@Override
-	public void projectApplyAdd(ModelAndView mav, String aplMemId) {
+	public void projectApplyAdd(ModelAndView mav, String memId) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		
-		System.out.println("%%%프로젝트 신청자:" + aplMemId);
+		
+		
+		System.out.println("%%%프로젝트 신청자:" + memId);
+		
+		
 		//프로젝트에 추가
-		int check = projectDao.projectApplyAdd(aplMemId);
+		int check = projectDao.projectApplyAdd(memId);
 		
 		
 	}
