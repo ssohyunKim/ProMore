@@ -13,7 +13,7 @@
   <meta name="author" content="">
   <meta name="google-signin-client_id" content="233392212481-rtrid3kc01hk4jhlhdv0o2jj33cvdi94.apps.googleusercontent.com">
 
-  <title>로그인 페이지</title>
+  <title>[ProMore] - 프로젝트를 모아모아</title>
 
   <!-- Custom fonts for this template-->
   <link href="resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -26,7 +26,16 @@
   <script src="https://apis.google.com/js/platform.js" async defer></script>
  
 </head>
-
+<script type="text/javascript">
+	function showLoginView(){
+		document.getElementsByClassName('p-5')[0].style.display = "none";
+		document.getElementsByClassName('p-5')[1].style.display = "block";
+	}
+	function showGuestView(){
+		document.getElementsByClassName('p-5')[0].style.display = "none";
+		document.getElementsByClassName('p-5')[2].style.display = "block";
+	}
+</script>
 <body class="bg-gradient-primary">
 
   <div class="container">
@@ -42,10 +51,30 @@
             <div class="row justify-content-center">
    
               <div class="col-lg-6">
-                <div class="p-5">
+              	 <div class="p-5">
+					<div class="text-center">
+						<div><img alt="" src="${root}/resources/img/promore.png" style="max-width:100%; height:auto;">
+						</div>&nbsp;
+						<br/>
+						<h2 class="h5 text-gray-900 mb-4">
+							함께하고 싶은 프로젝트를 <br />
+							쉽고 빠르게 개설하고, 협업해보세요!
+						</h2>
+						</div>&nbsp;
+						<div>
+							<img alt="" src="${root}/resources/img/main_photo.jpg" style="max-width:100%; height:auto;">
+						</div><br /><br />
+						<div class="form-group">
+							<button class="btn btn-primary btn-block" type="button" onclick="showLoginView()">로그인하기</button>
+							<button class="btn btn-secondary btn-block" type="button" onclick="javascript:location.href='${root}/project/main.do'">프로젝트 구경하기
+							</button>
+						</div>
+					</div>
+                <div class="p-5" style="display:none">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">환영합니다!</h1>
                   </div>
+                  <br/>
                   <form class="user" action="${root}/member/loginOk.do" method="post">
                     <div class="form-group">
                       <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="아이디를 입력하세요..." name="memId">
@@ -60,9 +89,6 @@
                       </div>
                     </div>
                     <input type="submit" class="btn btn-primary btn-user btn-block" value="로그인">      
-                    <a href="${root}/project/main.do" class="btn btn-primary btn-user btn-block">
-                                 	프로젝트메인
-                    </a>
                     <hr>
                     <a href="index.html" onclick="${root}/resources/js/member/googlelogin.js"  class="btn btn-google btn-user btn-block">
                       <i class="fab fa-google fa-fw"></i> Goolge계정으로 로그인하기
