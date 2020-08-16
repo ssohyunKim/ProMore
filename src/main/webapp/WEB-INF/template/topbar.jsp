@@ -82,7 +82,11 @@
 				</form>
 			</div>
 		</li>
-
+		
+		
+		<!-- 보류 기능 - 알림, 쪽지 -->
+		<%--
+		
 		<!-- Nav Item - Alerts -->
 		<li class="nav-item dropdown no-arrow mx-1">
 			
@@ -155,13 +159,77 @@
 				<i class="fas fa-envelope fa-fw"></i> 
 				
 				<!-- Counter - Messages -->
-				<span class="badge badge-danger badge-counter">7</span>
+				<span class="badge badge-danger badge-counter">0</span>
 			</a>
 
 			<!-- Drop down - Messages -->
 			
 		</li>
+		--%>
+		
+		<!-- 관리자용  top bar -->
+		
+		<c:if test="${memberDto.memLevel=='관리자'}">
+		
+		<!-- Nav Item - User Information -->
+		<li class="nav-item dropdown no-arrow">
+			<a class="nav-link dropdown-toggle" href="#" id="userDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false"> 
+				<img class="mr-2 img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+				<span class="d-none d-lg-inline text-gray-600 small">관리자 페이지입니다.</span>
+			</a> 
+		
+			<!-- Drop down -->
+			<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+				aria-labelledby="alertsDropdown">
+				
+				<!-- 타이틀 -->
+				<h6 class="dropdown-header">Manager Profile</h6>
+				
+				<!-- 정보 -->
+				<div class="dropdown-item d-flex align-self-center py-3">
+					<label class="small text-gray-500 m-0" style="width: 35% !important;">아이디</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memId}</label>
+				</div> 
+				<div class="dropdown-item d-flex align-self-center py-3">
+					<label class="small text-gray-500 m-0" style="width: 35% !important;">등급</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memLevel}</label>
+				</div> 
+				<div class="dropdown-item d-flex align-self-center py-3">
+					<label class="small text-gray-500 m-0" style="width: 35% !important;">이름</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memName}</label>
+				</div> 
+				<div class="dropdown-item d-flex align-self-center py-3">
+					<label class="small text-gray-500 m-0" style="width: 35% !important;">닉네임</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memNickname}</label>
+				</div> 
+				<div class="dropdown-item d-flex align-self-center py-3">
+					<label class="small text-gray-500 m-0" style="width: 35% !important;">휴대폰 번호</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memPhone}</label>
+				</div> 
+				<div class="dropdown-item d-flex align-self-center py-3">
+					<label class="small text-gray-500 m-0" style="width: 35% !important;">이메일 주소</label>
+					<label class="font-weight m-0" style="width: 65% !important;">${memberDto.memEmail}</label>
+				</div>
+				
+				<a href="#" class="dropdown-item d-flex justify-content-center align-self-center"
+					data-toggle="modal" data-target="#logoutModal"> 
+					<i class="fas fa-sign-out-alt mt-1 mr-2 text-gray-400"></i>
+					<label class="small text-gray-500 m-0">로그아웃</label>
+				</a>
+			</div>
+		</li>
+		
+		</c:if>
+		
+		<!-- 비회원용 top bar -->
 
+		
+		<!-- 회원용 top bar -->
+		
+		<c:if test="${memberDto.memLevel=='팀원' || memberDto.memLevel=='팀장'}">
+		
 		<!-- Nav Item - User Information -->
 		<li class="nav-item dropdown no-arrow">
 			<a class="nav-link dropdown-toggle" href="#" id="userDropdown"
@@ -211,5 +279,23 @@
 				</a>
 			</div>
 		</li>
+		
+		</c:if>
+		
+		<!-- 비회원용 top bar -->
+		
+		<c:if test="${memberDto==null}">
+		<!-- Nav Item - User Information -->
+		
+		<li class="nav-item small ml-2">
+	    	<a class="nav-link text-gray-900" href="${root}/member/register.do">회원가입</a>
+	    </li>
+		
+		<li class="nav-item small">
+	    	<a class="nav-link text-gray-900" href="${root}/index.jsp">로그인</a>
+	    </li>
+	    
+		</c:if>
+		
 	</ul>
 </nav>
