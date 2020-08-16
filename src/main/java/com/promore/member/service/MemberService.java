@@ -13,4 +13,8 @@ public interface MemberService {
 	public void sendEmail(ModelAndView mav);
 	
 	public void memberRegister(ModelAndView mav);
+
+	public void memberDeleteOk(ModelAndView mav);
+
+	public void memberDelete(ModelAndView mav);
 }

@@ -136,6 +136,45 @@ public class MemberServiceImp implements MemberService {
 		
 	}
 	
+	@Override
+	public void memberDelete(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		
+		int memNum = Integer.parseInt(request.getParameter("memNum"));
+		
+		System.out.println(memNum);
+		
+		MemberDto memberDto = memberDao.memberSelect(memNum);
+		
+		mav.addObject("memberDto", memberDto);
+		mav.setViewName("member/memberDelete");
+		
+	}
+
+	@Override
+	public void memberDeleteOk(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		//HttpSession session = request.getSession();
+		
+		/*
+		 * MemberDto memberDto = (MemberDto) map.get("memberDto");
+		 * HAspect.logger.info(HAspect.logMsg + memberDto);
+		 */
+		
+		int memNum = Integer.parseInt(request.getParameter("memNum"));
+		
+		int check = memberDao.memberDelete(memNum);
+		HAspect.logger.info(HAspect.logMsg + check);
+
+		mav.addObject("check", check);
+		mav.setViewName("member/memberDeleteOk");
+		
+	}
+
+
+	
 	
 	
 	

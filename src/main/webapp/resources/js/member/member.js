@@ -28,3 +28,17 @@ function memberUpdateCheck(obj, password) {
 
   //$('#memberUpdateModal').modal();
 }
+
+function memberDelete(obj, password){
+	//alert("확인");
+	//alert("넣은값"+obj.password.value + " _ DB값" + password);
+
+	if(obj.password.value != password){
+		alert("비밀번호가 틀렸습니다. 비밀번호를 확인하세요.");
+		//alert(obj.password.value + " _ " + password);
+		obj.password.focus();
+		return false; 
+	}
+	
+
+}

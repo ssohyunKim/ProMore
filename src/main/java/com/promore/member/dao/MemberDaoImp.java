@@ -56,4 +56,9 @@ public class MemberDaoImp implements MemberDao {
 		
 		return sqlSessionTemplate.insert("member_insert", memberDto);
 	}
+
+	@Override
+	public int memberDelete(int memNum) {
+		return sqlSessionTemplate.delete("member_Delete", memNum);
+	}
 }

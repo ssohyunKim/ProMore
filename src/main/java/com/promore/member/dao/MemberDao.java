@@ -13,4 +13,6 @@ public interface MemberDao {
 	public int memberUpdate(MemberDto memberDto);
 	
 	public int memberRegister(MemberDto member);
+
+	public int memberDelete(int memNum);
 }
