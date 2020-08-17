@@ -24,4 +24,6 @@ public interface WorkspaceService {
 	public void editReply(ModelAndView mav);
 
 	public void likeReply(ModelAndView mav);
+	
+	public void moveNthWork(ModelAndView mav);
 }

@@ -169,8 +169,7 @@
 														<div class="modal-header">
 															<div class="left-column clearfix">
 																<div class="left-column float-left">
-																	<span id="work-state" class="float-left bg-info"
-																		style="padding: 5px; border-radius: 5px;">요청</span>
+																	<span id="work-state" class="float-left p-1 rounded text-light">요청</span>
 																</div>
 																<div class="right-column float-left ml-2">
 																	<h5 class="modal-title" id="exampleModalLabel">CSS

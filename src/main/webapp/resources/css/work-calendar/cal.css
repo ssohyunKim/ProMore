@@ -1,103 +1,111 @@
 @charset "utf-8";
 
 .calendar-left-bar {
-  width: 200px;
+	width: 200px;
 }
 
 .calendar-left-bar input[type="checkbox"] {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
 }
 
-.calendar-left-bar input[type="checkbox"] + label {
-  display: inline-block;
-  position: relative;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  border: none;
+.calendar-left-bar input[type="checkbox"]+label {
+	display: inline-block;
+	position: relative;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	border: none;
 }
 
-.calendar-left-bar input[type="checkbox"] + label:before {
-  content: " ";
-  display: inline-block;
-  width: 19px;
-  height: 19px;
-  line-height: 19px;
-  margin: -2px 8px 0 0;
-  text-align: center;
-  vertical-align: middle;
-  background: #fafafa;
-  border: 1px solid #cacece;
-  border-radius: 3px;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05),
-    inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+.calendar-left-bar input[type="checkbox"]+label:before {
+	content: " ";
+	display: inline-block;
+	width: 19px;
+	height: 19px;
+	line-height: 19px;
+	margin: -2px 8px 0 0;
+	text-align: center;
+	vertical-align: middle;
+	background: #fafafa;
+	border: 1px solid #cacece;
+	border-radius: 3px;
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px
+		rgba(0, 0, 0, 0.05);
 }
 
-.calendar-left-bar input[type="checkbox"]:checked + label {
-  border: none;
+.calendar-left-bar input[type="checkbox"]:checked+label {
+	border: none;
 }
 
-.calendar-left-bar input[type="checkbox"]:checked + label:before {
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  content: "\f00c";
-  color: #fff;
-  text-shadow: 1px 1px #fff;
-  border-color: #adb8c0;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05),
-    inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05),
-    inset 15px 10px -12px rgba(255, 255, 255, 0.1);
+.calendar-left-bar input[type="checkbox"]:checked+label:before {
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	content: "\f00c";
+	color: #fff;
+	text-shadow: 1px 1px #fff;
+	border-color: #adb8c0;
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px
+		rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
 }
 
 /* 체크박스 색상 */
-.calendar-left-bar
-  > div:nth-of-type(1)
+.calendar-left-bar>div:nth-of-type(1)
   .category-item:nth-of-type(1)
-  input[type="checkbox"]
-  + label:before {
-  background-color: #23e40a;
+  input[type="checkbox"]+label:before {
+	background-color: #23e40a;
 }
 
-.calendar-left-bar
-  > div:nth-of-type(1)
+.calendar-left-bar>div:nth-of-type(1)
   .category-item:nth-of-type(2)
-  input[type="checkbox"]
-  + label:before {
-  background-color: #8d09f8;
+  input[type="checkbox"]+label:before {
+	background-color: #8d09f8;
 }
 
 #schedule-form .form-group .left-column {
-  float: left;
-  width: 80px;
-  line-height: 26px;
+	float: left;
+	width: 80px;
+	line-height: 26px;
 }
 
 #schedule-form .form-group .right-column {
-  float: left;
-  width: 300px;
+	float: left;
+	width: 300px;
 }
 
-#schedule-form .form-group .right-column textarea[name="schedule-content"] {
-  min-width: 300px;
-  max-width: 300px;
-  min-height: 150px;
-  max-height: 150px;
+#schedule-form .form-group .right-column textarea[name="schedule-content"]
+	{
+	min-width: 300px;
+	max-width: 300px;
+	min-height: 150px;
+	max-height: 150px;
 }
 
 .calender-topbar {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .calendar-topbar-nav {
-  position: absolute;
-  left: 50%;
-  margin-left: -50px;
+	position: absolute;
+	left: 50%;
+	margin-left: -50px;
+}
+
+.bg-0 {
+	background-color: rgb(26, 255, 191);
+}
+
+.bg-1 {
+	background-color: rgb(48, 255, 26);
+}
+
+.bg-2 {
+	background-color: rgb(244,142,6);
 }

@@ -29,15 +29,7 @@ var calendar = new tui.Calendar("#calendar", {
 });
 
 var koreanDays = ["일", "월", "화", "수", "목", "금", "토"];
-
-// calendar.on("beforeCreateSchedule", function (e) {
-//   var startTime = e.start;
-//   var endTime = e.end;
-//   var isAllDay = e.isAllDay;
-//   var guide = e.guide;
-//   var triggerEventName = e.triggerEventName;
-//   var schedule;
-// });
+var workStateArr = ["요청", "진행", "완료"];
 
 calendar.on("clickSchedule", function (e) {
   var schedule = e.schedule;
@@ -59,11 +51,11 @@ calendar.on("clickSchedule", function (e) {
   if (calId === "give-work") {
     scheduleView.find("#work-giver").addClass("d-none");
     scheduleView.find("#work-taker").removeClass("d-none");
-    scheduleView.find("#work-team-id").html(raw.workReceiver);
+    scheduleView.find("#work-team-id").text(raw.workReceiver);
   } else {
     scheduleView.find("#work-giver").removeClass("d-none");
     scheduleView.find("#work-taker").addClass("d-none");
-    scheduleView.find("#work-team-id").html(raw.workSender);
+    scheduleView.find("#work-team-id").text(raw.workSender);
   }
   scheduleView.find("#work-content").html(content);
 
@@ -83,7 +75,17 @@ calendar.on("clickSchedule", function (e) {
         koreanDays[momentEndDate.day()] +
         ")"
     );
-  $("#work-detail").attr("href", id);
+
+  scheduleView.find("#work-state").text(workStateArr[raw.workState]);
+  scheduleView.find("#work-state").removeClass("bg-0 bg-1 bg-2");
+  scheduleView.find("#work-state").addClass("bg-" + raw.workState);
+
+  scheduleView
+    .find("#work-detail")
+    .attr(
+      "href",
+      root + "/workspace/workspace.do?proNum=1&workNum=" + raw.workNum
+    );
 
   scheduleView.modal("toggle");
 });
@@ -99,15 +101,8 @@ function setYearMonthHeader(ymHeader) {
 }
 
 function getAllGiveSchedule() {
-  // 지금 로그인 한 유저(b)라고 가정
-  // 나중에 로그인 중인 아이디로 변경
-  var data = {
-    workSender: "b",
-  };
-
   $.ajax({
     url: root + "/workcal/get-givesche.do",
-    data: data,
     dataType: "json",
   })
     .then(function (data) {
@@ -126,8 +121,10 @@ function getAllGiveSchedule() {
             ),
             end: moment(parseInt(item.workEndDate)).format("yyyy-MM-DD (ddd)"),
             raw: {
+              workNum: item.workNum,
               workSender: item.workSender,
               workReceiver: item.workReceiver,
+              workState: parseInt(item.workState),
             },
           },
         ]);
@@ -139,15 +136,8 @@ function getAllGiveSchedule() {
 }
 
 function getAllTakeSchedule() {
-  // 지금 로그인 한 유저(b)라고 가정
-  // 나중에 로그인 중인 아이디로 변경
-  var data = {
-    workReceiver: "b",
-  };
-
   $.ajax({
     url: root + "/workcal/get-takesche.do",
-    data: data,
     dataType: "json",
   })
     .then(function (data) {
@@ -166,8 +156,10 @@ function getAllTakeSchedule() {
             ),
             end: moment(parseInt(item.workEndDate)).format("yyyy-MM-DD (ddd)"),
             raw: {
+              workNum: item.workNum,
               workSender: item.workSender,
               workReceiver: item.workReceiver,
+              workState: parseInt(item.workState),
             },
           },
         ]);
@@ -222,7 +214,7 @@ function init() {
   };
 
   // 모달 꺼짐 리스너
-  $("#schedule-modal-container").on("hidden.bs.modal", function () {});
+  $("#schedule-modal-container").on("hidden.bs.modal", function (e) {});
 
   // 모달 켜짐 리스너
   $("#schedule-modal-container").on("show.bs.modal", function (e) {});

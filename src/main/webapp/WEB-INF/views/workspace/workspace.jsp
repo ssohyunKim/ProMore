@@ -904,5 +904,13 @@ textarea {
 	</script>
 	<script src="${root}/resources/js/workspace/reply.js"></script>
 	<script src="${root}/resources/js/workspace/workspace.js"></script>
+	<c:if test="${workNum != null }">
+		<script>
+			document.querySelector("#work-no-${workNum}").scrollIntoView({
+				alignToTop: true,
+				behavior: "smooth"
+			});
+        </script>
+	</c:if>
 </body>
 </html>
