@@ -10,7 +10,7 @@ public interface CustomerDao {
 	
 	public int customerBoardWrite(CustomerDto customerDto);
 
-	public List<CustomerDto> customerBoardList(String customerId);
+	public List<CustomerDto> customerBoardList(String id);
 
 	public int customerBoardDelete(int cusNum);
 

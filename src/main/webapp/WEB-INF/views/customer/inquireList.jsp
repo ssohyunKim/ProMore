@@ -20,56 +20,59 @@
   <script type="text/javascript" src="${root}/resources/jquery.js"></script>
 </head>
 <script type="text/javascript">
-var cusNum = "";
-var title = "";
-var cate = "";
-var content = "";
-var file = "";
-$(function(){
-	$('#customerReadModal').on('show.bs.modal', function(event) {
-		cusNum = $(event.relatedTarget).data('num');
-		
- 		title = $(event.relatedTarget).data('title');
-		$('input[name="cusTitle"]').val(title);
-		
-	 	cate = $(event.relatedTarget).data('cate');
-	 	$('select[name="cusCate"]').val(cate).attr("selected", "selected");
-		$('select[name="cusCate"] option').attr('disabled', true);
-		
- 		content = $(event.relatedTarget).data('content');
-		$('textarea[name="cusContent"]').text(content);
-		
- 		file = $(event.relatedTarget).data('file');
-		console.log(file);
-	});
-	
-	$('#deleteBtn').click(function(){
-		$('#removeConfirmModal').modal();
+
+	var cusNum = "";
+	var title = "";
+	var cate = "";
+	var content = "";
+	var file = "";
+
+	$(function() {
+		$('#customerReadModal').on('show.bs.modal', function(event) {
+			cusNum = $(event.relatedTarget).data('num');
+
+			title = $(event.relatedTarget).data('title');
+			$('input[name="cusTitle"]').val(title);
+
+			cate = $(event.relatedTarget).data('cate');
+			$('select[name="cusCate"]').val(cate).attr("selected", "selected");
+			$('select[name="cusCate"] option').attr('disabled', true);
+
+			content = $(event.relatedTarget).data('content');
+			$('textarea[name="cusContent"]').text(content);
+
+			file = $(event.relatedTarget).data('file');
+			console.log(file);
+		});
+
+		$('#deleteBtn').click(function() {
+			$('#removeConfirmModal').modal();
+		});
+
+		$('#updateBtn').click(function() {
+			$('#customerUpdateModal').modal();
+
+			$('input[name="cusNum"]').val(cusNum);
+			$('input[name="cusTitle"]').val(title);
+
+			$('select[name="cusCate"]').val(cate).prop("selected", true);
+			$('select[name="cusCate"] option').attr('disabled', false);
+
+			$('textarea[name="cusContent"]').text(content);
+
+			$('#customerReadModal').modal().hide();
+
+			var file = $(event.relatedTarget).data('file');
+		});
+
+		$('.modal').on('hide.bs.modal', function(event) {
+			location.reload();
+		});
 	});
 
-	$('#updateBtn').click(function(){
-		$('#customerUpdateModal').modal();
-		
-		$('input[name="cusNum"]').val(cusNum);
-		$('input[name="cusTitle"]').val(title);
-		
-		$('select[name="cusCate"]').val(cate).prop("selected", true);
-		$('select[name="cusCate"] option').attr('disabled', false);
-		
-		$('textarea[name="cusContent"]').text(content);
-
-		$('#customerReadModal').modal().hide();
-		
-		var file = $(event.relatedTarget).data('file');
-	});
-	
-	$('.modal').on('hide.bs.modal', function(event){
-		location.reload();
-	});
-});
-function inquireDelete(root){
-	location.href = root + '/customer/inquireDelete.do?cusNum=' +cusNum;
-}
+	function inquireDelete(root) {
+		location.href = root + '/customer/inquireDelete.do?cusNum=' + cusNum;
+	}
 </script>
 <body id="page-top">
 

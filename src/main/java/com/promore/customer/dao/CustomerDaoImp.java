@@ -38,8 +38,8 @@ public class CustomerDaoImp implements CustomerDao {
 	}
 	
 	@Override
-	public List<CustomerDto> customerBoardList(String customerId) {
-		return sqlSessionTemplate.selectList("customer_board_list", customerId);
+	public List<CustomerDto> customerBoardList(String id) {
+		return sqlSessionTemplate.selectList("customer_board_list", id);
 	}
 	
 	@Override
