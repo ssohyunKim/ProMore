@@ -13,6 +13,7 @@
 	<c:if test="${memberDto.memLevel!=null}">
 	
 		<c:set var="memberDto" value="${memberDto}" scope="session"/>
+		<c:set var="id" value="${memberDto.memId}" scope="session"/>
 		
 		<script type="text/javascript">
 			alert("로그인 성공");
