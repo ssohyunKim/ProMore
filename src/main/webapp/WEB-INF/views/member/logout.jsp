@@ -11,6 +11,7 @@
 <body>
 
 	<c:remove var="memberDto" scope="session"/>
+	<c:remove var="id" scope="session"/>
 	 
 	<script type="text/javascript">
 		alert("로그아웃 되었습니다.");
