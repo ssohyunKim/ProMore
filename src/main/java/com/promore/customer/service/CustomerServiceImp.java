@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,8 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.promore.aop.HAspect;
 import com.promore.customer.dao.CustomerDao;
 import com.promore.customer.dto.CustomerDto;
-import com.promore.manager.dto.NoticeDto;
 import com.promore.manager.dao.ManagerDao;
+import com.promore.manager.dto.NoticeDto;
 
 @Component
 public class CustomerServiceImp implements CustomerService {
@@ -31,11 +32,15 @@ public class CustomerServiceImp implements CustomerService {
 		Map<String, Object> map = mav.getModelMap();
 		CustomerDto customerDto = (CustomerDto) map.get("customerDto");
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest)map.get("request");
+		HttpSession session = request.getSession();
+		
+		String id = (String) session.getAttribute("id");
+		HAspect.logger.info(HAspect.logMsg + "id:" + id);
 		
 		customerDto.setCusNum(0);
 		customerDto.setCusState(0);
 		customerDto.setCusDate(new Date());
-		customerDto.setCusId("test");
+		customerDto.setCusId(id);
 		
 		MultipartFile upFile = request.getFile("file");
 		HAspect.logger.info(HAspect.logMsg + customerDto);
@@ -79,12 +84,13 @@ public class CustomerServiceImp implements CustomerService {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
-		//ID 값 넘겨줘서 체크 String customerId = request.getParameter("id");
-		String customerId = "test";
+		//ID 값 넘겨줘서 체크 id
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
 
 		List<CustomerDto> boardList = null;
 	
-		boardList = customerDao.customerBoardList(customerId);
+		boardList = customerDao.customerBoardList(id);
 		HAspect.logger.info(HAspect.logMsg + boardList.size());
 
 		mav.addObject("boardList", boardList);

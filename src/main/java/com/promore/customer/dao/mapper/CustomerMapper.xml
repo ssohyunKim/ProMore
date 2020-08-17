@@ -54,7 +54,7 @@
 	
 	<!--  글목록 가져오기 -->
 	<select id="customer_board_list" parameterType="String" resultMap="CustomerDto">
-		select * from customer_board where cus_id = #{customerId}
+		select * from customer_board where cus_id = #{id}
 	</select>
 	
 	<!-- 작성글 삭제하기 -->
