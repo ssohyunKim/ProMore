@@ -32,8 +32,11 @@ public class ProjectController {
 		 System.out.println("mainid" + id); 
 		mav.addObject("aplMemId", id);
 		
+
+		projectservice.projectApplynull(mav, id);
 		projectservice.projectList(mav);
 		projectservice.projectCnt(mav, id); 
+	
 		return mav;
 	}
 

@@ -105,5 +105,23 @@
 	where pro_num = #{proNum}
 </update>
 
+<select id="project_null" resultType="com.promore.project.dto.ProjectDto">
+	select * from project
+</select>
+
+
+<insert id="project_apply_null" parameterType="java.util.HashMap">
+	insert into project_apply (
+			apl_no,
+			apl_num,
+			apl_mem_id
+			)
+			values(
+				project_apl_no_seq.nextval,
+				9999,
+				#{memId}
+			)
+</insert>
+
 
 </mapper>

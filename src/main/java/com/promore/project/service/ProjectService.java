@@ -29,4 +29,8 @@ public interface ProjectService {
 	public void projectStateUpdateOk(ModelAndView mav);
 
 
+
+	public void projectApplynull(ModelAndView mav, String id);
+
+
 }
