@@ -29,6 +29,7 @@ public interface ProjectDao {
 
 	public List<String> projectState();
 
-	public int projectApplynull(String id);
+
+	public List<ProjectDto> projectSelectList(int proNum);
 
 }

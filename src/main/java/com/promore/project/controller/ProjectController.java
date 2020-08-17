@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.promore.aop.HAspect;
 import com.promore.customer.dto.CustomerDto;
+import com.promore.member.dto.MemberDto;
 import com.promore.project.dto.ProjectDto;
 import com.promore.project.service.ProjectService;
 
@@ -32,14 +33,12 @@ public class ProjectController {
 		 System.out.println("mainid" + id); 
 		mav.addObject("aplMemId", id);
 
-		projectservice.projectApplynull(mav, id);
 		projectservice.projectList(mav);
 		projectservice.projectCnt(mav, id); 
 	
 		return mav;
 	}
 
-	// 프로젝트 작성 완료
 	@RequestMapping(value = "/project/writeOk.do", method = RequestMethod.POST)
 	public ModelAndView projectWriteOk(HttpServletRequest request, HttpServletResponse response, ProjectDto projectDto) {
 		ModelAndView mav = new ModelAndView(); 
@@ -53,12 +52,10 @@ public class ProjectController {
 		
 		projectservice.projectApplyAdd(mav, aplMemId);
 		projectservice.projectWrite(mav, aplMemId);
-		System.out.println("신청 완료했습니다.");
 		
 		return mav;
 	}
 	
-	//프로젝트 현황
 	@RequestMapping(value="/project/pjtState.do", method=RequestMethod.GET)
 	public ModelAndView projectState(HttpServletRequest request, HttpServletResponse response) {
 		  ModelAndView mav = new ModelAndView();
@@ -70,16 +67,14 @@ public class ProjectController {
 		  mav.addObject("request", request);
 		  mav.addObject("aplMemId", id);
 		  
-		  //회원 pjt_번호
 		  projectservice.projectCnt(mav, id); 
-		  //pjt 테이블 전체 가져오기
 		  projectservice.projectList(mav);
 		  
 		  return mav;
 
 	}
 	
-	//프로젝트 수정
+
 	@RequestMapping(value="/project/update.do", method=RequestMethod.POST)
 	public ModelAndView projectUpdate(HttpServletRequest request, HttpServletResponse response,ProjectDto projectDto) {
 		ModelAndView mav = new ModelAndView();
@@ -90,7 +85,7 @@ public class ProjectController {
 		projectservice.projectUpdateOk(mav);
 		return mav;
 	}
-	//프로젝트 삭제
+
 	@RequestMapping(value="/project/delete.do", method=RequestMethod.GET)
 	public ModelAndView projectdDelete(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
@@ -101,21 +96,34 @@ public class ProjectController {
 		return mav;		
 	}
 	
-	//프로젝트 신청
+	
 	@RequestMapping(value="/project/projectApply.do", method=RequestMethod.GET)
 	public ModelAndView projectApply(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("request", request);
 		HttpSession session = request.getSession(); 
 		String aplMemId = (String)session.getAttribute("id");
-		System.out.println("프로젝트 신청자 :" + aplMemId);
 		
 		projectservice.projectApplyOk(mav, aplMemId);
 			
 		return mav;		
 	}
 	
-	//프로젝트 현황 수정
+	@RequestMapping(value="/project/projectSelect.do", method=RequestMethod.GET)
+	public ModelAndView projectSelect(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		HttpSession session = request.getSession(); 
+		String aplMemId = (String)session.getAttribute("id");
+		
+		
+		projectservice.projectSelect(mav,aplMemId);
+
+		return mav;
+		
+	}
+			
+	
 	@RequestMapping(value="/project/projectStateUpdate.do", method=RequestMethod.POST)
 	public ModelAndView projectStateUpdate(HttpServletRequest request, HttpServletResponse response, ProjectDto projectDto) {
 		ModelAndView mav = new ModelAndView();
@@ -126,6 +134,19 @@ public class ProjectController {
 		projectservice.projectStateUpdateOk(mav); 
 		
 		return mav;
+	}
+	
+	@RequestMapping(value="/project/projectRead.do", method=RequestMethod.GET)
+	public ModelAndView projectRead(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("request", request);
+		HttpSession session = request.getSession(); 
+		String aplMemId = (String)session.getAttribute("id");
+		
+		projectservice.projectRead(mav,aplMemId);
+
+		return mav;
+		
 	}
 	
 		

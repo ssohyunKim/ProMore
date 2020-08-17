@@ -30,7 +30,10 @@ public interface ProjectService {
 
 
 
-	public void projectApplynull(ModelAndView mav, String id);
+	public void projectSelect(ModelAndView mav, String aplMemId);
+
+
+	public void projectRead(ModelAndView mav, String aplMemId);
 
 
 }

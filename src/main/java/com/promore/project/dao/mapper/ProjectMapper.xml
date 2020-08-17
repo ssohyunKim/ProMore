@@ -110,18 +110,9 @@
 </select>
 
 
-<insert id="project_apply_null" parameterType="java.util.HashMap">
-	insert into project_apply (
-			apl_no,
-			apl_num,
-			apl_mem_id
-			)
-			values(
-				project_apl_no_seq.nextval,
-				9999,
-				#{memId}
-			)
-</insert>
+<select id="project_select_list" parameterType="int" resultType="com.promore.project.dto.ProjectDto">
+	select * from project where pro_num=#{proNum}
+</select>
 
 
 </mapper>

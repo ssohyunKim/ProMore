@@ -92,16 +92,12 @@ public class ProjectServiceImp implements ProjectService {
 	public void projectApplyAdd(ModelAndView mav, String memId) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
-		
-		
-		
+	
 		System.out.println("%%%프로젝트 신청자:" + memId);
-		
-		
+
 		//프로젝트에 추가
 		int check = projectDao.projectApplyAdd(memId);
-		
-		
+
 	}
 
 	@Override
@@ -129,10 +125,7 @@ public class ProjectServiceImp implements ProjectService {
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		
 		int aplNum = Integer.parseInt(request.getParameter("proNum"));
-		/*
-		 * System.out.println("%%%프로젝트 신청번호" + aplNum);
-		 * System.out.println("%%%프로젝트 신청자:" + aplMemId);
-		 */
+	
 		int check = projectDao.projectApply(aplNum, aplMemId);
 		//숫자 증가
 		projectDao.projectApplyCnt(aplNum);
@@ -159,11 +152,34 @@ public class ProjectServiceImp implements ProjectService {
 		 
 	}
 	
+	
 	@Override
-	public void projectApplynull(ModelAndView mav, String id) {
+	public void projectSelect(ModelAndView mav, String aplMemId) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
-		int check = projectDao.projectApplynull(id);
+		//id가 신청한 프로젝트 목록 가져오기
+		 List<String> projectCnt = projectDao.projectState(aplMemId);
+		int proNum = Integer.parseInt(request.getParameter("proNum"));
+		List<ProjectDto> projectList = projectDao.projectSelectList(proNum); 
+	
+		
+		 mav.addObject("projectCnt",projectCnt);
+		 mav.addObject("projectList",projectList);
+		 mav.addObject("id",aplMemId);
+		 mav.addObject("proNum", proNum);
+		 mav.setViewName("project/projectSelect");
+		
+	}
+	
+	@Override
+	public void projectRead(ModelAndView mav, String aplMemId) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest)map.get("request");
+		
+		int proNum = Integer.parseInt(request.getParameter("proNum"));
+		System.out.println("OK" + proNum);
+		List<ProjectDto> projectList = projectDao.projectSelectList(proNum); 
+		System.out.println("오오오" + projectList);
 		
 	}
 	
