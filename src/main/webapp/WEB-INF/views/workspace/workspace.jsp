@@ -158,8 +158,7 @@ textarea {
 											<!-- subject -->
 											<div class="float-left pb-2">
 												<input type="text" class="work-subject form-control"
-													name="workSubject" placeholder="업무명을 입력하세요" required
-													value="더미데이터">
+													name="workSubject" placeholder="업무명을 입력하세요" required >
 											</div>
 
 											<!-- state -->
@@ -215,7 +214,7 @@ textarea {
 										<!-- content -->
 										<textarea
 											class="form-control mt-2 pt-2 pb-2 work-content autosize"
-											name="workContent" placeholder="업무내용을 입력하세요" required>더미데이터</textarea>
+											name="workContent" placeholder="업무내용을 입력하세요" required></textarea>
 
 										<!-- input-file -->
 										<div class="input-group pt-2 pb-2 col-8">
@@ -500,13 +499,12 @@ textarea {
 				<!-- /.container-fluid -->
 			</div>
 			<!-- End of Main Content -->
+            <jsp:include page="/WEB-INF/template/footer.jsp" />
 		</div>
 		<!-- End of Content Wrapper -->
 	</div>
 	<!-- End of Page Wrapper -->
 
-	<!-- Footer -->
-	<jsp:include page="/WEB-INF/template/footer.jsp" />
 
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top"> <i

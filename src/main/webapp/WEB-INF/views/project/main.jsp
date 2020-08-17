@@ -100,14 +100,11 @@ function projectApply(root){
 						<!-- 프로젝트 팀장, 팀원-->
 						<!-- 모든 경우의 수 비교 -->
 						<!-- 프로젝트를 하나도 안맡았을 때 -->
-					
-					
 						
 						<c:if test="${not loop_flag}">
-						<c:forEach var="projectCnt" items="${projectCnt}">
+						<c:forEach var="cnt" items="${projectCnt}">
 							<c:set var="pronum" value="${projectDto.proNum}"/>
-								<c:if test="${projectCnt eq pronum}">
-									
+								<c:if test="${cnt eq pronum}">
 									<c:set var="loop_flag" value="true"/>
 									<a href="${root}/workspace/workspace.do?proNum=${projectDto.proNum}">
 									<div class="flip-card-back1">
@@ -122,9 +119,9 @@ function projectApply(root){
 						
 						<!-- 프로젝트 아닌 사람 -->
 						<c:if test="${not loop_flag}">
-						<c:forEach var="projectCnt" items="${projectCnt}">
+						<c:forEach var="cnt" items="${projectCnt}">
 							<c:set var="pronum" value="${projectDto.proNum}"/>
-								<c:if test="${projectCnt ne pronum}">
+								<c:if test="${cnt ne pronum}">
 									<c:if test = "${projectDto.proCnt == projectDto.proMax}">
 									<c:set var="loop_flag" value="true"/>
 									<a href="#"
@@ -148,9 +145,9 @@ function projectApply(root){
 						<!-- 안되면 이리로 빠지게 한다. -->
 						<!-- 프로젝트 아닌 사람 -->
 						<c:if test="${not loop_flag}">
-							<c:forEach var="projectCnt" items="${projectCnt}">
+							<c:forEach var="cnt" items="${projectCnt}">
 								<c:set var="pronum" value="${projectDto.proNum}"/>
-									<c:if test="${projectCnt ne pronum}">
+									<c:if test="${cnt ne pronum}">
 										<c:if test = "${projectDto.proCnt < projectDto.proMax}">
 										<a href="#"
 										data-num = "${projectDto.proNum}"

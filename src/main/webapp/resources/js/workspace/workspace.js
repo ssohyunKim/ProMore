@@ -6,11 +6,25 @@ var workForm = document.querySelector("#work-form"); // form
 var workList = document.querySelector("#work-list"); // div
 var workTmpl = document.querySelector("#work-tmpl"); // div
 
+$(".workReceiver input[name='workReceiver']").autocomplete({
+  lookup: countries,
+  onSelect: function (suggestion) {
+    alert("You selected: " + suggestion.value + ", " + suggestion.data);
+  },
+});
+
+var countries = [
+  { value: "Andorra", data: "AD" },
+  { value: "Zimbabwe", data: "ZZ" },
+];
+
 // 페이지 로딩 때마다 리스너 바인딩
 function init() {
   var workEditBtns = workList.querySelectorAll(".work-edit");
   var editCancelBtns = workList.querySelectorAll(".work-edit-cancel");
-  var workNoForms = workList.querySelectorAll("[id^='work-no-'] .team-work-form");
+  var workNoForms = workList.querySelectorAll(
+    "[id^='work-no-'] .team-work-form"
+  );
   var workContents = workList.querySelectorAll(".work-content");
 
   var deleteBtns = workList.querySelectorAll(".work-delete");

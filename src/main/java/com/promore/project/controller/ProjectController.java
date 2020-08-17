@@ -31,7 +31,6 @@ public class ProjectController {
 		String id = (String)session.getAttribute("id");
 		 System.out.println("mainid" + id); 
 		mav.addObject("aplMemId", id);
-		
 
 		projectservice.projectApplynull(mav, id);
 		projectservice.projectList(mav);
