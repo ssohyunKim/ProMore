@@ -95,7 +95,7 @@
 												<th>마감날짜</th>
 											</tr>
 										</thead>
-										
+
 										<tfoot>
 											<tr>
 												<th>프로젝트 이름</th>
@@ -105,28 +105,28 @@
 												<th>마감날짜</th>
 											</tr>
 										</tfoot>
-									<tbody>
-									<c:if test="${workCount>0}">
-											<c:forEach var="workspaceDto" items="${workDtoArray}">
-											<c:set var="loop_flag" value="false" />
-												<tr>
-												 
-												<c:forEach var="projectDto" items="${projectDtoArray}">
-													 <c:if test="${not loop_flag }">
-														<c:set var="worknum" value="${projectDto.proNum}"/>
-														<c:if test="${workspaceDto.proNum eq worknum}">
-																 <c:set var="loop_flag" value="true" />
-																<td>${projectDto.proName}</td>
-														</c:if>
-													</c:if>
+										<tbody>
+											<c:if test="${workCount>0}">
+												<c:forEach var="workspaceDto" items="${workDtoArray}">
+													<c:set var="loop_flag" value="false" />
+													<tr>
+
+														<c:forEach var="projectDto" items="${projectDtoArray}">
+															<c:if test="${not loop_flag }">
+																<c:set var="worknum" value="${projectDto.proNum}" />
+																<c:if test="${workspaceDto.proNum eq worknum}">
+																	<c:set var="loop_flag" value="true" />
+																	<td>${projectDto.proName}</td>
+																</c:if>
+															</c:if>
+														</c:forEach>
+														<td>${workspaceDto.workSender}</td>
+														<td>${workspaceDto.workState}</td>
+														<td>${workspaceDto.workStartDate}</td>
+														<td>${workspaceDto.workEndDate}</td>
+													</tr>
 												</c:forEach>
-													<td>${workspaceDto.workSender}</td>
-													<td>${workspaceDto.workState}</td>
-													<td>${workspaceDto.workStartDate}</td>
-													<td>${workspaceDto.workEndDate}</td>
-												</tr>
-											</c:forEach>
-										</c:if>
+											</c:if>
 										</tbody>
 									</table>
 								</div>
@@ -146,9 +146,15 @@
 								<div class="container">
 									<div class="row">
 										<div class="calendar-left-bar">
+											<select class="project-selector form-control mb-3" name="projectCal" style="font-size:11px" >
+												<option value="-1">참여중인 프로젝트를 선택하세요.</option>
+												<c:forEach var="projectDto" items="${projectDtoArray}">
+													<option value="${projectDto.proNum }">
+														${projectDto.proName }</option>
+												</c:forEach>
+											</select>
 											<!-- 업무 -->
 											<div>
-												<h6 class="mb-3">업무</h6>
 												<ul class="category-list list-unstyled">
 													<li class="category-item"><input id="take-work-cb"
 														type="checkbox" /> <label for="take-work-cb">요청받은
@@ -169,7 +175,8 @@
 														<div class="modal-header">
 															<div class="left-column clearfix">
 																<div class="left-column float-left">
-																	<span id="work-state" class="float-left p-1 rounded text-light">요청</span>
+																	<span id="work-state"
+																		class="float-left p-1 rounded text-light">요청</span>
 																</div>
 																<div class="right-column float-left ml-2">
 																	<h5 class="modal-title" id="exampleModalLabel">CSS

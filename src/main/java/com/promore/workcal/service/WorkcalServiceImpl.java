@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.promore.project.dto.ProjectDto;
 import com.promore.workcal.dao.WorkcalDao;
 import com.promore.workcal.dto.WorkcalDto;
 
@@ -25,8 +26,10 @@ public class WorkcalServiceImpl implements WorkcalService {
 		Map<String, Object> model = mav.getModel();
 
 		WorkcalDto workcalDto = new WorkcalDto();
+
 		workcalDto.setWorkSender((String) model.get("workSender"));
-		
+		workcalDto.setProNum(Integer.parseInt((String) model.get("proNum")));
+
 		List<WorkcalDto> list = workcalDao.getGiveSche(workcalDto);
 		JSONObject jsonObj = null;
 		JSONArray jsonArr = new JSONArray();
@@ -40,6 +43,7 @@ public class WorkcalServiceImpl implements WorkcalService {
 			jsonObj.put("workContent", dto.getWorkContent());
 			jsonObj.put("workStartDate", dto.getWorkStartDate().getTime());
 			jsonObj.put("workEndDate", dto.getWorkEndDate().getTime());
+			jsonObj.put("proNum", dto.getProNum());
 			jsonArr.add(jsonObj);
 		}
 
@@ -55,7 +59,8 @@ public class WorkcalServiceImpl implements WorkcalService {
 
 		WorkcalDto workcalDto = new WorkcalDto();
 		workcalDto.setWorkReceiver((String) model.get("workReceiver"));
-		
+		workcalDto.setProNum(Integer.parseInt((String) model.get("proNum")));
+
 		List<WorkcalDto> list = workcalDao.getTakeSche(workcalDto);
 		JSONObject jsonObj = null;
 		JSONArray jsonArr = new JSONArray();
@@ -69,6 +74,7 @@ public class WorkcalServiceImpl implements WorkcalService {
 			jsonObj.put("workContent", dto.getWorkContent());
 			jsonObj.put("workStartDate", dto.getWorkStartDate().getTime());
 			jsonObj.put("workEndDate", dto.getWorkEndDate().getTime());
+			jsonObj.put("proNum", dto.getProNum());
 			jsonArr.add(jsonObj);
 		}
 

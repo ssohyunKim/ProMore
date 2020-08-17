@@ -84,7 +84,11 @@ calendar.on("clickSchedule", function (e) {
     .find("#work-detail")
     .attr(
       "href",
-      root + "/workspace/workspace.do?proNum=1&workNum=" + raw.workNum
+      root +
+        "/workspace/workspace.do?proNum=" +
+        raw.proNum +
+        "&workNum=" +
+        raw.workNum
     );
 
   scheduleView.modal("toggle");
@@ -100,9 +104,14 @@ function setYearMonthHeader(ymHeader) {
   ymHeader.innerText = year + "." + month;
 }
 
-function getAllGiveSchedule() {
+function getAllGiveSchedule(proNum) {
+  var data = {
+    proNum: proNum,
+  };
+
   $.ajax({
     url: root + "/workcal/get-givesche.do",
+    data: data,
     dataType: "json",
   })
     .then(function (data) {
@@ -125,6 +134,7 @@ function getAllGiveSchedule() {
               workSender: item.workSender,
               workReceiver: item.workReceiver,
               workState: parseInt(item.workState),
+              proNum: item.proNum,
             },
           },
         ]);
@@ -135,9 +145,14 @@ function getAllGiveSchedule() {
     });
 }
 
-function getAllTakeSchedule() {
+function getAllTakeSchedule(proNum) {
+  var data = {
+    proNum: proNum,
+  };
+
   $.ajax({
     url: root + "/workcal/get-takesche.do",
+    data: data,
     dataType: "json",
   })
     .then(function (data) {
@@ -160,6 +175,7 @@ function getAllTakeSchedule() {
               workSender: item.workSender,
               workReceiver: item.workReceiver,
               workState: parseInt(item.workState),
+              proNum: item.proNum,
             },
           },
         ]);
@@ -180,14 +196,13 @@ function init() {
   var takeWorkCb = document.querySelector("#take-work-cb");
   var giveWorkCb = document.querySelector("#give-work-cb");
 
+  var projectSel = document.querySelector(".project-selector");
+
   // 년/달 현재 달로 초기화
   setYearMonthHeader(ymHeader);
   // 체크박스 모두 체크
   giveWorkCb.checked = true;
   takeWorkCb.checked = true;
-
-  getAllGiveSchedule();
-  getAllTakeSchedule();
 
   // 리스너 설정
   nextBtn.onclick = function () {
@@ -211,6 +226,18 @@ function init() {
 
   takeWorkCb.onchange = function () {
     calendar.toggleSchedules("take-work", !this.checked);
+  };
+
+  projectSel.onchange = function (e) {
+    var target = e.target;
+    var proNum = target.value;
+
+    if (proNum === "-1") return;
+
+    calendar.clear(true);
+
+    getAllGiveSchedule(proNum);
+    getAllTakeSchedule(proNum);
   };
 
   // 모달 꺼짐 리스너

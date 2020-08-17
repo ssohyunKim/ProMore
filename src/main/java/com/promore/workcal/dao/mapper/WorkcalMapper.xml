@@ -15,32 +15,44 @@
 		<result column="work_content" property="workContent" />
 		<result column="work_start_date" property="workStartDate" />
 		<result column="work_end_date" property="workEndDate" />
+		<result column="pro_num" property="proNum" />
 	</resultMap>
-	
-	<select id="select_giver_schedule" parameterType="com.promore.workcal.dto.WorkcalDto" resultMap="workcal_dto">
-		select 
-			work_num,
-			work_state,
-			work_sender,
-			work_receiver,
-			work_subject,
-			work_content,
-			work_start_date,
-			work_end_date
-		from work where work_sender = #{workSender}
+
+	<select id="select_giver_schedule"
+		parameterType="com.promore.workcal.dto.WorkcalDto"
+		resultMap="workcal_dto">
+		select
+		work_num,
+		work_state,
+		work_sender,
+		work_receiver,
+		work_subject,
+		work_content,
+		work_start_date,
+		work_end_date,
+		pro_num
+		from work where
+		work_sender = #{workSender} and pro_num = #{proNum}
 	</select>
 
-	<select id="select_taker_schedule" parameterType="com.promore.workcal.dto.WorkcalDto" resultMap="workcal_dto">
-		select 
-			work_num,
-			work_state,
-			work_sender,
-			work_receiver,
-			work_subject,
-			work_content,
-			work_start_date,
-			work_end_date
-		from work where work_receiver = #{workReceiver}
+	<select id="select_taker_schedule"
+		parameterType="com.promore.workcal.dto.WorkcalDto"
+		resultMap="workcal_dto">
+		select
+		work_num,
+		work_state,
+		work_sender,
+		work_receiver,
+		work_subject,
+		work_content,
+		work_start_date,
+		work_end_date,
+		pro_num
+		from work 
+		where
+		work_receiver = #{workReceiver} and pro_num =
+		#{proNum}
+
 	</select>
-	
+
 </mapper>
