@@ -99,7 +99,9 @@ function projectApply(root){
 						
 						<!-- 프로젝트 팀장, 팀원-->
 						<!-- 모든 경우의 수 비교 -->
-						<c:set var="loop_flag" value="false"/>
+						<!-- 프로젝트를 하나도 안맡았을 때 -->
+					
+					
 						
 						<c:if test="${not loop_flag}">
 						<c:forEach var="projectCnt" items="${projectCnt}">

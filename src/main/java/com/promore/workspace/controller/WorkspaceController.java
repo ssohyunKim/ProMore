@@ -48,6 +48,9 @@ public class WorkspaceController {
 
 		// 프로젝트 정보(추가)
 		projectservice.projectList(mav);
+		
+		// 다른 페이지에서 일감 목록의 특정 위치로 이동하고 한다면 추가
+		workspaceService.moveNthWork(mav);
 
 		return mav;
 	}

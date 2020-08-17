@@ -113,9 +113,14 @@ public class ProjectServiceImp implements ProjectService {
 		
 		//번호 가져오기
 		 List<String> projectCnt = projectDao.projectState(aplMemId);
-		 
-		 mav.addObject("projectCnt", projectCnt);
-		
+		// System.out.println("@@@@" + projectCnt);
+		 if(projectCnt==null) {
+			 List<String> projectCntnull = projectDao.projectState();
+			 mav.addObject("projectCntnull", projectCntnull);
+		 }
+		 else {
+			mav.addObject("projectCnt", projectCnt);
+		 }
 	}
 	
 	@Override
@@ -154,5 +159,12 @@ public class ProjectServiceImp implements ProjectService {
 		 
 	}
 	
+	@Override
+	public void projectApplynull(ModelAndView mav, String id) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest)map.get("request");
+		int check = projectDao.projectApplynull(id);
+		
+	}
 	
 }

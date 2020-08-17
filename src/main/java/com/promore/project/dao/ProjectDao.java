@@ -27,4 +27,8 @@ public interface ProjectDao {
 
 	public int projectStateUpdate(int proNum, int proState);
 
+	public List<String> projectState();
+
+	public int projectApplynull(String id);
+
 }

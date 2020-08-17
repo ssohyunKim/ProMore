@@ -29,15 +29,7 @@ var calendar = new tui.Calendar("#calendar", {
 });
 
 var koreanDays = ["일", "월", "화", "수", "목", "금", "토"];
-
-// calendar.on("beforeCreateSchedule", function (e) {
-//   var startTime = e.start;
-//   var endTime = e.end;
-//   var isAllDay = e.isAllDay;
-//   var guide = e.guide;
-//   var triggerEventName = e.triggerEventName;
-//   var schedule;
-// });
+var workStateArr = ["요청", "진행", "완료"];
 
 calendar.on("clickSchedule", function (e) {
   var schedule = e.schedule;
@@ -59,11 +51,11 @@ calendar.on("clickSchedule", function (e) {
   if (calId === "give-work") {
     scheduleView.find("#work-giver").addClass("d-none");
     scheduleView.find("#work-taker").removeClass("d-none");
-    scheduleView.find("#work-team-id").html(raw.workReceiver);
+    scheduleView.find("#work-team-id").text(raw.workReceiver);
   } else {
     scheduleView.find("#work-giver").removeClass("d-none");
     scheduleView.find("#work-taker").addClass("d-none");
-    scheduleView.find("#work-team-id").html(raw.workSender);
+    scheduleView.find("#work-team-id").text(raw.workSender);
   }
   scheduleView.find("#work-content").html(content);
 
@@ -83,7 +75,21 @@ calendar.on("clickSchedule", function (e) {
         koreanDays[momentEndDate.day()] +
         ")"
     );
-  $("#work-detail").attr("href", id);
+
+  scheduleView.find("#work-state").text(workStateArr[raw.workState]);
+  scheduleView.find("#work-state").removeClass("bg-0 bg-1 bg-2");
+  scheduleView.find("#work-state").addClass("bg-" + raw.workState);
+
+  scheduleView
+    .find("#work-detail")
+    .attr(
+      "href",
+      root +
+        "/workspace/workspace.do?proNum=" +
+        raw.proNum +
+        "&workNum=" +
+        raw.workNum
+    );
 
   scheduleView.modal("toggle");
 });
@@ -98,11 +104,9 @@ function setYearMonthHeader(ymHeader) {
   ymHeader.innerText = year + "." + month;
 }
 
-function getAllGiveSchedule() {
-  // 지금 로그인 한 유저(b)라고 가정
-  // 나중에 로그인 중인 아이디로 변경
+function getAllGiveSchedule(proNum) {
   var data = {
-    workSender: "b",
+    proNum: proNum,
   };
 
   $.ajax({
@@ -126,8 +130,11 @@ function getAllGiveSchedule() {
             ),
             end: moment(parseInt(item.workEndDate)).format("yyyy-MM-DD (ddd)"),
             raw: {
+              workNum: item.workNum,
               workSender: item.workSender,
               workReceiver: item.workReceiver,
+              workState: parseInt(item.workState),
+              proNum: item.proNum,
             },
           },
         ]);
@@ -138,11 +145,9 @@ function getAllGiveSchedule() {
     });
 }
 
-function getAllTakeSchedule() {
-  // 지금 로그인 한 유저(b)라고 가정
-  // 나중에 로그인 중인 아이디로 변경
+function getAllTakeSchedule(proNum) {
   var data = {
-    workReceiver: "b",
+    proNum: proNum,
   };
 
   $.ajax({
@@ -166,8 +171,11 @@ function getAllTakeSchedule() {
             ),
             end: moment(parseInt(item.workEndDate)).format("yyyy-MM-DD (ddd)"),
             raw: {
+              workNum: item.workNum,
               workSender: item.workSender,
               workReceiver: item.workReceiver,
+              workState: parseInt(item.workState),
+              proNum: item.proNum,
             },
           },
         ]);
@@ -188,14 +196,13 @@ function init() {
   var takeWorkCb = document.querySelector("#take-work-cb");
   var giveWorkCb = document.querySelector("#give-work-cb");
 
+  var projectSel = document.querySelector(".project-selector");
+
   // 년/달 현재 달로 초기화
   setYearMonthHeader(ymHeader);
   // 체크박스 모두 체크
   giveWorkCb.checked = true;
   takeWorkCb.checked = true;
-
-  getAllGiveSchedule();
-  getAllTakeSchedule();
 
   // 리스너 설정
   nextBtn.onclick = function () {
@@ -221,8 +228,20 @@ function init() {
     calendar.toggleSchedules("take-work", !this.checked);
   };
 
+  projectSel.onchange = function (e) {
+    var target = e.target;
+    var proNum = target.value;
+
+    if (proNum === "-1") return;
+
+    calendar.clear(true);
+
+    getAllGiveSchedule(proNum);
+    getAllTakeSchedule(proNum);
+  };
+
   // 모달 꺼짐 리스너
-  $("#schedule-modal-container").on("hidden.bs.modal", function () {});
+  $("#schedule-modal-container").on("hidden.bs.modal", function (e) {});
 
   // 모달 켜짐 리스너
   $("#schedule-modal-container").on("show.bs.modal", function (e) {});

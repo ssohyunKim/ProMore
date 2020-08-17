@@ -11,12 +11,13 @@ public class WorkcalDto {
 	private String workContent;
 	private Date workStartDate;
 	private Date workEndDate;
+	private int proNum;
 
 	public WorkcalDto() {
 	}
 
 	public WorkcalDto(int workNum, int workState, String workSender, String workReceiver, String workSubject,
-			String workContent, Date workStartDate, Date workEndDate) {
+			String workContent, Date workStartDate, Date workEndDate, int proNum) {
 		super();
 		this.workNum = workNum;
 		this.workState = workState;
@@ -26,6 +27,7 @@ public class WorkcalDto {
 		this.workContent = workContent;
 		this.workStartDate = workStartDate;
 		this.workEndDate = workEndDate;
+		this.proNum = proNum;
 	}
 
 	public int getWorkNum() {
@@ -92,10 +94,18 @@ public class WorkcalDto {
 		this.workEndDate = workEndDate;
 	}
 
+	public int getProNum() {
+		return proNum;
+	}
+
+	public void setProNum(int proNum) {
+		this.proNum = proNum;
+	}
+
 	@Override
 	public String toString() {
 		return "WorkcalDto [workNum=" + workNum + ", workState=" + workState + ", workSender=" + workSender
 				+ ", workReceiver=" + workReceiver + ", workSubject=" + workSubject + ", workContent=" + workContent
-				+ ", workStartDate=" + workStartDate + ", workEndDate=" + workEndDate + "]";
+				+ ", workStartDate=" + workStartDate + ", workEndDate=" + workEndDate + ", proNum=" + proNum + "]";
 	}
 }

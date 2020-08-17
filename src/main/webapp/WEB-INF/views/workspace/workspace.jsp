@@ -361,7 +361,7 @@ textarea {
 												</div>
 
 												<c:if
-													test="${item.workSender == sessionScope.memberDto.memId }">
+													test="${item.workSender == sessionScope.memberDto.memId || item.workReceiver == sessionScope.memberDto.memId }">
 													<!-- more -->
 													<div class="more float-right mt-2">
 														<a class="work-edit mr-2" href="#"><i
@@ -904,5 +904,13 @@ textarea {
 	</script>
 	<script src="${root}/resources/js/workspace/reply.js"></script>
 	<script src="${root}/resources/js/workspace/workspace.js"></script>
+	<c:if test="${workNum != null }">
+		<script>
+			document.querySelector("#work-no-${workNum}").scrollIntoView({
+				alignToTop: true,
+				behavior: "smooth"
+			});
+        </script>
+	</c:if>
 </body>
 </html>

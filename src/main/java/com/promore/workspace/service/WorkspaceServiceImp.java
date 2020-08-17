@@ -403,4 +403,14 @@ public class WorkspaceServiceImp implements WorkspaceService {
 		mav.setViewName("workspace/workState");
 
 	}
+
+	@Override
+	public void moveNthWork(ModelAndView mav) {
+		Map<String, Object> model = mav.getModel();
+		HttpServletRequest req = (HttpServletRequest) model.get("req");
+		String workNum = req.getParameter("workNum");
+		
+		if(workNum != null) 
+			mav.addObject("workNum", workNum);
+	}
 }
