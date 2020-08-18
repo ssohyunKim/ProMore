@@ -62,9 +62,7 @@ public class ProjectDaoImp implements ProjectDao {
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		hMap.put("aplNum", aplNum);
 		hMap.put("aplMemId", aplMemId);
-		
-		
-		//mapï¿½ï¿½ï¿½ï¿½ ï¿½Ñ°ï¿½ï¿½Ö±ï¿½
+
 		return sqlSessionTemplate.insert("project_apply", hMap);
 	}
 	
@@ -75,11 +73,6 @@ public class ProjectDaoImp implements ProjectDao {
 	
 	@Override
 	public int projectApplyAdd(String memId) {
-		
-		System.out.println( " @@@" + memId);
-		
-		
-		
 		return sqlSessionTemplate.insert("project_apply_add", memId);
 		
 	}
@@ -97,9 +90,15 @@ public class ProjectDaoImp implements ProjectDao {
 		
 		return sqlSessionTemplate.selectList("project_null");
 	}
+
 	@Override
-	public int projectApplynull(String id) {
+	public List<ProjectDto> projectSelectList(int proNum) {
+		System.out.println("OK" + proNum);
+		List<ProjectDto> he = sqlSessionTemplate.selectList("project_select_list", proNum);
 		
-		return sqlSessionTemplate.insert("project_apply_null", id);
+		System.out.println("Áö±Ý" + he);
+		return he;
 	}
+	
+	
 }

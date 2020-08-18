@@ -16,6 +16,7 @@
   <link href="${root}/resources/css/sb-admin-2.min.css" rel="stylesheet">
   <link rel="stylesheet" href="${root}/resources/css/pjtmain.css">
   <script type="text/javascript" src="${root}/resources/jquery.js"></script>
+
 </head>
 <script type="text/javascript">
 var proNum="";
@@ -39,6 +40,10 @@ $(function(){
 		
 	});
 	
+	$('#projectConfirmModal').on('show.bs.modal', function(event) {
+		proNum = $(event.relatedTarget).data('num');
+	});
+	
 	$('#applyBtn').click(function(){
 		$('#applyConfirmModal').modal();
 	});
@@ -46,11 +51,18 @@ $(function(){
 	$('#fullApplyModal').click(function(){
 		$('#fullConfirmModal').modal();
 	});
+
 	
 });
 
 function projectApply(root){
+	 $('#proNum').val(proNum);
 	location.href = root + '/project/projectApply.do?proNum='+proNum;
+}
+
+function projectSelect(root){
+	 $('#proNum').val(proNum);
+	location.href = root + '/project/projectSelect.do?proNum='+proNum;
 }
 
 </script>
@@ -90,91 +102,34 @@ function projectApply(root){
 		<c:if test="${projectCount>=0}">		
 		 	<c:forEach var="projectDto" items="${projectDtoArray}">		 	
 				<div class="flip-card">
-					<div class="flip-card-inner">
-						<div class="flip-card-front1">
-							<p class="projectName">${projectDto.proName}</p>
-							<br/>
-							<p>최대인원 : ${projectDto.proMax}명</p>
-						</div>
+						<div class="flip-card-inner">
+							<div class="flip-card-front1">
+								<p class="projectName">${projectDto.proName}</p>
+								<br/>
+								<p>최대인원 : ${projectDto.proMax}명</p>
+							</div>
 						
-						<!-- 프로젝트 팀장, 팀원-->
-						<!-- 모든 경우의 수 비교 -->
-						<!-- 프로젝트를 하나도 안맡았을 때 -->
-						
-						<c:if test="${not loop_flag}">
-						<c:forEach var="cnt" items="${projectCnt}">
-							<c:set var="pronum" value="${projectDto.proNum}"/>
-								<c:if test="${cnt eq pronum}">
-									<c:set var="loop_flag" value="true"/>
-									<a href="${root}/workspace/workspace.do?proNum=${projectDto.proNum}">
-									<div class="flip-card-back1">
-										<p>${projectDto.proManager}</p>
-										<br/>
-										<p>현재인원 : ${projectDto.proCnt}명</p>
-									</div>
-									</a>
-								</c:if>
-						</c:forEach>
-						</c:if>
-						
-						<!-- 프로젝트 아닌 사람 -->
-						<c:if test="${not loop_flag}">
-						<c:forEach var="cnt" items="${projectCnt}">
-							<c:set var="pronum" value="${projectDto.proNum}"/>
-								<c:if test="${cnt ne pronum}">
-									<c:if test = "${projectDto.proCnt == projectDto.proMax}">
-									<c:set var="loop_flag" value="true"/>
+						<!-- 프로젝트 팀장, 팀원, 신청 안한 사람 모두 페이지 이동-->
 									<a href="#"
-									data-num = "${projectDto.proNum}"
-									data-name="${projectDto.proName}"
-									data-max = "${projectDto.proMax}"
-									data-content = "${projectDto.proContent}"
+									data-num = "${projectDto.proNum}"							
 									data-toggle="modal"
-									data-target="#fullApplyModal">
+									data-target="#projectConfirmModal">
 									<div class="flip-card-back1">
 										<p>${projectDto.proManager}</p>
 										<br/>
 										<p>현재인원 : ${projectDto.proCnt}명</p>
 									</div>
 									</a>
-									</c:if>
-								</c:if>
-						</c:forEach>
-						</c:if>
-						
-						<!-- 안되면 이리로 빠지게 한다. -->
-						<!-- 프로젝트 아닌 사람 -->
-						<c:if test="${not loop_flag}">
-							<c:forEach var="cnt" items="${projectCnt}">
-								<c:set var="pronum" value="${projectDto.proNum}"/>
-									<c:if test="${cnt ne pronum}">
-										<c:if test = "${projectDto.proCnt < projectDto.proMax}">
-										<a href="#"
-										data-num = "${projectDto.proNum}"
-										data-name="${projectDto.proName}"
-										data-max = "${projectDto.proMax}"
-										data-content = "${projectDto.proContent}"
-										data-toggle="modal"
-										data-target="#mainReadModal">
-										<div class="flip-card-back1">
-											<p>${projectDto.proManager}</p>
-											<br/>
-											<p>현재인원 : ${projectDto.proCnt}명</p>
-										</div>
-										</a>
-										</c:if>
-									</c:if>
-							</c:forEach>
-						
-						</c:if>
-						
-						
+						</div>
 					</div>
-				</div>
-		</c:forEach>
+				</c:forEach>
+			</c:if>
+		</div>				
+	</div>
+</div>
+	
   <%--     </c:forEach> --%>
          <!-- /.container-fluid -->
-	</c:if>
 
 	</div>
 	</div>
@@ -251,60 +206,28 @@ function projectApply(root){
 </div>
 </div>
 
-<!--Project Read Model -->
-	<div class="modal fade" id="mainReadModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-lg mt-5" role="document">
-			<div class="modal-content">
 
-				<!-- modal-header -->
+	
+	
+<!-- #projectConfirmModal-->
+	<div class="modal fade" id="projectConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="m-0 font-weight-bold text-primary p-2">프로젝트 읽기</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
+					<h5 class="modal-title" id="exampleModalLabel">확인</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-
-				<input id="proNum" type="hidden" name="proNum" value="" />
-				<!-- modal-body -->
-				<div class="modal-body">
-
-					<!-- 프로젝트 제목 && 인원수  -->
-			                  <div class="form-group row">
-			                     <div class="col-sm-10">
-			                        <input type="text" class="form-control-plaintext" name="proName" style="display: inline;"  placeholder="제목을 입력하세요." readonly>
-			                     </div>
-			                    <p style="margin: 6px 13px 0px 0px">인원수</p>
-			                     <div class="col-sm-1.5" style="display: inline;">
-			                        <select name="proMax" class="form-control-plaintext" readonly>
-			                            <option value="2">2</option>
-			                            <option value="3">3</option>
-			                            <option value="4">4</option>
-			                            <option value="5">5</option>
-			                        </select>
-			                     </div>
-			                  </div>
-	
-							<!-- 글 내용 -->
-							<div class="form-group row">
-								<div class="col-sm-12">
-									<textarea class="form-control-plaintext" rows="20" name="proContent" placeholder="글을 입력하세요." readonly></textarea>
-								</div>
-							</div>
-								
-
-							<!-- modal-footer -->
-							<div class="modal-footer justify-content-right">
-								<div>
-									<button id="applyBtn" type="button" class="btn btn-secondary">신청</button>
-									<button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
-								</div>
-							</div>
+				<div class="modal-body">프로젝트를 선택하시겠습니까?</div>
+				<div class="modal-footer">
+					<input type="hidden" id="proNum" name="proNum" value="" /> 
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">아니요</button>
+					<button class="btn btn-primary" type="button" onclick="projectSelect('${root}')">네</button>
 				</div>
-
 			</div>
 		</div>
-	</div>
+	</div>	
 	
 <!--apply Confirm Model -->
 <div class="modal fade" id="applyConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
