@@ -85,7 +85,7 @@ textarea {
 	});
 
 	function projectDelete(root) {
-		location.href = root + '/project/delete.do?proNum=' + encodeURI(${proNum});
+		location.href = root + '/project/delete.do?proNum=' + ${proNum};
 	}
 </script>
 
@@ -260,7 +260,8 @@ textarea {
 																pattern="yyyy.MM.dd (E)" />
 														</p>
 													</div>
-													<input class="work-sender" type="hidden" name="workSender"
+													<input class="work-sender" type="
+" name="workSender"
 														value="${sessionScope.memberDto.memId }" />
 												</div>
 												<!-- subject, state -->

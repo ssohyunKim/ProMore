@@ -91,6 +91,7 @@ $(function(){
 							                <div class="card-body">
 							                  <div class="row no-gutters align-items-center">
 							                    <div class="col mr-2">
+							                    	
 							                      <div class="text-s font-weight-bold text-info text-uppercase mb-1">${projectDto.proName}</div>
 							                      <div class="row no-gutters align-items-center">
 							                        <div class="col-auto">
@@ -104,7 +105,7 @@ $(function(){
 							                      </div>
 							                    </div>
 							                    <div class="col-auto">
-							                    <!-- 프로젝트 읽기 모달 -->
+							                    <!-- 프로젝트 현황 수정 모달 -->
 							                    <c:if test= "${memberDto.memLevel eq'팀장'}">
 								                    <a href="#"
 								                    	data-num="${projectDto.proNum}"

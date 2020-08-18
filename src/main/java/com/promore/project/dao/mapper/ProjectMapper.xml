@@ -50,10 +50,6 @@
 	select apl_num from project_apply where apl_mem_id=#{aplMemId}
 </select>
 
-<select id="project_select" parameterType="Integer" resultType="java.util.HashMap">
-	select * from project where pro_num=#{proNum} 
-</select>
-
 <update id="project_update" parameterType="java.util.HashMap">
 	update project set
 		pro_name = #{projectDto.proName},
@@ -110,9 +106,12 @@
 </select>
 
 
-<select id="project_select_list" parameterType="int" resultType="com.promore.project.dto.ProjectDto">
+<select id="project_select_list" parameterType="int" resultMap="project_dto">
 	select * from project where pro_num=#{proNum}
 </select>
 
+<select id="project_select" parameterType="int" resultMap="project_dto">
+	select * from project where pro_num=#{proNum}
+</select>
 
 </mapper>

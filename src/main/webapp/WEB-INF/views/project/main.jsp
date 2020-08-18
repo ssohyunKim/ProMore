@@ -128,7 +128,6 @@ function projectSelect(root){
 	</div>
 </div>
 	
-  <%--     </c:forEach> --%>
          <!-- /.container-fluid -->
 
 	</div>

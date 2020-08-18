@@ -53,7 +53,6 @@ public class ProjectDaoImp implements ProjectDao {
 	
 	@Override
 	public List<String> projectState(String id) {
-		//ï¿½ï¿½È£
 		return sqlSessionTemplate.selectList("project_cnt", id);
 	}
 	
@@ -93,12 +92,12 @@ public class ProjectDaoImp implements ProjectDao {
 
 	@Override
 	public List<ProjectDto> projectSelectList(int proNum) {
-		System.out.println("OK" + proNum);
-		List<ProjectDto> he = sqlSessionTemplate.selectList("project_select_list", proNum);
-		
-		System.out.println("Áö±Ý" + he);
-		return he;
+		return sqlSessionTemplate.selectList("project_select_list", proNum);
 	}
-	
+	@Override
+	public ProjectDto projectSelectRead(int proNum) {
+		return sqlSessionTemplate.selectOne("project_select", proNum);
+		
+	}
 	
 }

@@ -28,7 +28,6 @@ public class ProjectServiceImp implements ProjectService {
 	HttpServletRequest request = (HttpServletRequest)map.get("request");
 	ProjectDto projectDto = (ProjectDto) map.get("projectDto");	
 	
-	System.out.println("멤버id 체크" + aplMemId);
 
 	  projectDto.setProName(projectDto.getProName());
 	  projectDto.setProContent(projectDto.getProContent());
@@ -93,7 +92,6 @@ public class ProjectServiceImp implements ProjectService {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 	
-		System.out.println("%%%프로젝트 신청자:" + memId);
 
 		//프로젝트에 추가
 		int check = projectDao.projectApplyAdd(memId);
@@ -109,7 +107,6 @@ public class ProjectServiceImp implements ProjectService {
 		
 		//번호 가져오기
 		 List<String> projectCnt = projectDao.projectState(aplMemId);
-		// System.out.println("@@@@" + projectCnt);
 		 if(projectCnt==null) {
 			 List<String> projectCntnull = projectDao.projectState();
 			 mav.addObject("projectCntnull", projectCntnull);
@@ -123,15 +120,14 @@ public class ProjectServiceImp implements ProjectService {
 	public void projectApplyOk(ModelAndView mav, String aplMemId) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
+		int proNum = Integer.parseInt(request.getParameter("proNum"));
 		
-		int aplNum = Integer.parseInt(request.getParameter("proNum"));
-	
-		int check = projectDao.projectApply(aplNum, aplMemId);
+		int check = projectDao.projectApply(proNum, aplMemId);
 		//숫자 증가
-		projectDao.projectApplyCnt(aplNum);
+		projectDao.projectApplyCnt(proNum);
 		
 		mav.addObject("check", check);
-		mav.addObject("proNum", aplNum);
+		mav.addObject("proNum", proNum);
 		mav.setViewName("project/applyOk");
 		
 	}
@@ -161,8 +157,7 @@ public class ProjectServiceImp implements ProjectService {
 		 List<String> projectCnt = projectDao.projectState(aplMemId);
 		int proNum = Integer.parseInt(request.getParameter("proNum"));
 		List<ProjectDto> projectList = projectDao.projectSelectList(proNum); 
-	
-		
+
 		 mav.addObject("projectCnt",projectCnt);
 		 mav.addObject("projectList",projectList);
 		 mav.addObject("id",aplMemId);
@@ -178,8 +173,12 @@ public class ProjectServiceImp implements ProjectService {
 		
 		int proNum = Integer.parseInt(request.getParameter("proNum"));
 		System.out.println("OK" + proNum);
-		List<ProjectDto> projectList = projectDao.projectSelectList(proNum); 
-		System.out.println("오오오" + projectList);
+		ProjectDto projectDto = projectDao.projectSelectRead(proNum); 
+		
+		mav.addObject("projectDto", projectDto);
+		mav.addObject("id", aplMemId);
+		mav.setViewName("project/projectRead");
+		
 		
 	}
 	

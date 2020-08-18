@@ -103,7 +103,6 @@ public class ProjectController {
 		mav.addObject("request", request);
 		HttpSession session = request.getSession(); 
 		String aplMemId = (String)session.getAttribute("id");
-		
 		projectservice.projectApplyOk(mav, aplMemId);
 			
 		return mav;		

@@ -32,4 +32,6 @@ public interface ProjectDao {
 
 	public List<ProjectDto> projectSelectList(int proNum);
 
+	public ProjectDto projectSelectRead(int proNum);
+
 }
