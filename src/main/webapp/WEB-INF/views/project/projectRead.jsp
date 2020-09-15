@@ -19,25 +19,10 @@
 
 <!-- Custom styles for this template-->
 <link href="${root}/resources/css/sb-admin-2.min.css" rel="stylesheet">
- <script type="text/javascript" src="${root}/resources/jquery.js"></script>
-</head>
-<script type="text/javascript">
-var proNum="";
-
-$(function(){
-	$('#applyConfirmModal').on('show.bs.modal', function(event){
-		proNum = $(event.relatedTarget).data('num');
-	});
+<script type="text/javascript" src="${root}/resources/jquery.js"></script>
+<script type="text/javascript" src="${root}/resources/js/project/project.js"></script>
 	
-});
-
-function projectApply(root){
-	$('#proNum').val(proNum);
-	location.href= root + '/project/projectApply.do?proNum='+proNum;
-}
-
-
-</script>
+</head>
 
 <body>
 <body id="page-top">
@@ -217,9 +202,6 @@ function projectApply(root){
 		</div>
 
 </div>
-
-
-
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top"> <i

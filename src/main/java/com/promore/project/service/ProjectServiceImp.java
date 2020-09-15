@@ -36,31 +36,25 @@ public class ProjectServiceImp implements ProjectService {
 	  projectDto.setProMax(projectDto.getProMax());
 	  projectDto.setProCnt(1);
 	  
-	  
-		  
-	  int check =  projectDao.projectWrite(projectDto);
-	  mav.addObject("check", check);
-	  mav.setViewName("project/writeOk");
+	  int check = projectDao.projectWrite(projectDto);
 	}
 	
 	
 	@Override
-	public void projectUpdateOk(ModelAndView mav) {
+	public void projectUpdateOk(ModelAndView mav, String aplMemId) {
 		Map<String, Object> map = mav.getModelMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		int proNum = Integer.parseInt(request.getParameter("proNum"));
-		System.out.println("proNum" + proNum);
+		
 		ProjectDto projectDto = (ProjectDto) map.get("projectDto");
-		System.out.println("DTO" + projectDto);
+		projectDto.setProManager(aplMemId);
 		
 		int check = projectDao.projectUpdateOk(projectDto);
 		HAspect.logger.info(HAspect.logMsg + check);
 		
-		mav.addObject("check", check);
+		mav.addObject("check", check); 
 		mav.addObject("proNum", proNum);
-		mav.setViewName("project/updateOk");
-
-		
+		mav.setViewName("project/updateOk"); 
 	}
 	
 	@Override
@@ -129,7 +123,6 @@ public class ProjectServiceImp implements ProjectService {
 		mav.addObject("check", check);
 		mav.addObject("proNum", proNum);
 		mav.setViewName("project/applyOk");
-		
 	}
 	
 	@Override

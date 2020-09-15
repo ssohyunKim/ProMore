@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.promore.aop.HAspect;
@@ -78,11 +79,14 @@ public class ProjectController {
 	@RequestMapping(value="/project/update.do", method=RequestMethod.POST)
 	public ModelAndView projectUpdate(HttpServletRequest request, HttpServletResponse response,ProjectDto projectDto) {
 		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession(); 
+		String aplMemId = (String)session.getAttribute("id");
 		
 		mav.addObject("request", request);
 		mav.addObject("projectDto", projectDto);
+		mav.addObject("aplMemId", aplMemId);
 		
-		projectservice.projectUpdateOk(mav);
+		projectservice.projectUpdateOk(mav, aplMemId);
 		return mav;
 	}
 

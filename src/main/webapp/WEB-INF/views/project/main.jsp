@@ -16,56 +16,8 @@
   <link href="${root}/resources/css/sb-admin-2.min.css" rel="stylesheet">
   <link rel="stylesheet" href="${root}/resources/css/pjtmain.css">
   <script type="text/javascript" src="${root}/resources/jquery.js"></script>
-
+  <script type="text/javascript" src="${root}/resources/js/project/project.js"></script>
 </head>
-<script type="text/javascript">
-var proNum="";
-var name="";
-var content="";
-var max="";
-
-$(function(){
-	$('#mainReadModal').on('show.bs.modal', function(event) {
-		proNum = $(event.relatedTarget).data('num');
-		
-		name = $(event.relatedTarget).data('name');
-		$('input[name="proName"]').val(name);
-		
-		max = $(event.relatedTarget).data('max');
-	 	$('select[name="proMax"]').val(max).attr("selected", "selected");
-		$('select[name="proMax"] option').attr('disabled', true);
-		
-		content = $(event.relatedTarget).data('content');
-		$('textarea[name="proContent"]').text(content);
-		
-	});
-	
-	$('#projectConfirmModal').on('show.bs.modal', function(event) {
-		proNum = $(event.relatedTarget).data('num');
-	});
-	
-	$('#applyBtn').click(function(){
-		$('#applyConfirmModal').modal();
-	});
-	
-	$('#fullApplyModal').click(function(){
-		$('#fullConfirmModal').modal();
-	});
-
-	
-});
-
-function projectApply(root){
-	 $('#proNum').val(proNum);
-	location.href = root + '/project/projectApply.do?proNum='+proNum;
-}
-
-function projectSelect(root){
-	 $('#proNum').val(proNum);
-	location.href = root + '/project/projectSelect.do?proNum='+proNum;
-}
-
-</script>
 
 <body id="page-top">
  <!-- Page Wrapper -->
@@ -115,7 +67,7 @@ function projectSelect(root){
 									data-toggle="modal"
 									data-target="#projectConfirmModal">
 									<div class="flip-card-back1">
-										<p>${projectDto.proManager}</p>
+										<p>팀장 : ${projectDto.proManager}</p>
 										<br/>
 										<p>현재인원 : ${projectDto.proCnt}명</p>
 									</div>
@@ -127,21 +79,16 @@ function projectSelect(root){
 		</div>				
 	</div>
 </div>
-	
-         <!-- /.container-fluid -->
 
-	</div>
+<!-- /.container-fluid -->
+
 	</div>
       <!-- End of Main Content -->
 
       <!-- Footer -->
       <jsp:include page="/WEB-INF/template/footer.jsp"/>
       <!-- End of Footer -->
-
-    </div>
     <!-- End of Content Wrapper -->
-
-  </div>
   <!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button-->
@@ -161,19 +108,20 @@ function projectSelect(root){
 							<span aria-hidden="true">&times;</span>
 						</button>
 				</div>
-					<form id="createform" action="${root}/project/writeOk.do" method="post">
+				
 				<!-- modal-body -->
 						<div class="modal-body">
 						
 						      <!-- 프로젝트 제목 && 인원수  -->
 			                  <div class="form-group row">
 			                     <div class="col-sm-10">
-			                        <input type="text" class="form-control" name="proName" style="display: inline;"  placeholder="제목을 입력하세요.">
+			                     	
+			                        <input type="text" class="form-control" name="proName" id="proName" style="display: inline;"  placeholder="제목을 입력하세요.">
 			                     </div>
 			                    		<p style="margin: 6px 13px 0px 0px">인원수</p>
 			                     <div class="col-sm-1.5" style="display: inline;" >
 			                     	              
-			                       <select name="proMax" class="form-control">
+			                       <select name="proMax" class="form-control" id="proMax">
 			                            <option value="2">2</option>
 			                            <option value="3">3</option>
 			                            <option value="4">4</option>
@@ -187,7 +135,7 @@ function projectSelect(root){
 							<!-- 글 내용 -->
 							<div class="form-group row">
 								<div class="col-sm-12">
-									<textarea class="form-control" rows="20" name="proContent" placeholder="글을 입력하세요." ></textarea>
+									<textarea class="form-control" rows="20" name="proContent" placeholder="글을 입력하세요." id="proContent"></textarea>
 								</div>
 							</div>
 								
@@ -196,17 +144,14 @@ function projectSelect(root){
 							<button type="reset" class="btn btn-warning">초기화</button>
 							<div>
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-								<button type="submit" class="btn btn-primary">작성 완료</button>
+								<button type="button" class="btn btn-primary" onclick="writePjt('${root}')">작성 완료</button>
 							</div>
 							</div>
 						</div>
-					</form>
+					
 	</div>
 </div>
 </div>
-
-
-	
 	
 <!-- #projectConfirmModal-->
 	<div class="modal fade" id="projectConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -227,51 +172,16 @@ function projectSelect(root){
 			</div>
 		</div>
 	</div>	
-	
-<!--apply Confirm Model -->
-<div class="modal fade" id="applyConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">신청</h5>
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">×</span>
-					</button>
-				</div>
-				<div class="modal-body">정말 신청하시겠습니까?</div>
-				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">아니요</button>
-					<button class="btn btn-primary" type="button" onclick="projectApply('${root}')">네</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-<!-- fullConfirmModal -->
-<div class="modal fade" id="applyConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">신청</h5>
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">×</span>
-					</button>
-				</div>
-				<div class="modal-body">신청이 마감되었습니다</div>
-			</div>
-		</div>
-	</div>
-
 
   
-	<!-- Bootstrap core JavaScript -->
-	<script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
-	<script src="${root}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	
-	<!-- Core plugin JavaScript -->
-	<script src="${root}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
-	
-	<!-- Custom scripts for all pages -->
-	<script src="${root}/resources/js/sb-admin-2.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="${root}/resources/vendor/jquery/jquery.min.js"></script>
+<script src="${root}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript -->
+<script src="${root}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages -->
+<script src="${root}/resources/js/sb-admin-2.min.js"></script>
 </body>
 </html>

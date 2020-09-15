@@ -14,7 +14,7 @@ public interface ProjectService {
 
 
 
-	public void projectUpdateOk(ModelAndView mav);
+	public void projectUpdateOk(ModelAndView mav, String id);
 
 
 	public void projectDeleteOk(ModelAndView mav);

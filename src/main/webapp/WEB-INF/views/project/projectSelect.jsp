@@ -9,12 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<%-- 	${projectCnt}
-	${id}
-	${projectList}
-	 --%>
-	 
 	 <!-- 프로젝트를 신청한 팀장, 팀원 부분 -->
 	<c:set var="loop_flag" value="false"/>
 	<c:forEach var="projectCnt" items="${projectCnt}">
