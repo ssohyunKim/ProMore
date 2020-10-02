@@ -15,4 +15,6 @@ public interface CustomerService {
 	public void noticeBoardList(ModelAndView mav);
 	
 	public void noticeBoardUpdateCount(ModelAndView mav);
+
+	public void fileDownload(ModelAndView mav);
 }

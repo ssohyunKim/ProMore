@@ -1,11 +1,16 @@
 package com.promore.customer.service;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +25,15 @@ import com.promore.customer.dto.CustomerDto;
 import com.promore.manager.dao.ManagerDao;
 import com.promore.manager.dto.NoticeDto;
 
+/**
+ * @Author	: sohyunkim
+ * @Descriptions :고객게시판(1:1문의하기, 공지사항)
+ */
 @Component
 public class CustomerServiceImp implements CustomerService {
 	@Autowired
 	private CustomerDao customerDao;
-	private ManagerDao noticeDao;
-
-	/* 글작성 하기 */
+	
 	@Override
 	public void customerBoardWriteOk(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
@@ -35,7 +42,6 @@ public class CustomerServiceImp implements CustomerService {
 		HttpSession session = request.getSession();
 		
 		String id = (String) session.getAttribute("id");
-		HAspect.logger.info(HAspect.logMsg + "id:" + id);
 		
 		customerDto.setCusNum(0);
 		customerDto.setCusState(0);
@@ -43,8 +49,6 @@ public class CustomerServiceImp implements CustomerService {
 		customerDto.setCusId(id);
 		
 		MultipartFile upFile = request.getFile("file");
-		HAspect.logger.info(HAspect.logMsg + customerDto);
-		
 		
 		if(upFile.getSize()!=0) {
 			String fileName = Long.toString(System.currentTimeMillis())+ "_" + upFile.getOriginalFilename();
@@ -75,7 +79,6 @@ public class CustomerServiceImp implements CustomerService {
 		HAspect.logger.info(HAspect.logMsg + check);
 		
 		mav.addObject("check", check);
-		mav.setViewName("customer/inquireWrite");
 	}
 	
 	/* 글리스트 보기 */
@@ -91,7 +94,6 @@ public class CustomerServiceImp implements CustomerService {
 		List<CustomerDto> boardList = null;
 	
 		boardList = customerDao.customerBoardList(id);
-		HAspect.logger.info(HAspect.logMsg + boardList.size());
 
 		mav.addObject("boardList", boardList);
 		mav.setViewName("customer/inquireList");
@@ -104,13 +106,10 @@ public class CustomerServiceImp implements CustomerService {
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		
 		int cusNum = Integer.parseInt(request.getParameter("cusNum"));
-		HAspect.logger.info(HAspect.logMsg + cusNum);
 		
 		int check = customerDao.customerBoardDelete(cusNum);
-		HAspect.logger.info(HAspect.logMsg + check);
 		
 		mav.addObject("check", check);
-		mav.setViewName("customer/inquireDelete");
 	}
 	
 	/* 작성한글 수정 */
@@ -120,13 +119,10 @@ public class CustomerServiceImp implements CustomerService {
 		MultipartHttpServletRequest request = (MultipartHttpServletRequest)map.get("request");
 
 		int cusNum = Integer.parseInt(request.getParameter("cusNum"));
-		System.out.println(cusNum + "###");
 		CustomerDto customerDto = (CustomerDto) map.get("customerDto");
-		System.out.println(customerDto);
 		customerDto.setCusDate(new Date());
 		
 		MultipartFile upFile = request.getFile("file");
-		HAspect.logger.info(HAspect.logMsg + upFile.getOriginalFilename());
 		
 		
 		if(upFile.getSize()!=0) {
@@ -153,15 +149,68 @@ public class CustomerServiceImp implements CustomerService {
 			}
 
 		}
-		HAspect.logger.info(HAspect.logMsg +customerDto);
 		
 		int check = customerDao.customerBoardUpdateOk(customerDto);
-		HAspect.logger.info(HAspect.logMsg + check);
 		
 		mav.addObject("check", check);
-		mav.setViewName("customer/inquireUpdate");
 	}
 	
+	/* 파일 다운로드 */
+	public void fileDownload(ModelAndView mav) {
+		Map<String, Object> map = mav.getModelMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		HttpServletResponse response = (HttpServletResponse) map.get("response");
+
+		int cusNum = Integer.parseInt(request.getParameter("cusNum"));
+		//HAspect.logger.info(HAspect.logMsg + cusNum);
+
+		CustomerDto customerDto = customerDao.customerBoardRead(cusNum);
+
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+
+		try {
+			int index = customerDto.getCusFileName().indexOf("_") + 1;
+			String fName = customerDto.getCusFileName().substring(index);
+			String fileName = new String(fName.getBytes("utf-8"), "ISO-8859-1");
+
+			long fileSize = customerDto.getCusFileSize();
+			String path = customerDto.getCusFilePath();
+
+			response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+			response.setContentType("application/octet-stream");
+			response.setContentLength((int) fileSize);
+
+			bis = new BufferedInputStream(new FileInputStream(path), 1024);
+			bos = new BufferedOutputStream(response.getOutputStream(), 1024);
+
+			while (true) {
+				int data = bis.read();
+				if (data == -1) break;
+				bos.write(data);
+			}
+			bos.flush();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			try {
+				if (bis != null)
+					bis.close();
+				if (bos != null)
+					bos.close();
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/* 공지사항 리스트 */
 	@Override
 	public void noticeBoardList(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
@@ -170,12 +219,12 @@ public class CustomerServiceImp implements CustomerService {
 		List<NoticeDto> boardList = null;
 	
 		boardList = customerDao.noticeBoardList();
-		HAspect.logger.info(HAspect.logMsg + boardList.size());
 
 		mav.addObject("boardList", boardList);
 		mav.setViewName("customer/noticeList");
 	}
 	
+	/* 조회수 증가 */
 	@Override
 	public void noticeBoardUpdateCount(ModelAndView mav) {
 		
@@ -183,12 +232,8 @@ public class CustomerServiceImp implements CustomerService {
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		int noticeNum = Integer.parseInt(request.getParameter("notNum"));
 		
-		HAspect.logger.info(HAspect.logMsg + noticeNum);
-		
 		int check = customerDao.noticeBoardUpdateCount(noticeNum);
 		
-		HAspect.logger.info(HAspect.logMsg + check);
-
 		mav.addObject("check", check);
 	}
 }

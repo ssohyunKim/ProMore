@@ -45,7 +45,7 @@ $(function(){
  		   	url: "${root}/customer/noticeUpdateCount.do",
  		   	type:"POST",
  		   	data: "notNum="+notNum,
- 		   	dataType: "text",
+ 		   	dataType: "json",
  			success	: function(data){
  			},
  			error	: function(request, status, error){
@@ -80,7 +80,7 @@ $(function(){
 	
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">공지사항</h1>
+						<h1 class="h3 mb-0 text-gray-800"></h1>
 					</div>
 	
 					<div>

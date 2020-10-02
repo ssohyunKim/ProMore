@@ -11,6 +11,10 @@ import org.springframework.stereotype.Component;
 import com.promore.customer.dto.CustomerDto;
 import com.promore.manager.dto.NoticeDto;
 
+/**
+ * @Author	: sohyunkim
+ * @Descriptions : 고객게시판(1:1문의하기, 공지사항)
+ */
 @Component
 public class CustomerDaoImp implements CustomerDao {
 	@Autowired
@@ -72,7 +76,6 @@ public class CustomerDaoImp implements CustomerDao {
 		return sqlSessionTemplate.selectList("notice_board_list");
 	}
 	
-	//조회수 증가
 	@Override
 	public int noticeBoardUpdateCount(int notNum) {
 		return sqlSessionTemplate.update("notice_board_update", notNum);

@@ -54,7 +54,12 @@
 	
 	<!--  글목록 가져오기 -->
 	<select id="customer_board_list" parameterType="String" resultMap="CustomerDto">
-		select * from customer_board where cus_id = #{id}
+		select * from customer_board where cus_id = #{id} order by cus_state, cus_num desc
+	</select>
+	
+	<!-- 작성글 가져오기 -->
+	<select id="customer_board_read" resultMap="CustomerDto">
+		select * from customer_board where cus_num = #{cusNum}
 	</select>
 	
 	<!-- 작성글 삭제하기 -->

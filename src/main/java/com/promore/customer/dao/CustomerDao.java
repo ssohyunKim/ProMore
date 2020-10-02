@@ -22,5 +22,4 @@ public interface CustomerDao {
 	
 	public int noticeBoardUpdateCount(int noticeNum);
 
-
 }

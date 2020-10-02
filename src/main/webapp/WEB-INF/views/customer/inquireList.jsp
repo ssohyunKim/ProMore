@@ -20,12 +20,11 @@
   <script type="text/javascript" src="${root}/resources/jquery.js"></script>
 </head>
 <script type="text/javascript">
-
 	var cusNum = "";
 	var title = "";
 	var cate = "";
 	var content = "";
-	var file = "";
+	var fileName = "";
 
 	$(function() {
 		$('#customerReadModal').on('show.bs.modal', function(event) {
@@ -35,14 +34,21 @@
 			$('input[name="cusTitle"]').val(title);
 
 			cate = $(event.relatedTarget).data('cate');
-			$('select[name="cusCate"]').val(cate).attr("selected", "selected");
+			$('select[name="cusCate"]').val(cate).attr("selected","selected");
 			$('select[name="cusCate"] option').attr('disabled', true);
 
 			content = $(event.relatedTarget).data('content');
 			$('textarea[name="cusContent"]').text(content);
 
-			file = $(event.relatedTarget).data('file');
-			console.log(file);
+			fileName = $(event.relatedTarget).data('file');
+
+			if (fileName != "") {
+				$('#fileName').text(fileName.substring(14));
+				var url = "${root}/customer/fileDownload.do?cusNum="+ cusNum;
+				$('#fileName').attr("href", url);
+			} else {
+				$('#fileName').html("첨부파일 없음");
+			}
 		});
 
 		$('#deleteBtn').click(function() {
@@ -59,19 +65,97 @@
 			$('select[name="cusCate"] option').attr('disabled', false);
 
 			$('textarea[name="cusContent"]').text(content);
+			
+			var a = $('.fileName');
+			
+			if (fileName != "") {
+				a.text(fileName);
+			} else {
+				a.html("첨부파일 없음");
+			}
 
 			$('#customerReadModal').modal().hide();
+		});
+		
+		 
+		var fileTarget = $('#fileupload');
+		fileTarget.on('change', function() { 
+			if (window.FileReader) { // modern browser
+				var filename = $(this)[0].files[0].name;
+			} else { // old IE
+				var filename = $(this).val().split('/').pop().split('\\').pop(); // 파일명 추출
+			}
 
-			var file = $(event.relatedTarget).data('file');
+			$('.fileName').text(filename);
 		});
 
 		$('.modal').on('hide.bs.modal', function(event) {
 			location.reload();
 		});
 	});
-
+	
+	function inquireWrite(){
+		var formData = new FormData($('#createForm')[0]);
+		
+		$.ajax({
+		   	url: "${root}/customer/inquireWrite.do",
+		   	enctype: "multipart/form-data",
+		   	type:"POST",
+		   	data: formData,
+		   	processData: false,
+		   	contentType: false,
+		   	cache: false,
+			success	: function(data){
+				if(data>0) {
+					alert("글쓰기에 성공하셨습니다. 담당자 확인 후 처리까지 시간이 조금 소요될 수 있습니다.");
+				}
+				location.href = "${root}/customer/inquireList.do";
+			},
+			error	: function(request, status, error){
+				alert("요청하신 작업이 처리되지 않았습니다.")
+			}
+		});
+	}
+	
+	function inquireUpdate(){
+		var formData = new FormData($('#updateForm')[0]);
+		
+		$.ajax({
+		   	url: "${root}/customer/inquireUpdate.do",
+		   	enctype: "multipart/form-data",
+		   	type:"POST",
+		   	data: formData,
+		   	processData: false,
+		   	contentType: false,
+		   	cache: false,
+			success	: function(data){
+				if(data>0) {
+					alert("글을 수정하였습니다.")
+				}
+				location.href = "${root}/customer/inquireList.do";
+			},
+			error	: function(request, status, error){
+				alert("요청하신 작업이 처리되지 않았습니다.")
+			}
+		});
+	}
+	
 	function inquireDelete(root) {
-		location.href = root + '/customer/inquireDelete.do?cusNum=' + cusNum;
+		$.ajax({
+ 		   	url: "${root}/customer/inquireDelete.do",
+ 		   	type:"POST",
+ 		   	data: "cusNum="+cusNum,
+ 		   	dataType: "json",
+ 			success	: function(data){
+ 				if(data>0) {
+ 					alert("글을 삭제하였습니다.")
+ 				}
+ 				location.href = "${root}/customer/inquireList.do";
+ 			},
+ 			error	: function(request, status, error){
+ 				alert("요청하신 작업이 처리되지 않았습니다.")
+ 			}
+ 		});
 	}
 </script>
 <body id="page-top">
@@ -96,7 +180,7 @@
 
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">1:1 문의하기</h1>
+						<h1 class="h3 mb-0 text-gray-800"></h1>
 					</div>
 					
 					<div>
@@ -107,8 +191,8 @@
 						</a>
 						<p class="mb-4">
 							<br />
-							욕설, 비방글, 회원신고는 신고하기로 작성해주세요.<br />
-							(파일첨부는 1개만 가능합니다.)
+							욕설, 비방글 회원신고는 신고하기로 작성해주세요.(파일첨부는 1개만 가능합니다. 여러파일을 업로드 하실 경우 하나의 파일로 압축부탁드립니다.) <br />
+							관리자가 확인 후 가입하신 이메일로 답변을 드립니다.
 						</p>
 					</div>
 
@@ -221,8 +305,8 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-
-				<form action="${root}/customer/inquireWrite.do" name="createForm" method="post" enctype="multipart/form-data">
+				
+				<form id="createForm" method="post" enctype="multipart/form-data">
 					<!-- modal-body -->
 					<div class="modal-body">
 						<!-- 문의글 제목 -->
@@ -247,7 +331,7 @@
 						<div class="form-group row">
 							<div class="col-sm-12">
 								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
-								</span> <input type="file" name="file" class="mx-2"/>
+								</span> <input type="file" class="mx-2" id="inputFile" name="file" />
 							</div>
 						</div>
 					</div>
@@ -256,7 +340,7 @@
 						<button type="reset" class="btn btn-warning">초기화</button>
 						<div>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-							<button type="submit" class="btn btn-primary">작성 완료</button>
+							<button type="button" class="btn btn-primary" onclick="inquireWrite();">작성 완료</button>
 						</div>
 					</div>
 				</form>
@@ -300,7 +384,7 @@
 					<div class="form-group row">
 						<div class="col-sm-12">
 							<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
-							</span> <input type="file" name="file" class="mx-2" readonly/>
+							</span> <a id="fileName"></a>
 						</div>
 					</div>
 				</div>
@@ -327,7 +411,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form action="${root}/customer/inquireUpdate.do" name="updateForm" method="post" enctype="multipart/form-data">		
+				<form id="updateForm" method="post" enctype="multipart/form-data">		
 					<input type="hidden" id="cusNum" name="cusNum" value="" /> 
 					<!-- modal-body -->
 					<div class="modal-body">
@@ -353,7 +437,9 @@
 						<div class="form-group row">
 							<div class="col-sm-12">
 								<span class="icon"> <i class="fas fa-paperclip fa-lg"></i>
-								</span> <input type="file" name="file" class="mx-2"/>
+								</span> <label for="fileupload" class="btn btn-secondary btn-sm">파일
+									선택</label> <input type="file" id="fileupload" name="file"
+									style="display: none;"> <a class="fileName">첨부파일 없음</a>
 							</div>
 						</div>
 					</div>
@@ -361,7 +447,7 @@
 					<div class="modal-footer justify-content-right">
 						<div>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-							<button type="submit" class="btn btn-primary">확인</button>
+							<button type="button" class="btn btn-primary" onclick="inquireUpdate();">확인</button>
 						</div>
 					</div>
 				</form>
