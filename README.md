@@ -52,7 +52,7 @@
 > Spring, Mybatis 3.4.6, AJAX, jQuery, Bootstrap4, JSON 
 
 
-**4. 화면페이지 **
+**4. 화면페이지**
 
 - 메인 화면 <br>
 <img src="/doc/img/main.png" width="600px" height="300px"></img>
