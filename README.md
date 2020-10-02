@@ -55,15 +55,15 @@
 **4. 화면페이지 **
 
 - 메인 화면 <br>
-<img src="../ProMore/doc/img/main.png" width="400px" height="200px"></img>
+<img src="/doc/img/main.png" width="400px" height="200px"></img>
 - 로그인 화면 <br>
-<img src="../ProMore/doc/img/login.png" width="400px" height="200px"></img>
+<img src="/doc/img/login.png" width="400px" height="200px"></img>
 - 프로젝트 메뉴 <br>
-<img src="../ProMore/doc/img/project.png" width="400px" height="200px"></img>
+<img src="/doc/img/project.png" width="400px" height="200px"></img>
 - 프로젝트별 일감 페이지 <br>
-<img src="../ProMore/doc/img/work.png" width="400px" height="200px"></img>
+<img src="/doc/img/work.png" width="400px" height="200px"></img>
 - 공지사항 <br>
-<img src="../ProMore/doc/img/notice.png" width="400px" height="200px"></img>
+<img src="/doc/img/notice.png" width="400px" height="200px"></img>
 - 문의하기 <br>
-<img src="../ProMore/doc/img/inquire.png" width="400px" height="200px"></img>
+<img src="/doc/img/inquire.png" width="400px" height="200px"></img>
 
